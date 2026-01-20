@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alexandria Sanctuary - A global spiritual sanctuary for contemplative living, wisdom cultivation, and sacred passage at Palgongsan, Korea.">
+
+  <title>Alexandria Sanctuary - Where Wisdom Meets Mortality</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/design-system.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+
+  <!-- Favicon & Icons -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/emblem.svg">
+  <link rel="apple-touch-icon" href="assets/icons/emblem.svg">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Alexandria">
+
+  <style>
+    /* Page-specific intro animation */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1.5s var(--ease-smooth), visibility 1.5s;
+    }
+
+    .intro-overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-text {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      font-style: italic;
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 40ch;
+      line-height: var(--leading-relaxed);
+      opacity: 0;
+      animation: fadeIn 2s var(--ease-smooth) 0.5s forwards;
+    }
+
+    .intro-text span {
+      display: block;
+      margin-top: var(--space-4);
+      font-style: normal;
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+      letter-spacing: var(--tracking-wider);
+    }
+  </style>
+</head>
+<body>
+  <!-- Cinematic Intro Overlay -->
+  <div class="intro-overlay" id="introOverlay">
+    <p class="intro-text">
+      "To prepare for death is to prepare for life.<br>
+      The two are one."
+      <span>— Thich Nhat Hanh</span>
+    </p>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="/" class="nav__logo">
+          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="21" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
+            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="nav__logo-text">Alexandria</span>
+        </a>
+
+        <div class="nav__menu">
+          <a href="philosophy/" class="nav__link">Philosophy</a>
+          <a href="sanctuary/" class="nav__link">Sanctuary</a>
+          <a href="forum/" class="nav__link">Forum</a>
+          <a href="library/" class="nav__link">Library</a>
+          <a href="visit/" class="nav__link">Visit</a>
+        </div>
+
+        <div class="nav__actions">
+          <a href="visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
+          <button class="nav__toggle" id="navToggle" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__bg">
+      <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920&q=80" alt="Misty mountain at dawn">
+      <div class="hero__overlay"></div>
+    </div>
+
+    <div class="hero__content">
+      <p class="hero__quote">
+        "We are not preparing for death.<br>
+        We are preparing for the deepest embrace of life."
+      </p>
+
+      <h1 class="hero__title">Alexandria</h1>
+      <p class="hero__subtitle">알렉산드리아</p>
+
+      <p class="hero__tagline">
+        A global sanctuary where ancient wisdom meets modern care.<br>
+        Where the final chapter becomes the most meaningful.
+      </p>
+
+      <div class="hero__actions">
+        <a href="philosophy/" class="btn btn-primary btn-lg">Discover Our Philosophy</a>
+        <a href="sanctuary/" class="btn btn-secondary btn-lg">Explore the Sanctuary</a>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
+      <span>Scroll to Explore</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Philosophy Intro -->
+  <section class="section">
+    <div class="container container-narrow">
+      <div class="quote-block" data-animate>
+        <div class="quote-block__mark">"</div>
+        <p class="quote-block__text">
+          The ancient Library of Alexandria gathered the wisdom of the world.
+          Our sanctuary gathers the wisdom needed for life's most sacred passage.
+        </p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="prose" style="margin: 0 auto;" data-animate>
+        <p>
+          Nestled in the sacred mountains of Palgongsan, Korea, Alexandria is not merely a place of care—it is a sanctuary for the soul. Here, Eastern contemplative traditions meet Western philosophical inquiry in service of humanity's most profound question: How do we live fully, knowing we must die?
+        </p>
+        <p>
+          We believe that preparing for death is not morbid—it is the most life-affirming act. Through cave meditation, wisdom teachings, and compassionate community, we offer a space where the final chapter of life becomes not an ending, but a culmination.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Five Pillars -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-header" data-animate>
+        <span class="section-label">The Five Pillars</span>
+        <h2 class="section-title">Pathways to Wisdom</h2>
+        <p class="section-subtitle">
+          Five integrated approaches to contemplative living and sacred passage.
+        </p>
+      </div>
+
+      <div class="pillars">
+        <!-- Cave -->
+        <article class="pillar-card" data-animate>
+          <div class="pillar-card__icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M8 40 Q8 20 24 12 Q40 20 40 40"/>
+              <circle cx="24" cy="28" r="4"/>
+              <path d="M24 32 L24 36" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="pillar-card__name">Cave</span>
+          <h3 class="pillar-card__title">동굴수행</h3>
+          <p class="pillar-card__description">
+            Deep meditation retreats in natural and crafted cave spaces, following ancient contemplative traditions.
+          </p>
+        </article>
+
+        <!-- Forum -->
+        <article class="pillar-card" data-animate>
+          <div class="pillar-card__icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="24" cy="16" r="6"/>
+              <circle cx="12" cy="32" r="5"/>
+              <circle cx="36" cy="32" r="5"/>
+              <path d="M24 22 L24 27 M18 28 L12 27 M30 28 L36 27"/>
+            </svg>
+          </div>
+          <span class="pillar-card__name">Forum</span>
+          <h3 class="pillar-card__title">지혜의 광장</h3>
+          <p class="pillar-card__description">
+            Global dialogues with wisdom teachers, philosophers, and contemplatives. Live broadcasts and intimate gatherings.
+          </p>
+        </article>
+
+        <!-- Library -->
+        <article class="pillar-card" data-animate>
+          <div class="pillar-card__icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="8" y="12" width="32" height="28" rx="2"/>
+              <path d="M24 12 L24 40"/>
+              <path d="M12 18 L20 18 M28 18 L36 18"/>
+              <path d="M12 24 L20 24 M28 24 L36 24"/>
+              <path d="M12 30 L20 30 M28 30 L36 30"/>
+            </svg>
+          </div>
+          <span class="pillar-card__name">Library</span>
+          <h3 class="pillar-card__title">영혼의 서재</h3>
+          <p class="pillar-card__description">
+            A curated archive of wisdom teachings on death, dying, and the art of living fully.
+          </p>
+        </article>
+
+        <!-- Care -->
+        <article class="pillar-card" data-animate>
+          <div class="pillar-card__icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M24 40 C24 40 8 28 8 18 C8 12 12 8 18 8 C22 8 24 12 24 12 C24 12 26 8 30 8 C36 8 40 12 40 18 C40 28 24 40 24 40Z"/>
+            </svg>
+          </div>
+          <span class="pillar-card__name">Care</span>
+          <h3 class="pillar-card__title">돌봄의 집</h3>
+          <p class="pillar-card__description">
+            Holistic residential care integrating medical excellence with spiritual companionship.
+          </p>
+        </article>
+
+        <!-- Legacy -->
+        <article class="pillar-card" data-animate>
+          <div class="pillar-card__icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="24" cy="24" r="16"/>
+              <path d="M24 14 L24 24 L32 28"/>
+              <circle cx="24" cy="24" r="3"/>
+            </svg>
+          </div>
+          <span class="pillar-card__name">Legacy</span>
+          <h3 class="pillar-card__title">유산 프로젝트</h3>
+          <p class="pillar-card__description">
+            Preserve your story, wisdom, and love for generations through guided life review and digital legacy.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Speaker -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" data-animate>
+        <span class="section-label">Wisdom Teachers</span>
+        <h2 class="section-title">Voices of the Forum</h2>
+        <p class="section-subtitle">
+          Encounters with minds that illuminate the path.
+        </p>
+      </div>
+
+      <div class="quote-block" data-animate style="max-width: 800px; margin: 0 auto;">
+        <div class="quote-block__mark">"</div>
+        <p class="quote-block__text">
+          "Death is not the opposite of life. Life has no opposite. The opposite of death is birth. Life is eternal."
+        </p>
+        <p class="quote-block__author">Eckhart Tolle</p>
+      </div>
+
+      <div class="text-center mt-12" data-animate>
+        <a href="forum/" class="btn btn-secondary btn-lg">Explore Upcoming Forums</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location Preview -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-header" data-animate>
+        <span class="section-label">Sacred Ground</span>
+        <h2 class="section-title">Palgongsan, Korea</h2>
+        <p class="section-subtitle">
+          팔공산 — The mountain of eight merits, a place of pilgrimage for over a thousand years.
+        </p>
+      </div>
+
+      <div style="position: relative; aspect-ratio: 21/9; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-8);" data-animate>
+        <img src="https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?w=1600&q=80" alt="Mountain temple in mist" style="width: 100%; height: 100%; object-fit: cover;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to right, var(--bg-secondary), transparent 50%, var(--bg-secondary));"></div>
+      </div>
+
+      <div class="prose" style="margin: 0 auto; text-align: center;" data-animate>
+        <p>
+          Our sanctuary rests where ancient temples have stood for centuries. Here, the boundary between the mundane and the sacred grows thin. The mountain air carries the echo of countless prayers, and the stones remember the footsteps of pilgrims.
+        </p>
+      </div>
+
+      <div class="text-center mt-12" data-animate>
+        <a href="visit/" class="btn btn-primary btn-lg">Plan Your Visit</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section" style="padding: var(--space-40) 0;">
+    <div class="container container-narrow text-center">
+      <div class="ornament" data-animate>✦</div>
+      <h2 class="section-title mt-8" data-animate style="margin-bottom: var(--space-6);">
+        Begin Your Journey
+      </h2>
+      <p class="section-subtitle" data-animate style="margin-bottom: var(--space-12);">
+        Whether you seek a weekend of contemplation or a place to call home in your final years, Alexandria welcomes you.
+      </p>
+      <div data-animate>
+        <a href="visit/" class="btn btn-primary btn-lg">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo">
+            <svg width="32" height="32" viewBox="0 0 44 44" fill="none">
+              <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
+              <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+            </svg>
+            <span class="nav__logo-text">Alexandria</span>
+          </a>
+          <p class="footer__description">
+            A global sanctuary for contemplative living and sacred passage. Palgongsan, Daegu, Korea.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer__column-title">Sanctuary</h4>
+          <nav class="footer__links">
+            <a href="sanctuary/cave-retreat/" class="footer__link">Cave Retreat</a>
+            <a href="sanctuary/residence/" class="footer__link">Residence</a>
+            <a href="sanctuary/hospice/" class="footer__link">Hospice Care</a>
+          </nav>
+        </div>
+
+        <div>
+          <h4 class="footer__column-title">Wisdom</h4>
+          <nav class="footer__links">
+            <a href="forum/" class="footer__link">Forum</a>
+            <a href="library/" class="footer__link">Library</a>
+            <a href="philosophy/" class="footer__link">Philosophy</a>
+          </nav>
+        </div>
+
+        <div>
+          <h4 class="footer__column-title">Connect</h4>
+          <nav class="footer__links">
+            <a href="visit/" class="footer__link">Visit</a>
+            <a href="about/" class="footer__link">About</a>
+            <a href="contact/" class="footer__link">Contact</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>&copy; 2026 Alexandria Sanctuary Foundation. All rights reserved.</span>
+        <span>Palgongsan, Daegu, Korea</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

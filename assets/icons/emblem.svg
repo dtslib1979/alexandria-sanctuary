@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Deep navy gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f1d2f"/>
+      <stop offset="100%" style="stop-color:#060d18"/>
+    </linearGradient>
+    <!-- Gold gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8b84a"/>
+      <stop offset="50%" style="stop-color:#c9a227"/>
+      <stop offset="100%" style="stop-color:#a6841f"/>
+    </linearGradient>
+    <!-- Subtle glow -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="url(#bgGrad)"/>
+
+  <!-- Outer circle -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#f5f1e8" stroke-width="1" opacity="0.15"/>
+
+  <!-- Inner sacred circle -->
+  <circle cx="256" cy="256" r="160" fill="none" stroke="url(#goldGrad)" stroke-width="2" filter="url(#glow)"/>
+
+  <!-- Sacred geometry - Vesica Piscis inspired -->
+  <g filter="url(#glow)">
+    <!-- Vertical axis - tree of life / spine -->
+    <line x1="256" y1="120" x2="256" y2="392" stroke="url(#goldGrad)" stroke-width="2"/>
+
+    <!-- Upper branches - reaching to heaven -->
+    <path d="M200 180 L256 120 L312 180" fill="none" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Lower branches - roots to earth -->
+    <path d="M200 332 L256 392 L312 332" fill="none" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Horizontal axis - balance -->
+    <line x1="160" y1="256" x2="352" y2="256" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.6"/>
+
+    <!-- Center point - the self -->
+    <circle cx="256" cy="256" r="12" fill="url(#goldGrad)"/>
+    <circle cx="256" cy="256" r="6" fill="#0a1628"/>
+
+    <!-- Small stars at cardinal points -->
+    <circle cx="256" cy="120" r="4" fill="url(#goldGrad)"/>
+    <circle cx="256" cy="392" r="4" fill="url(#goldGrad)"/>
+    <circle cx="160" cy="256" r="3" fill="url(#goldGrad)" opacity="0.7"/>
+    <circle cx="352" cy="256" r="3" fill="url(#goldGrad)" opacity="0.7"/>
+  </g>
+
+  <!-- Text: ALEXANDRIA -->
+  <text x="256" y="460"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="32"
+        font-weight="normal"
+        fill="url(#goldGrad)"
+        text-anchor="middle"
+        letter-spacing="8">ALEXANDRIA</text>
+
+  <!-- Decorative dots -->
+  <g fill="url(#goldGrad)" opacity="0.5">
+    <circle cx="180" cy="456" r="2"/>
+    <circle cx="332" cy="456" r="2"/>
+  </g>
+</svg>

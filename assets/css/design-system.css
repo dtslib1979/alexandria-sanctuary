@@ -1,0 +1,457 @@
+/* ============================================
+   ALEXANDRIA SANCTUARY - DESIGN SYSTEM
+   Contemplative, Serene, Sacred
+   ============================================ */
+
+/* ============================================
+   CSS CUSTOM PROPERTIES
+   ============================================ */
+:root {
+  /* === COLOR SYSTEM === */
+  /* Primary - Deep Navy (Night Sky, Depth) */
+  --color-primary-50: #e8eef7;
+  --color-primary-100: #c5d3eb;
+  --color-primary-200: #9fb5dd;
+  --color-primary-300: #7896cf;
+  --color-primary-400: #5a7fc4;
+  --color-primary-500: #3c68b9;
+  --color-primary-600: #3560b2;
+  --color-primary-700: #2b55aa;
+  --color-primary-800: #224ba2;
+  --color-primary-900: #0a1628;
+  --color-primary-950: #060d18;
+
+  /* Accent - Warm Gold (Wisdom, Sacred) */
+  --color-gold-50: #fefaed;
+  --color-gold-100: #fcf2d1;
+  --color-gold-200: #f9e4a3;
+  --color-gold-300: #f5d175;
+  --color-gold-400: #e8b84a;
+  --color-gold-500: #c9a227;
+  --color-gold-600: #a6841f;
+  --color-gold-700: #83671a;
+  --color-gold-800: #604b14;
+  --color-gold-900: #3d300d;
+
+  /* Neutral - Warm Cream & Stone */
+  --color-cream-50: #fdfcfa;
+  --color-cream-100: #f9f7f3;
+  --color-cream-200: #f5f1e8;
+  --color-cream-300: #ebe5d8;
+  --color-cream-400: #d9d0be;
+  --color-cream-500: #c7bba4;
+  --color-cream-600: #a89b82;
+  --color-cream-700: #8a7d66;
+  --color-cream-800: #6b604d;
+  --color-cream-900: #4d4536;
+
+  /* Stone (for text and borders) */
+  --color-stone-50: #f8f8f6;
+  --color-stone-100: #f0efec;
+  --color-stone-200: #e2e0db;
+  --color-stone-300: #c8c5bc;
+  --color-stone-400: #a9a498;
+  --color-stone-500: #8a8476;
+  --color-stone-600: #6f695c;
+  --color-stone-700: #5a554a;
+  --color-stone-800: #48443b;
+  --color-stone-900: #3a3731;
+
+  /* === DARK THEME (Default - Contemplative) === */
+  --bg-primary: var(--color-primary-950);
+  --bg-secondary: var(--color-primary-900);
+  --bg-tertiary: #0f1d2f;
+  --bg-elevated: rgba(15, 29, 47, 0.9);
+  --bg-glass: rgba(10, 22, 40, 0.85);
+
+  --text-primary: var(--color-cream-200);
+  --text-secondary: var(--color-stone-400);
+  --text-tertiary: var(--color-stone-500);
+  --text-gold: var(--color-gold-500);
+
+  --border-subtle: rgba(201, 162, 39, 0.1);
+  --border-default: rgba(201, 162, 39, 0.2);
+  --border-gold: rgba(201, 162, 39, 0.4);
+
+  /* === LIGHT THEME (Parchment) === */
+  [data-theme="light"] {
+    --bg-primary: var(--color-cream-100);
+    --bg-secondary: var(--color-cream-50);
+    --bg-tertiary: var(--color-cream-200);
+    --bg-elevated: rgba(253, 252, 250, 0.95);
+    --bg-glass: rgba(249, 247, 243, 0.9);
+
+    --text-primary: var(--color-primary-900);
+    --text-secondary: var(--color-stone-600);
+    --text-tertiary: var(--color-stone-500);
+
+    --border-subtle: rgba(10, 22, 40, 0.05);
+    --border-default: rgba(10, 22, 40, 0.1);
+  }
+
+  /* === TYPOGRAPHY === */
+  --font-serif: 'Cormorant Garamond', 'Noto Serif KR', Georgia, serif;
+  --font-sans: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Cinzel', var(--font-serif);
+
+  /* Font Sizes - Elegant, Readable */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.125rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 4rem;
+  --text-6xl: 5rem;
+  --text-7xl: 6rem;
+
+  /* Font Weights */
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights - Generous for readability */
+  --leading-none: 1;
+  --leading-tight: 1.2;
+  --leading-snug: 1.4;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.8;
+  --leading-loose: 2;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.03em;
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.2em;
+
+  /* === SPACING === */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
+  --space-48: 12rem;
+
+  /* === LAYOUT === */
+  --max-width-prose: 65ch;
+  --max-width-sm: 640px;
+  --max-width-md: 768px;
+  --max-width-lg: 1024px;
+  --max-width-xl: 1280px;
+  --max-width-2xl: 1440px;
+
+  --container-padding: clamp(1.5rem, 5vw, 4rem);
+
+  /* === BORDERS === */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* === SHADOWS === */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --shadow-glow-gold: 0 0 40px rgba(201, 162, 39, 0.15);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* === TRANSITIONS === */
+  --ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --duration-slow: 600ms;
+  --duration-medium: 400ms;
+  --duration-fast: 200ms;
+
+  /* === Z-INDEX === */
+  --z-below: -1;
+  --z-base: 0;
+  --z-above: 1;
+  --z-header: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+}
+
+/* ============================================
+   BASE RESET & DEFAULTS
+   ============================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: var(--font-regular);
+  line-height: var(--leading-relaxed);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-gold-500);
+  color: var(--color-primary-950);
+}
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--color-gold-500);
+  outline-offset: 3px;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-gentle);
+}
+
+/* Images */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Lists */
+ul, ol {
+  list-style: none;
+}
+
+/* Buttons */
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ============================================
+   TYPOGRAPHY UTILITIES
+   ============================================ */
+.font-serif { font-family: var(--font-serif); }
+.font-sans { font-family: var(--font-sans); }
+.font-display { font-family: var(--font-display); }
+
+.text-gold {
+  color: var(--color-gold-500);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold-400), var(--color-gold-600));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Decorative heading with lines */
+.heading-decorated {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.heading-decorated::before,
+.heading-decorated::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+}
+
+/* ============================================
+   ANIMATION KEYFRAMES
+   ============================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInSlow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.02); }
+}
+
+@keyframes candleFlicker {
+  0%, 100% { opacity: 1; }
+  25% { opacity: 0.9; }
+  50% { opacity: 1; }
+  75% { opacity: 0.85; }
+}
+
+/* ============================================
+   ANIMATION UTILITIES
+   ============================================ */
+.animate-fade-in {
+  animation: fadeIn 1s var(--ease-smooth) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s var(--ease-smooth) forwards;
+}
+
+.animate-fade-in-slow {
+  animation: fadeInSlow 2s var(--ease-smooth) forwards;
+}
+
+.animate-breathe {
+  animation: breathe 6s var(--ease-gentle) infinite;
+}
+
+.animate-float {
+  animation: float 6s var(--ease-gentle) infinite;
+}
+
+/* Stagger delays */
+.delay-200 { animation-delay: 200ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-800 { animation-delay: 800ms; }
+.delay-1000 { animation-delay: 1000ms; }
+.delay-1500 { animation-delay: 1500ms; }
+.delay-2000 { animation-delay: 2000ms; }
+
+/* Initially hidden for animation */
+[data-animate] {
+  opacity: 0;
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-700);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-600);
+}
+
+/* ============================================
+   PROSE STYLES
+   ============================================ */
+.prose {
+  max-width: var(--max-width-prose);
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+  line-height: var(--leading-loose);
+}
+
+.prose p {
+  margin-bottom: var(--space-6);
+}
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  color: var(--text-primary);
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-6);
+}
+
+.prose blockquote {
+  padding-left: var(--space-6);
+  border-left: 2px solid var(--color-gold-500);
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+/* ============================================
+   DECORATIVE ELEMENTS
+   ============================================ */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+  margin: var(--space-12) 0;
+}
+
+.divider-short {
+  width: 80px;
+  height: 2px;
+  background: var(--color-gold-500);
+  margin: var(--space-8) auto;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  color: var(--color-gold-500);
+  font-size: var(--text-xl);
+}
+
+.ornament::before,
+.ornament::after {
+  content: '✦';
+  font-size: var(--text-sm);
+  opacity: 0.6;
+}
