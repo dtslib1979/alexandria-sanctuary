@@ -32,6 +32,8 @@
   const Navigation = {
     init() {
       const nav = document.getElementById('nav');
+      const navToggle = document.getElementById('navToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
 
       // Scroll behavior
       window.addEventListener('scroll', () => {
@@ -41,6 +43,34 @@
           nav?.classList.remove('is-scrolled');
         }
       }, { passive: true });
+
+      // Mobile menu toggle
+      if (navToggle && mobileMenu) {
+        navToggle.addEventListener('click', () => {
+          const isOpen = mobileMenu.classList.contains('is-open');
+          mobileMenu.classList.toggle('is-open');
+          navToggle.setAttribute('aria-expanded', !isOpen);
+          document.body.style.overflow = isOpen ? '' : 'hidden';
+        });
+
+        // Close menu when clicking a link
+        mobileMenu.querySelectorAll('.nav__link').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('is-open');
+            navToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+            mobileMenu.classList.remove('is-open');
+            navToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      }
 
       // Smooth scroll for anchor links
       document.querySelectorAll('a[href^="#"]').forEach(link => {
