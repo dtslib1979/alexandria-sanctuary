@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cave retreat programs at Alexandria Sanctuary - Deep meditation in natural mountain caves at Palgongsan, Korea.">
+
+  <title>Cave Retreat - Alexandria Sanctuary</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../assets/css/design-system.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/emblem.svg">
+  <meta name="theme-color" content="#0a1628">
+
+  <style>
+    .cave-hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-32) var(--space-4);
+      background:
+        radial-gradient(ellipse at center, rgba(10, 22, 40, 0.9), var(--bg-primary)),
+        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.05), transparent 50%);
+      position: relative;
+    }
+
+    .cave-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(201, 162, 39, 0.03) 0%, transparent 30%),
+        radial-gradient(circle at 70% 60%, rgba(201, 162, 39, 0.02) 0%, transparent 25%);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      margin-bottom: var(--space-6);
+    }
+
+    .breadcrumb a {
+      color: var(--text-tertiary);
+      text-decoration: none;
+      transition: color var(--duration-normal);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--color-gold-500);
+    }
+
+    .breadcrumb span {
+      color: var(--color-gold-500);
+    }
+
+    .cave-intro {
+      padding: var(--space-20) 0;
+    }
+
+    .cave-intro__content {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .cave-intro__content p {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      line-height: var(--leading-loose);
+      margin-bottom: var(--space-6);
+    }
+
+    .cave-intro__content blockquote {
+      padding: var(--space-8);
+      margin: var(--space-10) 0;
+      border-left: 2px solid var(--color-gold-500);
+      background: var(--bg-secondary);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    }
+
+    .cave-intro__content blockquote p {
+      font-style: italic;
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .cave-intro__content blockquote cite {
+      font-style: normal;
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+    }
+
+    .programs-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .program-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-8);
+      max-width: var(--max-width-xl);
+      margin: var(--space-12) auto 0;
+      padding: 0 var(--container-padding);
+    }
+
+    .program-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .program-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-gold-500), transparent);
+    }
+
+    .program-card__duration {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      margin-bottom: var(--space-3);
+    }
+
+    .program-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .program-card__subtitle {
+      font-family: var(--font-serif);
+      font-size: var(--text-base);
+      color: var(--text-tertiary);
+      font-style: italic;
+      margin-bottom: var(--space-6);
+    }
+
+    .program-card__description {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-6);
+    }
+
+    .program-card__details {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-8);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: var(--space-6);
+    }
+
+    .program-card__details li {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-2) 0;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .program-card__details li span:first-child {
+      color: var(--text-tertiary);
+    }
+
+    .program-card__price {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-6);
+    }
+
+    .program-card__price small {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      font-family: var(--font-body);
+    }
+
+    .preparation-section {
+      padding: var(--space-20) 0;
+    }
+
+    .preparation-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .preparation-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .preparation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-8);
+      max-width: var(--max-width-lg);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .preparation-item {
+      text-align: center;
+      padding: var(--space-8);
+    }
+
+    .preparation-item__icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-4);
+      opacity: 0.8;
+    }
+
+    .preparation-item__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .preparation-item__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .testimonial-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .testimonial {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+      text-align: center;
+    }
+
+    .testimonial__quote {
+      font-family: var(--font-serif);
+      font-size: var(--text-2xl);
+      color: var(--text-primary);
+      line-height: var(--leading-relaxed);
+      font-style: italic;
+      margin-bottom: var(--space-8);
+    }
+
+    .testimonial__author {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+    }
+
+    .testimonial__author strong {
+      display: block;
+      color: var(--color-gold-500);
+      font-weight: 500;
+      margin-bottom: var(--space-1);
+    }
+
+    .faq-section {
+      padding: var(--space-20) 0;
+    }
+
+    .faq-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-12);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .faq-list {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: var(--space-6) 0;
+    }
+
+    .faq-item__question {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .faq-item__answer {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav is-scrolled" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="../../" class="nav__logo">
+          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
+            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="nav__logo-text">Alexandria</span>
+        </a>
+
+        <div class="nav__menu">
+          <a href="../../philosophy/" class="nav__link">Philosophy</a>
+          <a href="../" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
+          <a href="../../forum/" class="nav__link">Forum</a>
+          <a href="../../library/" class="nav__link">Library</a>
+          <a href="../../visit/" class="nav__link">Visit</a>
+        </div>
+
+        <div class="nav__actions">
+          <a href="../../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="cave-hero">
+    <div class="container container-narrow" style="position: relative; z-index: 1;">
+      <nav class="breadcrumb" data-animate>
+        <a href="../">Sanctuary</a>
+        <span>›</span>
+        <span>Cave Retreat</span>
+      </nav>
+      <h1 class="section-title" data-animate style="font-size: var(--text-5xl);">
+        Cave Retreat
+      </h1>
+      <p class="section-subtitle" data-animate style="margin-top: var(--space-4);">
+        동굴수행 · Donggul Suhaeng
+      </p>
+      <p class="section-subtitle" data-animate style="margin-top: var(--space-6); font-size: var(--text-lg);">
+        Enter the silence. Meet yourself.
+      </p>
+    </div>
+  </header>
+
+  <!-- Introduction -->
+  <section class="cave-intro" data-animate>
+    <div class="cave-intro__content">
+      <p>
+        For millennia, humans have sought the darkness of caves for transformation. In the absence of light, time dissolves. In the absence of sound, the chattering mind finally quiets. What remains is essence—the awareness that was always there, obscured by the noise of ordinary life.
+      </p>
+      <p>
+        The caves of Palgongsan are not merely holes in rock. They are temples carved by water and time, sanctified by generations of seekers. Some caves are large enough to stand; others require crawling. All of them require surrender.
+      </p>
+      <blockquote>
+        <p>"In the cave, I finally understood what teachers mean by 'beginner's mind.' With no reference points—no light, no sound, no schedule—everything became new. Even breathing felt like a discovery."</p>
+        <cite>— Former Retreatant</cite>
+      </blockquote>
+      <p>
+        Our cave retreat program is not for everyone. It requires physical fitness, psychological stability, and a genuine calling. We screen all applicants carefully, not to exclude, but to ensure safety and readiness. The mountain gives generously to those who are prepared.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Programs -->
+  <section class="programs-section" data-animate>
+    <div class="container container-narrow text-center">
+      <span class="section-label">Retreat Programs</span>
+      <h2 class="section-title" style="margin-top: var(--space-4);">Choose Your Depth</h2>
+      <p class="section-subtitle" style="margin-top: var(--space-4);">
+        Each retreat builds upon the last. First-time participants begin with the Threshold.
+      </p>
+    </div>
+
+    <div class="program-cards">
+      <!-- 3-Day -->
+      <article class="program-card">
+        <span class="program-card__duration">3 Days</span>
+        <h3 class="program-card__title">The Threshold</h3>
+        <p class="program-card__subtitle">문턱 · Munteok</p>
+        <p class="program-card__description">
+          An introduction to cave practice. You'll spend increasing periods in cave darkness—from hours to a full day—while receiving guidance on meditation technique and the psychology of isolation.
+        </p>
+        <ul class="program-card__details">
+          <li><span>Cave Time</span><span>Up to 24 hours</span></li>
+          <li><span>Accommodation</span><span>Hermitage</span></li>
+          <li><span>Meals</span><span>Simple fasting</span></li>
+          <li><span>Guidance</span><span>Daily sessions</span></li>
+        </ul>
+        <div class="program-card__price">
+          ₩900,000 <small>/ all inclusive</small>
+        </div>
+        <a href="../../visit/" class="btn btn-primary" style="width: 100%;">Apply for Threshold</a>
+      </article>
+
+      <!-- 7-Day -->
+      <article class="program-card">
+        <span class="program-card__duration">7 Days</span>
+        <h3 class="program-card__title">The Descent</h3>
+        <p class="program-card__subtitle">하강 · Hagang</p>
+        <p class="program-card__description">
+          A deeper immersion. After preparation days, you'll enter the cave for 72 continuous hours of darkness and silence. This is where the real work begins—and where breakthroughs occur.
+        </p>
+        <ul class="program-card__details">
+          <li><span>Cave Time</span><span>72 hours continuous</span></li>
+          <li><span>Accommodation</span><span>Cave chamber</span></li>
+          <li><span>Meals</span><span>Light provisions</span></li>
+          <li><span>Guidance</span><span>Pre & post sessions</span></li>
+        </ul>
+        <div class="program-card__price">
+          ₩2,100,000 <small>/ all inclusive</small>
+        </div>
+        <a href="../../visit/" class="btn btn-primary" style="width: 100%;">Apply for Descent</a>
+      </article>
+
+      <!-- 21-Day -->
+      <article class="program-card">
+        <span class="program-card__duration">21 Days</span>
+        <h3 class="program-card__title">The Return</h3>
+        <p class="program-card__subtitle">귀환 · Gwihwan</p>
+        <p class="program-card__description">
+          The traditional length for deep transformation. Extended cave time (up to 7 days) alternates with integration periods. You will not be the same person who entered. Requires prior retreat experience.
+        </p>
+        <ul class="program-card__details">
+          <li><span>Cave Time</span><span>Up to 7 days</span></li>
+          <li><span>Accommodation</span><span>Private hermitage</span></li>
+          <li><span>Meals</span><span>Modified fasting</span></li>
+          <li><span>Guidance</span><span>Comprehensive support</span></li>
+        </ul>
+        <div class="program-card__price">
+          ₩6,300,000 <small>/ all inclusive</small>
+        </div>
+        <a href="../../visit/" class="btn btn-primary" style="width: 100%;">Apply for Return</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- Preparation -->
+  <section class="preparation-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Before You Come</span>
+    <h2 style="margin-top: var(--space-4);">Preparing for the Cave</h2>
+    <p>
+      The cave retreat is a profound undertaking. Proper preparation—physical, mental, and spiritual—makes all the difference.
+    </p>
+
+    <div class="preparation-grid">
+      <div class="preparation-item">
+        <svg class="preparation-item__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="20" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M16 52 C16 40 24 34 32 34 C40 34 48 40 48 52" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+        </svg>
+        <h3 class="preparation-item__title">Physical Readiness</h3>
+        <p class="preparation-item__text">
+          Cave environments require basic fitness. You should be able to sit comfortably for extended periods and navigate uneven terrain. Medical clearance required.
+        </p>
+      </div>
+
+      <div class="preparation-item">
+        <svg class="preparation-item__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="32" cy="32" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <line x1="32" y1="12" x2="32" y2="24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="preparation-item__title">Meditation Experience</h3>
+        <p class="preparation-item__text">
+          Prior meditation experience is strongly recommended. If you're new to practice, we offer introductory programs at the sanctuary before cave retreats.
+        </p>
+      </div>
+
+      <div class="preparation-item">
+        <svg class="preparation-item__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="16" y="12" width="32" height="40" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <line x1="22" y1="20" x2="42" y2="20" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="22" y1="28" x2="42" y2="28" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="22" y1="36" x2="36" y2="36" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="preparation-item__title">Application Process</h3>
+        <p class="preparation-item__text">
+          Complete our application form and schedule a video interview. We'll discuss your intentions, assess readiness, and answer all your questions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="testimonial-section" data-animate>
+    <div class="container">
+      <div class="ornament">✦</div>
+      <div class="testimonial">
+        <p class="testimonial__quote">
+          "I was terrified before entering. By the third day, I didn't want to leave. The cave became my womb, my temple, my mirror. I saw myself clearly—perhaps for the first time—and what I saw was not the fearful person I thought I was, but something much older, much quieter, much more at peace."
+        </p>
+        <div class="testimonial__author">
+          <strong>Soyeon K.</strong>
+          21-Day Retreat Participant, 2025
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" data-animate>
+    <h2>Common Questions</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3 class="faq-item__question">Is it completely dark?</h3>
+        <p class="faq-item__answer">
+          Yes. The cave chambers have no artificial light. You will experience complete darkness—what meditators call "the fertile void." This is essential to the practice. A small emergency light is always within reach.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-item__question">What about claustrophobia?</h3>
+        <p class="faq-item__answer">
+          Surprisingly, most participants report that the cave feels expansive rather than confining. The darkness removes visual boundaries, creating a sense of infinite space. However, if you have severe claustrophobia, please discuss this with us before applying.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-item__question">How do I eat and drink?</h3>
+        <p class="faq-item__answer">
+          Food and water are provided in the cave. Meals are simple—rice, vegetables, tea—designed to sustain without distracting. Extended retreats include modified fasting protocols developed with nutritional experts.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-item__question">What if I need to leave early?</h3>
+        <p class="faq-item__answer">
+          You can exit at any time. A signaling system connects you to staff who are always nearby. Your safety and psychological wellbeing are paramount. There is no shame in adjusting the retreat to your needs.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-item__question">Is it cold in the caves?</h3>
+        <p class="faq-item__answer">
+          Our caves maintain a consistent temperature of 14-16°C (57-61°F) year-round. Warm bedding, meditation cushions, and thermal clothing are provided. Most participants find the temperature comfortable.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container container-narrow text-center">
+      <div class="ornament" data-animate>✦</div>
+      <p class="section-subtitle mt-8" data-animate>
+        The cave awaits. Are you ready to enter?
+      </p>
+      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+        <a href="../../visit/" class="btn btn-primary">Apply Now</a>
+        <a href="../" class="btn btn-secondary">Explore Other Spaces</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
+        <span>Palgongsan, Daegu, Korea</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>

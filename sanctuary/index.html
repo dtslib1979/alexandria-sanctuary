@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore the sacred spaces of Alexandria Sanctuary - Cave retreats, contemplative residence, and compassionate hospice care at Palgongsan, Korea.">
+
+  <title>The Sanctuary - Alexandria Sanctuary</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
+  <meta name="theme-color" content="#0a1628">
+
+  <style>
+    .sanctuary-hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-32) var(--space-4);
+      background:
+        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.06), transparent 50%),
+        radial-gradient(ellipse at bottom left, rgba(201, 162, 39, 0.04), transparent 40%),
+        var(--bg-primary);
+      position: relative;
+    }
+
+    .sanctuary-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(201,162,39,0.1)"/></svg>');
+      background-size: 80px 80px;
+      opacity: 0.5;
+    }
+
+    .sanctuary-intro {
+      padding: var(--space-20) 0;
+      text-align: center;
+    }
+
+    .sanctuary-intro p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-6);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      line-height: var(--leading-loose);
+    }
+
+    .spaces-section {
+      padding: var(--space-20) 0;
+    }
+
+    .space-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+      margin-bottom: var(--space-20);
+      padding: 0 var(--container-padding);
+      max-width: var(--max-width-xl);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .space-card:nth-child(even) {
+      direction: rtl;
+    }
+
+    .space-card:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .space-card__image {
+      aspect-ratio: 4/3;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .space-card__image-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at center, rgba(201, 162, 39, 0.1), transparent 70%);
+    }
+
+    .space-card__icon {
+      width: 120px;
+      height: 120px;
+      opacity: 0.6;
+    }
+
+    .space-card__content {
+      padding: var(--space-8);
+    }
+
+    .space-card__label {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      margin-bottom: var(--space-3);
+    }
+
+    .space-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .space-card__subtitle {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      color: var(--color-gold-500);
+      font-style: italic;
+      margin-bottom: var(--space-4);
+    }
+
+    .space-card__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-6);
+    }
+
+    .space-card__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-6);
+    }
+
+    .space-card__features li {
+      padding: var(--space-2) 0;
+      padding-left: var(--space-6);
+      position: relative;
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+    }
+
+    .space-card__features li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: var(--color-gold-500);
+      font-size: var(--text-xs);
+    }
+
+    @media (max-width: 900px) {
+      .space-card {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+      }
+
+      .space-card:nth-child(even) {
+        direction: ltr;
+      }
+
+      .space-card__image {
+        aspect-ratio: 16/9;
+      }
+    }
+
+    .mountain-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+      text-align: center;
+    }
+
+    .mountain-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .mountain-section p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-6);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      line-height: var(--leading-loose);
+    }
+
+    .mountain-stats {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-12);
+      margin-top: var(--space-10);
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat__number {
+      font-family: var(--font-display);
+      font-size: var(--text-4xl);
+      color: var(--color-gold-500);
+      display: block;
+    }
+
+    .stat__label {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      margin-top: var(--space-2);
+    }
+
+    .daily-rhythm {
+      padding: var(--space-20) 0;
+    }
+
+    .daily-rhythm h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .daily-rhythm > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+    }
+
+    .rhythm-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-6);
+      max-width: var(--max-width-lg);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .rhythm-item {
+      text-align: center;
+      padding: var(--space-6);
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .rhythm-item__time {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--color-gold-500);
+      margin-bottom: var(--space-2);
+    }
+
+    .rhythm-item__activity {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      color: var(--text-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .rhythm-item__korean {
+      font-family: var(--font-korean-serif);
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav is-scrolled" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="../" class="nav__logo">
+          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
+            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="nav__logo-text">Alexandria</span>
+        </a>
+
+        <div class="nav__menu">
+          <a href="../philosophy/" class="nav__link">Philosophy</a>
+          <a href="./" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
+          <a href="../forum/" class="nav__link">Forum</a>
+          <a href="../library/" class="nav__link">Library</a>
+          <a href="../visit/" class="nav__link">Visit</a>
+        </div>
+
+        <div class="nav__actions">
+          <a href="../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="sanctuary-hero">
+    <div class="container container-narrow" style="position: relative; z-index: 1;">
+      <span class="section-label" data-animate>The Sanctuary</span>
+      <h1 class="section-title" data-animate style="font-size: var(--text-5xl); margin-top: var(--space-4);">
+        Sacred Spaces for<br>Every Season of Life
+      </h1>
+      <p class="section-subtitle" data-animate style="margin-top: var(--space-6);">
+        From weekend retreats to final passage,<br>
+        Alexandria offers places of profound peace.
+      </p>
+    </div>
+  </header>
+
+  <!-- Introduction -->
+  <section class="sanctuary-intro">
+    <div class="container container-narrow" data-animate>
+      <p>
+        The sanctuary is not a building—it is a landscape. Nestled on the slopes of Palgongsan mountain, our spaces emerge from the terrain itself: caves carved by millennia of wind and water, gardens that follow the natural contours, and buildings that whisper rather than shout.
+      </p>
+      <p>
+        Whether you come for three days or three years, the mountain will be your teacher. The silence will speak what words cannot.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Three Spaces -->
+  <section class="spaces-section">
+    <div class="container container-narrow text-center" data-animate>
+      <span class="section-label">Three Dwelling Places</span>
+      <h2 class="section-title" style="margin-top: var(--space-4);">Choose Your Path</h2>
+    </div>
+
+    <!-- Cave Retreat -->
+    <article class="space-card" data-animate>
+      <div class="space-card__image">
+        <div class="space-card__image-inner">
+          <svg class="space-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 75 Q25 45 50 35 Q75 45 85 75" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+            <ellipse cx="50" cy="75" rx="30" ry="15" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
+            <circle cx="50" cy="55" r="8" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
+            <path d="M50 47 L50 35" stroke="var(--color-gold-500)" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+      <div class="space-card__content">
+        <span class="space-card__label">Pillar I</span>
+        <h3 class="space-card__title">Cave Retreat</h3>
+        <p class="space-card__subtitle">동굴수행 · Donggul Suhaeng</p>
+        <p class="space-card__text">
+          Enter the womb of the mountain. Our natural caves have sheltered contemplatives for centuries. In total darkness and silence, the mind turns inward. What remains when all distraction falls away?
+        </p>
+        <ul class="space-card__features">
+          <li>3-day, 7-day, and 21-day silent retreats</li>
+          <li>Natural cave chambers heated by geothermal warmth</li>
+          <li>Guidance from experienced meditation teachers</li>
+          <li>Integration sessions to bring insights into daily life</li>
+        </ul>
+        <a href="./cave-retreat/" class="btn btn-primary">Explore Cave Retreats</a>
+      </div>
+    </article>
+
+    <!-- Contemplative Residence -->
+    <article class="space-card" data-animate>
+      <div class="space-card__image">
+        <div class="space-card__image-inner">
+          <svg class="space-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="25" y="40" width="50" height="40" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+            <path d="M20 40 L50 20 L80 40" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+            <rect x="42" y="55" width="16" height="25" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
+            <line x1="50" y1="55" x2="50" y2="80" stroke="var(--color-gold-500)" stroke-width="1"/>
+            <circle cx="50" cy="15" r="3" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+      </div>
+      <div class="space-card__content">
+        <span class="space-card__label">Pillar II</span>
+        <h3 class="space-card__title">Contemplative Residence</h3>
+        <p class="space-card__subtitle">명상의 집 · Myeongsang-ui Jip</p>
+        <p class="space-card__text">
+          For those seeking extended immersion, our residency program offers a home within the sanctuary. Live alongside fellow seekers, participate in daily practice, and weave contemplation into the fabric of ordinary life.
+        </p>
+        <ul class="space-card__features">
+          <li>3-month, 6-month, and 1-year residencies available</li>
+          <li>Private quarters with mountain views</li>
+          <li>Shared meals, work practice, and communal gatherings</li>
+          <li>Access to library, gardens, and all sanctuary programs</li>
+        </ul>
+        <a href="./residence/" class="btn btn-primary">Learn About Residency</a>
+      </div>
+    </article>
+
+    <!-- Hospice Care -->
+    <article class="space-card" data-animate>
+      <div class="space-card__image">
+        <div class="space-card__image-inner">
+          <svg class="space-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="30" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+            <path d="M50 30 L50 70 M35 42 L50 30 L65 42 M35 58 L50 70 L65 58" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+            <circle cx="50" cy="50" r="6" fill="var(--color-gold-500)" opacity="0.3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="space-card__content">
+        <span class="space-card__label">Pillar III</span>
+        <h3 class="space-card__title">Hospice Care</h3>
+        <p class="space-card__subtitle">돌봄의 집 · Dolbom-ui Jip</p>
+        <p class="space-card__text">
+          When the final journey approaches, Alexandria offers a place to die with dignity, surrounded by beauty and love. Our hospice integrates the highest standards of medical care with deep spiritual support.
+        </p>
+        <ul class="space-card__features">
+          <li>24-hour palliative care by trained nurses</li>
+          <li>Spiritual companions from all traditions</li>
+          <li>Private suites with gardens and mountain views</li>
+          <li>Family accommodation and bereavement support</li>
+        </ul>
+        <a href="./hospice/" class="btn btn-primary">Discover Hospice Care</a>
+      </div>
+    </article>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- The Mountain -->
+  <section class="mountain-section" data-animate>
+    <div class="container container-narrow">
+      <span class="section-label">Our Location</span>
+      <h2 style="margin-top: var(--space-4);">Palgongsan</h2>
+      <p>
+        The "Mountain of Eight Merits" has been sacred ground for over 1,500 years. Its caves sheltered the first Buddhist monks to arrive in Korea. Its slopes hold dozens of temples and hermitages. The mountain does not merely host Alexandria—it teaches us.
+      </p>
+      <p>
+        From our sanctuary, you can walk to ancient temple sites, meditate by waterfalls, or simply sit and watch the mist rise through the pines. The mountain is not separate from the practice—it is the practice.
+      </p>
+
+      <div class="mountain-stats">
+        <div class="stat">
+          <span class="stat__number">1,193m</span>
+          <span class="stat__label">Summit Elevation</span>
+        </div>
+        <div class="stat">
+          <span class="stat__number">1,500+</span>
+          <span class="stat__label">Years of Practice</span>
+        </div>
+        <div class="stat">
+          <span class="stat__number">30+</span>
+          <span class="stat__label">Temple Sites</span>
+        </div>
+        <div class="stat">
+          <span class="stat__number">4</span>
+          <span class="stat__label">Seasons of Beauty</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Daily Rhythm -->
+  <section class="daily-rhythm" data-animate>
+    <div class="container">
+      <span class="section-label" style="display: block; text-align: center;">Life at Alexandria</span>
+      <h2 style="margin-top: var(--space-4);">The Daily Rhythm</h2>
+      <p>
+        Each day at Alexandria follows a gentle structure—not rigid rules, but an invitation to flow with the natural rhythms of mountain life.
+      </p>
+
+      <div class="rhythm-grid">
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">5:30</div>
+          <div class="rhythm-item__activity">Morning Bell</div>
+          <div class="rhythm-item__korean">새벽종</div>
+        </div>
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">6:00</div>
+          <div class="rhythm-item__activity">Meditation</div>
+          <div class="rhythm-item__korean">명상</div>
+        </div>
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">7:30</div>
+          <div class="rhythm-item__activity">Breakfast</div>
+          <div class="rhythm-item__korean">아침공양</div>
+        </div>
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">9:00</div>
+          <div class="rhythm-item__activity">Work Practice</div>
+          <div class="rhythm-item__korean">작무</div>
+        </div>
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">12:00</div>
+          <div class="rhythm-item__activity">Lunch</div>
+          <div class="rhythm-item__korean">점심공양</div>
+        </div>
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">14:00</div>
+          <div class="rhythm-item__activity">Rest or Study</div>
+          <div class="rhythm-item__korean">휴식 · 공부</div>
+        </div>
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">17:00</div>
+          <div class="rhythm-item__activity">Evening Walk</div>
+          <div class="rhythm-item__korean">산책</div>
+        </div>
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">18:00</div>
+          <div class="rhythm-item__activity">Dinner</div>
+          <div class="rhythm-item__korean">저녁공양</div>
+        </div>
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">19:30</div>
+          <div class="rhythm-item__activity">Evening Gathering</div>
+          <div class="rhythm-item__korean">저녁모임</div>
+        </div>
+        <div class="rhythm-item">
+          <div class="rhythm-item__time">21:00</div>
+          <div class="rhythm-item__activity">Noble Silence</div>
+          <div class="rhythm-item__korean">침묵의 시간</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container container-narrow text-center">
+      <div class="ornament" data-animate>✦</div>
+      <p class="section-subtitle mt-8" data-animate>
+        Ready to explore the sanctuary in person?
+      </p>
+      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+        <a href="../visit/" class="btn btn-primary">Plan Your Visit</a>
+        <a href="../forum/" class="btn btn-secondary">Attend an Event First</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
+        <span>Palgongsan, Daegu, Korea</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

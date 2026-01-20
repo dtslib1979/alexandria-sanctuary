@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The philosophy of Alexandria Sanctuary - Understanding our approach to contemplative living, death preparation, and the integration of Eastern and Western wisdom traditions.">
+
+  <title>Philosophy - Alexandria Sanctuary</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
+  <meta name="theme-color" content="#0a1628">
+
+  <style>
+    .philosophy-hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-32) var(--space-4);
+      background:
+        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.08), transparent 60%),
+        var(--bg-primary);
+    }
+
+    .philosophy-content {
+      padding: var(--space-20) 0;
+    }
+
+    .philosophy-section {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-20);
+      padding: 0 var(--container-padding);
+    }
+
+    .philosophy-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      color: var(--color-gold-500);
+      letter-spacing: var(--tracking-wide);
+      margin-bottom: var(--space-6);
+      text-align: center;
+    }
+
+    .philosophy-section p {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      line-height: var(--leading-loose);
+      margin-bottom: var(--space-6);
+    }
+
+    .philosophy-section blockquote {
+      padding: var(--space-8);
+      margin: var(--space-10) 0;
+      border-left: 2px solid var(--color-gold-500);
+      background: var(--bg-secondary);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    }
+
+    .philosophy-section blockquote p {
+      font-style: italic;
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .philosophy-section blockquote cite {
+      font-style: normal;
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+    }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+
+    .principle-card {
+      padding: var(--space-8);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .principle-card__number {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--color-gold-500);
+      opacity: 0.5;
+      margin-bottom: var(--space-4);
+    }
+
+    .principle-card__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .principle-card__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .timeline {
+      position: relative;
+      max-width: var(--max-width-md);
+      margin: var(--space-12) auto;
+      padding-left: var(--space-8);
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--color-gold-500), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: var(--space-10);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--space-8) - 4px);
+      top: 8px;
+      width: 10px;
+      height: 10px;
+      background: var(--color-gold-500);
+      border-radius: 50%;
+    }
+
+    .timeline-item__year {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+      letter-spacing: var(--tracking-wider);
+      margin-bottom: var(--space-2);
+    }
+
+    .timeline-item__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .timeline-item__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav is-scrolled" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="../" class="nav__logo">
+          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
+            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="nav__logo-text">Alexandria</span>
+        </a>
+
+        <div class="nav__menu">
+          <a href="./" class="nav__link" style="color: var(--color-gold-500);">Philosophy</a>
+          <a href="../sanctuary/" class="nav__link">Sanctuary</a>
+          <a href="../forum/" class="nav__link">Forum</a>
+          <a href="../library/" class="nav__link">Library</a>
+          <a href="../visit/" class="nav__link">Visit</a>
+        </div>
+
+        <div class="nav__actions">
+          <a href="../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="philosophy-hero">
+    <div class="container container-narrow">
+      <span class="section-label" data-animate>Our Philosophy</span>
+      <h1 class="section-title" data-animate style="font-size: var(--text-5xl); margin-top: var(--space-4);">
+        The Art of Sacred Passage
+      </h1>
+      <p class="section-subtitle" data-animate style="margin-top: var(--space-6);">
+        Understanding death is understanding life.<br>
+        This is the foundation of Alexandria.
+      </p>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="philosophy-content">
+    <!-- The Name -->
+    <section class="philosophy-section" data-animate>
+      <h2>Why Alexandria?</h2>
+      <p>
+        The ancient Library of Alexandria was humanity's first attempt to gather all the world's wisdom in one place. Scholars from every tradition—Greek, Egyptian, Persian, Hebrew—came to study, debate, and synthesize knowledge. It was a place where boundaries dissolved in pursuit of truth.
+      </p>
+      <p>
+        Our sanctuary carries this name as a promise: here, too, we gather wisdom. But the wisdom we seek is not found in scrolls alone. It is the wisdom of how to live fully, how to love completely, and how to die peacefully.
+      </p>
+      <blockquote>
+        <p>"The library of Alexandria was destroyed not by fire, but by forgetting. We build anew—a library for what must never be forgotten."</p>
+        <cite>— Founding Statement, 2026</cite>
+      </blockquote>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Core Belief -->
+    <section class="philosophy-section" data-animate>
+      <h2>Our Core Belief</h2>
+      <p>
+        Modern society has made death invisible. We hide it in hospitals, speak of it in euphemisms, and live as if it will never come. This denial does not protect us—it impoverishes us. It robs us of the urgency that makes life precious and the preparation that makes death peaceful.
+      </p>
+      <p>
+        At Alexandria, we believe that contemplating death is not morbid—it is the most life-affirming practice. When we face our mortality honestly, we shed what is trivial. We prioritize love, presence, and meaning. We become truly alive.
+      </p>
+      <p>
+        This is not a philosophy of resignation. It is a philosophy of awakening.
+      </p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Four Principles -->
+    <section class="philosophy-section" style="max-width: var(--max-width-xl);" data-animate>
+      <h2>Four Guiding Principles</h2>
+
+      <div class="principles-grid">
+        <article class="principle-card">
+          <div class="principle-card__number">I</div>
+          <h3 class="principle-card__title">Awareness Over Avoidance</h3>
+          <p class="principle-card__text">
+            We face death directly, not to create fear, but to dissolve it. What we can look at, we can transform.
+          </p>
+        </article>
+
+        <article class="principle-card">
+          <div class="principle-card__number">II</div>
+          <h3 class="principle-card__title">Wisdom Across Traditions</h3>
+          <p class="principle-card__text">
+            We draw from Buddhist, Christian, Stoic, Indigenous, and secular wisdom. Truth wears many garments.
+          </p>
+        </article>
+
+        <article class="principle-card">
+          <div class="principle-card__number">III</div>
+          <h3 class="principle-card__title">Community Over Isolation</h3>
+          <p class="principle-card__text">
+            We believe the final journey should not be walked alone. We create families of choice for those who need them.
+          </p>
+        </article>
+
+        <article class="principle-card">
+          <div class="principle-card__number">IV</div>
+          <h3 class="principle-card__title">Practice Over Theory</h3>
+          <p class="principle-card__text">
+            Philosophy means nothing unless lived. We offer not just teachings, but practices—meditation, ritual, conversation.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- East Meets West -->
+    <section class="philosophy-section" data-animate>
+      <h2>East Meets West</h2>
+      <p>
+        Korea sits at a crossroads of civilizations. Buddhism arrived here over 1,600 years ago and found harmony with indigenous shamanic traditions. Confucianism shaped the social order. Christianity brought Western thought. Today, Korea is one of the few places where all these streams flow together.
+      </p>
+      <p>
+        Palgongsan—our mountain—embodies this synthesis. Its temples have hosted Buddhist monks for over a millennium. Its caves have sheltered hermits seeking enlightenment. Its forests have witnessed shamanic rituals connecting the living and the dead.
+      </p>
+      <p>
+        Alexandria builds on this foundation. We are not Buddhist, not Christian, not secular—we are all of these and none. We take what is true, what is helpful, what is beautiful, from wherever it comes.
+      </p>
+      <blockquote>
+        <p>"In the beginner's mind there are many possibilities, but in the expert's mind there are few."</p>
+        <cite>— Shunryu Suzuki</cite>
+      </blockquote>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Our Story -->
+    <section class="philosophy-section" data-animate>
+      <h2>Our Story</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-item__year">2024</span>
+          <h3 class="timeline-item__title">The Vision</h3>
+          <p class="timeline-item__text">
+            A small group of contemplatives, healthcare professionals, and educators begin meeting to discuss a new model of end-of-life care—one that integrates spiritual depth with medical excellence.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-item__year">2025</span>
+          <h3 class="timeline-item__title">Finding the Mountain</h3>
+          <p class="timeline-item__text">
+            After searching across Korea, the founders discover a site near Palgongsan with natural caves, ancient temple ruins, and a view that takes the breath away. The land is acquired.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-item__year">2026</span>
+          <h3 class="timeline-item__title">Alexandria Opens</h3>
+          <p class="timeline-item__text">
+            The sanctuary welcomes its first residents and retreat participants. The library begins collecting wisdom teachings. The first international forum convenes.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-item__year">Future</span>
+          <h3 class="timeline-item__title">A Global Network</h3>
+          <p class="timeline-item__text">
+            We envision Alexandria as the first of many sanctuaries worldwide—each rooted in local culture, connected by shared philosophy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container container-narrow text-center">
+        <div class="ornament" data-animate>✦</div>
+        <p class="section-subtitle mt-8" data-animate>
+          If our philosophy resonates with you, we invite you to explore further.
+        </p>
+        <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+          <a href="../sanctuary/" class="btn btn-primary">Explore the Sanctuary</a>
+          <a href="../forum/" class="btn btn-secondary">Attend a Forum</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
+        <span>Palgongsan, Daegu, Korea</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

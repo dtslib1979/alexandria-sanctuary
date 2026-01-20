@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plan your visit to Alexandria Sanctuary - Retreat programs, residency applications, and contact information.">
+
+  <title>Visit - Alexandria Sanctuary</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
+  <meta name="theme-color" content="#0a1628">
+
+  <style>
+    .visit-hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-32) var(--space-4);
+      background:
+        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.08), transparent 50%),
+        var(--bg-primary);
+    }
+
+    .visit-intro {
+      padding: var(--space-16) 0;
+    }
+
+    .visit-intro__content {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+      text-align: center;
+    }
+
+    .visit-intro__content p {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      line-height: var(--leading-loose);
+    }
+
+    .options-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-8);
+      max-width: var(--max-width-xl);
+      margin: var(--space-12) auto 0;
+      padding: 0 var(--container-padding);
+    }
+
+    .option-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+      transition: transform var(--duration-normal), box-shadow var(--duration-normal);
+    }
+
+    .option-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .option-card__icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-6);
+      opacity: 0.8;
+    }
+
+    .option-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .option-card__duration {
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .option-card__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-6);
+    }
+
+    .option-card__price {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      color: var(--text-primary);
+      margin-bottom: var(--space-6);
+    }
+
+    .option-card__price small {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      font-family: var(--font-body);
+    }
+
+    .contact-section {
+      padding: var(--space-20) 0;
+    }
+
+    .contact-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .contact-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-8);
+      max-width: var(--max-width-lg);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .contact-card {
+      text-align: center;
+      padding: var(--space-8);
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .contact-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      color: var(--color-gold-500);
+      margin-bottom: var(--space-3);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .contact-card__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .contact-card__text a {
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .contact-card__text a:hover {
+      color: var(--color-gold-500);
+    }
+
+    .location-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .location-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .location-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .location-details {
+      max-width: var(--max-width-md);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .location-item {
+      display: flex;
+      gap: var(--space-6);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .location-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .location-item__icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      opacity: 0.7;
+    }
+
+    .location-item__content h3 {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .location-item__content p {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .faq-section {
+      padding: var(--space-20) 0;
+    }
+
+    .faq-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-12);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .faq-list {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: var(--space-6) 0;
+    }
+
+    .faq-item__question {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .faq-item__answer {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .newsletter-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .newsletter-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .newsletter-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-8);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .newsletter-form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: var(--text-base);
+    }
+
+    .newsletter-form input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .newsletter-form input:focus {
+      outline: none;
+      border-color: var(--color-gold-500);
+    }
+
+    @media (max-width: 500px) {
+      .newsletter-form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav is-scrolled" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="../" class="nav__logo">
+          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
+            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="nav__logo-text">Alexandria</span>
+        </a>
+
+        <div class="nav__menu">
+          <a href="../philosophy/" class="nav__link">Philosophy</a>
+          <a href="../sanctuary/" class="nav__link">Sanctuary</a>
+          <a href="../forum/" class="nav__link">Forum</a>
+          <a href="../library/" class="nav__link">Library</a>
+          <a href="./" class="nav__link" style="color: var(--color-gold-500);">Visit</a>
+        </div>
+
+        <div class="nav__actions">
+          <a href="./" class="btn btn-secondary btn-sm">Begin Your Journey</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="visit-hero">
+    <div class="container container-narrow">
+      <span class="section-label" data-animate>Begin Your Journey</span>
+      <h1 class="section-title" data-animate style="font-size: var(--text-5xl); margin-top: var(--space-4);">
+        Visit Alexandria
+      </h1>
+      <p class="section-subtitle" data-animate style="margin-top: var(--space-6);">
+        The mountain awaits. Choose your path in.
+      </p>
+    </div>
+  </header>
+
+  <!-- Introduction -->
+  <section class="visit-intro" data-animate>
+    <div class="visit-intro__content">
+      <p>
+        Whether you seek a weekend of stillness, months of deep practice, or compassionate care for life's final chapter, Alexandria offers a place for you. Every journey begins with a single step—reaching out.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Options -->
+  <section class="options-section" data-animate>
+    <div class="container container-narrow text-center">
+      <span class="section-label">Ways to Come</span>
+      <h2 class="section-title" style="margin-top: var(--space-4);">Choose Your Path</h2>
+    </div>
+
+    <div class="options-grid">
+      <article class="option-card">
+        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M32 16 L32 32 L42 38" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="option-card__title">Day Visit</h3>
+        <p class="option-card__duration">1 day</p>
+        <p class="option-card__text">
+          Tour the sanctuary, attend a meditation session, have tea in the garden. Get to know us before committing to more.
+        </p>
+        <div class="option-card__price">
+          Free <small>by reservation</small>
+        </div>
+        <a href="#contact" class="btn btn-secondary" style="width: 100%;">Schedule a Visit</a>
+      </article>
+
+      <article class="option-card">
+        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 48 L32 12 L52 48" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          <line x1="22" y1="36" x2="42" y2="36" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="option-card__title">Weekend Retreat</h3>
+        <p class="option-card__duration">3 days</p>
+        <p class="option-card__text">
+          Immerse yourself in the rhythm of sanctuary life. Meditation, silence, nature, community. A taste of what's possible.
+        </p>
+        <div class="option-card__price">
+          ₩450,000 <small>all inclusive</small>
+        </div>
+        <a href="#contact" class="btn btn-secondary" style="width: 100%;">Apply Now</a>
+      </article>
+
+      <article class="option-card">
+        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 48 Q25 28 32 38 Q39 48 49 28" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          <circle cx="32" cy="20" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="option-card__title">Cave Retreat</h3>
+        <p class="option-card__duration">3-21 days</p>
+        <p class="option-card__text">
+          Enter the darkness of Palgongsan's ancient caves. Profound practice for experienced meditators ready to go deep.
+        </p>
+        <div class="option-card__price">
+          From ₩900,000
+        </div>
+        <a href="../sanctuary/cave-retreat/" class="btn btn-secondary" style="width: 100%;">Learn More</a>
+      </article>
+
+      <article class="option-card">
+        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="16" y="24" width="32" height="24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M12 24 L32 12 L52 24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <rect x="26" y="36" width="12" height="12" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="option-card__title">Residency</h3>
+        <p class="option-card__duration">3-12 months</p>
+        <p class="option-card__text">
+          Make the sanctuary your home. Extended practice, community living, deep transformation over seasons.
+        </p>
+        <div class="option-card__price">
+          From ₩1,800,000 <small>/month</small>
+        </div>
+        <a href="../sanctuary/residence/" class="btn btn-secondary" style="width: 100%;">Learn More</a>
+      </article>
+
+      <article class="option-card">
+        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="16" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M32 20 L32 44 M24 28 L32 20 L40 28 M24 36 L32 44 L40 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="option-card__title">Hospice Care</h3>
+        <p class="option-card__duration">End of life</p>
+        <p class="option-card__text">
+          For those facing terminal illness. Medical excellence meets spiritual depth. Die with dignity and peace.
+        </p>
+        <div class="option-card__price">
+          ₩8,500,000 <small>/month</small>
+        </div>
+        <a href="../sanctuary/hospice/" class="btn btn-secondary" style="width: 100%;">Learn More</a>
+      </article>
+
+      <article class="option-card">
+        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="40" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="32" cy="42" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="option-card__title">Forum Event</h3>
+        <p class="option-card__duration">1-3 days</p>
+        <p class="option-card__text">
+          Attend a teaching, dialogue, or workshop with visiting wisdom teachers. Open to all.
+        </p>
+        <div class="option-card__price">
+          Varies by event
+        </div>
+        <a href="../forum/" class="btn btn-secondary" style="width: 100%;">See Events</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact-section" id="contact" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Reach Out</span>
+    <h2 style="margin-top: var(--space-4);">Contact Us</h2>
+    <p>
+      We respond to all inquiries within 48 hours. Reach out in whatever way feels most comfortable.
+    </p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3 class="contact-card__title">Email</h3>
+        <p class="contact-card__text">
+          <a href="mailto:welcome@alexandria-sanctuary.org">welcome@alexandria-sanctuary.org</a>
+        </p>
+      </div>
+
+      <div class="contact-card">
+        <h3 class="contact-card__title">Phone</h3>
+        <p class="contact-card__text">
+          <a href="tel:+82537001234">+82 53 700 1234</a><br>
+          <small>Mon-Sat, 9am-5pm KST</small>
+        </p>
+      </div>
+
+      <div class="contact-card">
+        <h3 class="contact-card__title">KakaoTalk</h3>
+        <p class="contact-card__text">
+          <a href="#">@alexandria_sanctuary</a><br>
+          <small>For Korean speakers</small>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location -->
+  <section class="location-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Finding Us</span>
+    <h2 style="margin-top: var(--space-4);">Getting Here</h2>
+    <p>
+      Alexandria is located on the slopes of Palgongsan, approximately 20km northeast of Daegu city center.
+    </p>
+
+    <div class="location-details">
+      <div class="location-item">
+        <svg class="location-item__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4 L20 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M4 20 L36 20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="20" cy="20" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <div class="location-item__content">
+          <h3>By Air</h3>
+          <p>
+            Fly to Daegu International Airport (TAE). From there, we can arrange pickup (₩80,000) or you can take a taxi (approximately ₩50,000).
+          </p>
+        </div>
+      </div>
+
+      <div class="location-item">
+        <svg class="location-item__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="16" width="24" height="12" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="14" cy="28" r="3" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="26" cy="28" r="3" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <line x1="8" y1="12" x2="32" y2="12" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <div class="location-item__content">
+          <h3>By Train</h3>
+          <p>
+            Take KTX to Dongdaegu Station (from Seoul: 1hr 40min). Bus 급행1 runs from the station to Palgongsan. We can also arrange pickup.
+          </p>
+        </div>
+      </div>
+
+      <div class="location-item">
+        <svg class="location-item__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="16" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M20 24 L20 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M14 36 L26 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <div class="location-item__content">
+          <h3>Address</h3>
+          <p>
+            Alexandria Sanctuary<br>
+            123 Palgongsan-ro, Dong-gu<br>
+            Daegu 41028, South Korea
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" data-animate>
+    <h2>Common Questions</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3 class="faq-item__question">Do I need meditation experience?</h3>
+        <p class="faq-item__answer">
+          For weekend retreats and forum events, no experience is necessary. Cave retreats and extended residencies do require some prior meditation practice—we'll discuss your background during the application process.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-item__question">What about language?</h3>
+        <p class="faq-item__answer">
+          Our programs are conducted in English and Korean. Most visiting teachers speak English. Silence is the primary language of the sanctuary—you'll find that words matter less than you expect.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-item__question">Is it religious?</h3>
+        <p class="faq-item__answer">
+          Alexandria is not affiliated with any religion. We draw from Buddhist, Christian, Stoic, and indigenous wisdom traditions while welcoming people of all faiths and none. The practice here is about direct experience, not belief.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-item__question">What should I bring?</h3>
+        <p class="faq-item__answer">
+          Comfortable, modest clothing for meditation (nothing tight or revealing). Warm layers—the mountain can be cool. Personal toiletries. Any medications. We provide bedding, towels, and meditation cushions.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-item__question">Is there WiFi?</h3>
+        <p class="faq-item__answer">
+          Limited WiFi is available in common areas for essential communications. We encourage—but do not require—digital detox during your stay. The mountain offers better connection than any signal.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-item__question">Can I come alone?</h3>
+        <p class="faq-item__answer">
+          Most people come alone. The community becomes your companions. If you're nervous about traveling solo, reach out—we can connect you with others making the journey.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Stay Connected</span>
+    <h2 style="margin-top: var(--space-4);">Monthly Reflections</h2>
+    <p>
+      A letter from the mountain—meditations on mortality, announcements of upcoming events, and invitations to practice. Sent monthly. Unsubscribe anytime.
+    </p>
+
+    <form class="newsletter-form" action="#" method="post">
+      <input type="email" name="email" placeholder="Your email address" required>
+      <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section">
+    <div class="container container-narrow text-center">
+      <div class="ornament" data-animate>✦</div>
+      <p class="section-subtitle mt-8" data-animate>
+        The first step is often the hardest.<br>
+        We are here to walk with you.
+      </p>
+      <div class="mt-8" data-animate>
+        <a href="mailto:welcome@alexandria-sanctuary.org" class="btn btn-primary btn-lg">Send Us a Message</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
+        <span>Palgongsan, Daegu, Korea</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

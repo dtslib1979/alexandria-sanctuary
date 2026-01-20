@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Library at Alexandria Sanctuary - A curated archive of wisdom teachings on death, dying, and the art of living fully.">
+
+  <title>Library - Alexandria Sanctuary</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
+  <meta name="theme-color" content="#0a1628">
+
+  <style>
+    .library-hero {
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-32) var(--space-4);
+      background:
+        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.08), transparent 50%),
+        var(--bg-primary);
+      position: relative;
+    }
+
+    .library-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 100px,
+          rgba(201, 162, 39, 0.02) 100px,
+          rgba(201, 162, 39, 0.02) 101px
+        );
+      opacity: 0.5;
+    }
+
+    .library-intro {
+      padding: var(--space-20) 0;
+    }
+
+    .library-intro__content {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+      text-align: center;
+    }
+
+    .library-intro__content p {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      line-height: var(--leading-loose);
+      margin-bottom: var(--space-6);
+    }
+
+    .collections-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-8);
+      max-width: var(--max-width-xl);
+      margin: var(--space-12) auto 0;
+      padding: 0 var(--container-padding);
+    }
+
+    .collection-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--duration-normal), box-shadow var(--duration-normal);
+    }
+
+    .collection-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .collection-card__icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: var(--space-6);
+      opacity: 0.8;
+    }
+
+    .collection-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .collection-card__subtitle {
+      font-family: var(--font-korean-serif);
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .collection-card__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+
+    .collection-card__count {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+    }
+
+    .featured-section {
+      padding: var(--space-20) 0;
+    }
+
+    .featured-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .featured-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .featured-books {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--space-6);
+      max-width: var(--max-width-xl);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .book-card {
+      text-align: center;
+    }
+
+    .book-card__cover {
+      aspect-ratio: 2/3;
+      background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-card__cover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 8px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--color-gold-500), transparent);
+      opacity: 0.3;
+    }
+
+    .book-card__cover-title {
+      font-family: var(--font-serif);
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      text-align: center;
+      line-height: var(--leading-snug);
+    }
+
+    .book-card__cover-author {
+      font-size: var(--text-xs);
+      color: var(--color-gold-500);
+      margin-top: var(--space-2);
+    }
+
+    .book-card__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-base);
+      color: var(--text-primary);
+      margin-bottom: var(--space-1);
+      line-height: var(--leading-snug);
+    }
+
+    .book-card__author {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+    }
+
+    .reading-room {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .reading-room h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .reading-room > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .reading-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-8);
+      max-width: var(--max-width-lg);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .reading-feature {
+      text-align: center;
+      padding: var(--space-6);
+    }
+
+    .reading-feature__icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto var(--space-4);
+      opacity: 0.7;
+    }
+
+    .reading-feature__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .reading-feature__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .digital-section {
+      padding: var(--space-20) 0;
+    }
+
+    .digital-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .digital-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .digital-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-8);
+      max-width: var(--max-width-lg);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .digital-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+    }
+
+    .digital-card__icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto var(--space-6);
+      opacity: 0.8;
+    }
+
+    .digital-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .digital-card__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+
+    .digital-card__link {
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+      text-decoration: none;
+    }
+
+    .digital-card__link:hover {
+      text-decoration: underline;
+    }
+
+    .quote-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .quote-section blockquote {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+      text-align: center;
+    }
+
+    .quote-section blockquote p {
+      font-family: var(--font-serif);
+      font-size: var(--text-2xl);
+      color: var(--text-primary);
+      line-height: var(--leading-relaxed);
+      font-style: italic;
+      margin-bottom: var(--space-6);
+    }
+
+    .quote-section blockquote cite {
+      font-style: normal;
+      font-size: var(--text-base);
+      color: var(--color-gold-500);
+    }
+
+    .contribute-section {
+      padding: var(--space-20) 0;
+    }
+
+    .contribute-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .contribute-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .contribute-list {
+      max-width: var(--max-width-prose);
+      margin: var(--space-8) auto 0;
+      padding: 0 var(--container-padding);
+    }
+
+    .contribute-list li {
+      padding: var(--space-3) 0;
+      padding-left: var(--space-6);
+      position: relative;
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .contribute-list li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: var(--color-gold-500);
+      font-size: var(--text-xs);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav is-scrolled" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="../" class="nav__logo">
+          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
+            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="nav__logo-text">Alexandria</span>
+        </a>
+
+        <div class="nav__menu">
+          <a href="../philosophy/" class="nav__link">Philosophy</a>
+          <a href="../sanctuary/" class="nav__link">Sanctuary</a>
+          <a href="../forum/" class="nav__link">Forum</a>
+          <a href="./" class="nav__link" style="color: var(--color-gold-500);">Library</a>
+          <a href="../visit/" class="nav__link">Visit</a>
+        </div>
+
+        <div class="nav__actions">
+          <a href="../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="library-hero">
+    <div class="container container-narrow" style="position: relative; z-index: 1;">
+      <span class="section-label" data-animate>The Library</span>
+      <h1 class="section-title" data-animate style="font-size: var(--text-5xl); margin-top: var(--space-4);">
+        영혼의 서재
+      </h1>
+      <p class="section-subtitle" data-animate style="margin-top: var(--space-2);">
+        The Soul's Archive
+      </p>
+      <p class="section-subtitle" data-animate style="margin-top: var(--space-6); font-size: var(--text-lg);">
+        A curated collection of humanity's deepest wisdom<br>
+        on death, dying, and the art of living fully.
+      </p>
+    </div>
+  </header>
+
+  <!-- Introduction -->
+  <section class="library-intro" data-animate>
+    <div class="library-intro__content">
+      <p>
+        The ancient Library of Alexandria sought to collect all human knowledge. Our library has a narrower but deeper aim: to gather the essential teachings on death, mortality, and meaning from every wisdom tradition.
+      </p>
+      <p>
+        Here you will find Buddhist texts on impermanence, Christian writings on resurrection and hope, Stoic meditations on mortality, indigenous wisdom on ancestors and the spirit world, and modern research on near-death experiences and grief.
+      </p>
+      <p>
+        Whether you seek scholarly depth or practical guidance, the library offers pathways in.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Collections -->
+  <section class="collections-section" data-animate>
+    <div class="container container-narrow text-center">
+      <span class="section-label">Collections</span>
+      <h2 class="section-title" style="margin-top: var(--space-4);">Eight Branches of Wisdom</h2>
+    </div>
+
+    <div class="collections-grid">
+      <article class="collection-card">
+        <svg class="collection-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="28" r="16" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M32 12 L32 28 L44 40" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M20 52 L44 52" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="collection-card__title">Buddhist Teachings</h3>
+        <p class="collection-card__subtitle">불교 가르침</p>
+        <p class="collection-card__text">
+          The Tibetan Book of the Dead, Zen writings on the Great Matter, Theravada contemplations on impermanence.
+        </p>
+        <span class="collection-card__count">340+ volumes</span>
+      </article>
+
+      <article class="collection-card">
+        <svg class="collection-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 8 L32 56" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M16 22 L48 22" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="32" cy="38" r="12" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="collection-card__title">Christian Mysticism</h3>
+        <p class="collection-card__subtitle">기독교 신비주의</p>
+        <p class="collection-card__text">
+          Ars moriendi traditions, Meister Eckhart, Julian of Norwich, contemporary Christian writings on death and hope.
+        </p>
+        <span class="collection-card__count">280+ volumes</span>
+      </article>
+
+      <article class="collection-card">
+        <svg class="collection-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="16" y="12" width="32" height="40" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <line x1="24" y1="20" x2="40" y2="20" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="24" y1="28" x2="40" y2="28" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="24" y1="36" x2="40" y2="36" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="24" y1="44" x2="36" y2="44" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="collection-card__title">Stoic Philosophy</h3>
+        <p class="collection-card__subtitle">스토아 철학</p>
+        <p class="collection-card__text">
+          Marcus Aurelius, Seneca's letters on death, Epictetus, and modern Stoic approaches to mortality.
+        </p>
+        <span class="collection-card__count">120+ volumes</span>
+      </article>
+
+      <article class="collection-card">
+        <svg class="collection-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 12 L32 52" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M20 24 L32 12 L44 24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M20 40 L32 52 L44 40" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="32" cy="32" r="6" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="collection-card__title">Indigenous Wisdom</h3>
+        <p class="collection-card__subtitle">토착 지혜</p>
+        <p class="collection-card__text">
+          Korean shamanistic traditions, Native American teachings, African ancestor wisdom, global death rituals.
+        </p>
+        <span class="collection-card__count">180+ volumes</span>
+      </article>
+
+      <article class="collection-card">
+        <svg class="collection-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M32 16 C24 24 24 40 32 48 C40 40 40 24 32 16" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="12" y1="32" x2="52" y2="32" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="collection-card__title">Eastern Traditions</h3>
+        <p class="collection-card__subtitle">동양 전통</p>
+        <p class="collection-card__text">
+          Taoist writings on immortality, Hindu texts on death and rebirth, Confucian perspectives on legacy.
+        </p>
+        <span class="collection-card__count">220+ volumes</span>
+      </article>
+
+      <article class="collection-card">
+        <svg class="collection-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="32" cy="32" rx="20" ry="12" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <ellipse cx="32" cy="32" rx="8" ry="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="32" cy="32" r="3" fill="var(--color-gold-500)"/>
+        </svg>
+        <h3 class="collection-card__title">Science of Dying</h3>
+        <p class="collection-card__subtitle">죽음의 과학</p>
+        <p class="collection-card__text">
+          Near-death experience research, hospice medicine, neuroscience of consciousness, clinical thanatology.
+        </p>
+        <span class="collection-card__count">150+ volumes</span>
+      </article>
+
+      <article class="collection-card">
+        <svg class="collection-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 48 Q32 24 48 48" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          <circle cx="32" cy="20" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <line x1="32" y1="28" x2="32" y2="38" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="collection-card__title">Grief & Loss</h3>
+        <p class="collection-card__subtitle">슬픔과 상실</p>
+        <p class="collection-card__text">
+          Psychology of bereavement, mourning rituals worldwide, poetry of loss, memoirs of grief and healing.
+        </p>
+        <span class="collection-card__count">200+ volumes</span>
+      </article>
+
+      <article class="collection-card">
+        <svg class="collection-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 48 L32 12 L52 48 Z" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          <circle cx="32" cy="36" r="6" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="32" y1="20" x2="32" y2="30" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="collection-card__title">Art of Dying</h3>
+        <p class="collection-card__subtitle">죽음의 예술</p>
+        <p class="collection-card__text">
+          Practical guides to death preparation, advance directives, legacy work, sacred dying practices.
+        </p>
+        <span class="collection-card__count">160+ volumes</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- Featured Books -->
+  <section class="featured-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Essential Reading</span>
+    <h2 style="margin-top: var(--space-4);">Where to Begin</h2>
+    <p>
+      If you're new to this terrain, these twelve books offer various entry points into the conversation about death and meaning.
+    </p>
+
+    <div class="featured-books">
+      <article class="book-card">
+        <div class="book-card__cover">
+          <span class="book-card__cover-title">The Tibetan Book of Living and Dying</span>
+          <span class="book-card__cover-author">Sogyal Rinpoche</span>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-card__cover">
+          <span class="book-card__cover-title">Being Mortal</span>
+          <span class="book-card__cover-author">Atul Gawande</span>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-card__cover">
+          <span class="book-card__cover-title">Meditations</span>
+          <span class="book-card__cover-author">Marcus Aurelius</span>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-card__cover">
+          <span class="book-card__cover-title">No Death, No Fear</span>
+          <span class="book-card__cover-author">Thich Nhat Hanh</span>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-card__cover">
+          <span class="book-card__cover-title">When Breath Becomes Air</span>
+          <span class="book-card__cover-author">Paul Kalanithi</span>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-card__cover">
+          <span class="book-card__cover-title">The Year of Magical Thinking</span>
+          <span class="book-card__cover-author">Joan Didion</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Reading Room -->
+  <section class="reading-room" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">The Space</span>
+    <h2 style="margin-top: var(--space-4);">The Reading Room</h2>
+    <p>
+      Our physical library is designed for deep, unhurried study. A place where you can sit with a text for hours, let it work on you, and return to it the next day.
+    </p>
+
+    <div class="reading-features">
+      <div class="reading-feature">
+        <svg class="reading-feature__icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="12" width="40" height="32" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <line x1="28" y1="12" x2="28" y2="44" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="reading-feature__title">Silent Study</h3>
+        <p class="reading-feature__text">
+          The main reading room observes noble silence. Natural light, comfortable seating, the whisper of pages turning.
+        </p>
+      </div>
+
+      <div class="reading-feature">
+        <svg class="reading-feature__icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="28" cy="28" r="16" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <line x1="28" y1="16" x2="28" y2="28" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <line x1="28" y1="28" x2="36" y2="34" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="reading-feature__title">Extended Hours</h3>
+        <p class="reading-feature__text">
+          Open 6am to 10pm daily. Early morning and late evening are especially quiet for contemplative reading.
+        </p>
+      </div>
+
+      <div class="reading-feature">
+        <svg class="reading-feature__icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 44 L28 12 L42 44" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          <line x1="20" y1="32" x2="36" y2="32" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="reading-feature__title">Mountain Views</h3>
+        <p class="reading-feature__text">
+          Floor-to-ceiling windows frame Palgongsan. Let your eyes rest on the mountain between pages.
+        </p>
+      </div>
+
+      <div class="reading-feature">
+        <svg class="reading-feature__icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="28" cy="20" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M16 44 C16 34 22 30 28 30 C34 30 40 34 40 44" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="reading-feature__title">Librarian Guidance</h3>
+        <p class="reading-feature__text">
+          Our librarians are scholars who can recommend texts tailored to your questions and background.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Digital Library -->
+  <section class="digital-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Beyond the Mountain</span>
+    <h2 style="margin-top: var(--space-4);">Digital Archive</h2>
+    <p>
+      For those who cannot visit in person, we are building a digital archive of teachings, lectures, and selected texts available worldwide.
+    </p>
+
+    <div class="digital-grid">
+      <article class="digital-card">
+        <svg class="digital-card__icon" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="16" width="48" height="32" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M36 48 L36 56" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M24 56 L48 56" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M30 30 L30 38 L42 34 Z" fill="var(--color-gold-500)" opacity="0.5"/>
+        </svg>
+        <h3 class="digital-card__title">Video Archive</h3>
+        <p class="digital-card__text">
+          Recorded forum talks, meditation instructions, and documentary films on death and dying across cultures.
+        </p>
+        <a href="#" class="digital-card__link">Coming 2026</a>
+      </article>
+
+      <article class="digital-card">
+        <svg class="digital-card__icon" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="36" cy="36" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="36" cy="36" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="36" cy="36" r="2" fill="var(--color-gold-500)"/>
+          <line x1="36" y1="16" x2="36" y2="28" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="36" y1="44" x2="36" y2="56" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="digital-card__title">Audio Library</h3>
+        <p class="digital-card__text">
+          Guided meditations on death and impermanence, dharma talks, and readings from classic texts.
+        </p>
+        <a href="#" class="digital-card__link">Coming 2026</a>
+      </article>
+
+      <article class="digital-card">
+        <svg class="digital-card__icon" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="18" y="12" width="36" height="48" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <line x1="24" y1="24" x2="48" y2="24" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="24" y1="32" x2="48" y2="32" stroke="var(--color-gold-500)" stroke-width="1"/>
+          <line x1="24" y1="40" x2="40" y2="40" stroke="var(--color-gold-500)" stroke-width="1"/>
+        </svg>
+        <h3 class="digital-card__title">Text Archive</h3>
+        <p class="digital-card__text">
+          Digitized versions of rare texts, translations of Korean wisdom literature, and original essays.
+        </p>
+        <a href="#" class="digital-card__link">Coming 2026</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="quote-section" data-animate>
+    <div class="container">
+      <div class="ornament">✦</div>
+      <blockquote>
+        <p>
+          "A library is not a luxury but one of the necessities of life. And when that library concerns the greatest necessity—preparing for death—it becomes sacred ground."
+        </p>
+        <cite>— Alexandria Founding Charter</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Contribute -->
+  <section class="contribute-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Join Us</span>
+    <h2 style="margin-top: var(--space-4);">Building the Collection</h2>
+    <p>
+      A library is always becoming. We welcome contributions from those who share our vision.
+    </p>
+
+    <ul class="contribute-list">
+      <li><strong>Book Donations:</strong> Texts on death, dying, grief, and meaning from any tradition. We especially seek works in Korean, Japanese, and Chinese.</li>
+      <li><strong>Rare Texts:</strong> Historical manuscripts, out-of-print works, family collections relating to death practices.</li>
+      <li><strong>Oral Histories:</strong> Recordings of elders sharing traditional death wisdom from their cultures.</li>
+      <li><strong>Financial Support:</strong> Gifts that fund acquisitions, translations, digitization, and librarian positions.</li>
+    </ul>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container container-narrow text-center">
+      <div class="ornament" data-animate>✦</div>
+      <p class="section-subtitle mt-8" data-animate>
+        Ready to explore the wisdom gathered here?
+      </p>
+      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+        <a href="../visit/" class="btn btn-primary">Visit the Library</a>
+        <a href="../forum/" class="btn btn-secondary">Attend a Teaching</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
+        <span>Palgongsan, Daegu, Korea</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

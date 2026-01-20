@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hospice care at Alexandria Sanctuary - Compassionate end-of-life care integrating medical excellence with spiritual depth at Palgongsan, Korea.">
+
+  <title>Hospice Care - Alexandria Sanctuary</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../assets/css/design-system.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/emblem.svg">
+  <meta name="theme-color" content="#0a1628">
+
+  <style>
+    .hospice-hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-32) var(--space-4);
+      background:
+        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.06), transparent 50%),
+        radial-gradient(ellipse at center bottom, rgba(245, 241, 232, 0.03), transparent 50%),
+        var(--bg-primary);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      margin-bottom: var(--space-6);
+    }
+
+    .breadcrumb a {
+      color: var(--text-tertiary);
+      text-decoration: none;
+      transition: color var(--duration-normal);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--color-gold-500);
+    }
+
+    .breadcrumb span {
+      color: var(--color-gold-500);
+    }
+
+    .hospice-intro {
+      padding: var(--space-20) 0;
+    }
+
+    .hospice-intro__content {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .hospice-intro__content p {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      line-height: var(--leading-loose);
+      margin-bottom: var(--space-6);
+    }
+
+    .hospice-intro__content blockquote {
+      padding: var(--space-8);
+      margin: var(--space-10) 0;
+      border-left: 2px solid var(--color-gold-500);
+      background: var(--bg-secondary);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    }
+
+    .hospice-intro__content blockquote p {
+      font-style: italic;
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .hospice-intro__content blockquote cite {
+      font-style: normal;
+      font-size: var(--text-sm);
+      color: var(--color-gold-500);
+    }
+
+    .care-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .care-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-8);
+      max-width: var(--max-width-lg);
+      margin: var(--space-12) auto 0;
+      padding: 0 var(--container-padding);
+    }
+
+    @media (max-width: 768px) {
+      .care-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .care-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10);
+    }
+
+    .care-card__icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: var(--space-6);
+      opacity: 0.8;
+    }
+
+    .care-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .care-card__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+
+    .care-card__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .care-card__list li {
+      padding: var(--space-2) 0;
+      padding-left: var(--space-5);
+      position: relative;
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+    }
+
+    .care-card__list li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--color-gold-500);
+      font-weight: bold;
+    }
+
+    .space-section {
+      padding: var(--space-20) 0;
+    }
+
+    .space-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .space-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .space-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-6);
+      max-width: var(--max-width-lg);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .space-feature {
+      text-align: center;
+      padding: var(--space-6);
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .space-feature__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .space-feature__text {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .family-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .family-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .family-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-8);
+      max-width: var(--max-width-lg);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .family-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+    }
+
+    .family-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--color-gold-500);
+      margin-bottom: var(--space-3);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .family-card__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .philosophy-section {
+      padding: var(--space-20) 0;
+    }
+
+    .philosophy-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-12);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-10);
+      max-width: var(--max-width-lg);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .philosophy-item {
+      text-align: center;
+    }
+
+    .philosophy-item__number {
+      font-family: var(--font-display);
+      font-size: var(--text-4xl);
+      color: var(--color-gold-500);
+      opacity: 0.4;
+      margin-bottom: var(--space-4);
+    }
+
+    .philosophy-item__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .philosophy-item__text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .testimonial-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .testimonial {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+      text-align: center;
+    }
+
+    .testimonial__quote {
+      font-family: var(--font-serif);
+      font-size: var(--text-2xl);
+      color: var(--text-primary);
+      line-height: var(--leading-relaxed);
+      font-style: italic;
+      margin-bottom: var(--space-8);
+    }
+
+    .testimonial__author {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+    }
+
+    .testimonial__author strong {
+      display: block;
+      color: var(--color-gold-500);
+      font-weight: 500;
+      margin-bottom: var(--space-1);
+    }
+
+    .admission-section {
+      padding: var(--space-20) 0;
+    }
+
+    .admission-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .admission-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto var(--space-12);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .admission-steps {
+      max-width: var(--max-width-md);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .admission-step {
+      display: flex;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+      align-items: flex-start;
+    }
+
+    .admission-step__number {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--color-gold-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      color: var(--color-gold-500);
+    }
+
+    .admission-step__content h3 {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .admission-step__content p {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .cost-section {
+      padding: var(--space-20) 0;
+      background: var(--bg-secondary);
+    }
+
+    .cost-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .cost-section > p {
+      max-width: var(--max-width-prose);
+      margin: 0 auto;
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: var(--leading-loose);
+      padding: 0 var(--container-padding);
+    }
+
+    .cost-note {
+      max-width: var(--max-width-prose);
+      margin: var(--space-8) auto 0;
+      padding: var(--space-8);
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .cost-note p {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+
+    .cost-note p:last-child {
+      margin-bottom: 0;
+      font-style: italic;
+      color: var(--color-gold-500);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav is-scrolled" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="../../" class="nav__logo">
+          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
+            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="nav__logo-text">Alexandria</span>
+        </a>
+
+        <div class="nav__menu">
+          <a href="../../philosophy/" class="nav__link">Philosophy</a>
+          <a href="../" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
+          <a href="../../forum/" class="nav__link">Forum</a>
+          <a href="../../library/" class="nav__link">Library</a>
+          <a href="../../visit/" class="nav__link">Visit</a>
+        </div>
+
+        <div class="nav__actions">
+          <a href="../../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hospice-hero">
+    <div class="container container-narrow">
+      <nav class="breadcrumb" data-animate>
+        <a href="../">Sanctuary</a>
+        <span>›</span>
+        <span>Hospice</span>
+      </nav>
+      <h1 class="section-title" data-animate style="font-size: var(--text-5xl);">
+        Hospice Care
+      </h1>
+      <p class="section-subtitle" data-animate style="margin-top: var(--space-4);">
+        돌봄의 집 · Dolbom-ui Jip
+      </p>
+      <p class="section-subtitle" data-animate style="margin-top: var(--space-6); font-size: var(--text-lg);">
+        A sacred place to complete life's journey<br>with dignity, peace, and love.
+      </p>
+    </div>
+  </header>
+
+  <!-- Introduction -->
+  <section class="hospice-intro" data-animate>
+    <div class="hospice-intro__content">
+      <p>
+        Death is not a medical failure. It is life's final chapter—and like all chapters, it deserves to be written with care. At Alexandria's hospice, we believe that how we die matters as much as how we live.
+      </p>
+      <p>
+        Our hospice is not a place of waiting. It is a place of living—fully, consciously, with whatever time remains. Here, palliative medicine meets contemplative wisdom. Pain is managed with expertise. Fear is met with presence. And the soul is tended as carefully as the body.
+      </p>
+      <blockquote>
+        <p>"We do not cure at Alexandria. We care. And in that caring, something more profound than cure often happens: acceptance, reconciliation, even gratitude."</p>
+        <cite>— Dr. Minji Park, Medical Director</cite>
+      </blockquote>
+      <p>
+        Our residents come from all backgrounds—Buddhist, Christian, secular, uncertain. We do not impose any belief. We simply create conditions where each person can meet death in their own way, surrounded by beauty, supported by skill, and held by love.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Our Care -->
+  <section class="care-section" data-animate>
+    <div class="container container-narrow text-center">
+      <span class="section-label">Our Approach</span>
+      <h2 class="section-title" style="margin-top: var(--space-4);">Integrative Care</h2>
+      <p class="section-subtitle" style="margin-top: var(--space-4);">
+        Medical excellence and spiritual depth, woven together.
+      </p>
+    </div>
+
+    <div class="care-grid">
+      <article class="care-card">
+        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="24" width="40" height="28" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M32 12 L32 24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M24 18 L32 12 L40 18" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M26 38 L32 32 L38 38 L32 44 Z" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
+        </svg>
+        <h3 class="care-card__title">Palliative Medicine</h3>
+        <p class="care-card__text">
+          Expert symptom management by board-certified palliative physicians. Pain, nausea, anxiety, breathlessness—all addressed with the latest medical knowledge.
+        </p>
+        <ul class="care-card__list">
+          <li>24-hour nursing care</li>
+          <li>Physician on call always</li>
+          <li>Advanced pain protocols</li>
+          <li>Comfort-focused approach</li>
+        </ul>
+      </article>
+
+      <article class="care-card">
+        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <path d="M32 16 L32 32 L44 32" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="32" cy="32" r="4" fill="var(--color-gold-500)" opacity="0.3"/>
+        </svg>
+        <h3 class="care-card__title">Spiritual Companionship</h3>
+        <p class="care-card__text">
+          Trained spiritual companions from Buddhist, Christian, and secular contemplative traditions. They listen, sit, pray, or simply offer presence.
+        </p>
+        <ul class="care-card__list">
+          <li>Daily companion visits</li>
+          <li>Multi-faith chaplaincy</li>
+          <li>Meditation guidance</li>
+          <li>Life review facilitation</li>
+        </ul>
+      </article>
+
+      <article class="care-card">
+        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="22" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="42" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+          <circle cx="32" cy="44" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="care-card__title">Emotional Support</h3>
+        <p class="care-card__text">
+          Licensed therapists and counselors available for patients and families. Grief support before, during, and after death.
+        </p>
+        <ul class="care-card__list">
+          <li>Individual counseling</li>
+          <li>Family therapy</li>
+          <li>Anticipatory grief support</li>
+          <li>Bereavement follow-up</li>
+        </ul>
+      </article>
+
+      <article class="care-card">
+        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 52 Q22 32 32 42 Q42 52 52 32" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
+          <circle cx="32" cy="18" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
+        </svg>
+        <h3 class="care-card__title">Creative Expression</h3>
+        <p class="care-card__text">
+          Art therapy, music, poetry—ways to express what words alone cannot capture. Legacy projects to leave something meaningful behind.
+        </p>
+        <ul class="care-card__list">
+          <li>Art therapy sessions</li>
+          <li>Music at bedside</li>
+          <li>Legacy letter writing</li>
+          <li>Memory book creation</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- The Space -->
+  <section class="space-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">The Space</span>
+    <h2 style="margin-top: var(--space-4);">Where Beauty Heals</h2>
+    <p>
+      Our hospice suites are not hospital rooms. They are sanctuaries—designed to nourish the spirit even as the body prepares to release.
+    </p>
+
+    <div class="space-features">
+      <div class="space-feature">
+        <h3 class="space-feature__title">Private Suites</h3>
+        <p class="space-feature__text">
+          Each 35㎡ suite includes space for family to stay. No shared rooms. No institutional atmosphere.
+        </p>
+      </div>
+
+      <div class="space-feature">
+        <h3 class="space-feature__title">Garden Access</h3>
+        <p class="space-feature__text">
+          Every suite opens to a private garden. Even beds can be rolled outside to feel sun and wind.
+        </p>
+      </div>
+
+      <div class="space-feature">
+        <h3 class="space-feature__title">Mountain Views</h3>
+        <p class="space-feature__text">
+          Floor-to-ceiling windows frame Palgongsan. The mountain is present in every moment.
+        </p>
+      </div>
+
+      <div class="space-feature">
+        <h3 class="space-feature__title">Natural Materials</h3>
+        <p class="space-feature__text">
+          Wood, stone, natural fibers. Nothing plastic, nothing harsh. Warmth in every surface.
+        </p>
+      </div>
+
+      <div class="space-feature">
+        <h3 class="space-feature__title">Meditation Alcove</h3>
+        <p class="space-feature__text">
+          A quiet corner in each suite for prayer, meditation, or simple sitting in silence.
+        </p>
+      </div>
+
+      <div class="space-feature">
+        <h3 class="space-feature__title">Family Kitchen</h3>
+        <p class="space-feature__text">
+          A shared kitchen for families to prepare loved ones' favorite foods. Comfort in familiar tastes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Families -->
+  <section class="family-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">For Families</span>
+    <h2 style="margin-top: var(--space-4);">Walking Together</h2>
+    <p>
+      Death is hard for those who remain. We support not just the dying, but those who love them.
+    </p>
+
+    <div class="family-grid">
+      <article class="family-card">
+        <h3 class="family-card__title">Family Accommodations</h3>
+        <p class="family-card__text">
+          Stay in your loved one's suite or in nearby guest rooms. Be present without exhaustion. We provide bedding, meals, and support.
+        </p>
+      </article>
+
+      <article class="family-card">
+        <h3 class="family-card__title">Caregiver Support</h3>
+        <p class="family-card__text">
+          Guidance on how to be present, how to touch, how to speak to someone dying. Practical wisdom for an overwhelming time.
+        </p>
+      </article>
+
+      <article class="family-card">
+        <h3 class="family-card__title">Bereavement Care</h3>
+        <p class="family-card__text">
+          Our relationship doesn't end at death. Grief support groups, counseling, and memorial services continue for a full year.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="philosophy-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Our Philosophy</span>
+    <h2 style="margin-top: var(--space-4);">What We Believe</h2>
+
+    <div class="philosophy-grid">
+      <div class="philosophy-item">
+        <div class="philosophy-item__number">I</div>
+        <h3 class="philosophy-item__title">Death Is Sacred</h3>
+        <p class="philosophy-item__text">
+          The moment of death is as sacred as birth. It deserves beauty, intention, and reverence—not the sterile efficiency of a hospital.
+        </p>
+      </div>
+
+      <div class="philosophy-item">
+        <div class="philosophy-item__number">II</div>
+        <h3 class="philosophy-item__title">Pain Is Optional</h3>
+        <p class="philosophy-item__text">
+          Modern palliative medicine can manage almost all physical suffering. No one should die in pain. We use every tool available.
+        </p>
+      </div>
+
+      <div class="philosophy-item">
+        <div class="philosophy-item__number">III</div>
+        <h3 class="philosophy-item__title">Presence Is Medicine</h3>
+        <p class="philosophy-item__text">
+          Sometimes the most healing thing is simply not being alone. We ensure that no one dies without someone holding their hand.
+        </p>
+      </div>
+
+      <div class="philosophy-item">
+        <div class="philosophy-item__number">IV</div>
+        <h3 class="philosophy-item__title">Meaning Matters</h3>
+        <p class="philosophy-item__text">
+          The dying often have unfinished business—words unsaid, wounds unhealed. We help complete what needs completing.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="testimonial-section" data-animate>
+    <div class="container">
+      <div class="ornament">✦</div>
+      <div class="testimonial">
+        <p class="testimonial__quote">
+          "My father came to Alexandria terrified of death. He left this world at peace—laughing with his grandchildren, watching the sunset over Palgongsan, whispering gratitude. I didn't know death could be like this. I didn't know it could be beautiful."
+        </p>
+        <div class="testimonial__author">
+          <strong>Hyunjoo K.</strong>
+          Daughter of hospice resident, 2025
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admission -->
+  <section class="admission-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Getting Started</span>
+    <h2 style="margin-top: var(--space-4);">Admission Process</h2>
+    <p>
+      We welcome anyone facing a life-limiting illness who desires holistic end-of-life care. The process is simple and compassionate.
+    </p>
+
+    <div class="admission-steps">
+      <div class="admission-step">
+        <div class="admission-step__number">1</div>
+        <div class="admission-step__content">
+          <h3>Initial Contact</h3>
+          <p>Call or email us. Our care coordinator will listen to your situation and answer initial questions. No commitment required.</p>
+        </div>
+      </div>
+
+      <div class="admission-step">
+        <div class="admission-step__number">2</div>
+        <div class="admission-step__content">
+          <h3>Medical Review</h3>
+          <p>Share medical records with our team. Our physicians will review the case and confirm that hospice care is appropriate.</p>
+        </div>
+      </div>
+
+      <div class="admission-step">
+        <div class="admission-step__number">3</div>
+        <div class="admission-step__content">
+          <h3>Visit</h3>
+          <p>If possible, come see the sanctuary. Walk the gardens, meet the staff, feel the space. This is an important decision.</p>
+        </div>
+      </div>
+
+      <div class="admission-step">
+        <div class="admission-step__number">4</div>
+        <div class="admission-step__content">
+          <h3>Welcome</h3>
+          <p>When you're ready, we prepare your suite and welcome you home. The journey begins.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cost -->
+  <section class="cost-section" data-animate>
+    <span class="section-label" style="display: block; text-align: center;">Investment</span>
+    <h2 style="margin-top: var(--space-4);">Cost & Financial Support</h2>
+    <p>
+      Hospice care at Alexandria costs ₩8,500,000 per month, all inclusive—medical care, accommodation, meals, spiritual support, and family stays. This is less than most hospitals and far more humane.
+    </p>
+
+    <div class="cost-note">
+      <p>
+        We believe that dying well should not be a privilege of the wealthy. Our foundation provides scholarship support for those who cannot afford full fees. Please do not let cost prevent you from inquiring.
+      </p>
+      <p>
+        "No one turned away for inability to pay."
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top: var(--space-10);">
+    <div class="container container-narrow text-center">
+      <div class="ornament" data-animate>✦</div>
+      <p class="section-subtitle mt-8" data-animate>
+        Questions? Concerns? Simply want to talk?<br>
+        We are here to listen.
+      </p>
+      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+        <a href="../../visit/" class="btn btn-primary">Contact Us</a>
+        <a href="../../philosophy/" class="btn btn-secondary">Learn Our Philosophy</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
+        <span>Palgongsan, Daegu, Korea</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/app.js"></script>
+</body>
+</html>
