@@ -1,0 +1,54 @@
+{
+  "feedId": "alexandria-wisdom",
+  "version": "1.0",
+  "lastUpdated": "2026-01-23T00:00:00Z",
+  "publisher": "alexandria",
+  "type": "content",
+  "articles": [
+    {
+      "id": "wisdom-001",
+      "title": "The Art of Graceful Transition",
+      "excerpt": "Preparing for life's final chapter is not about endings — it is about completing the masterpiece.",
+      "category": "philosophy",
+      "author": "Alexandria Forum",
+      "readTime": "5 min",
+      "url": "/alexandria-sanctuary/philosophy/",
+      "createdAt": "2026-01-20"
+    },
+    {
+      "id": "wisdom-002",
+      "title": "Cave Meditation: Ancient Practice for Modern Minds",
+      "excerpt": "In the depths of silence, wisdom reveals itself. The cave retreat tradition spans millennia.",
+      "category": "practice",
+      "author": "Alexandria Forum",
+      "readTime": "7 min",
+      "url": "/alexandria-sanctuary/sanctuary/",
+      "createdAt": "2026-01-21"
+    },
+    {
+      "id": "wisdom-003",
+      "title": "Building a Legacy: Digital Preservation of Life Stories",
+      "excerpt": "Every life is a library. We help preserve its volumes for future generations.",
+      "category": "legacy",
+      "author": "Alexandria Forum",
+      "readTime": "4 min",
+      "url": "/alexandria-sanctuary/library/",
+      "createdAt": "2026-01-22"
+    },
+    {
+      "id": "wisdom-004",
+      "title": "Palgongsan: The Mountain of Eight Merits",
+      "excerpt": "For over 1,000 years, pilgrims have sought wisdom on this sacred mountain. Now Alexandria continues the tradition.",
+      "category": "place",
+      "author": "Alexandria Forum",
+      "readTime": "6 min",
+      "url": "/alexandria-sanctuary/visit/",
+      "createdAt": "2026-01-22"
+    }
+  ],
+  "categories": ["philosophy", "practice", "legacy", "place"],
+  "stats": {
+    "totalArticles": 4,
+    "totalCategories": 4
+  }
+}
