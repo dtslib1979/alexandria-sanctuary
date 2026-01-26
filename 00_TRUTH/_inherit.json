@@ -1,0 +1,12 @@
+{
+  "repo": "alexandria-sanctuary",
+  "level": 2,
+  "parent": "dtslib-papyrus",
+  "type": "Independent Project",
+  "inherit": {
+    "immutable": "strict",
+    "defaults": "override-allowed"
+  },
+  "created": "2026-01-26",
+  "overrides": []
+}
