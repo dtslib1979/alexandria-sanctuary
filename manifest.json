@@ -1,0 +1,19 @@
+{
+  "name": "Alexandria Sanctuary",
+  "short_name": "Alexandria",
+  "description": "A global spiritual sanctuary for contemplative living and sacred passage at Palgongsan, Korea.",
+  "start_url": "/alexandria-sanctuary/",
+  "scope": "/alexandria-sanctuary/",
+  "display": "browser",
+  "background_color": "#060d18",
+  "theme_color": "#0a1628",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/icons/emblem.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
