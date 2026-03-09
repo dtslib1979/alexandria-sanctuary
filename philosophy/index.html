@@ -1,381 +1,579 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="The philosophy of Alexandria Sanctuary - Understanding our approach to contemplative living, death preparation, and the integration of Eastern and Western wisdom traditions.">
+  <meta name="description" content="알렉산드리아 7개의 게이트 — 나는 신을 만나고 싶었는데 끝내 못 만났다. 그래서 이 공간을 만들었다.">
+  <title>7 Gates — Alexandria Sanctuary</title>
 
-  <title>Philosophy - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="../assets/css/design-system.css">
   <link rel="stylesheet" href="../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
 
   <style>
-    .philosophy-hero {
-      min-height: 70vh;
+    /* ── Hero ───────────────────────────────────────────── */
+    .ph-hero {
+      min-height: 80vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.08), transparent 60%),
-        var(--bg-primary);
+      padding: calc(var(--space-32) + 56px) var(--container-padding) var(--space-32);
+      background: var(--bg-primary);
+      position: relative;
+      overflow: hidden;
     }
 
-    .philosophy-content {
-      padding: var(--space-20) 0;
+    .ph-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
     }
 
-    .philosophy-section {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-20);
-      padding: 0 var(--container-padding);
+    .ph-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(201,162,39,0.06), transparent 60%);
+      pointer-events: none;
     }
 
-    .philosophy-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-2xl);
-      color: var(--color-gold-500);
-      letter-spacing: var(--tracking-wide);
-      margin-bottom: var(--space-6);
-      text-align: center;
+    .ph-hero__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
     }
 
-    .philosophy-section p {
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-      margin-bottom: var(--space-6);
-    }
-
-    .philosophy-section blockquote {
-      padding: var(--space-8);
-      margin: var(--space-10) 0;
-      border-left: 2px solid var(--color-gold-500);
-      background: var(--bg-secondary);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    }
-
-    .philosophy-section blockquote p {
+    .ph-hero__opening {
+      font-family: var(--font-serif);
+      font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+      font-weight: 300;
       font-style: italic;
       color: var(--text-primary);
-      margin-bottom: var(--space-2);
+      line-height: 1.8;
+      margin-bottom: var(--space-12);
     }
 
-    .philosophy-section blockquote cite {
-      font-style: normal;
-      font-size: var(--text-sm);
+    .ph-hero__author {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: rgba(201, 162, 39, 0.5);
+    }
+
+    .ph-hero__scroll {
+      position: absolute;
+      bottom: var(--space-10);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.3);
+      animation: fadeIn 2s ease 2s both;
+    }
+
+    .ph-hero__scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(201,162,39,0.3), transparent);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* ── Gate Rail (desktop sticky sidebar) ─────────────── */
+    .gate-rail {
+      position: fixed;
+      right: clamp(var(--space-6), 3vw, var(--space-12));
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      z-index: 50;
+    }
+
+    @media (max-width: 1280px) { .gate-rail { display: none; } }
+
+    .gate-rail__item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      opacity: 0.2;
+      transition: opacity 0.4s;
+      flex-direction: row-reverse;
+    }
+
+    .gate-rail__item.is-active { opacity: 1; }
+
+    .gate-rail__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: 1px solid var(--color-gold-500);
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .gate-rail__item.is-active .gate-rail__dot {
+      background: var(--color-gold-500);
+      transform: scale(1.3);
+    }
+
+    .gate-rail__num {
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
       color: var(--color-gold-500);
     }
 
-    .principles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      margin-top: var(--space-12);
+    /* ── Gate Sections ───────────────────────────────────── */
+    .gate-section {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: var(--space-48) 0;
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
     }
 
-    .principle-card {
-      padding: var(--space-8);
+    .gate-section:nth-child(even) {
       background: var(--bg-secondary);
+    }
+
+    .gate-section__inner {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+      width: 100%;
+    }
+
+    .gate-section__ghost {
+      font-family: var(--font-display);
+      font-size: clamp(100px, 18vw, 200px);
+      color: rgba(201, 162, 39, 0.04);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+      position: absolute;
+      top: var(--space-20);
+      left: var(--container-padding);
+    }
+
+    .gate-section__tag {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-gold-500);
+      margin-bottom: var(--space-4);
+      display: block;
+    }
+
+    .gate-section__title {
+      font-family: var(--font-serif);
+      font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+      font-weight: 300;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin-bottom: var(--space-12);
+    }
+
+    .gate-section__story {
+      font-family: var(--font-serif);
+      font-size: clamp(var(--text-lg), 2vw, var(--text-xl));
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 2.1;
+      margin-bottom: var(--space-12);
+    }
+
+    .gate-section__divider {
+      width: 40px;
+      height: 1px;
+      background: var(--color-gold-500);
+      margin-bottom: var(--space-10);
+      opacity: 0.4;
+    }
+
+    .gate-section__question {
+      font-family: var(--font-serif);
+      font-size: clamp(var(--text-2xl), 3.5vw, var(--text-3xl));
+      font-weight: 300;
+      color: var(--color-gold-500);
+      line-height: 1.6;
+      padding-left: var(--space-6);
+      border-left: 2px solid rgba(201, 162, 39, 0.35);
+      margin-bottom: var(--space-12);
+    }
+
+    .gate-section__service {
+      padding: var(--space-6) var(--space-8);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
+      background: rgba(201, 162, 39, 0.015);
+      display: flex;
+      gap: var(--space-6);
+      align-items: flex-start;
+    }
+
+    .gate-section__service-icon {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-gold-500);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .gate-section__service-text {
+      font-family: var(--font-serif);
+      font-size: var(--text-base);
+      color: var(--text-tertiary);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* ── Closing section ─────────────────────────────────── */
+    .ph-close {
+      background: #000;
+      padding: var(--space-48) var(--container-padding);
       text-align: center;
     }
 
-    .principle-card__number {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--color-gold-500);
-      opacity: 0.5;
-      margin-bottom: var(--space-4);
-    }
-
-    .principle-card__title {
+    .ph-close__text {
       font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
+      font-size: clamp(var(--text-xl), 3vw, var(--text-3xl));
+      font-weight: 300;
+      color: var(--color-cream-200);
+      line-height: 2;
+      max-width: 560px;
+      margin: 0 auto var(--space-12);
     }
 
-    .principle-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .timeline {
-      position: relative;
-      max-width: var(--max-width-md);
-      margin: var(--space-12) auto;
-      padding-left: var(--space-8);
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--color-gold-500), transparent);
-    }
-
-    .timeline-item {
-      position: relative;
-      padding-bottom: var(--space-10);
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: calc(-1 * var(--space-8) - 4px);
-      top: 8px;
-      width: 10px;
-      height: 10px;
-      background: var(--color-gold-500);
-      border-radius: 50%;
-    }
-
-    .timeline-item__year {
-      font-family: var(--font-display);
-      font-size: var(--text-sm);
+    .ph-close__text em {
+      font-style: normal;
       color: var(--color-gold-500);
-      letter-spacing: var(--tracking-wider);
-      margin-bottom: var(--space-2);
-    }
-
-    .timeline-item__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-    }
-
-    .timeline-item__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
     }
   </style>
 </head>
 <body>
+
   <!-- Navigation -->
   <nav class="nav is-scrolled" id="nav">
     <div class="container">
       <div class="nav__inner">
         <a href="../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none">
             <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
             <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
           </svg>
           <span class="nav__logo-text">Alexandria</span>
         </a>
-
         <div class="nav__menu">
-          <a href="./" class="nav__link" style="color: var(--color-gold-500);">Philosophy</a>
+          <a href="./"          class="nav__link" style="color:var(--color-gold-500);">Philosophy</a>
           <a href="../sanctuary/" class="nav__link">Sanctuary</a>
-          <a href="../forum/" class="nav__link">Forum</a>
-          <a href="../library/" class="nav__link">Library</a>
-          <a href="../visit/" class="nav__link">Visit</a>
+          <a href="../forum/"     class="nav__link">Forum</a>
+          <a href="../library/"   class="nav__link">Library</a>
+          <a href="../visit/"     class="nav__link">Visit</a>
         </div>
-
         <div class="nav__actions">
-          <a href="../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+          <a href="../#gate-test" class="btn btn-secondary btn-sm">내 게이트 찾기</a>
+          <button class="nav__toggle" id="navToggle" aria-label="메뉴" aria-expanded="false">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
             </svg>
           </button>
         </div>
       </div>
     </div>
-
-    <!-- Mobile Menu Overlay -->
     <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="./" class="nav__link">Philosophy</a>
+      <a href="./"            class="nav__link">Philosophy</a>
       <a href="../sanctuary/" class="nav__link">Sanctuary</a>
-      <a href="../forum/" class="nav__link">Forum</a>
-      <a href="../library/" class="nav__link">Library</a>
-      <a href="../visit/" class="nav__link">Visit</a>
+      <a href="../forum/"     class="nav__link">Forum</a>
+      <a href="../library/"   class="nav__link">Library</a>
+      <a href="../visit/"     class="nav__link">Visit</a>
+    </div>
+  </nav>
+
+  <!-- Gate Rail (desktop only) -->
+  <nav class="gate-rail" aria-label="게이트 탐색">
+    <div class="gate-rail__item is-active" data-gate="1">
+      <div class="gate-rail__dot"></div>
+      <span class="gate-rail__num">01</span>
+    </div>
+    <div class="gate-rail__item" data-gate="2">
+      <div class="gate-rail__dot"></div>
+      <span class="gate-rail__num">02</span>
+    </div>
+    <div class="gate-rail__item" data-gate="3">
+      <div class="gate-rail__dot"></div>
+      <span class="gate-rail__num">03</span>
+    </div>
+    <div class="gate-rail__item" data-gate="4">
+      <div class="gate-rail__dot"></div>
+      <span class="gate-rail__num">04</span>
+    </div>
+    <div class="gate-rail__item" data-gate="5">
+      <div class="gate-rail__dot"></div>
+      <span class="gate-rail__num">05</span>
+    </div>
+    <div class="gate-rail__item" data-gate="6">
+      <div class="gate-rail__dot"></div>
+      <span class="gate-rail__num">06</span>
+    </div>
+    <div class="gate-rail__item" data-gate="7">
+      <div class="gate-rail__dot"></div>
+      <span class="gate-rail__num">07</span>
     </div>
   </nav>
 
   <!-- Hero -->
-  <header class="philosophy-hero">
-    <div class="container container-narrow">
-      <span class="section-label" data-animate>Our Philosophy</span>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl); margin-top: var(--space-4);">
-        The Art of Sacred Passage
-      </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6);">
-        Understanding death is understanding life.<br>
-        This is the foundation of Alexandria.
+  <header class="ph-hero">
+    <div class="ph-hero__inner">
+      <p class="ph-hero__opening" data-animate>
+        나는 신을 만나고 싶었는데<br>
+        끝내 못 만났다.<br>
+        그래서 이 공간을 만들었다.
       </p>
+      <p class="ph-hero__author" data-animate>알렉산드리아 창립자 · 7개의 게이트</p>
+    </div>
+    <div class="ph-hero__scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="ph-hero__scroll-line"></div>
     </div>
   </header>
 
-  <!-- Content -->
-  <main class="philosophy-content">
-    <!-- The Name -->
-    <section class="philosophy-section" data-animate>
-      <h2>Why Alexandria?</h2>
-      <p>
-        The ancient Library of Alexandria was humanity's first attempt to gather all the world's wisdom in one place. Scholars from every tradition—Greek, Egyptian, Persian, Hebrew—came to study, debate, and synthesize knowledge. It was a place where boundaries dissolved in pursuit of truth.
+  <!-- ── GATE 01 ─────────────────────────────────────────── -->
+  <section class="gate-section" id="gate-1" data-gate="1">
+    <div class="gate-section__ghost" aria-hidden="true">01</div>
+    <div class="gate-section__inner" data-animate>
+      <span class="gate-section__tag">Gate 01 — 정신의 붕괴</span>
+      <h2 class="gate-section__title">The Fracture of Mind</h2>
+      <p class="gate-section__story">
+        누나의 방은 항상 닫혀 있었다. 나는 열 살이었다. 문 너머에서
+        목소리가 들렸다. 누군가와 대화하는 소리였는데, 그 누군가는
+        우리 가족에게 보이지 않았다. 어른들은 조현병이라고 했다.
+        나는 그 단어를 이해하지 못했다. 다만 한 가지를 물었다.<br><br>
+        누나의 정신이 무너졌다면, 누나의 영혼은 어디 있는가.
+        그 질문에 아무도 답하지 않았다. 나는 지금도 답을 모른다.
       </p>
-      <p>
-        Our sanctuary carries this name as a promise: here, too, we gather wisdom. But the wisdom we seek is not found in scrolls alone. It is the wisdom of how to live fully, how to love completely, and how to die peacefully.
+      <div class="gate-section__divider" aria-hidden="true"></div>
+      <p class="gate-section__question">
+        정신의 붕괴와 영혼은<br>다른 것인가?
       </p>
-      <blockquote>
-        <p>"The library of Alexandria was destroyed not by fire, but by forgetting. We build anew—a library for what must never be forgotten."</p>
-        <cite>— Founding Statement, 2026</cite>
-      </blockquote>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- Core Belief -->
-    <section class="philosophy-section" data-animate>
-      <h2>Our Core Belief</h2>
-      <p>
-        Modern society has made death invisible. We hide it in hospitals, speak of it in euphemisms, and live as if it will never come. This denial does not protect us—it impoverishes us. It robs us of the urgency that makes life precious and the preparation that makes death peaceful.
-      </p>
-      <p>
-        At Alexandria, we believe that contemplating death is not morbid—it is the most life-affirming practice. When we face our mortality honestly, we shed what is trivial. We prioritize love, presence, and meaning. We become truly alive.
-      </p>
-      <p>
-        This is not a philosophy of resignation. It is a philosophy of awakening.
-      </p>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- Four Principles -->
-    <section class="philosophy-section" style="max-width: var(--max-width-xl);" data-animate>
-      <h2>Four Guiding Principles</h2>
-
-      <div class="principles-grid">
-        <article class="principle-card">
-          <div class="principle-card__number">I</div>
-          <h3 class="principle-card__title">Awareness Over Avoidance</h3>
-          <p class="principle-card__text">
-            We face death directly, not to create fear, but to dissolve it. What we can look at, we can transform.
-          </p>
-        </article>
-
-        <article class="principle-card">
-          <div class="principle-card__number">II</div>
-          <h3 class="principle-card__title">Wisdom Across Traditions</h3>
-          <p class="principle-card__text">
-            We draw from Buddhist, Christian, Stoic, Indigenous, and secular wisdom. Truth wears many garments.
-          </p>
-        </article>
-
-        <article class="principle-card">
-          <div class="principle-card__number">III</div>
-          <h3 class="principle-card__title">Community Over Isolation</h3>
-          <p class="principle-card__text">
-            We believe the final journey should not be walked alone. We create families of choice for those who need them.
-          </p>
-        </article>
-
-        <article class="principle-card">
-          <div class="principle-card__number">IV</div>
-          <h3 class="principle-card__title">Practice Over Theory</h3>
-          <p class="principle-card__text">
-            Philosophy means nothing unless lived. We offer not just teachings, but practices—meditation, ritual, conversation.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- East Meets West -->
-    <section class="philosophy-section" data-animate>
-      <h2>East Meets West</h2>
-      <p>
-        Korea sits at a crossroads of civilizations. Buddhism arrived here over 1,600 years ago and found harmony with indigenous shamanic traditions. Confucianism shaped the social order. Christianity brought Western thought. Today, Korea is one of the few places where all these streams flow together.
-      </p>
-      <p>
-        Palgongsan—our mountain—embodies this synthesis. Its temples have hosted Buddhist monks for over a millennium. Its caves have sheltered hermits seeking enlightenment. Its forests have witnessed shamanic rituals connecting the living and the dead.
-      </p>
-      <p>
-        Alexandria builds on this foundation. We are not Buddhist, not Christian, not secular—we are all of these and none. We take what is true, what is helpful, what is beautiful, from wherever it comes.
-      </p>
-      <blockquote>
-        <p>"In the beginner's mind there are many possibilities, but in the expert's mind there are few."</p>
-        <cite>— Shunryu Suzuki</cite>
-      </blockquote>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- Our Story -->
-    <section class="philosophy-section" data-animate>
-      <h2>Our Story</h2>
-
-      <div class="timeline">
-        <div class="timeline-item">
-          <span class="timeline-item__year">2024</span>
-          <h3 class="timeline-item__title">The Vision</h3>
-          <p class="timeline-item__text">
-            A small group of contemplatives, healthcare professionals, and educators begin meeting to discuss a new model of end-of-life care—one that integrates spiritual depth with medical excellence.
-          </p>
-        </div>
-
-        <div class="timeline-item">
-          <span class="timeline-item__year">2025</span>
-          <h3 class="timeline-item__title">Finding the Mountain</h3>
-          <p class="timeline-item__text">
-            After searching across Korea, the founders discover a site near Palgongsan with natural caves, ancient temple ruins, and a view that takes the breath away. The land is acquired.
-          </p>
-        </div>
-
-        <div class="timeline-item">
-          <span class="timeline-item__year">2026</span>
-          <h3 class="timeline-item__title">Alexandria Opens</h3>
-          <p class="timeline-item__text">
-            The sanctuary welcomes its first residents and retreat participants. The library begins collecting wisdom teachings. The first international forum convenes.
-          </p>
-        </div>
-
-        <div class="timeline-item">
-          <span class="timeline-item__year">Future</span>
-          <h3 class="timeline-item__title">A Global Network</h3>
-          <p class="timeline-item__text">
-            We envision Alexandria as the first of many sanctuaries worldwide—each rooted in local culture, connected by shared philosophy.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section" style="padding-top: 0;">
-      <div class="container container-narrow text-center">
-        <div class="ornament" data-animate>✦</div>
-        <p class="section-subtitle mt-8" data-animate>
-          If our philosophy resonates with you, we invite you to explore further.
+      <div class="gate-section__service">
+        <span class="gate-section__service-icon">SERVICE</span>
+        <p class="gate-section__service-text">
+          알렉산드리아는 정신질환 가족을 위한 케어 프로그램을 운영합니다.
+          당신의 누나, 형제, 부모를 이해하기 위한 공간입니다.
+          의학이 아닌 관계로 접근합니다.
         </p>
-        <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="../sanctuary/" class="btn btn-primary">Explore the Sanctuary</a>
-          <a href="../forum/" class="btn btn-secondary">Attend a Forum</a>
-        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+
+  <!-- ── GATE 02 ─────────────────────────────────────────── -->
+  <section class="gate-section" id="gate-2" data-gate="2">
+    <div class="gate-section__ghost" aria-hidden="true">02</div>
+    <div class="gate-section__inner" data-animate>
+      <span class="gate-section__tag">Gate 02 — 자아의 소멸</span>
+      <h2 class="gate-section__title">The Dissolution of Self</h2>
+      <p class="gate-section__story">
+        어머니가 처음 내 이름을 잊어버린 날을 기억한다.
+        어머니는 나를 보며 웃었다. 낯선 사람에게 보내는
+        친절한 웃음이었다. 아름다운 웃음이었다.
+        그리고 그것이 이상하게 거룩하게 느껴졌다.<br><br>
+        자아가 사라져도 그 사람은 남아있는가.
+        나는 그 순간 이 질문이 더 이상 철학이 아님을 알았다.
+        어머니는 계속 웃고 있었다.
+      </p>
+      <div class="gate-section__divider" aria-hidden="true"></div>
+      <p class="gate-section__question">
+        자아가 사라져도<br>그 사람은 남아있는가?
+      </p>
+      <div class="gate-section__service">
+        <span class="gate-section__service-icon">SERVICE</span>
+        <p class="gate-section__service-text">
+          치매 가족을 위한 동반 케어 프로그램. 환자가 아닌 사람으로 대합니다.
+          남아있는 것들에 집중합니다. 알렉산드리아에서는 잊혀지는 과정도
+          하나의 여정으로 이해합니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GATE 03 ─────────────────────────────────────────── -->
+  <section class="gate-section" id="gate-3" data-gate="3">
+    <div class="gate-section__ghost" aria-hidden="true">03</div>
+    <div class="gate-section__inner" data-animate>
+      <span class="gate-section__tag">Gate 03 — 신의 접속</span>
+      <h2 class="gate-section__title">The Touch of the Sacred</h2>
+      <p class="gate-section__story">
+        성가대에서 소프라노 파트를 맡았던 날이었다.
+        갑자기 무언가가 내 목을 통해 흘렀다.
+        나는 노래하고 있었는데, 동시에 나는 노래하지 않았다.
+        그것이 신인지, 신경계인지, 음악의 수학인지 나는 알지 못했다.<br><br>
+        목사 지망생이었던 내가 그 경험 이후 신학교 원서를 접었다.
+        이미 경험한 것을 설명하는 언어가 두려워졌다.
+      </p>
+      <div class="gate-section__divider" aria-hidden="true"></div>
+      <p class="gate-section__question">
+        신이 실제로<br>인간에게 접속하는가?
+      </p>
+      <div class="gate-section__service">
+        <span class="gate-section__service-icon">SERVICE</span>
+        <p class="gate-section__service-text">
+          크로스 종교 대담 시리즈. 티벳 승려, 무속인, 신부, 목사, 철학자가
+          같은 자리에 앉아 각자의 언어로 같은 경험을 이야기합니다.
+          유튜브 채널로 공개됩니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GATE 04 ─────────────────────────────────────────── -->
+  <section class="gate-section" id="gate-4" data-gate="4">
+    <div class="gate-section__ghost" aria-hidden="true">04</div>
+    <div class="gate-section__inner" data-animate>
+      <span class="gate-section__tag">Gate 04 — 제도의 안과 밖</span>
+      <h2 class="gate-section__title">Between Institutions</h2>
+      <p class="gate-section__story">
+        작은아버지는 주지승이다. 나는 개신교 세례를 받았고,
+        천주교 미사에도 참석했다. 삼촌의 절에서 하룻밤을 보낸 적이 있다.
+        새벽 예불 소리가 잠을 깨웠다. 이상하게 낯설지 않았다.<br><br>
+        나는 어느 집에도 완전히 들어가지 못했다.
+        그 경계에 서 있던 사람. 그 경계가 지금의 나를 만들었다.
+        알렉산드리아는 어느 집에도 속하지 못한 사람들의 집이다.
+      </p>
+      <div class="gate-section__divider" aria-hidden="true"></div>
+      <p class="gate-section__question">
+        깨달음은 제도 안에서<br>가능한가?
+      </p>
+      <div class="gate-section__service">
+        <span class="gate-section__service-icon">SERVICE</span>
+        <p class="gate-section__service-text">
+          알렉산드리아는 어느 종교도 강요하지 않습니다.
+          불교도, 기독교인도, 무신론자도 같은 공간에 앉습니다.
+          전통은 자원이지, 규칙이 아닙니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GATE 05 ─────────────────────────────────────────── -->
+  <section class="gate-section" id="gate-5" data-gate="5">
+    <div class="gate-section__ghost" aria-hidden="true">05</div>
+    <div class="gate-section__inner" data-animate>
+      <span class="gate-section__tag">Gate 05 — 소리와 영혼</span>
+      <h2 class="gate-section__title">Sound and Soul</h2>
+      <p class="gate-section__story">
+        그레고리안 성가를 처음 들은 것은 CD를 통해서였다.
+        라틴어를 몰랐다. 그래도 이해했다.
+        그 소리는 단어가 아니었다.<br><br>
+        이 질문 하나만으로 게이트 5가 설계됐다.
+        알렉산드리아의 음악 프로그램은 이 질문에서 시작한다.
+        저작권 없는 성악, 범패, 티벳 음악으로.
+        MIDI 렌더링 엔진으로.
+        소리는 언제나 재생될 수 있다.
+      </p>
+      <div class="gate-section__divider" aria-hidden="true"></div>
+      <p class="gate-section__question">
+        소리가<br>신에게 닿을 수 있는가?
+      </p>
+      <div class="gate-section__service">
+        <span class="gate-section__service-icon">SERVICE</span>
+        <p class="gate-section__service-text">
+          음악 영성 워크샵. 그레고리안 성가 · 불교 범패 · 티벳 음악을
+          함께 듣고, 침묵 속에서 나누는 대화. 악보를 읽지 않아도 됩니다.
+          경험이 없어도 됩니다. 귀만 있으면 됩니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GATE 06 ─────────────────────────────────────────── -->
+  <section class="gate-section" id="gate-6" data-gate="6">
+    <div class="gate-section__ghost" aria-hidden="true">06</div>
+    <div class="gate-section__inner" data-animate>
+      <span class="gate-section__tag">Gate 06 — 의식의 심화</span>
+      <h2 class="gate-section__title">The Depth of Consciousness</h2>
+      <p class="gate-section__story">
+        매직 머쉬룸 이야기를 처음 들은 것은 친구에게서였다.
+        "동굴에서 했어. 다 보였어."
+        그 말이 이상하게 오랫동안 떠나지 않았다.
+        경험이 아니라 그 말이 남겼다.<br><br>
+        의식의 경계가 어디까지인지. 나는 아직도 모른다.
+        그래서 동굴을 만들었다. 무엇이 보이는지는
+        각자가 결정하도록.
+      </p>
+      <div class="gate-section__divider" aria-hidden="true"></div>
+      <p class="gate-section__question">
+        의식의 경계는<br>어디까지인가?
+      </p>
+      <div class="gate-section__service">
+        <span class="gate-section__service-icon">SERVICE</span>
+        <p class="gate-section__service-text">
+          홀로트로픽 호흡 리트릿 · 감각차단 동굴 수행.
+          3일~21일 과정. 팔공산 자연 동굴.
+          경험 있는 수행자에게만 권합니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GATE 07 ─────────────────────────────────────────── -->
+  <section class="gate-section" id="gate-7" data-gate="7">
+    <div class="gate-section__ghost" aria-hidden="true">07</div>
+    <div class="gate-section__inner" data-animate>
+      <span class="gate-section__tag">Gate 07 — 마지막 집</span>
+      <h2 class="gate-section__title">The Final Home</h2>
+      <p class="gate-section__story">
+        요양원에 어머니를 입소시키던 날.
+        어머니는 여전히 낯선 사람에게 웃어줬다.
+        그 웃음이 거룩했다.<br><br>
+        죽음을 잘 죽는다는 것이 무엇인지
+        나는 그때 처음 물었다.
+        알렉산드리아는 그 질문에 대한 응답이다.
+        나 같은 사람들을 위한 마지막 집.
+      </p>
+      <div class="gate-section__divider" aria-hidden="true"></div>
+      <p class="gate-section__question">
+        죽음을 잘 죽는다는 것이<br>무엇인가?
+      </p>
+      <div class="gate-section__service">
+        <span class="gate-section__service-icon">SERVICE</span>
+        <p class="gate-section__service-text">
+          입주 멤버십 · 호스피스 케어.
+          의료 + 영성 + 공동체가 통합된 유일한 공간.
+          어느 종교도 강요하지 않습니다.
+          세계관이 있는 마지막 집입니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing -->
+  <section class="ph-close" data-animate>
+    <p class="ph-close__text">
+      7개의 게이트는<br>
+      7개의 <em>미해결 질문</em>이다.<br><br>
+      알렉산드리아는<br>
+      그 질문들에 답하지 않는다.<br>
+      다만 <em>함께 앉아있는다.</em>
+    </p>
+    <a href="../#gate-test" class="btn btn-primary btn-lg" style="margin-right: var(--space-4);">내 게이트 찾기</a>
+    <a href="../visit/"     class="btn btn-ghost  btn-lg">방문 신청</a>
+  </section>
 
   <!-- Footer -->
   <footer class="footer">
@@ -388,5 +586,36 @@
   </footer>
 
   <script src="../assets/js/app.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      /* Gate Rail scroll tracking */
+      const sections  = document.querySelectorAll('.gate-section[data-gate]');
+      const railItems = document.querySelectorAll('.gate-rail__item[data-gate]');
+
+      const activate = (gateNum) => {
+        railItems.forEach(item =>
+          item.classList.toggle('is-active', item.dataset.gate === gateNum)
+        );
+      };
+
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) activate(entry.target.dataset.gate);
+        });
+      }, { threshold: 0.4 });
+
+      sections.forEach(s => obs.observe(s));
+
+      /* Rail click → scroll */
+      railItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const target = document.getElementById(`gate-${item.dataset.gate}`);
+          target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
