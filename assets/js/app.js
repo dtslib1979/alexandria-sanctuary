@@ -7,22 +7,14 @@
   'use strict';
 
   // ============================================
-  // INTRO OVERLAY
+  // INTRO OVERLAY (legacy pages only — index uses gate entry)
   // ============================================
   const IntroOverlay = {
     init() {
       const overlay = document.getElementById('introOverlay');
       if (!overlay) return;
-
-      // Hide after quote is read
-      setTimeout(() => {
-        overlay.classList.add('is-hidden');
-      }, 4500);
-
-      // Skip on click
-      overlay.addEventListener('click', () => {
-        overlay.classList.add('is-hidden');
-      });
+      setTimeout(() => overlay.classList.add('is-hidden'), 4500);
+      overlay.addEventListener('click', () => overlay.classList.add('is-hidden'));
     }
   };
 
@@ -127,17 +119,14 @@
   };
 
   // ============================================
-  // PARALLAX (Subtle)
+  // PARALLAX (only on pages with hero image)
   // ============================================
   const Parallax = {
     init() {
       const heroImg = document.querySelector('.hero__bg img');
       if (!heroImg) return;
-
       window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        const rate = scrolled * 0.3;
-        heroImg.style.transform = `translateY(${rate}px) scale(1.1)`;
+        heroImg.style.transform = `translateY(${window.scrollY * 0.3}px) scale(1.1)`;
       }, { passive: true });
     }
   };

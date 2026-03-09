@@ -1,78 +1,912 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Alexandria Sanctuary - A global spiritual sanctuary for contemplative living, wisdom cultivation, and sacred passage at Palgongsan, Korea.">
+  <meta name="description" content="알렉산드리아 — 마지막 정거장. 들어왔다가 나간 사람이 거의 없다.">
+  <title>Alexandria Sanctuary — 마지막 정거장</title>
 
-  <title>Alexandria Sanctuary - Where Wisdom Meets Mortality</title>
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/css/design-system.css">
   <link rel="stylesheet" href="assets/css/components.css">
-
-  <!-- Favicon & Icons -->
   <link rel="icon" type="image/svg+xml" href="assets/icons/emblem.svg">
   <link rel="apple-touch-icon" href="assets/icons/emblem.svg">
   <link rel="manifest" href="manifest.json">
 
   <style>
-    /* Page-specific intro animation */
-    .intro-overlay {
+    /* ============================================================
+       GATE ENTRY — Two-door cinematic entrance
+       ============================================================ */
+    .gate-entry {
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: var(--bg-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: opacity 1.5s var(--ease-smooth), visibility 1.5s;
+      overflow: hidden;
+      background: #000;
     }
 
-    .intro-overlay.is-hidden {
+    .gate-entry__door {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50.2%;
+      background: #000;
+      transition: transform 1.8s cubic-bezier(0.76, 0, 0.24, 1);
+      transition-delay: 0.2s;
+      will-change: transform;
+    }
+
+    .gate-entry__door--left  { left: 0; }
+    .gate-entry__door--right { right: 0; }
+
+    .gate-entry.is-opening .gate-entry__door--left  { transform: translateX(-100%); }
+    .gate-entry.is-opening .gate-entry__door--right { transform: translateX(100%); }
+
+    .gate-entry.is-gone { display: none; }
+
+    .gate-entry__content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: var(--space-8);
+      max-width: 500px;
+      width: 100%;
+      transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
+    }
+
+    .gate-entry.is-opening .gate-entry__content {
       opacity: 0;
-      visibility: hidden;
+      transform: scale(0.97);
+    }
+
+    .gate-entry__emblem {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto var(--space-12);
+      opacity: 0;
+      animation: fadeIn 2s var(--ease-smooth) 0.6s forwards;
+    }
+
+    .gate-entry__question {
+      font-family: var(--font-serif);
+      font-size: clamp(var(--text-xl), 3vw, var(--text-3xl));
+      font-weight: 300;
+      color: var(--color-cream-200);
+      line-height: 1.9;
+      margin-bottom: var(--space-12);
+      opacity: 0;
+      animation: fadeIn 2.5s var(--ease-smooth) 1.4s forwards;
+    }
+
+    .gate-entry__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-10);
+      border: 1px solid rgba(201, 162, 39, 0.45);
+      background: transparent;
+      color: var(--color-gold-500);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.5s var(--ease-smooth);
+      opacity: 0;
+      animation: fadeIn 2s var(--ease-smooth) 2.8s forwards;
+    }
+
+    .gate-entry__btn:hover {
+      background: rgba(201, 162, 39, 0.06);
+      border-color: var(--color-gold-500);
+      box-shadow: 0 0 50px rgba(201, 162, 39, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .gate-entry__btn-arrow {
+      transition: transform 0.4s var(--ease-smooth);
+    }
+
+    .gate-entry__btn:hover .gate-entry__btn-arrow {
+      transform: translateX(5px);
+    }
+
+    .gate-entry__note {
+      position: absolute;
+      bottom: var(--space-8);
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      color: rgba(169, 164, 152, 0.3);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      white-space: nowrap;
+      opacity: 0;
+      animation: fadeIn 2s var(--ease-smooth) 4s forwards;
+    }
+
+    /* Gold seam at the center — the light through the crack */
+    .gate-entry::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(to bottom,
+        transparent,
+        rgba(201, 162, 39, 0.2) 20%,
+        rgba(201, 162, 39, 0.4) 50%,
+        rgba(201, 162, 39, 0.2) 80%,
+        transparent
+      );
+      opacity: 0;
+      animation: fadeIn 1.5s var(--ease-smooth) 1s forwards;
+      transition: opacity 0.3s;
+      z-index: 5;
+    }
+
+    .gate-entry.is-opening::after {
+      opacity: 0;
+    }
+
+    /* ============================================================
+       HERO — Pure dark, no image, canvas particles
+       ============================================================ */
+    .hero--pure {
+      background: var(--color-primary-950);
+    }
+
+    .hero--pure .hero__bg { display: none; }
+
+    #particleCanvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
       pointer-events: none;
     }
 
-    .intro-text {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      font-style: italic;
-      color: var(--text-secondary);
-      text-align: center;
-      max-width: 40ch;
-      line-height: var(--leading-relaxed);
-      opacity: 0;
-      animation: fadeIn 2s var(--ease-smooth) 0.5s forwards;
+    .hero--pure .hero__content {
+      position: relative;
+      z-index: 1;
     }
 
-    .intro-text span {
-      display: block;
-      margin-top: var(--space-4);
-      font-style: normal;
-      font-size: var(--text-sm);
+    .hero__gate-label {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: rgba(201, 162, 39, 0.6);
+      margin-bottom: var(--space-8);
+      opacity: 0;
+      animation: fadeIn 1.5s var(--ease-smooth) 0.2s forwards;
+    }
+
+    .hero__line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--color-gold-500), transparent);
+      margin: var(--space-6) auto;
+      opacity: 0;
+      animation: fadeIn 1.5s var(--ease-smooth) 2s forwards;
+    }
+
+    .hero__sub {
+      font-family: var(--font-serif);
+      font-size: var(--text-base);
+      font-style: italic;
+      color: var(--text-tertiary);
+      margin-bottom: var(--space-16);
+      opacity: 0;
+      animation: fadeIn 1.5s var(--ease-smooth) 2.4s forwards;
+    }
+
+    /* ============================================================
+       DECLARATION — World manifesto
+       ============================================================ */
+    .declaration {
+      padding: var(--space-40) 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .declaration__inner {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 var(--container-padding);
+    }
+
+    .declaration__prelude {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
       color: var(--color-gold-500);
+      margin-bottom: var(--space-10);
+    }
+
+    .declaration__text {
+      font-family: var(--font-serif);
+      font-size: clamp(var(--text-xl), 2.8vw, var(--text-3xl));
+      font-weight: 300;
+      line-height: 2;
+      color: var(--text-primary);
+    }
+
+    .declaration__text em {
+      font-style: normal;
+      color: var(--color-gold-500);
+    }
+
+    .declaration__coda {
+      margin-top: var(--space-10);
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: var(--text-lg);
+      color: var(--text-tertiary);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* ============================================================
+       SEVEN GATES TRACK
+       ============================================================ */
+    .gates-section {
+      padding: var(--space-32) 0;
+      background: var(--bg-secondary);
+    }
+
+    .gates-header {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto var(--space-20);
+      padding: 0 var(--container-padding);
+    }
+
+    .gates-header__q {
+      margin-top: var(--space-6);
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    .gates-track {
+      position: relative;
+      padding: 0 var(--container-padding);
+      max-width: var(--max-width-xl);
+      margin: 0 auto;
+    }
+
+    /* Connecting spine line — desktop */
+    .gates-track__spine {
+      position: absolute;
+      top: 24px;
+      left: calc(var(--container-padding) + 24px);
+      right: calc(var(--container-padding) + 24px);
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent,
+        var(--border-subtle) 8%,
+        var(--border-subtle) 92%,
+        transparent
+      );
+      pointer-events: none;
+    }
+
+    .gates-track__grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--space-3);
+      position: relative;
+    }
+
+    .gate-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      padding: 0 var(--space-1);
+      transition: all var(--duration-medium) var(--ease-gentle);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .gate-item__node {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+      position: relative;
+      z-index: 1;
+      margin-bottom: var(--space-6);
+      flex-shrink: 0;
+      transition: all var(--duration-medium) var(--ease-gentle);
+    }
+
+    .gate-item__num {
+      font-family: var(--font-display);
+      font-size: 10px;
       letter-spacing: var(--tracking-wider);
+      color: var(--text-tertiary);
+      transition: color var(--duration-medium) var(--ease-gentle);
+    }
+
+    .gate-item:hover .gate-item__node {
+      border-color: var(--color-gold-500);
+      box-shadow: 0 0 24px rgba(201, 162, 39, 0.25);
+      background: rgba(201, 162, 39, 0.04);
+    }
+
+    .gate-item:hover .gate-item__num {
+      color: var(--color-gold-500);
+    }
+
+    .gate-item__ko {
+      font-family: var(--font-serif);
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-2);
+      line-height: 1.4;
+      transition: color var(--duration-medium) var(--ease-gentle);
+    }
+
+    .gate-item:hover .gate-item__ko {
+      color: var(--text-primary);
+    }
+
+    .gate-item__q {
+      font-family: var(--font-serif);
+      font-size: var(--text-sm);
+      font-style: italic;
+      color: var(--text-tertiary);
+      line-height: var(--leading-relaxed);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all 0.4s var(--ease-smooth) 0.05s;
+    }
+
+    .gate-item:hover .gate-item__q {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile: vertical list */
+    @media (max-width: 900px) {
+      .gates-track__spine { display: none; }
+
+      .gates-track__grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .gate-item {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+        padding: var(--space-6) 0;
+        border-bottom: 1px solid var(--border-subtle);
+        gap: var(--space-5);
+      }
+
+      .gate-item__node {
+        margin-bottom: 0;
+      }
+
+      .gate-item__q {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ============================================================
+       EPISODE CARDS — Infinite protagonist model
+       ============================================================ */
+    .episodes-section {
+      padding: var(--space-40) 0;
+    }
+
+    .episodes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-16);
+      max-width: var(--max-width-xl);
+      margin-inline: auto;
+      padding: 0 var(--container-padding);
+    }
+
+    @media (max-width: 768px) {
+      .episodes-grid { grid-template-columns: 1fr; }
+    }
+
+    .episode-card {
+      position: relative;
+      padding: var(--space-10);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      transition: all var(--duration-medium) var(--ease-gentle);
+    }
+
+    .episode-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--color-gold-500), transparent);
+      transform: scaleX(0);
+      transition: transform 0.5s var(--ease-smooth);
+    }
+
+    .episode-card:hover {
+      border-color: rgba(201, 162, 39, 0.15);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .episode-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .episode-card__gate {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-gold-500);
+      margin-bottom: var(--space-8);
+    }
+
+    .episode-card__id {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: var(--space-5);
+    }
+
+    .episode-card__log {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      font-weight: 300;
+      color: var(--text-primary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-8);
+    }
+
+    .episode-card__status {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: var(--tracking-wide);
+      color: var(--text-tertiary);
+    }
+
+    .episode-card__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(201, 162, 39, 0.5);
+      animation: breathe 3s var(--ease-gentle) infinite;
+    }
+
+    .episodes-footnote {
+      text-align: center;
+      margin-top: var(--space-12);
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: var(--text-base);
+      color: var(--text-tertiary);
+      padding: 0 var(--container-padding);
+    }
+
+    /* ============================================================
+       SOUND CHAMBER — MIDI Audio Player
+       ============================================================ */
+    .sound-chamber {
+      background: #000;
+      padding: var(--space-48) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient radial glow behind the player */
+    .sound-chamber::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(201, 162, 39, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .sound-chamber__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+      text-align: center;
+    }
+
+    .sound-chamber__label {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: rgba(201, 162, 39, 0.5);
+      margin-bottom: var(--space-6);
+    }
+
+    .sound-chamber__title {
+      font-family: var(--font-serif);
+      font-size: clamp(var(--text-xl), 3vw, var(--text-3xl));
+      font-weight: 300;
+      color: var(--color-cream-200);
+      line-height: 1.8;
+      margin-bottom: var(--space-16);
+    }
+
+    /* Audio Player */
+    .audio-player {
+      text-align: left;
+    }
+
+    .audio-player__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--space-8);
+      gap: var(--space-4);
+    }
+
+    .audio-player__title {
+      display: block;
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      letter-spacing: var(--tracking-wide);
+      color: var(--color-cream-200);
+      margin-bottom: var(--space-1);
+    }
+
+    .audio-player__source {
+      display: block;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: var(--text-sm);
+      color: rgba(169, 164, 152, 0.5);
+    }
+
+    .audio-player__badge {
+      flex-shrink: 0;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: var(--tracking-wide);
+      color: var(--color-gold-500);
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      padding: var(--space-1) var(--space-3);
+      white-space: nowrap;
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+
+    .audio-player__row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .audio-play-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 162, 39, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold-500);
+      cursor: pointer;
+      transition: all var(--duration-medium) var(--ease-gentle);
+      flex-shrink: 0;
+      background: transparent;
+    }
+
+    .audio-play-btn:hover {
+      background: rgba(201, 162, 39, 0.08);
+      border-color: var(--color-gold-500);
+      box-shadow: 0 0 40px rgba(201, 162, 39, 0.15);
+    }
+
+    .audio-play-btn.is-playing {
+      background: rgba(201, 162, 39, 0.05);
+    }
+
+    .audio-play-btn .icon-pause { display: none; }
+    .audio-play-btn.is-playing .icon-play  { display: none; }
+    .audio-play-btn.is-playing .icon-pause { display: block; }
+
+    .waveform-bars {
+      flex: 1;
+      height: 44px;
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .waveform-bar {
+      flex: 1;
+      background: rgba(201, 162, 39, 0.2);
+      border-radius: 1px;
+      height: 15%;
+      transform-origin: bottom;
+      transition: background 0.3s;
+    }
+
+    @keyframes waveBar {
+      0%, 100% { height: var(--h-min, 15%); opacity: 0.35; }
+      50%       { height: var(--h-max, 80%); opacity: 0.7; }
+    }
+
+    .waveform-bars.is-playing .waveform-bar {
+      animation-name: waveBar;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      background: rgba(201, 162, 39, 0.45);
+    }
+
+    .audio-time {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: rgba(169, 164, 152, 0.4);
+      letter-spacing: var(--tracking-wide);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .audio-progress {
+      width: 100%;
+      height: 1px;
+      background: rgba(201, 162, 39, 0.12);
+      margin-bottom: var(--space-6);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .audio-progress__fill {
+      height: 100%;
+      background: rgba(201, 162, 39, 0.6);
+      width: 0%;
+      transition: width 0.5s linear;
+    }
+
+    .audio-listeners {
+      text-align: center;
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-wide);
+      color: rgba(169, 164, 152, 0.4);
+      margin-top: var(--space-2);
+    }
+
+    .audio-listeners strong {
+      color: rgba(201, 162, 39, 0.6);
+      font-weight: var(--font-regular);
+    }
+
+    /* ============================================================
+       GATE DIAGNOSIS — Self-assessment
+       ============================================================ */
+    .diagnosis-section {
+      padding: var(--space-40) 0;
+      background: var(--bg-secondary);
+    }
+
+    .diagnosis-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .diagnosis-inner .section-label {
+      display: block;
+      text-align: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .diagnosis-inner h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+      font-weight: 300;
+      color: var(--text-primary);
+      text-align: center;
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-16);
+    }
+
+    .diagnosis-question {
+      padding: var(--space-8) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .diagnosis-question:first-of-type {
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .diagnosis-q {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: var(--space-5);
+      line-height: var(--leading-relaxed);
+    }
+
+    .diagnosis-q-num {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-widest);
+      color: var(--color-gold-500);
+      display: block;
+      margin-bottom: var(--space-2);
+    }
+
+    .diagnosis-options {
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .diagnosis-option {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      cursor: pointer;
+    }
+
+    .diagnosis-option input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--border-default);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .diagnosis-option input[type="radio"]:checked {
+      border-color: var(--color-gold-500);
+    }
+
+    .diagnosis-option input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--color-gold-500);
+    }
+
+    .diagnosis-option label {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      letter-spacing: var(--tracking-wide);
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .diagnosis-submit {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--space-12);
+    }
+
+    .diagnosis-result {
+      margin-top: var(--space-12);
+      padding: var(--space-12) var(--space-10);
+      border: 1px solid var(--border-gold);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.9s var(--ease-smooth);
+      display: none;
+    }
+
+    .diagnosis-result.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      display: block;
+    }
+
+    .diagnosis-result__gate {
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-gold-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .diagnosis-result__title {
+      font-family: var(--font-serif);
+      font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: var(--space-6);
+    }
+
+    .diagnosis-result__desc {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      line-height: var(--leading-loose);
+      max-width: 44ch;
+      margin: 0 auto var(--space-10);
     }
   </style>
 </head>
 <body>
-  <!-- Cinematic Intro Overlay -->
-  <div class="intro-overlay" id="introOverlay">
-    <p class="intro-text">
-      "To prepare for death is to prepare for life.<br>
-      The two are one."
-      <span>— Thich Nhat Hanh</span>
-    </p>
+
+  <!-- ================================================================
+       GATE ENTRY — Cinematic two-door entrance
+       ================================================================ -->
+  <div id="gateEntry" class="gate-entry" role="dialog" aria-label="알렉산드리아 입장">
+    <div class="gate-entry__door gate-entry__door--left"  aria-hidden="true"></div>
+    <div class="gate-entry__door gate-entry__door--right" aria-hidden="true"></div>
+
+    <div class="gate-entry__content">
+      <!-- Emblem -->
+      <div class="gate-entry__emblem" aria-hidden="true">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="26" cy="26" r="20" stroke="rgba(201,162,39,0.4)" stroke-width="1"/>
+          <circle cx="26" cy="26" r="12" stroke="rgba(201,162,39,0.7)" stroke-width="0.8"/>
+          <path d="M26 14 L26 38 M18 22 L26 14 L34 22 M18 30 L26 38 L34 30" stroke="var(--color-gold-500)" stroke-width="1.2" fill="none"/>
+        </svg>
+      </div>
+
+      <p class="gate-entry__question">
+        죽기 전에 한 번은<br>
+        제대로 물어보고 싶었다
+      </p>
+
+      <button class="gate-entry__btn" id="openGateBtn">
+        <span>문을 열다</span>
+        <svg class="gate-entry__btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8 H13 M9 4 L13 8 L9 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <p class="gate-entry__note">Alexandria Sanctuary · 알렉산드리아 성소</p>
   </div>
 
-  <!-- Navigation -->
+
+  <!-- ================================================================
+       NAVIGATION
+       ================================================================ -->
   <nav class="nav" id="nav">
     <div class="container">
       <div class="nav__inner">
@@ -87,15 +921,15 @@
 
         <div class="nav__menu">
           <a href="philosophy/" class="nav__link">Philosophy</a>
-          <a href="sanctuary/" class="nav__link">Sanctuary</a>
-          <a href="forum/" class="nav__link">Forum</a>
-          <a href="library/" class="nav__link">Library</a>
-          <a href="visit/" class="nav__link">Visit</a>
+          <a href="sanctuary/"  class="nav__link">Sanctuary</a>
+          <a href="#gates"      class="nav__link">Gates</a>
+          <a href="library/"    class="nav__link">Library</a>
+          <a href="visit/"      class="nav__link">Visit</a>
         </div>
 
         <div class="nav__actions">
-          <a href="visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+          <a href="#gate-test" class="btn btn-secondary btn-sm">내 게이트 찾기</a>
+          <button class="nav__toggle" id="navToggle" aria-label="메뉴" aria-expanded="false">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <line x1="3" y1="6" x2="21" y2="6"/>
               <line x1="3" y1="12" x2="21" y2="12"/>
@@ -106,239 +940,339 @@
       </div>
     </div>
 
-    <!-- Mobile Menu Overlay -->
     <div class="nav__mobile-menu" id="mobileMenu">
       <a href="philosophy/" class="nav__link">Philosophy</a>
-      <a href="sanctuary/" class="nav__link">Sanctuary</a>
-      <a href="forum/" class="nav__link">Forum</a>
-      <a href="library/" class="nav__link">Library</a>
-      <a href="visit/" class="nav__link">Visit</a>
+      <a href="sanctuary/"  class="nav__link">Sanctuary</a>
+      <a href="#gates"      class="nav__link">Gates</a>
+      <a href="library/"    class="nav__link">Library</a>
+      <a href="visit/"      class="nav__link">Visit</a>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero__bg">
-      <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920&q=80" alt="Misty mountain at dawn">
-      <div class="hero__overlay"></div>
-    </div>
+
+  <!-- ================================================================
+       HERO — Canvas particles, pure dark
+       ================================================================ -->
+  <section class="hero hero--pure" id="top">
+    <canvas id="particleCanvas" aria-hidden="true"></canvas>
 
     <div class="hero__content">
-      <p class="hero__quote">
-        "We are not preparing for death.<br>
-        We are preparing for the deepest embrace of life."
-      </p>
+      <span class="hero__gate-label">Gate 00 — 세계의 시작</span>
 
-      <h1 class="hero__title">Alexandria</h1>
+      <h1 class="hero__title">ALEXANDRIA</h1>
       <p class="hero__subtitle">알렉산드리아</p>
 
+      <div class="hero__line" aria-hidden="true"></div>
+
       <p class="hero__tagline">
-        A global sanctuary where ancient wisdom meets modern care.<br>
-        Where the final chapter becomes the most meaningful.
+        죽기 전에 한 번은 제대로 물어보고 싶었다
+      </p>
+      <p class="hero__sub">
+        들어왔다가 나간 사람이 거의 없다
       </p>
 
       <div class="hero__actions">
-        <a href="philosophy/" class="btn btn-primary btn-lg">Discover Our Philosophy</a>
-        <a href="sanctuary/" class="btn btn-secondary btn-lg">Explore the Sanctuary</a>
+        <a href="#gates"     class="btn btn-primary btn-lg">7개의 게이트</a>
+        <a href="#sound"     class="btn btn-ghost   btn-lg">침묵 속으로</a>
       </div>
     </div>
 
-    <div class="hero__scroll">
-      <span>Scroll to Explore</span>
+    <div class="hero__scroll" aria-hidden="true">
+      <span>Scroll</span>
       <div class="hero__scroll-line"></div>
     </div>
   </section>
 
-  <!-- Philosophy Intro -->
-  <section class="section">
-    <div class="container container-narrow">
-      <div class="quote-block" data-animate>
-        <div class="quote-block__mark">"</div>
-        <p class="quote-block__text">
-          The ancient Library of Alexandria gathered the wisdom of the world.
-          Our sanctuary gathers the wisdom needed for life's most sacred passage.
-        </p>
-      </div>
 
-      <div class="divider"></div>
-
-      <div class="prose" style="margin: 0 auto;" data-animate>
-        <p>
-          Nestled in the sacred mountains of Palgongsan, Korea, Alexandria is not merely a place of care—it is a sanctuary for the soul. Here, Eastern contemplative traditions meet Western philosophical inquiry in service of humanity's most profound question: How do we live fully, knowing we must die?
-        </p>
-        <p>
-          We believe that preparing for death is not morbid—it is the most life-affirming act. Through cave meditation, wisdom teachings, and compassionate community, we offer a space where the final chapter of life becomes not an ending, but a culmination.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Five Pillars -->
-  <section class="section section-dark">
-    <div class="container">
-      <div class="section-header" data-animate>
-        <span class="section-label">The Five Pillars</span>
-        <h2 class="section-title">Pathways to Wisdom</h2>
-        <p class="section-subtitle">
-          Five integrated approaches to contemplative living and sacred passage.
-        </p>
-      </div>
-
-      <div class="pillars">
-        <!-- Cave -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M8 40 Q8 20 24 12 Q40 20 40 40"/>
-              <circle cx="24" cy="28" r="4"/>
-              <path d="M24 32 L24 36" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Cave</span>
-          <h3 class="pillar-card__title">동굴수행</h3>
-          <p class="pillar-card__description">
-            Deep meditation retreats in natural and crafted cave spaces, following ancient contemplative traditions.
-          </p>
-        </article>
-
-        <!-- Forum -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="24" cy="16" r="6"/>
-              <circle cx="12" cy="32" r="5"/>
-              <circle cx="36" cy="32" r="5"/>
-              <path d="M24 22 L24 27 M18 28 L12 27 M30 28 L36 27"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Forum</span>
-          <h3 class="pillar-card__title">지혜의 광장</h3>
-          <p class="pillar-card__description">
-            Global dialogues with wisdom teachers, philosophers, and contemplatives. Live broadcasts and intimate gatherings.
-          </p>
-        </article>
-
-        <!-- Library -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="8" y="12" width="32" height="28" rx="2"/>
-              <path d="M24 12 L24 40"/>
-              <path d="M12 18 L20 18 M28 18 L36 18"/>
-              <path d="M12 24 L20 24 M28 24 L36 24"/>
-              <path d="M12 30 L20 30 M28 30 L36 30"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Library</span>
-          <h3 class="pillar-card__title">영혼의 서재</h3>
-          <p class="pillar-card__description">
-            A curated archive of wisdom teachings on death, dying, and the art of living fully.
-          </p>
-        </article>
-
-        <!-- Care -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M24 40 C24 40 8 28 8 18 C8 12 12 8 18 8 C22 8 24 12 24 12 C24 12 26 8 30 8 C36 8 40 12 40 18 C40 28 24 40 24 40Z"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Care</span>
-          <h3 class="pillar-card__title">돌봄의 집</h3>
-          <p class="pillar-card__description">
-            Holistic residential care integrating medical excellence with spiritual companionship.
-          </p>
-        </article>
-
-        <!-- Legacy -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="24" cy="24" r="16"/>
-              <path d="M24 14 L24 24 L32 28"/>
-              <circle cx="24" cy="24" r="3"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Legacy</span>
-          <h3 class="pillar-card__title">유산 프로젝트</h3>
-          <p class="pillar-card__description">
-            Preserve your story, wisdom, and love for generations through guided life review and digital legacy.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Speaker -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header" data-animate>
-        <span class="section-label">Wisdom Teachers</span>
-        <h2 class="section-title">Voices of the Forum</h2>
-        <p class="section-subtitle">
-          Encounters with minds that illuminate the path.
-        </p>
-      </div>
-
-      <div class="quote-block" data-animate style="max-width: 800px; margin: 0 auto;">
-        <div class="quote-block__mark">"</div>
-        <p class="quote-block__text">
-          "Death is not the opposite of life. Life has no opposite. The opposite of death is birth. Life is eternal."
-        </p>
-        <p class="quote-block__author">Eckhart Tolle</p>
-      </div>
-
-      <div class="text-center mt-12" data-animate>
-        <a href="forum/" class="btn btn-secondary btn-lg">Explore Upcoming Forums</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Location Preview -->
-  <section class="section section-dark">
-    <div class="container">
-      <div class="section-header" data-animate>
-        <span class="section-label">Sacred Ground</span>
-        <h2 class="section-title">Palgongsan, Korea</h2>
-        <p class="section-subtitle">
-          팔공산 — The mountain of eight merits, a place of pilgrimage for over a thousand years.
-        </p>
-      </div>
-
-      <div style="position: relative; aspect-ratio: 21/9; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-8);" data-animate>
-        <img src="https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?w=1600&q=80" alt="Mountain temple in mist" style="width: 100%; height: 100%; object-fit: cover;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(to right, var(--bg-secondary), transparent 50%, var(--bg-secondary));"></div>
-      </div>
-
-      <div class="prose" style="margin: 0 auto; text-align: center;" data-animate>
-        <p>
-          Our sanctuary rests where ancient temples have stood for centuries. Here, the boundary between the mundane and the sacred grows thin. The mountain air carries the echo of countless prayers, and the stones remember the footsteps of pilgrims.
-        </p>
-      </div>
-
-      <div class="text-center mt-12" data-animate>
-        <a href="visit/" class="btn btn-primary btn-lg">Plan Your Visit</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="section" style="padding: var(--space-40) 0;">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <h2 class="section-title mt-8" data-animate style="margin-bottom: var(--space-6);">
-        Begin Your Journey
-      </h2>
-      <p class="section-subtitle" data-animate style="margin-bottom: var(--space-12);">
-        Whether you seek a weekend of contemplation or a place to call home in your final years, Alexandria welcomes you.
+  <!-- ================================================================
+       DECLARATION — World manifesto
+       ================================================================ -->
+  <section class="declaration" id="about">
+    <div class="declaration__inner" data-animate>
+      <p class="declaration__prelude">알렉산드리아란 무엇인가</p>
+      <p class="declaration__text">
+        알렉산드리아는 <em>책이 아니다.</em><br>
+        게임도 아니고, 영상도 아니다.<br>
+        세계관이 있는 <em>장소다.</em><br>
+        그리고 그 장소는<br>
+        지금 이 순간 <em>실재한다.</em>
       </p>
-      <div data-animate>
-        <a href="visit/" class="btn btn-primary btn-lg">Contact Us</a>
+      <p class="declaration__coda">
+        들어온 사람들은 각자의 이유를 들고 온다.<br>
+        나간 사람은 거의 없다.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ================================================================
+       SEVEN GATES — Interactive gate track
+       ================================================================ -->
+  <section class="gates-section" id="gates">
+    <div class="gates-header" data-animate>
+      <span class="section-label">The Seven Gates · 7개의 게이트</span>
+      <h2 class="section-title">당신은 지금<br>어느 게이트에 있습니까</h2>
+      <p class="gates-header__q">
+        각 게이트는 하나의 미해결 질문이다.
+      </p>
+    </div>
+
+    <div class="gates-track" data-animate>
+      <div class="gates-track__spine" aria-hidden="true"></div>
+
+      <div class="gates-track__grid">
+
+        <a href="philosophy/" class="gate-item">
+          <div class="gate-item__node"><span class="gate-item__num">01</span></div>
+          <div>
+            <p class="gate-item__ko">정신의 붕괴</p>
+            <p class="gate-item__q">정신의 붕괴와<br>영혼은 다른가</p>
+          </div>
+        </a>
+
+        <a href="philosophy/" class="gate-item">
+          <div class="gate-item__node"><span class="gate-item__num">02</span></div>
+          <div>
+            <p class="gate-item__ko">자아의 소멸</p>
+            <p class="gate-item__q">자아가 사라져도<br>그 사람은 남는가</p>
+          </div>
+        </a>
+
+        <a href="philosophy/" class="gate-item">
+          <div class="gate-item__node"><span class="gate-item__num">03</span></div>
+          <div>
+            <p class="gate-item__ko">신의 접속</p>
+            <p class="gate-item__q">신이 실제로<br>인간에게 접속하는가</p>
+          </div>
+        </a>
+
+        <a href="philosophy/" class="gate-item">
+          <div class="gate-item__node"><span class="gate-item__num">04</span></div>
+          <div>
+            <p class="gate-item__ko">제도의 안과 밖</p>
+            <p class="gate-item__q">깨달음은 제도 안에서<br>가능한가</p>
+          </div>
+        </a>
+
+        <a href="#sound" class="gate-item">
+          <div class="gate-item__node"><span class="gate-item__num">05</span></div>
+          <div>
+            <p class="gate-item__ko">소리와 영혼</p>
+            <p class="gate-item__q">소리가<br>신에게 닿을 수 있는가</p>
+          </div>
+        </a>
+
+        <a href="sanctuary/cave-retreat/" class="gate-item">
+          <div class="gate-item__node"><span class="gate-item__num">06</span></div>
+          <div>
+            <p class="gate-item__ko">의식의 심화</p>
+            <p class="gate-item__q">의식의 경계는<br>어디까지인가</p>
+          </div>
+        </a>
+
+        <a href="sanctuary/hospice/" class="gate-item">
+          <div class="gate-item__node"><span class="gate-item__num">07</span></div>
+          <div>
+            <p class="gate-item__ko">마지막 집</p>
+            <p class="gate-item__q">죽음을 잘 죽는다는<br>것이 무엇인가</p>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+
+  <!-- ================================================================
+       EPISODE CARDS — Infinite protagonist model
+       ================================================================ -->
+  <section class="episodes-section" id="stories">
+    <div style="max-width: var(--max-width-xl); margin: 0 auto; padding: 0 var(--container-padding);">
+      <div class="section-header" data-animate>
+        <span class="section-label">공간이 만드는 이야기</span>
+        <h2 class="section-title">무한한 주인공</h2>
+        <p class="section-subtitle">
+          알렉산드리아는 특정 인물의 이야기가 아닙니다.<br>
+          공간이 주인공을 끝없이 만들어냅니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="episodes-grid" data-animate>
+
+      <article class="episode-card">
+        <p class="episode-card__gate">Gate 02 — 자아의 소멸</p>
+        <p class="episode-card__id">입주자 #2847</p>
+        <p class="episode-card__log">
+          동굴에서 30년 전 버린 아들을 만났다.
+          아들은 이미 그곳에서 기다리고 있었다.
+        </p>
+        <div class="episode-card__status">
+          <div class="episode-card__dot"></div>
+          <span>현재 거주 중</span>
+        </div>
+      </article>
+
+      <article class="episode-card">
+        <p class="episode-card__gate">Gate 05 — 소리와 영혼</p>
+        <p class="episode-card__id">방문자 #1192</p>
+        <p class="episode-card__log">
+          그녀는 평생 무대에 섰다.
+          동굴에서야 비로소 끝내 못 부른
+          마지막 노래를 불렀다.
+        </p>
+        <div class="episode-card__status">
+          <div class="episode-card__dot"></div>
+          <span>3일 체류 후 퇴소</span>
+        </div>
+      </article>
+
+      <article class="episode-card">
+        <p class="episode-card__gate">Gate 04 — 제도의 안과 밖</p>
+        <p class="episode-card__id">입주자 #3301</p>
+        <p class="episode-card__log">
+          30년 수행의 스님이었다.
+          동굴에서 환속하고 싶었던 자신을 만났다.
+          그는 아직 떠나지 않았다.
+        </p>
+        <div class="episode-card__status">
+          <div class="episode-card__dot"></div>
+          <span>현재 거주 중</span>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="episodes-footnote" data-animate>
+      이 이야기들은 실재합니다. 혹은 곧 실재할 것입니다.
+    </p>
+  </section>
+
+
+  <!-- ================================================================
+       SOUND CHAMBER — MIDI Audio Experience
+       ================================================================ -->
+  <section class="sound-chamber" id="sound">
+    <div class="sound-chamber__inner" data-animate>
+      <p class="sound-chamber__label">Gate 05 — 소리와 영혼</p>
+      <h2 class="sound-chamber__title">
+        소리가 신에게<br>닿을 수 있는가
+      </h2>
+
+      <div class="audio-player">
+        <div class="audio-player__header">
+          <div>
+            <span class="audio-player__title">Agnus Dei</span>
+            <span class="audio-player__source">Gregorian Plainchant, ca. 12세기 · MIDI 렌더링</span>
+          </div>
+          <span class="audio-player__badge">저작권 프리</span>
+        </div>
+
+        <div class="audio-player__row">
+          <button class="audio-play-btn" id="audioPlayBtn" aria-label="재생">
+            <!-- Play icon -->
+            <svg class="icon-play" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+              <polygon points="5,3 15,9 5,15"/>
+            </svg>
+            <!-- Pause icon -->
+            <svg class="icon-pause" width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+              <rect x="4" y="3" width="3.5" height="12" rx="1"/>
+              <rect x="10.5" y="3" width="3.5" height="12" rx="1"/>
+            </svg>
+          </button>
+
+          <div class="waveform-bars" id="waveformBars" aria-hidden="true">
+            <!-- Generated by JS -->
+          </div>
+
+          <span class="audio-time" id="audioTime">0:00</span>
+        </div>
+
+        <div class="audio-progress" id="audioProgress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="audio-progress__fill" id="audioProgressFill"></div>
+        </div>
+
+        <p class="audio-listeners">
+          지금 <strong id="listenerCount">47</strong>명이 이 공간에 함께 있습니다
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================================
+       GATE DIAGNOSIS — Self-assessment
+       ================================================================ -->
+  <section class="diagnosis-section" id="gate-test">
+    <div class="diagnosis-inner" data-animate>
+      <span class="section-label">자가 진단</span>
+      <h2>당신은 몇 번<br>게이트에 있습니까?</h2>
+
+      <form id="diagnosisForm">
+
+        <div class="diagnosis-question">
+          <span class="diagnosis-q-num">01</span>
+          <p class="diagnosis-q">가까운 누군가의 상실을 경험했습니까?</p>
+          <div class="diagnosis-options">
+            <label class="diagnosis-option">
+              <input type="radio" name="q1" value="yes" required>
+              <span>예</span>
+            </label>
+            <label class="diagnosis-option">
+              <input type="radio" name="q1" value="no">
+              <span>아니오</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="diagnosis-question">
+          <span class="diagnosis-q-num">02</span>
+          <p class="diagnosis-q">신, 의식, 또는 존재의 본질에 대해 진지하게 탐구한 적 있습니까?</p>
+          <div class="diagnosis-options">
+            <label class="diagnosis-option">
+              <input type="radio" name="q2" value="yes" required>
+              <span>예</span>
+            </label>
+            <label class="diagnosis-option">
+              <input type="radio" name="q2" value="no">
+              <span>아니오</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="diagnosis-question">
+          <span class="diagnosis-q-num">03</span>
+          <p class="diagnosis-q">자신의 죽음에 대해 직접 마주한 적 있습니까?</p>
+          <div class="diagnosis-options">
+            <label class="diagnosis-option">
+              <input type="radio" name="q3" value="yes" required>
+              <span>예</span>
+            </label>
+            <label class="diagnosis-option">
+              <input type="radio" name="q3" value="no">
+              <span>아니오</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="diagnosis-submit">
+          <button type="submit" class="btn btn-primary btn-lg">결과 보기</button>
+        </div>
+      </form>
+
+      <div class="diagnosis-result" id="diagnosisResult" aria-live="polite">
+        <p class="diagnosis-result__gate" id="resultGate"></p>
+        <h3 class="diagnosis-result__title" id="resultTitle"></h3>
+        <p class="diagnosis-result__desc" id="resultDesc"></p>
+        <a href="visit/" class="btn btn-primary">알렉산드리아로 오다</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================================
+       FOOTER
+       ================================================================ -->
   <footer class="footer">
     <div class="container">
       <div class="footer__top">
@@ -351,24 +1285,25 @@
             <span class="nav__logo-text">Alexandria</span>
           </a>
           <p class="footer__description">
-            A global sanctuary for contemplative living and sacred passage. Palgongsan, Daegu, Korea.
+            나 같은 사람들을 위한 마지막 집.<br>
+            팔공산, 대구, 한국.
           </p>
         </div>
 
         <div>
           <h4 class="footer__column-title">Sanctuary</h4>
           <nav class="footer__links">
-            <a href="sanctuary/cave-retreat/" class="footer__link">Cave Retreat</a>
-            <a href="sanctuary/residence/" class="footer__link">Residence</a>
-            <a href="sanctuary/hospice/" class="footer__link">Hospice Care</a>
+            <a href="sanctuary/cave-retreat/" class="footer__link">동굴수행</a>
+            <a href="sanctuary/residence/"    class="footer__link">입주 프로그램</a>
+            <a href="sanctuary/hospice/"      class="footer__link">호스피스</a>
           </nav>
         </div>
 
         <div>
           <h4 class="footer__column-title">Wisdom</h4>
           <nav class="footer__links">
-            <a href="forum/" class="footer__link">Forum</a>
-            <a href="library/" class="footer__link">Library</a>
+            <a href="forum/"      class="footer__link">Forum</a>
+            <a href="library/"    class="footer__link">Library</a>
             <a href="philosophy/" class="footer__link">Philosophy</a>
           </nav>
         </div>
@@ -376,20 +1311,224 @@
         <div>
           <h4 class="footer__column-title">Connect</h4>
           <nav class="footer__links">
-            <a href="visit/" class="footer__link">Visit</a>
-            <a href="#about" class="footer__link">About</a>
-            <a href="#gate" class="footer__link">Contact</a>
+            <a href="visit/"     class="footer__link">방문 신청</a>
+            <a href="#gate-test" class="footer__link">게이트 진단</a>
+            <a href="#sound"     class="footer__link">음악 감상</a>
           </nav>
         </div>
       </div>
 
       <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation. All rights reserved.</span>
+        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
         <span>Palgongsan, Daegu, Korea</span>
       </div>
     </div>
   </footer>
 
+
   <script src="assets/js/app.js"></script>
+
+  <script>
+    /* ================================================================
+       PAGE-SPECIFIC: Gate Entry, Particles, Audio, Diagnosis
+       ================================================================ */
+    (function () {
+      'use strict';
+
+      /* ── GATE ENTRY ──────────────────────────────────────────────── */
+      const gateEntry  = document.getElementById('gateEntry');
+      const openGateBtn = document.getElementById('openGateBtn');
+
+      if (gateEntry && openGateBtn) {
+        document.body.style.overflow = 'hidden';
+
+        const open = () => {
+          gateEntry.classList.add('is-opening');
+          document.body.style.overflow = '';
+          setTimeout(() => gateEntry.classList.add('is-gone'), 2200);
+        };
+
+        openGateBtn.addEventListener('click', open);
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') open();
+        });
+      }
+
+      /* ── PARTICLE CANVAS ─────────────────────────────────────────── */
+      const canvas = document.getElementById('particleCanvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        const resize = () => {
+          canvas.width  = window.innerWidth;
+          canvas.height = window.innerHeight;
+        };
+
+        const makeParticle = () => ({
+          x:      Math.random() * canvas.width,
+          y:      Math.random() * canvas.height,
+          r:      Math.random() * 1.2 + 0.2,
+          vx:     (Math.random() - 0.5) * 0.15,
+          vy:     (Math.random() - 0.5) * 0.15,
+          base:   Math.random() * 0.5 + 0.08,
+          phase:  Math.random() * Math.PI * 2,
+          speed:  Math.random() * 0.008 + 0.004,
+        });
+
+        const init = () => {
+          particles = Array.from({ length: 140 }, makeParticle);
+        };
+
+        const draw = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          for (const p of particles) {
+            p.phase += p.speed;
+            const a = p.base * (0.5 + 0.5 * Math.sin(p.phase));
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(201,162,39,${a})`;
+            ctx.fill();
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < -4) p.x = canvas.width + 4;
+            if (p.x > canvas.width + 4)  p.x = -4;
+            if (p.y < -4) p.y = canvas.height + 4;
+            if (p.y > canvas.height + 4) p.y = -4;
+          }
+          requestAnimationFrame(draw);
+        };
+
+        window.addEventListener('resize', () => { resize(); init(); }, { passive: true });
+        resize();
+        init();
+        draw();
+      }
+
+      /* ── WAVEFORM BARS ───────────────────────────────────────────── */
+      const waveformBars = document.getElementById('waveformBars');
+      if (waveformBars) {
+        const BAR_COUNT = 48;
+        for (let i = 0; i < BAR_COUNT; i++) {
+          const bar = document.createElement('div');
+          bar.className = 'waveform-bar';
+          const dur  = (0.7 + Math.random() * 0.9).toFixed(2) + 's';
+          const del  = (Math.random() * 0.5).toFixed(2) + 's';
+          const hMax = Math.round(40 + Math.random() * 55) + '%';
+          const hMin = Math.round(10 + Math.random() * 15) + '%';
+          bar.style.animationDuration = dur;
+          bar.style.animationDelay    = del;
+          bar.style.setProperty('--h-max', hMax);
+          bar.style.setProperty('--h-min', hMin);
+          waveformBars.appendChild(bar);
+        }
+      }
+
+      /* ── AUDIO PLAYER (mock — ready for MIDI engine) ─────────────── */
+      const audioPlayBtn    = document.getElementById('audioPlayBtn');
+      const audioTime       = document.getElementById('audioTime');
+      const audioProgressFill = document.getElementById('audioProgressFill');
+      const audioProgress   = document.getElementById('audioProgress');
+      const listenerCount   = document.getElementById('listenerCount');
+
+      let isPlaying       = false;
+      let elapsed         = 0;
+      const TOTAL_SECS    = 268; // 4:28
+      let playInterval    = null;
+
+      const formatTime = (s) => {
+        const m = Math.floor(s / 60);
+        return `${m}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+      };
+
+      const setPlayState = (playing) => {
+        isPlaying = playing;
+        audioPlayBtn.classList.toggle('is-playing', playing);
+        waveformBars.classList.toggle('is-playing', playing);
+        audioProgress.setAttribute('aria-valuenow', Math.round((elapsed / TOTAL_SECS) * 100));
+      };
+
+      if (audioPlayBtn) {
+        audioPlayBtn.addEventListener('click', () => {
+          if (!isPlaying) {
+            setPlayState(true);
+            playInterval = setInterval(() => {
+              elapsed++;
+              const pct = (elapsed / TOTAL_SECS) * 100;
+              audioProgressFill.style.width = pct + '%';
+              audioTime.textContent = formatTime(elapsed);
+              if (elapsed >= TOTAL_SECS) {
+                clearInterval(playInterval);
+                setPlayState(false);
+                elapsed = 0;
+                audioProgressFill.style.width = '0%';
+                audioTime.textContent = '0:00';
+              }
+            }, 1000);
+          } else {
+            clearInterval(playInterval);
+            setPlayState(false);
+          }
+        });
+      }
+
+      /* Listener count ambient fluctuation */
+      if (listenerCount) {
+        let count = parseInt(listenerCount.textContent, 10);
+        setInterval(() => {
+          const delta = Math.floor(Math.random() * 5) - 2;
+          count = Math.max(28, Math.min(72, count + delta));
+          listenerCount.textContent = count;
+        }, 4500);
+      }
+
+      /* ── GATE DIAGNOSIS ──────────────────────────────────────────── */
+      const diagnosisForm   = document.getElementById('diagnosisForm');
+      const diagnosisResult = document.getElementById('diagnosisResult');
+      const resultGate      = document.getElementById('resultGate');
+      const resultTitle     = document.getElementById('resultTitle');
+      const resultDesc      = document.getElementById('resultDesc');
+
+      const GATE_DATA = [
+        {
+          gate: '01', title: '정신의 붕괴',
+          desc: '당신은 아직 문 앞에 서 있습니다. 알렉산드리아는 준비되지 않은 사람도 받아들입니다. 오히려 그런 사람을 위해 이 공간이 존재합니다.',
+        },
+        {
+          gate: '03', title: '신의 접속',
+          desc: '당신은 보이지 않는 것에 대해 질문을 품어왔습니다. 그 질문이 당신을 여기까지 이끌었습니다. 알렉산드리아는 그 질문에 답하지 않습니다. 함께 앉아있을 뿐입니다.',
+        },
+        {
+          gate: '05', title: '소리와 영혼',
+          desc: '당신은 경계를 넘어본 사람입니다. 소리가 신에게 닿는다는 것을 어쩌면 이미 알고 있을지도 모릅니다. 동굴이 당신을 기다립니다.',
+        },
+        {
+          gate: '07', title: '마지막 집',
+          desc: '당신은 준비된 사람입니다. 알렉산드리아의 마지막 게이트가 열립니다. 우리는 당신이 오기를 기다려왔습니다.',
+        },
+      ];
+
+      if (diagnosisForm) {
+        diagnosisForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const fd    = new FormData(diagnosisForm);
+          const score = ['q1', 'q2', 'q3'].filter(k => fd.get(k) === 'yes').length;
+          const data  = GATE_DATA[score];
+
+          resultGate.textContent  = `GATE ${data.gate}`;
+          resultTitle.textContent = data.title;
+          resultDesc.textContent  = data.desc;
+
+          diagnosisResult.style.display = 'block';
+          // Force reflow for transition
+          diagnosisResult.getBoundingClientRect();
+          diagnosisResult.classList.add('is-visible');
+          diagnosisResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      }
+
+    })();
+  </script>
 </body>
 </html>
