@@ -1,698 +1,738 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Plan your visit to Alexandria Sanctuary - Retreat programs, residency applications, and contact information.">
+  <meta name="description" content="방문 신청 — 알렉산드리아 생츄어리. 동굴 수련, 입주 공간, 임종 케어 문의. 팔공산, 경상북도.">
+  <title>방문 신청 — Alexandria Sanctuary</title>
 
-  <title>Visit - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="../assets/css/design-system.css">
   <link rel="stylesheet" href="../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
 
   <style>
-    .visit-hero {
-      min-height: 70vh;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── HERO ─── */
+    .vt-hero {
+      min-height: 60vh;
+      background: #060d18;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.08), transparent 50%),
-        var(--bg-primary);
+      padding: 9rem 1.5rem 5rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .visit-intro {
-      padding: var(--space-16) 0;
+    .vt-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center top, rgba(201,162,39,0.05) 0%, transparent 55%);
+      pointer-events: none;
     }
 
-    .visit-intro__content {
-      max-width: var(--max-width-prose);
+    .vt-hero__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1.5rem;
+    }
+
+    .vt-hero__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .vt-hero__sub {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 2;
+    }
+
+    /* ─── INTENT SELECTOR ─── */
+    .vt-intent {
+      background: #030810;
+      padding: 6rem 1.5rem;
+    }
+
+    .vt-intent__inner {
+      max-width: 900px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
+    }
+
+    .vt-intent__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
       text-align: center;
     }
 
-    .visit-intro__content p {
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
+    .vt-intent__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 3rem;
+      text-align: center;
     }
 
-    .options-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .options-grid {
+    .intent-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-xl);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
     }
 
-    .option-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-8);
-      text-align: center;
-      transition: transform var(--duration-normal), box-shadow var(--duration-normal);
+    @media (max-width: 760px) {
+      .intent-grid { grid-template-columns: 1fr; }
     }
 
-    .option-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    .intent-btn {
+      background: rgba(245,240,232,0.02);
+      border: 1px solid rgba(201,162,39,0.1);
+      padding: 2rem 1.75rem;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      position: relative;
     }
 
-    .option-card__icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto var(--space-6);
-      opacity: 0.8;
+    .intent-btn:hover,
+    .intent-btn.is-selected {
+      background: rgba(201,162,39,0.06);
+      border-color: rgba(201,162,39,0.4);
     }
 
-    .option-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-      letter-spacing: var(--tracking-wide);
+    .intent-btn.is-selected::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(201,162,39,0.6);
     }
 
-    .option-card__duration {
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-4);
+    .intent-btn__icon {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      opacity: 0.5;
     }
 
-    .option-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-6);
+    .intent-btn__name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #f5f0e8;
+      margin-bottom: 0.3rem;
     }
 
-    .option-card__price {
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-6);
+    .intent-btn__ko {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.8rem;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 0.75rem;
     }
 
-    .option-card__price small {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      font-family: var(--font-body);
+    .intent-btn__desc {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      line-height: 1.7;
     }
 
-    .contact-section {
-      padding: var(--space-20) 0;
+    /* ─── FORM ─── */
+    .vt-form {
+      background: #060d18;
+      padding: 6rem 1.5rem;
     }
 
-    .contact-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
+    .vt-form__inner {
+      max-width: 680px;
+      margin: 0 auto;
     }
 
-    .contact-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
+    .vt-form__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
     }
 
-    .contact-grid {
+    .vt-form__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 0.75rem;
+    }
+
+    .vt-form__sub {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      line-height: 1.8;
+      margin-bottom: 3.5rem;
+    }
+
+    .form-field {
+      margin-bottom: 2rem;
+    }
+
+    .form-field__label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 0.6rem;
+    }
+
+    .form-field__input,
+    .form-field__select,
+    .form-field__textarea {
+      width: 100%;
+      background: rgba(245,240,232,0.03);
+      border: 1px solid rgba(201,162,39,0.15);
+      color: #f5f0e8;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding: 0.9rem 1.1rem;
+      outline: none;
+      transition: border-color 0.3s ease, background 0.3s ease;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
+
+    .form-field__input:focus,
+    .form-field__select:focus,
+    .form-field__textarea:focus {
+      border-color: rgba(201,162,39,0.5);
+      background: rgba(245,240,232,0.05);
+    }
+
+    .form-field__input::placeholder,
+    .form-field__textarea::placeholder {
+      color: rgba(245,240,232,0.2);
+    }
+
+    .form-field__textarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .form-field__select option {
+      background: #0a1628;
+      color: #f5f0e8;
+    }
+
+    .form-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
     }
 
-    .contact-card {
-      text-align: center;
-      padding: var(--space-8);
-      background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
+    @media (max-width: 540px) {
+      .form-row { grid-template-columns: 1fr; }
     }
 
-    .contact-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-3);
-      letter-spacing: var(--tracking-wide);
+    .form-note {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.3);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      padding: 1.25rem 1.5rem;
+      border-left: 2px solid rgba(201,162,39,0.15);
     }
 
-    .contact-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .contact-card__text a {
-      color: var(--text-primary);
-      text-decoration: none;
-    }
-
-    .contact-card__text a:hover {
-      color: var(--color-gold-500);
-    }
-
-    .location-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .location-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .location-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .location-details {
-      max-width: var(--max-width-md);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .location-item {
+    .form-submit {
       display: flex;
-      gap: var(--space-6);
-      margin-bottom: var(--space-6);
-      padding-bottom: var(--space-6);
-      border-bottom: 1px solid var(--border-subtle);
+      flex-direction: column;
+      gap: 1rem;
     }
 
-    .location-item:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1.1rem 2.5rem;
+      background: rgba(201,162,39,0.1);
+      border: 1px solid rgba(201,162,39,0.5);
+      color: #c9a227;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.4s ease;
     }
 
-    .location-item__icon {
+    .btn-submit:hover {
+      background: rgba(201,162,39,0.18);
+      border-color: #c9a227;
+    }
+
+    .form-consent {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.3);
+      line-height: 1.7;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .form-consent input[type="checkbox"] {
+      margin-top: 3px;
       flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      opacity: 0.7;
+      accent-color: #c9a227;
     }
 
-    .location-item__content h3 {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-    }
-
-    .location-item__content p {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .faq-section {
-      padding: var(--space-20) 0;
-    }
-
-    .faq-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
+    /* ─── SUCCESS STATE (hidden by default) ─── */
+    .vt-success {
+      display: none;
+      background: #060d18;
+      padding: 6rem 1.5rem;
       text-align: center;
-      margin-bottom: var(--space-12);
-      letter-spacing: var(--tracking-wide);
     }
 
-    .faq-list {
-      max-width: var(--max-width-prose);
+    .vt-success.is-shown { display: block; }
+
+    .vt-success__icon {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.6;
+    }
+
+    .vt-success__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 0.75rem;
+    }
+
+    .vt-success__body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 1.9;
+    }
+
+    /* ─── FAQ ─── */
+    .vt-faq {
+      background: #030810;
+      padding: 6rem 1.5rem;
+    }
+
+    .vt-faq__inner {
+      max-width: 680px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
+    }
+
+    .vt-faq__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .vt-faq__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 3rem;
     }
 
     .faq-item {
-      border-bottom: 1px solid var(--border-subtle);
-      padding: var(--space-6) 0;
+      border-bottom: 1px solid rgba(201,162,39,0.08);
     }
 
-    .faq-item__question {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-    }
-
-    .faq-item__answer {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .newsletter-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .newsletter-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .newsletter-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-8);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .newsletter-form {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
+    .faq-item__q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.5rem 0;
       display: flex;
-      gap: var(--space-3);
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-align: left;
+      gap: 1rem;
     }
 
-    .newsletter-form input {
-      flex: 1;
-      padding: var(--space-3) var(--space-4);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-size: var(--text-base);
+    .faq-item__q-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: rgba(245,240,232,0.7);
+      line-height: 1.5;
     }
 
-    .newsletter-form input::placeholder {
-      color: var(--text-tertiary);
+    .faq-item__q-arrow {
+      color: rgba(201,162,39,0.5);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
     }
 
-    .newsletter-form input:focus {
-      outline: none;
-      border-color: var(--color-gold-500);
+    .faq-item.is-open .faq-item__q-arrow {
+      transform: rotate(90deg);
     }
 
-    @media (max-width: 500px) {
-      .newsletter-form {
-        flex-direction: column;
-      }
+    .faq-item__a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
     }
+
+    .faq-item.is-open .faq-item__a {
+      max-height: 400px;
+    }
+
+    .faq-item__a-inner {
+      padding-bottom: 1.5rem;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 2;
+    }
+
+    /* ─── CTA BOTTOM ─── */
+    .vt-bottom {
+      background: #000;
+      padding: 6rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(201,162,39,0.06);
+    }
+
+    .vt-bottom__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 300;
+      color: rgba(245,240,232,0.5);
+      margin-bottom: 0.5rem;
+      font-style: italic;
+    }
+
+    .vt-bottom__body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.3);
+      line-height: 1.9;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    [data-reveal].is-revealed { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../philosophy/" class="nav__link">Philosophy</a>
-          <a href="../sanctuary/" class="nav__link">Sanctuary</a>
-          <a href="../forum/" class="nav__link">Forum</a>
-          <a href="../library/" class="nav__link">Library</a>
-          <a href="./" class="nav__link" style="color: var(--color-gold-500);">Visit</a>
-        </div>
-
-        <div class="nav__actions">
-          <a href="./" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="../" class="nav__logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="#c9a227" stroke-width="1" fill="none"/>
+          <polygon points="14,7 21,11 21,18 14,22 7,18 7,11" stroke="#c9a227" stroke-width="0.5" fill="none" opacity="0.4"/>
+          <circle cx="14" cy="14" r="2" fill="#c9a227" opacity="0.6"/>
+        </svg>
+        <span>Alexandria</span>
+      </a>
+      <div class="nav__links">
+        <a href="../philosophy/" class="nav__link">철학</a>
+        <a href="../sanctuary/" class="nav__link">생츄어리</a>
+        <a href="../library/" class="nav__link">도서관</a>
+        <a href="../forum/" class="nav__link">포럼</a>
+        <a href="./" class="nav__link nav__link--cta is-active">방문 신청</a>
       </div>
-    </div>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../philosophy/" class="nav__link">Philosophy</a>
-      <a href="../sanctuary/" class="nav__link">Sanctuary</a>
-      <a href="../forum/" class="nav__link">Forum</a>
-      <a href="../library/" class="nav__link">Library</a>
-      <a href="./" class="nav__link">Visit</a>
+      <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="visit-hero">
-    <div class="container container-narrow">
-      <span class="section-label" data-animate>Begin Your Journey</span>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl); margin-top: var(--space-4);">
-        Visit Alexandria
+  <!-- HERO -->
+  <section class="vt-hero">
+    <div>
+      <p class="vt-hero__label">방문 신청</p>
+      <h1 class="vt-hero__title">
+        여기까지 오기로<br>결심했다면
       </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6);">
-        The mountain awaits. Choose your path in.
-      </p>
-    </div>
-  </header>
-
-  <!-- Introduction -->
-  <section class="visit-intro" data-animate>
-    <div class="visit-intro__content">
-      <p>
-        Whether you seek a weekend of stillness, months of deep practice, or compassionate care for life's final chapter, Alexandria offers a place for you. Every journey begins with a single step—reaching out.
+      <p class="vt-hero__sub">
+        어떤 이유든 환영합니다.<br>
+        준비가 됐는지 묻지 않겠습니다.
       </p>
     </div>
   </section>
 
-  <div class="divider"></div>
+  <!-- INTENT SELECTOR -->
+  <section class="vt-intent">
+    <div class="vt-intent__inner">
+      <p class="vt-intent__label" data-reveal>어떤 공간을 원하시나요</p>
+      <h2 class="vt-intent__title" data-reveal>방문 목적을 선택하세요</h2>
 
-  <!-- Options -->
-  <section class="options-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Ways to Come</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Choose Your Path</h2>
-    </div>
-
-    <div class="options-grid">
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M32 16 L32 32 L42 38" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="option-card__title">Day Visit</h3>
-        <p class="option-card__duration">1 day</p>
-        <p class="option-card__text">
-          Tour the sanctuary, attend a meditation session, have tea in the garden. Get to know us before committing to more.
-        </p>
-        <div class="option-card__price">
-          Free <small>by reservation</small>
-        </div>
-        <a href="#contact" class="btn btn-secondary" style="width: 100%;">Schedule a Visit</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 48 L32 12 L52 48" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <line x1="22" y1="36" x2="42" y2="36" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="option-card__title">Weekend Retreat</h3>
-        <p class="option-card__duration">3 days</p>
-        <p class="option-card__text">
-          Immerse yourself in the rhythm of sanctuary life. Meditation, silence, nature, community. A taste of what's possible.
-        </p>
-        <div class="option-card__price">
-          ₩450,000 <small>all inclusive</small>
-        </div>
-        <a href="#contact" class="btn btn-secondary" style="width: 100%;">Apply Now</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 48 Q25 28 32 38 Q39 48 49 28" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <circle cx="32" cy="20" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="option-card__title">Cave Retreat</h3>
-        <p class="option-card__duration">3-21 days</p>
-        <p class="option-card__text">
-          Enter the darkness of Palgongsan's ancient caves. Profound practice for experienced meditators ready to go deep.
-        </p>
-        <div class="option-card__price">
-          From ₩900,000
-        </div>
-        <a href="../sanctuary/cave-retreat/" class="btn btn-secondary" style="width: 100%;">Learn More</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="16" y="24" width="32" height="24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M12 24 L32 12 L52 24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <rect x="26" y="36" width="12" height="12" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="option-card__title">Residency</h3>
-        <p class="option-card__duration">3-12 months</p>
-        <p class="option-card__text">
-          Make the sanctuary your home. Extended practice, community living, deep transformation over seasons.
-        </p>
-        <div class="option-card__price">
-          From ₩1,800,000 <small>/month</small>
-        </div>
-        <a href="../sanctuary/residence/" class="btn btn-secondary" style="width: 100%;">Learn More</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="16" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M32 20 L32 44 M24 28 L32 20 L40 28 M24 36 L32 44 L40 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="option-card__title">Hospice Care</h3>
-        <p class="option-card__duration">End of life</p>
-        <p class="option-card__text">
-          For those facing terminal illness. Medical excellence meets spiritual depth. Die with dignity and peace.
-        </p>
-        <div class="option-card__price">
-          ₩8,500,000 <small>/month</small>
-        </div>
-        <a href="../sanctuary/hospice/" class="btn btn-secondary" style="width: 100%;">Learn More</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="40" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="32" cy="42" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="option-card__title">Forum Event</h3>
-        <p class="option-card__duration">1-3 days</p>
-        <p class="option-card__text">
-          Attend a teaching, dialogue, or workshop with visiting wisdom teachers. Open to all.
-        </p>
-        <div class="option-card__price">
-          Varies by event
-        </div>
-        <a href="../forum/" class="btn btn-secondary" style="width: 100%;">See Events</a>
-      </article>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="contact-section" id="contact" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Reach Out</span>
-    <h2 style="margin-top: var(--space-4);">Contact Us</h2>
-    <p>
-      We respond to all inquiries within 48 hours. Reach out in whatever way feels most comfortable.
-    </p>
-
-    <div class="contact-grid">
-      <div class="contact-card">
-        <h3 class="contact-card__title">Email</h3>
-        <p class="contact-card__text">
-          <a href="mailto:welcome@alexandria-sanctuary.org">welcome@alexandria-sanctuary.org</a>
-        </p>
-      </div>
-
-      <div class="contact-card">
-        <h3 class="contact-card__title">Phone</h3>
-        <p class="contact-card__text">
-          <a href="tel:+82537001234">+82 53 700 1234</a><br>
-          <small>Mon-Sat, 9am-5pm KST</small>
-        </p>
-      </div>
-
-      <div class="contact-card">
-        <h3 class="contact-card__title">KakaoTalk</h3>
-        <p class="contact-card__text">
-          <a href="#">@alexandria_sanctuary</a><br>
-          <small>For Korean speakers</small>
-        </p>
+      <div class="intent-grid" data-reveal>
+        <button class="intent-btn is-selected" data-intent="cave" type="button">
+          <div class="intent-btn__icon">◯</div>
+          <p class="intent-btn__name">Cave Retreat</p>
+          <p class="intent-btn__ko">동굴 수련</p>
+          <p class="intent-btn__desc">3일, 7일, 21일<br>완전한 어둠과 침묵</p>
+        </button>
+        <button class="intent-btn" data-intent="residence" type="button">
+          <div class="intent-btn__icon">□</div>
+          <p class="intent-btn__name">Residence</p>
+          <p class="intent-btn__ko">입주 공간</p>
+          <p class="intent-btn__desc">3개월~12개월<br>장기 공동 생활</p>
+        </button>
+        <button class="intent-btn" data-intent="hospice" type="button">
+          <div class="intent-btn__icon">△</div>
+          <p class="intent-btn__name">Hospice</p>
+          <p class="intent-btn__ko">임종 케어</p>
+          <p class="intent-btn__desc">삶의 마지막 단계<br>동반자 지원</p>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- Location -->
-  <section class="location-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Finding Us</span>
-    <h2 style="margin-top: var(--space-4);">Getting Here</h2>
-    <p>
-      Alexandria is located on the slopes of Palgongsan, approximately 20km northeast of Daegu city center.
-    </p>
+  <!-- FORM -->
+  <section class="vt-form">
+    <div class="vt-form__inner">
+      <p class="vt-form__label" data-reveal>신청서</p>
+      <h2 class="vt-form__title" data-reveal>간단한 정보를 남겨주세요</h2>
+      <p class="vt-form__sub" data-reveal>
+        개인 정보는 담당자 외 공유되지 않습니다.<br>
+        실명이 아니어도 됩니다. 이야기를 남기는 것만으로 충분합니다.
+      </p>
 
-    <div class="location-details">
-      <div class="location-item">
-        <svg class="location-item__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 4 L20 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M4 20 L36 20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="20" cy="20" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <div class="location-item__content">
-          <h3>By Air</h3>
-          <p>
-            Fly to Daegu International Airport (TAE). From there, we can arrange pickup (₩80,000) or you can take a taxi (approximately ₩50,000).
-          </p>
+      <form id="visitForm" novalidate>
+        <div class="form-row">
+          <div class="form-field" data-reveal>
+            <label class="form-field__label" for="name">이름 또는 별명</label>
+            <input class="form-field__input" type="text" id="name" name="name" placeholder="익명도 괜찮습니다" autocomplete="name">
+          </div>
+          <div class="form-field" data-reveal>
+            <label class="form-field__label" for="contact">연락처</label>
+            <input class="form-field__input" type="text" id="contact" name="contact" placeholder="이메일 또는 전화번호">
+          </div>
         </div>
-      </div>
 
-      <div class="location-item">
-        <svg class="location-item__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="16" width="24" height="12" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="14" cy="28" r="3" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="26" cy="28" r="3" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="8" y1="12" x2="32" y2="12" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <div class="location-item__content">
-          <h3>By Train</h3>
-          <p>
-            Take KTX to Dongdaegu Station (from Seoul: 1hr 40min). Bus 급행1 runs from the station to Palgongsan. We can also arrange pickup.
-          </p>
+        <div class="form-field" data-reveal>
+          <label class="form-field__label" for="intent">희망 프로그램</label>
+          <select class="form-field__select" id="intent" name="intent">
+            <option value="cave">동굴 수련 (Cave Retreat)</option>
+            <option value="residence">입주 공간 (Residence)</option>
+            <option value="hospice">임종 케어 (Hospice)</option>
+            <option value="visit">단순 방문 / 견학</option>
+            <option value="other">기타 / 아직 모름</option>
+          </select>
         </div>
-      </div>
 
-      <div class="location-item">
-        <svg class="location-item__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="16" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M20 24 L20 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M14 36 L26 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <div class="location-item__content">
-          <h3>Address</h3>
-          <p>
-            Alexandria Sanctuary<br>
-            123 Palgongsan-ro, Dong-gu<br>
-            Daegu 41028, South Korea
-          </p>
+        <div class="form-field" data-reveal>
+          <label class="form-field__label" for="timing">희망 시기</label>
+          <input class="form-field__input" type="text" id="timing" name="timing" placeholder="예: 2025년 여름, 가능한 빨리, 아직 미정">
         </div>
-      </div>
+
+        <div class="form-field" data-reveal>
+          <label class="form-field__label" for="story">지금 어떤 상황인지 간단히 써주세요 (선택)</label>
+          <textarea class="form-field__textarea" id="story" name="story" placeholder="아무것도 쓰지 않아도 됩니다. 쓰고 싶은 것만 쓰세요."></textarea>
+        </div>
+
+        <div class="form-note" data-reveal>
+          알렉산드리아는 자동 응답 없이 사람이 직접 읽고 연락드립니다.<br>
+          보통 3~7일 내 연락드리며, 급한 경우 메모에 남겨주세요.
+        </div>
+
+        <div class="form-submit" data-reveal>
+          <label class="form-consent">
+            <input type="checkbox" id="consent" name="consent" required>
+            <span>개인정보가 알렉산드리아 담당자에게 전달되는 것에 동의합니다. 외부 공유 없음.</span>
+          </label>
+          <button type="submit" class="btn-submit">신청서 보내기 →</button>
+        </div>
+      </form>
     </div>
+  </section>
+
+  <!-- SUCCESS STATE -->
+  <section class="vt-success" id="successPanel">
+    <div class="vt-success__icon">◇</div>
+    <h2 class="vt-success__title">신청서가 전달되었습니다</h2>
+    <p class="vt-success__body">
+      3~7일 내로 담당자가 연락드립니다.<br>
+      그동안 알렉산드리아의 공간들을 둘러보세요.
+    </p>
   </section>
 
   <!-- FAQ -->
-  <section class="faq-section" data-animate>
-    <h2>Common Questions</h2>
+  <section class="vt-faq">
+    <div class="vt-faq__inner">
+      <p class="vt-faq__label" data-reveal>자주 묻는 질문</p>
+      <h2 class="vt-faq__title" data-reveal>먼저 답해드릴게요</h2>
 
-    <div class="faq-list">
-      <div class="faq-item">
-        <h3 class="faq-item__question">Do I need meditation experience?</h3>
-        <p class="faq-item__answer">
-          For weekend retreats and forum events, no experience is necessary. Cave retreats and extended residencies do require some prior meditation practice—we'll discuss your background during the application process.
-        </p>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__q">
+          <span class="faq-item__q-text">특정 종교가 없어도 괜찮은가요?</span>
+          <span class="faq-item__q-arrow">›</span>
+        </button>
+        <div class="faq-item__a">
+          <p class="faq-item__a-inner">완전히 괜찮습니다. 알렉산드리아는 어떤 종교도 강요하지 않습니다. 불교, 천주교, 무속, 무종교 모두 환영합니다. 당신의 언어로 죽음을 말하면 됩니다.</p>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <h3 class="faq-item__question">What about language?</h3>
-        <p class="faq-item__answer">
-          Our programs are conducted in English and Korean. Most visiting teachers speak English. Silence is the primary language of the sanctuary—you'll find that words matter less than you expect.
-        </p>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__q">
+          <span class="faq-item__q-text">혼자 와도 되나요?</span>
+          <span class="faq-item__q-arrow">›</span>
+        </button>
+        <div class="faq-item__a">
+          <p class="faq-item__a-inner">네, 대부분의 참가자가 혼자 옵니다. 가족이 함께 오는 경우도 있습니다. 동반자 여부는 어떤 프로그램이든 영향을 주지 않습니다.</p>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <h3 class="faq-item__question">Is it religious?</h3>
-        <p class="faq-item__answer">
-          Alexandria is not affiliated with any religion. We draw from Buddhist, Christian, Stoic, and indigenous wisdom traditions while welcoming people of all faiths and none. The practice here is about direct experience, not belief.
-        </p>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__q">
+          <span class="faq-item__q-text">비용은 얼마인가요?</span>
+          <span class="faq-item__q-arrow">›</span>
+        </button>
+        <div class="faq-item__a">
+          <p class="faq-item__a-inner">알렉산드리아는 정해진 요금이 없습니다. 후원금으로 운영됩니다. 경제적 여력에 따라 기여하는 구조입니다. 비용 없이도 모든 프로그램에 참가할 수 있습니다.</p>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <h3 class="faq-item__question">What should I bring?</h3>
-        <p class="faq-item__answer">
-          Comfortable, modest clothing for meditation (nothing tight or revealing). Warm layers—the mountain can be cool. Personal toiletries. Any medications. We provide bedding, towels, and meditation cushions.
-        </p>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__q">
+          <span class="faq-item__q-text">아직 죽음이 임박하지 않았는데 임종 케어를 알아봐도 될까요?</span>
+          <span class="faq-item__q-arrow">›</span>
+        </button>
+        <div class="faq-item__a">
+          <p class="faq-item__a-inner">됩니다. 오히려 미리 알아두는 것이 좋습니다. 당장 필요하지 않더라도 대화를 나눌 수 있습니다. 가족을 위해 알아보는 경우도 많습니다.</p>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <h3 class="faq-item__question">Is there WiFi?</h3>
-        <p class="faq-item__answer">
-          Limited WiFi is available in common areas for essential communications. We encourage—but do not require—digital detox during your stay. The mountain offers better connection than any signal.
-        </p>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__q">
+          <span class="faq-item__q-text">동굴 수련이 무섭지 않나요?</span>
+          <span class="faq-item__q-arrow">›</span>
+        </button>
+        <div class="faq-item__a">
+          <p class="faq-item__a-inner">무서울 수 있습니다. 그것이 정상입니다. 완전한 어둠과 침묵은 처음에 낯설고 불안합니다. 입문 과정에서는 지도자가 동반하며 처음 며칠은 점진적으로 적응합니다.</p>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <h3 class="faq-item__question">Can I come alone?</h3>
-        <p class="faq-item__answer">
-          Most people come alone. The community becomes your companions. If you're nervous about traveling solo, reach out—we can connect you with others making the journey.
-        </p>
+      <div class="faq-item" data-reveal>
+        <button class="faq-item__q">
+          <span class="faq-item__q-text">팔공산까지 어떻게 가나요?</span>
+          <span class="faq-item__q-arrow">›</span>
+        </button>
+        <div class="faq-item__a">
+          <p class="faq-item__a-inner">대구에서 차로 40분, 경산에서 30분입니다. 대중교통 이용 시 동화사 방면 버스 이용. 정확한 주소는 방문 신청 확정 후 안내드립니다.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Newsletter -->
-  <section class="newsletter-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Stay Connected</span>
-    <h2 style="margin-top: var(--space-4);">Monthly Reflections</h2>
-    <p>
-      A letter from the mountain—meditations on mortality, announcements of upcoming events, and invitations to practice. Sent monthly. Unsubscribe anytime.
+  <!-- BOTTOM -->
+  <section class="vt-bottom">
+    <p class="vt-bottom__title" data-reveal>"준비가 되지 않아도 됩니다."</p>
+    <p class="vt-bottom__body" data-reveal>
+      알렉산드리아는 죽음을 준비하는 곳이 아닙니다.<br>
+      죽음 앞에서 살아있는 곳입니다.
     </p>
-
-    <form class="newsletter-form" action="#" method="post">
-      <input type="email" name="email" placeholder="Your email address" required>
-      <button type="submit" class="btn btn-primary">Subscribe</button>
-    </form>
   </section>
-
-  <!-- Final CTA -->
-  <section class="section">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        The first step is often the hardest.<br>
-        We are here to walk with you.
-      </p>
-      <div class="mt-8" data-animate>
-        <a href="mailto:welcome@alexandria-sanctuary.org" class="btn btn-primary btn-lg">Send Us a Message</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
-      </div>
-    </div>
-  </footer>
 
   <script src="../assets/js/app.js"></script>
+  <script>
+    // Intent buttons
+    document.querySelectorAll('.intent-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.intent-btn').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        // Sync with select field
+        const intentSelect = document.getElementById('intent');
+        if (intentSelect) {
+          const map = { cave: 'cave', residence: 'residence', hospice: 'hospice' };
+          const val = map[btn.dataset.intent];
+          if (val) intentSelect.value = val;
+        }
+      });
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item__q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('is-open'));
+        if (!wasOpen) item.classList.add('is-open');
+      });
+    });
+
+    // Form submit
+    document.getElementById('visitForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const consent = document.getElementById('consent');
+      if (!consent.checked) {
+        consent.focus();
+        return;
+      }
+      // Hide form, show success
+      document.getElementById('visitForm').closest('.vt-form').style.display = 'none';
+      document.getElementById('successPanel').classList.add('is-shown');
+      document.getElementById('successPanel').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Scroll reveal
+    (function () {
+      const els = document.querySelectorAll('[data-reveal]');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('is-revealed'), i * 80);
+            obs.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      els.forEach(el => obs.observe(el));
+    })();
+  </script>
 </body>
 </html>

@@ -1,866 +1,999 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Hospice care at Alexandria Sanctuary - Compassionate end-of-life care integrating medical excellence with spiritual depth at Palgongsan, Korea.">
+  <meta name="description" content="임종 케어 — 알렉산드리아 생츄어리. 삶의 마지막 단계를 위한 공간. 의료적 처치보다 존재적 동반. 종교 없이, 의례 없이, 함께 있음.">
+  <title>임종 케어 — Alexandria Sanctuary</title>
 
-  <title>Hospice Care - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="../../assets/css/design-system.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../../assets/icons/emblem.svg">
 
   <style>
-    .hospice-hero {
-      min-height: 80vh;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── HERO: warmest, darkest ─── */
+    .hp-hero {
+      min-height: 100vh;
+      background: #050008;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.06), transparent 50%),
-        radial-gradient(ellipse at center bottom, rgba(245, 241, 232, 0.03), transparent 50%),
-        var(--bg-primary);
+      position: relative;
+      overflow: hidden;
     }
 
-    .breadcrumb {
+    /* Slow breathing glow */
+    .hp-hero__breath {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,162,39,0.07) 0%, transparent 70%);
+      animation: breathe 7s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(0.8); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    .hp-hero__body {
+      position: relative;
+      z-index: 2;
+      padding: 0 1.5rem;
+      max-width: 680px;
+    }
+
+    .hp-hero__breadcrumb {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: rgba(201,162,39,0.4);
+      margin-bottom: 3.5rem;
+    }
+
+    .hp-hero__breadcrumb a {
+      color: rgba(201,162,39,0.4);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .hp-hero__breadcrumb a:hover { color: rgba(201,162,39,0.8); }
+
+    .hp-hero__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 2rem;
+    }
+
+    .hp-hero__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7.5vw, 6rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      line-height: 1.06;
+      margin-bottom: 1rem;
+    }
+
+    .hp-hero__title em {
+      display: block;
+      font-style: italic;
+      color: rgba(201,162,39,0.7);
+      font-size: 0.5em;
+      margin-top: 0.6rem;
+    }
+
+    .hp-hero__sub {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      line-height: 2;
+    }
+
+    /* ─── OPENING STATEMENT ─── */
+    .hp-open {
+      background: #000;
+      padding: 8rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hp-open__inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .hp-open__quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(245,240,232,0.8);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    .hp-open__quote strong {
+      font-style: normal;
+      color: #c9a227;
+      font-weight: 400;
+    }
+
+    .hp-open__divider {
+      width: 50px;
+      height: 1px;
+      background: rgba(201,162,39,0.3);
+      margin: 0 auto 3rem;
+    }
+
+    .hp-open__body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.93rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 2.2;
+    }
+
+    /* ─── STORY ─── */
+    .hp-story {
+      background: #060510;
+      padding: 8rem 1.5rem;
+    }
+
+    .hp-story__inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .hp-story__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 3rem;
+    }
+
+    .hp-story__text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(245,240,232,0.78);
+      line-height: 2.1;
+      margin-bottom: 2.5rem;
+    }
+
+    .hp-story__text strong {
+      font-style: normal;
+      color: #c9a227;
+      font-weight: 500;
+    }
+
+    .hp-story__attr {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.3);
+      padding-left: 1.5rem;
+      border-left: 1px solid rgba(201,162,39,0.2);
+    }
+
+    /* ─── WHAT WE DO ─── */
+    .hp-what {
+      background: #030810;
+      padding: 7rem 1.5rem;
+    }
+
+    .hp-what__header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .hp-what__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .hp-what__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+    }
+
+    /* Two-column: do vs don't */
+    .hp-what__split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 680px) {
+      .hp-what__split { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .what-col__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+
+    .what-col--do .what-col__title { color: rgba(201,162,39,0.8); }
+    .what-col--dont .what-col__title { color: rgba(245,240,232,0.35); }
+
+    .what-col__list { list-style: none; }
+
+    .what-col__list li {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.7;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(201,162,39,0.06);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .what-col--do .what-col__list li { color: rgba(245,240,232,0.65); }
+    .what-col--do .what-col__list li::before { content: '✓'; position: absolute; left: 0; color: rgba(201,162,39,0.5); font-size: 0.75rem; }
+
+    .what-col--dont .what-col__list li { color: rgba(245,240,232,0.3); }
+    .what-col--dont .what-col__list li::before { content: '✗'; position: absolute; left: 0; color: rgba(245,240,232,0.2); font-size: 0.75rem; }
+
+    /* ─── PROCESS (death doula flow) ─── */
+    .hp-process {
+      background: #050008;
+      padding: 7rem 1.5rem;
+    }
+
+    .hp-process__header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .hp-process__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .hp-process__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+    }
+
+    .hp-process__flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hp-process__flow::before {
+      content: '';
+      position: absolute;
+      left: 2rem;
+      top: 2rem;
+      bottom: 2rem;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(201,162,39,0.4), rgba(201,162,39,0.05));
+    }
+
+    .process-step {
+      display: flex;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(201,162,39,0.05);
+    }
+
+    .process-step:last-child { border-bottom: none; }
+
+    .process-step__dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(6,13,24,1);
+      border: 1px solid rgba(201,162,39,0.6);
+      flex-shrink: 0;
+      margin-top: 0.3rem;
+      position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: var(--space-2);
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      margin-bottom: var(--space-6);
+      margin-left: 1.25rem;
     }
 
-    .breadcrumb a {
-      color: var(--text-tertiary);
-      text-decoration: none;
-      transition: color var(--duration-normal);
+    .process-step__dot::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(201,162,39,0.6);
     }
 
-    .breadcrumb a:hover {
-      color: var(--color-gold-500);
+    .process-step__content {}
+
+    .process-step__phase {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 0.4rem;
     }
 
-    .breadcrumb span {
-      color: var(--color-gold-500);
+    .process-step__name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #f5f0e8;
+      margin-bottom: 0.5rem;
     }
 
-    .hospice-intro {
-      padding: var(--space-20) 0;
+    .process-step__desc {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 1.9;
     }
 
-    .hospice-intro__content {
-      max-width: var(--max-width-prose);
+    /* ─── COMPANION (death doula) ─── */
+    .hp-comp {
+      background: #000;
+      padding: 7rem 1.5rem;
+      text-align: center;
+    }
+
+    .hp-comp__inner {
+      max-width: 720px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
     }
 
-    .hospice-intro__content p {
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-      margin-bottom: var(--space-6);
+    .hp-comp__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
     }
 
-    .hospice-intro__content blockquote {
-      padding: var(--space-8);
-      margin: var(--space-10) 0;
-      border-left: 2px solid var(--color-gold-500);
-      background: var(--bg-secondary);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    .hp-comp__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 2rem;
     }
 
-    .hospice-intro__content blockquote p {
-      font-style: italic;
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
+    .hp-comp__body {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.5);
+      line-height: 2.2;
+      margin-bottom: 3rem;
     }
 
-    .hospice-intro__content blockquote cite {
-      font-style: normal;
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-    }
-
-    .care-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .care-grid {
+    /* Role cards */
+    .hp-comp__roles {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      text-align: left;
     }
 
-    @media (max-width: 768px) {
-      .care-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 680px) {
+      .hp-comp__roles { grid-template-columns: 1fr; }
     }
 
-    .care-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-10);
+    .role-card {
+      background: rgba(245,240,232,0.02);
+      border: 1px solid rgba(201,162,39,0.1);
+      padding: 2rem 1.75rem;
     }
 
-    .care-card__icon {
-      width: 64px;
-      height: 64px;
-      margin-bottom: var(--space-6);
-      opacity: 0.8;
+    .role-card__icon {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
     }
 
-    .care-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-      letter-spacing: var(--tracking-wide);
+    .role-card__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #f5f0e8;
+      margin-bottom: 0.5rem;
     }
 
-    .care-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-4);
+    .role-card__desc {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      line-height: 1.8;
     }
 
-    .care-card__list {
+    /* ─── FAREWELL RITUAL ─── */
+    .hp-ritual {
+      background: #030810;
+      padding: 8rem 1.5rem;
+    }
+
+    .hp-ritual__inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .hp-ritual__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .hp-ritual__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 3rem;
+    }
+
+    .hp-ritual__body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.93rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.5);
+      line-height: 2.2;
+      margin-bottom: 2.5rem;
+    }
+
+    .hp-ritual__options {
       list-style: none;
-      padding: 0;
-      margin: 0;
     }
 
-    .care-card__list li {
-      padding: var(--space-2) 0;
-      padding-left: var(--space-5);
+    .hp-ritual__options li {
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(201,162,39,0.07);
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.55);
+      line-height: 1.7;
+      padding-left: 1.5rem;
       position: relative;
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
     }
 
-    .care-card__list li::before {
-      content: '·';
+    .hp-ritual__options li::before {
+      content: '—';
       position: absolute;
       left: 0;
-      color: var(--color-gold-500);
-      font-weight: bold;
+      color: rgba(201,162,39,0.3);
     }
 
-    .space-section {
-      padding: var(--space-20) 0;
-    }
-
-    .space-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .space-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .space-features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-6);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .space-feature {
-      text-align: center;
-      padding: var(--space-6);
-      background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .space-feature__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-    }
-
-    .space-feature__text {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .family-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .family-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .family-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .family-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .family-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-8);
+    /* ─── MUSIC AT END OF LIFE ─── */
+    .hp-music {
+      background: #060d18;
+      padding: 6rem 1.5rem;
       text-align: center;
     }
 
-    .family-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-3);
-      letter-spacing: var(--tracking-wide);
+    .hp-music__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
     }
 
-    .family-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
+    .hp-music__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 2.1rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 2rem;
     }
 
-    .philosophy-section {
-      padding: var(--space-20) 0;
+    .hp-music__body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 2.1;
+      max-width: 560px;
+      margin: 0 auto 3rem;
     }
 
-    .philosophy-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-12);
-      letter-spacing: var(--tracking-wide);
+    /* Mini player mock */
+    .hp-music__player {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 2.5rem 3rem;
+      background: rgba(245,240,232,0.02);
+      border: 1px solid rgba(201,162,39,0.12);
+      max-width: 380px;
     }
 
-    .philosophy-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-10);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
+    .hp-music__track {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #f5f0e8;
     }
 
-    .philosophy-item {
-      text-align: center;
+    .hp-music__source {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.4);
     }
 
-    .philosophy-item__number {
-      font-family: var(--font-display);
-      font-size: var(--text-4xl);
-      color: var(--color-gold-500);
-      opacity: 0.4;
-      margin-bottom: var(--space-4);
-    }
-
-    .philosophy-item__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-    }
-
-    .philosophy-item__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .testimonial-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .testimonial {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-      text-align: center;
-    }
-
-    .testimonial__quote {
-      font-family: var(--font-serif);
-      font-size: var(--text-2xl);
-      color: var(--text-primary);
-      line-height: var(--leading-relaxed);
-      font-style: italic;
-      margin-bottom: var(--space-8);
-    }
-
-    .testimonial__author {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-    }
-
-    .testimonial__author strong {
-      display: block;
-      color: var(--color-gold-500);
-      font-weight: 500;
-      margin-bottom: var(--space-1);
-    }
-
-    .admission-section {
-      padding: var(--space-20) 0;
-    }
-
-    .admission-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .admission-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .admission-steps {
-      max-width: var(--max-width-md);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .admission-step {
-      display: flex;
-      gap: var(--space-6);
-      margin-bottom: var(--space-8);
-      align-items: flex-start;
-    }
-
-    .admission-step__number {
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid var(--color-gold-500);
+    /* Waveform bars */
+    .hp-music__wave {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--color-gold-500);
+      gap: 3px;
+      height: 32px;
     }
 
-    .admission-step__content h3 {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
+    .wave-bar {
+      width: 3px;
+      background: rgba(201,162,39,0.5);
+      border-radius: 1px;
+      animation: waveAnim var(--dur) ease-in-out infinite alternate;
+      animation-delay: var(--delay);
     }
 
-    .admission-step__content p {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
+    @keyframes waveAnim {
+      from { height: var(--hmin); }
+      to { height: var(--hmax); }
     }
 
-    .cost-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
+    /* ─── TESTIMONIAL ─── */
+    .hp-test {
+      background: #050008;
+      padding: 7rem 1.5rem;
     }
 
-    .cost-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .cost-section > p {
-      max-width: var(--max-width-prose);
+    .hp-test__inner {
+      max-width: 680px;
       margin: 0 auto;
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
     }
 
-    .cost-note {
-      max-width: var(--max-width-prose);
-      margin: var(--space-8) auto 0;
-      padding: var(--space-8);
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      text-align: center;
-    }
-
-    .cost-note p {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-4);
-    }
-
-    .cost-note p:last-child {
-      margin-bottom: 0;
+    .hp-test__quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
       font-style: italic;
-      color: var(--color-gold-500);
+      font-weight: 300;
+      color: rgba(245,240,232,0.75);
+      line-height: 2;
+      margin-bottom: 2rem;
+      padding-left: 2rem;
+      border-left: 2px solid rgba(201,162,39,0.25);
     }
+
+    .hp-test__attr {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.3);
+      padding-left: 2rem;
+    }
+
+    /* ─── CTA ─── */
+    .hp-cta {
+      background: #000;
+      padding: 7rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(201,162,39,0.06);
+    }
+
+    .hp-cta__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 0.75rem;
+    }
+
+    .hp-cta__sub {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .btn-set { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      border: 1px solid rgba(201,162,39,0.5);
+      color: #c9a227;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.4s ease;
+    }
+    .btn-gold:hover { background: rgba(201,162,39,0.08); border-color: #c9a227; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      border: 1px solid rgba(245,240,232,0.12);
+      color: rgba(245,240,232,0.5);
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.4s ease;
+    }
+    .btn-ghost:hover { border-color: rgba(245,240,232,0.3); color: rgba(245,240,232,0.8); }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    [data-reveal].is-revealed { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../../philosophy/" class="nav__link">Philosophy</a>
-          <a href="../" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
-          <a href="../../forum/" class="nav__link">Forum</a>
-          <a href="../../library/" class="nav__link">Library</a>
-          <a href="../../visit/" class="nav__link">Visit</a>
-        </div>
-
-        <div class="nav__actions">
-          <a href="../../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="../../" class="nav__logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="#c9a227" stroke-width="1" fill="none"/>
+          <polygon points="14,7 21,11 21,18 14,22 7,18 7,11" stroke="#c9a227" stroke-width="0.5" fill="none" opacity="0.4"/>
+          <circle cx="14" cy="14" r="2" fill="#c9a227" opacity="0.6"/>
+        </svg>
+        <span>Alexandria</span>
+      </a>
+      <div class="nav__links">
+        <a href="../../philosophy/" class="nav__link">철학</a>
+        <a href="../" class="nav__link is-active">생츄어리</a>
+        <a href="../../library/" class="nav__link">도서관</a>
+        <a href="../../forum/" class="nav__link">포럼</a>
+        <a href="../../visit/" class="nav__link nav__link--cta">방문 신청</a>
       </div>
-    </div>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../../philosophy/" class="nav__link">Philosophy</a>
-      <a href="../" class="nav__link">Sanctuary</a>
-      <a href="../../forum/" class="nav__link">Forum</a>
-      <a href="../../library/" class="nav__link">Library</a>
-      <a href="../../visit/" class="nav__link">Visit</a>
+      <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hospice-hero">
-    <div class="container container-narrow">
-      <nav class="breadcrumb" data-animate>
-        <a href="../">Sanctuary</a>
+  <!-- HERO -->
+  <section class="hp-hero">
+    <div class="hp-hero__breath"></div>
+
+    <div class="hp-hero__body">
+      <div class="hp-hero__breadcrumb">
+        <a href="../../">Alexandria</a>
         <span>›</span>
-        <span>Hospice</span>
-      </nav>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl);">
-        Hospice Care
+        <a href="../">생츄어리</a>
+        <span>›</span>
+        <span style="color: rgba(201,162,39,0.7);">임종 케어</span>
+      </div>
+      <p class="hp-hero__label">Space 03 · Hospice</p>
+      <h1 class="hp-hero__title">
+        임종 케어
+        <em>Being Present at the End</em>
       </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-4);">
-        돌봄의 집 · Dolbom-ui Jip
-      </p>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6); font-size: var(--text-lg);">
-        A sacred place to complete life's journey<br>with dignity, peace, and love.
-      </p>
-    </div>
-  </header>
-
-  <!-- Introduction -->
-  <section class="hospice-intro" data-animate>
-    <div class="hospice-intro__content">
-      <p>
-        Death is not a medical failure. It is life's final chapter—and like all chapters, it deserves to be written with care. At Alexandria's hospice, we believe that how we die matters as much as how we live.
-      </p>
-      <p>
-        Our hospice is not a place of waiting. It is a place of living—fully, consciously, with whatever time remains. Here, palliative medicine meets contemplative wisdom. Pain is managed with expertise. Fear is met with presence. And the soul is tended as carefully as the body.
-      </p>
-      <blockquote>
-        <p>"We do not cure at Alexandria. We care. And in that caring, something more profound than cure often happens: acceptance, reconciliation, even gratitude."</p>
-        <cite>— Dr. Minji Park, Medical Director</cite>
-      </blockquote>
-      <p>
-        Our residents come from all backgrounds—Buddhist, Christian, secular, uncertain. We do not impose any belief. We simply create conditions where each person can meet death in their own way, surrounded by beauty, supported by skill, and held by love.
+      <p class="hp-hero__sub">
+        마지막 순간,<br>
+        혼자이지 않아도 됩니다
       </p>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- Our Care -->
-  <section class="care-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Our Approach</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Integrative Care</h2>
-      <p class="section-subtitle" style="margin-top: var(--space-4);">
-        Medical excellence and spiritual depth, woven together.
+  <!-- OPENING STATEMENT -->
+  <section class="hp-open">
+    <div class="hp-open__inner" data-reveal>
+      <p class="hp-open__quote">
+        "죽음은 의료적 실패가 아닙니다.<br>
+        죽음은 <strong>삶의 완성</strong>입니다."
       </p>
-    </div>
-
-    <div class="care-grid">
-      <article class="care-card">
-        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="12" y="24" width="40" height="28" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M32 12 L32 24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M24 18 L32 12 L40 18" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M26 38 L32 32 L38 38 L32 44 Z" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-        </svg>
-        <h3 class="care-card__title">Palliative Medicine</h3>
-        <p class="care-card__text">
-          Expert symptom management by board-certified palliative physicians. Pain, nausea, anxiety, breathlessness—all addressed with the latest medical knowledge.
-        </p>
-        <ul class="care-card__list">
-          <li>24-hour nursing care</li>
-          <li>Physician on call always</li>
-          <li>Advanced pain protocols</li>
-          <li>Comfort-focused approach</li>
-        </ul>
-      </article>
-
-      <article class="care-card">
-        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M32 16 L32 32 L44 32" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="32" cy="32" r="4" fill="var(--color-gold-500)" opacity="0.3"/>
-        </svg>
-        <h3 class="care-card__title">Spiritual Companionship</h3>
-        <p class="care-card__text">
-          Trained spiritual companions from Buddhist, Christian, and secular contemplative traditions. They listen, sit, pray, or simply offer presence.
-        </p>
-        <ul class="care-card__list">
-          <li>Daily companion visits</li>
-          <li>Multi-faith chaplaincy</li>
-          <li>Meditation guidance</li>
-          <li>Life review facilitation</li>
-        </ul>
-      </article>
-
-      <article class="care-card">
-        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="22" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="42" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="32" cy="44" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="care-card__title">Emotional Support</h3>
-        <p class="care-card__text">
-          Licensed therapists and counselors available for patients and families. Grief support before, during, and after death.
-        </p>
-        <ul class="care-card__list">
-          <li>Individual counseling</li>
-          <li>Family therapy</li>
-          <li>Anticipatory grief support</li>
-          <li>Bereavement follow-up</li>
-        </ul>
-      </article>
-
-      <article class="care-card">
-        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 52 Q22 32 32 42 Q42 52 52 32" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <circle cx="32" cy="18" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="care-card__title">Creative Expression</h3>
-        <p class="care-card__text">
-          Art therapy, music, poetry—ways to express what words alone cannot capture. Legacy projects to leave something meaningful behind.
-        </p>
-        <ul class="care-card__list">
-          <li>Art therapy sessions</li>
-          <li>Music at bedside</li>
-          <li>Legacy letter writing</li>
-          <li>Memory book creation</li>
-        </ul>
-      </article>
+      <div class="hp-open__divider"></div>
+      <p class="hp-open__body">
+        알렉산드리아 임종 케어는 호스피스가 아닙니다.<br>
+        병원도 아닙니다.<br>
+        치료를 포기한 곳도 아닙니다.<br><br>
+        여기는 단지,<br>
+        한 사람이 자신의 방식으로 삶을 마칠 수 있도록<br>
+        옆에 있어주는 공간입니다.
+      </p>
     </div>
   </section>
 
-  <!-- The Space -->
-  <section class="space-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">The Space</span>
-    <h2 style="margin-top: var(--space-4);">Where Beauty Heals</h2>
-    <p>
-      Our hospice suites are not hospital rooms. They are sanctuaries—designed to nourish the spirit even as the body prepares to release.
+  <!-- STORY -->
+  <section class="hp-story">
+    <div class="hp-story__inner">
+      <p class="hp-story__label" data-reveal>창립자의 기록</p>
+      <p class="hp-story__text" data-reveal>
+        요양원에 입소하던 날,<br>
+        어머니는 처음으로 내 손을 놓았다.<br><br>
+        엘리베이터 문이 닫히는 순간,<br>
+        <strong>나는 그것이 작별인지 몰랐다.</strong><br><br>
+        그날 밤, 나는 생각했다.<br>
+        만약 누군가 어머니 옆에 그냥 앉아 있었다면,<br>
+        손을 잡아주었다면,<br>
+        아무것도 설명하지 않고 함께 있었다면.<br><br>
+        그것이 임종 케어를 만든 이유입니다.
+      </p>
+      <p class="hp-story__attr" data-reveal>창립자 익명 기록 · 2021년 겨울</p>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO / DON'T -->
+  <section class="hp-what">
+    <div class="hp-what__header" data-reveal>
+      <p class="hp-what__label">우리가 하는 것과 하지 않는 것</p>
+      <h2 class="hp-what__title">존재의 경계</h2>
+    </div>
+
+    <div class="hp-what__split">
+      <div class="what-col what-col--do" data-reveal>
+        <h3 class="what-col__title">우리가 하는 것</h3>
+        <ul class="what-col__list">
+          <li>침대 옆에 그냥 앉아 있기</li>
+          <li>손 잡기 (요청 시)</li>
+          <li>원하는 음악 틀어주기</li>
+          <li>가족 연락 대행</li>
+          <li>원하는 이야기 듣기</li>
+          <li>통증 완화 의료 연계</li>
+          <li>임종 후 정리 지원</li>
+          <li>유서 구술 기록</li>
+        </ul>
+      </div>
+      <div class="what-col what-col--dont" data-reveal>
+        <h3 class="what-col__title">우리가 하지 않는 것</h3>
+        <ul class="what-col__list">
+          <li>종교적 의식 강요</li>
+          <li>적극적 치료 시도</li>
+          <li>가족에게 결정 대신하기</li>
+          <li>고통 숨기거나 포장하기</li>
+          <li>죽음에 대해 긍정적으로 설득</li>
+          <li>울지 말라고 말하기</li>
+          <li>서류 처리만 해주는 것</li>
+          <li>24시간 감시</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="hp-process">
+    <div class="hp-process__header" data-reveal>
+      <p class="hp-process__label">함께하는 과정</p>
+      <h2 class="hp-process__title">임종의 단계들</h2>
+    </div>
+
+    <div class="hp-process__flow" data-reveal>
+      <div class="process-step">
+        <div class="process-step__dot"></div>
+        <div class="process-step__content">
+          <p class="process-step__phase">Phase 01</p>
+          <p class="process-step__name">첫 만남</p>
+          <p class="process-step__desc">담당 동반자가 처음 방문합니다. 아무것도 결정하지 않아도 됩니다. 그냥 만나는 것으로 시작합니다.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__dot"></div>
+        <div class="process-step__content">
+          <p class="process-step__phase">Phase 02</p>
+          <p class="process-step__name">원하는 것 찾기</p>
+          <p class="process-step__desc">어떤 음악을 원하는지, 누가 옆에 있기를 원하는지, 마지막에 어떤 말을 하고 싶은지. 당신의 언어로 말해도 됩니다.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__dot"></div>
+        <div class="process-step__content">
+          <p class="process-step__phase">Phase 03</p>
+          <p class="process-step__name">일상 동반</p>
+          <p class="process-step__desc">매일 또는 필요한 만큼 동반자가 함께합니다. 대화일 수도 있고, 침묵일 수도 있습니다.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__dot"></div>
+        <div class="process-step__content">
+          <p class="process-step__phase">Phase 04</p>
+          <p class="process-step__name">임종의 순간</p>
+          <p class="process-step__desc">원하면 동반자가 함께 있습니다. 원하지 않으면 혼자 있을 수 있습니다. 어떤 선택도 존중됩니다.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__dot"></div>
+        <div class="process-step__content">
+          <p class="process-step__phase">Phase 05</p>
+          <p class="process-step__name">남은 이들을 위한 지원</p>
+          <p class="process-step__desc">가족과 지인을 위한 슬픔 동반 프로그램. 알렉산드리아 아카이브에 고인의 이야기를 남길 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPANION / DEATH DOULA -->
+  <section class="hp-comp">
+    <div class="hp-comp__inner">
+      <p class="hp-comp__label" data-reveal>동반자</p>
+      <h2 class="hp-comp__title" data-reveal>죽음 동반자 (Death Doula)</h2>
+      <p class="hp-comp__body" data-reveal>
+        알렉산드리아의 동반자들은 의료인이 아닙니다.<br>
+        이들은 각자의 죽음과 가까운 경험을 가진 사람들입니다.<br>
+        스스로 상실을 겪었고, 그 경험을 언어화한 사람들입니다.
+      </p>
+
+      <div class="hp-comp__roles" data-reveal>
+        <div class="role-card">
+          <div class="role-card__icon">◦</div>
+          <h3 class="role-card__title">존재적 동반자</h3>
+          <p class="role-card__desc">철학적 질문을 함께 탐색합니다. 의미, 유산, 두려움. 답 없이 함께 앉아 있습니다.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-card__icon">◦</div>
+          <h3 class="role-card__title">음악 동반자</h3>
+          <p class="role-card__desc">원하는 음악을 선별하고 재생합니다. MIDI 성가, 범패, 세속음악 모두 가능합니다.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-card__icon">◦</div>
+          <h3 class="role-card__title">기록 동반자</h3>
+          <p class="role-card__desc">구술 기록을 남깁니다. 유서, 편지, 이야기. 당신의 목소리로 남기고 싶은 것들.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAREWELL RITUAL -->
+  <section class="hp-ritual">
+    <div class="hp-ritual__inner">
+      <p class="hp-ritual__label" data-reveal>작별 의례</p>
+      <h2 class="hp-ritual__title" data-reveal>당신이 원하는 방식으로</h2>
+      <p class="hp-ritual__body" data-reveal>
+        알렉산드리아는 정해진 작별 의례가 없습니다.<br>
+        당신이 원하는 것이 의례입니다.<br>
+        다음 중 어떤 것도, 또는 전혀 없는 것도 선택 가능합니다.
+      </p>
+      <ul class="hp-ritual__options" data-reveal>
+        <li>특정 음악 재생 (그레고리안 성가, 범패, 좋아하는 노래)</li>
+        <li>촛불 또는 향 (가능한 경우)</li>
+        <li>원하는 사람들만 침실에 함께</li>
+        <li>구술 유서 낭독</li>
+        <li>산을 향한 창문 열어두기</li>
+        <li>완전한 침묵</li>
+        <li>알렉산드리아 아카이브에 기록 남기기</li>
+        <li>종교적 의례 (담당 종교인 연결 지원)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MUSIC AT END OF LIFE -->
+  <section class="hp-music">
+    <p class="hp-music__label" data-reveal>삶의 끝에서 듣는 음악</p>
+    <h2 class="hp-music__title" data-reveal>In Paradisum</h2>
+    <p class="hp-music__body" data-reveal>
+      가브리엘 포레의 레퀴엠 마지막 악장.<br>
+      "천사들이 당신을 낙원으로 인도하기를."<br>
+      MIDI 렌더링으로 저작권 없이, 언제든지, 원하는 만큼.
     </p>
 
-    <div class="space-features">
-      <div class="space-feature">
-        <h3 class="space-feature__title">Private Suites</h3>
-        <p class="space-feature__text">
-          Each 35㎡ suite includes space for family to stay. No shared rooms. No institutional atmosphere.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Garden Access</h3>
-        <p class="space-feature__text">
-          Every suite opens to a private garden. Even beds can be rolled outside to feel sun and wind.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Mountain Views</h3>
-        <p class="space-feature__text">
-          Floor-to-ceiling windows frame Palgongsan. The mountain is present in every moment.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Natural Materials</h3>
-        <p class="space-feature__text">
-          Wood, stone, natural fibers. Nothing plastic, nothing harsh. Warmth in every surface.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Meditation Alcove</h3>
-        <p class="space-feature__text">
-          A quiet corner in each suite for prayer, meditation, or simple sitting in silence.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Family Kitchen</h3>
-        <p class="space-feature__text">
-          A shared kitchen for families to prepare loved ones' favorite foods. Comfort in familiar tastes.
-        </p>
-      </div>
+    <div class="hp-music__player" data-reveal>
+      <p class="hp-music__track">In Paradisum — Fauré Requiem</p>
+      <p class="hp-music__source">IMSLP · Public Domain MIDI · Studio Rendered</p>
+      <div class="hp-music__wave" id="endWave"></div>
     </div>
   </section>
 
-  <!-- For Families -->
-  <section class="family-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">For Families</span>
-    <h2 style="margin-top: var(--space-4);">Walking Together</h2>
-    <p>
-      Death is hard for those who remain. We support not just the dying, but those who love them.
-    </p>
-
-    <div class="family-grid">
-      <article class="family-card">
-        <h3 class="family-card__title">Family Accommodations</h3>
-        <p class="family-card__text">
-          Stay in your loved one's suite or in nearby guest rooms. Be present without exhaustion. We provide bedding, meals, and support.
-        </p>
-      </article>
-
-      <article class="family-card">
-        <h3 class="family-card__title">Caregiver Support</h3>
-        <p class="family-card__text">
-          Guidance on how to be present, how to touch, how to speak to someone dying. Practical wisdom for an overwhelming time.
-        </p>
-      </article>
-
-      <article class="family-card">
-        <h3 class="family-card__title">Bereavement Care</h3>
-        <p class="family-card__text">
-          Our relationship doesn't end at death. Grief support groups, counseling, and memorial services continue for a full year.
-        </p>
-      </article>
-    </div>
-  </section>
-
-  <!-- Philosophy -->
-  <section class="philosophy-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Our Philosophy</span>
-    <h2 style="margin-top: var(--space-4);">What We Believe</h2>
-
-    <div class="philosophy-grid">
-      <div class="philosophy-item">
-        <div class="philosophy-item__number">I</div>
-        <h3 class="philosophy-item__title">Death Is Sacred</h3>
-        <p class="philosophy-item__text">
-          The moment of death is as sacred as birth. It deserves beauty, intention, and reverence—not the sterile efficiency of a hospital.
-        </p>
-      </div>
-
-      <div class="philosophy-item">
-        <div class="philosophy-item__number">II</div>
-        <h3 class="philosophy-item__title">Pain Is Optional</h3>
-        <p class="philosophy-item__text">
-          Modern palliative medicine can manage almost all physical suffering. No one should die in pain. We use every tool available.
-        </p>
-      </div>
-
-      <div class="philosophy-item">
-        <div class="philosophy-item__number">III</div>
-        <h3 class="philosophy-item__title">Presence Is Medicine</h3>
-        <p class="philosophy-item__text">
-          Sometimes the most healing thing is simply not being alone. We ensure that no one dies without someone holding their hand.
-        </p>
-      </div>
-
-      <div class="philosophy-item">
-        <div class="philosophy-item__number">IV</div>
-        <h3 class="philosophy-item__title">Meaning Matters</h3>
-        <p class="philosophy-item__text">
-          The dying often have unfinished business—words unsaid, wounds unhealed. We help complete what needs completing.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonial -->
-  <section class="testimonial-section" data-animate>
-    <div class="container">
-      <div class="ornament">✦</div>
-      <div class="testimonial">
-        <p class="testimonial__quote">
-          "My father came to Alexandria terrified of death. He left this world at peace—laughing with his grandchildren, watching the sunset over Palgongsan, whispering gratitude. I didn't know death could be like this. I didn't know it could be beautiful."
-        </p>
-        <div class="testimonial__author">
-          <strong>Hyunjoo K.</strong>
-          Daughter of hospice resident, 2025
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Admission -->
-  <section class="admission-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Getting Started</span>
-    <h2 style="margin-top: var(--space-4);">Admission Process</h2>
-    <p>
-      We welcome anyone facing a life-limiting illness who desires holistic end-of-life care. The process is simple and compassionate.
-    </p>
-
-    <div class="admission-steps">
-      <div class="admission-step">
-        <div class="admission-step__number">1</div>
-        <div class="admission-step__content">
-          <h3>Initial Contact</h3>
-          <p>Call or email us. Our care coordinator will listen to your situation and answer initial questions. No commitment required.</p>
-        </div>
-      </div>
-
-      <div class="admission-step">
-        <div class="admission-step__number">2</div>
-        <div class="admission-step__content">
-          <h3>Medical Review</h3>
-          <p>Share medical records with our team. Our physicians will review the case and confirm that hospice care is appropriate.</p>
-        </div>
-      </div>
-
-      <div class="admission-step">
-        <div class="admission-step__number">3</div>
-        <div class="admission-step__content">
-          <h3>Visit</h3>
-          <p>If possible, come see the sanctuary. Walk the gardens, meet the staff, feel the space. This is an important decision.</p>
-        </div>
-      </div>
-
-      <div class="admission-step">
-        <div class="admission-step__number">4</div>
-        <div class="admission-step__content">
-          <h3>Welcome</h3>
-          <p>When you're ready, we prepare your suite and welcome you home. The journey begins.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cost -->
-  <section class="cost-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Investment</span>
-    <h2 style="margin-top: var(--space-4);">Cost & Financial Support</h2>
-    <p>
-      Hospice care at Alexandria costs ₩8,500,000 per month, all inclusive—medical care, accommodation, meals, spiritual support, and family stays. This is less than most hospitals and far more humane.
-    </p>
-
-    <div class="cost-note">
-      <p>
-        We believe that dying well should not be a privilege of the wealthy. Our foundation provides scholarship support for those who cannot afford full fees. Please do not let cost prevent you from inquiring.
+  <!-- TESTIMONIAL -->
+  <section class="hp-test">
+    <div class="hp-test__inner" data-reveal>
+      <p class="hp-test__quote">
+        "아버지가 마지막으로 요청한 것은<br>
+        그레고리안 성가였습니다.<br><br>
+        동반자가 틀어주었고,<br>
+        아버지는 눈을 감고 고개를 끄덕였습니다.<br>
+        그것이 마지막 대화였습니다.<br><br>
+        나는 그것으로 충분했다고 생각합니다."
       </p>
-      <p>
-        "No one turned away for inability to pay."
-      </p>
+      <p class="hp-test__attr">방문자 #1192 · 부친 임종 동반 기록</p>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="section" style="padding-top: var(--space-10);">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        Questions? Concerns? Simply want to talk?<br>
-        We are here to listen.
-      </p>
-      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-        <a href="../../visit/" class="btn btn-primary">Contact Us</a>
-        <a href="../../philosophy/" class="btn btn-secondary">Learn Our Philosophy</a>
-      </div>
+  <section class="hp-cta">
+    <h2 class="hp-cta__title" data-reveal>임종 케어 문의</h2>
+    <p class="hp-cta__sub" data-reveal>
+      급하지 않아도 됩니다.<br>
+      준비가 되면, 또는 준비가 되지 않았더라도, 연락하세요.
+    </p>
+    <div class="btn-set" data-reveal>
+      <a href="../../visit/" class="btn-gold">문의하기 →</a>
+      <a href="../" class="btn-ghost">← 생츄어리로 돌아가기</a>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
-      </div>
-    </div>
-  </footer>
-
   <script src="../../assets/js/app.js"></script>
+  <script>
+    // Build waveform bars
+    (function () {
+      const wave = document.getElementById('endWave');
+      if (!wave) return;
+      const count = 20;
+      for (let i = 0; i < count; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'wave-bar';
+        const hmin = 4 + Math.random() * 8;
+        const hmax = 14 + Math.random() * 18;
+        const dur = 0.8 + Math.random() * 1.4;
+        const delay = Math.random() * 1.2;
+        bar.style.cssText = `--hmin:${hmin}px;--hmax:${hmax}px;--dur:${dur}s;--delay:${delay}s;height:${hmin}px`;
+        wave.appendChild(bar);
+      }
+    })();
+
+    // Scroll reveal
+    (function () {
+      const els = document.querySelectorAll('[data-reveal]');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('is-revealed'), i * 80);
+            obs.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      els.forEach(el => obs.observe(el));
+    })();
+  </script>
 </body>
 </html>

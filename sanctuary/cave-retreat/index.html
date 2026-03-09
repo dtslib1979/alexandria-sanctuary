@@ -1,621 +1,775 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Cave retreat programs at Alexandria Sanctuary - Deep meditation in natural mountain caves at Palgongsan, Korea.">
+  <meta name="description" content="동굴 수련 — 팔공산 천연 동굴에서의 3일, 7일, 21일 프로그램. 완전한 어둠, 완전한 침묵. 자신의 죽음을 상상하는 시간.">
+  <title>동굴 수련 — Alexandria Sanctuary</title>
 
-  <title>Cave Retreat - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="../../assets/css/design-system.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../../assets/icons/emblem.svg">
 
   <style>
-    .cave-hero {
-      min-height: 80vh;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── HERO: pure darkness ─── */
+    .cv-hero {
+      min-height: 100vh;
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center, rgba(10, 22, 40, 0.9), var(--bg-primary)),
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.05), transparent 50%);
-      position: relative;
-    }
-
-    .cave-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 30% 40%, rgba(201, 162, 39, 0.03) 0%, transparent 30%),
-        radial-gradient(circle at 70% 60%, rgba(201, 162, 39, 0.02) 0%, transparent 25%);
-    }
-
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      margin-bottom: var(--space-6);
-    }
-
-    .breadcrumb a {
-      color: var(--text-tertiary);
-      text-decoration: none;
-      transition: color var(--duration-normal);
-    }
-
-    .breadcrumb a:hover {
-      color: var(--color-gold-500);
-    }
-
-    .breadcrumb span {
-      color: var(--color-gold-500);
-    }
-
-    .cave-intro {
-      padding: var(--space-20) 0;
-    }
-
-    .cave-intro__content {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .cave-intro__content p {
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-      margin-bottom: var(--space-6);
-    }
-
-    .cave-intro__content blockquote {
-      padding: var(--space-8);
-      margin: var(--space-10) 0;
-      border-left: 2px solid var(--color-gold-500);
-      background: var(--bg-secondary);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    }
-
-    .cave-intro__content blockquote p {
-      font-style: italic;
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-    }
-
-    .cave-intro__content blockquote cite {
-      font-style: normal;
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-    }
-
-    .programs-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .program-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-xl);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
-    }
-
-    .program-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-10);
       position: relative;
       overflow: hidden;
     }
 
-    .program-card::before {
+    /* Concentric cave-mouth rings */
+    .cv-hero__rings {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .cv-hero__ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(201,162,39,0.06);
+      animation: ringPulse 8s ease-in-out infinite;
+    }
+
+    .cv-hero__ring:nth-child(1) { width: 160px; height: 160px; animation-delay: 0s; }
+    .cv-hero__ring:nth-child(2) { width: 320px; height: 320px; animation-delay: 0.8s; border-color: rgba(201,162,39,0.05); }
+    .cv-hero__ring:nth-child(3) { width: 520px; height: 520px; animation-delay: 1.6s; border-color: rgba(201,162,39,0.04); }
+    .cv-hero__ring:nth-child(4) { width: 760px; height: 760px; animation-delay: 2.4s; border-color: rgba(201,162,39,0.03); }
+    .cv-hero__ring:nth-child(5) { width: 1040px; height: 1040px; animation-delay: 3.2s; border-color: rgba(201,162,39,0.02); }
+
+    @keyframes ringPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+
+    .cv-hero__breadcrumb {
+      position: absolute;
+      top: 8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: rgba(201,162,39,0.4);
+      white-space: nowrap;
+    }
+
+    .cv-hero__breadcrumb a {
+      color: rgba(201,162,39,0.4);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .cv-hero__breadcrumb a:hover { color: rgba(201,162,39,0.8); }
+
+    .cv-hero__body {
+      position: relative;
+      z-index: 2;
+      padding: 0 1.5rem;
+      max-width: 720px;
+    }
+
+    .cv-hero__en {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 2rem;
+    }
+
+    .cv-hero__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      line-height: 1.05;
+      margin-bottom: 2rem;
+    }
+
+    .cv-hero__title em {
+      display: block;
+      font-style: italic;
+      color: #c9a227;
+      font-size: 0.55em;
+      margin-top: 0.5rem;
+    }
+
+    .cv-hero__sub {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 2;
+    }
+
+    /* ─── PERSONAL STORY ─── */
+    .cv-story {
+      background: #030810;
+      padding: 8rem 1.5rem;
+    }
+
+    .cv-story__inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .cv-story__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 3rem;
+    }
+
+    .cv-story__text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(245,240,232,0.75);
+      line-height: 2;
+      margin-bottom: 2.5rem;
+    }
+
+    .cv-story__text strong {
+      font-style: normal;
+      color: #c9a227;
+      font-weight: 500;
+    }
+
+    .cv-story__attr {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.3);
+      padding-left: 1.5rem;
+      border-left: 1px solid rgba(201,162,39,0.2);
+    }
+
+    /* ─── PROGRAMS ─── */
+    .cv-prog {
+      background: #060d18;
+      padding: 7rem 1.5rem;
+    }
+
+    .cv-prog__header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .cv-prog__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .cv-prog__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+      color: #f5f0e8;
+    }
+
+    .cv-prog__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 860px) {
+      .cv-prog__grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .prog-card {
+      background: rgba(245,240,232,0.02);
+      border: 1px solid rgba(201,162,39,0.1);
+      padding: 3rem 2.5rem;
+      position: relative;
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    .prog-card:hover {
+      background: rgba(201,162,39,0.03);
+      border-color: rgba(201,162,39,0.25);
+    }
+
+    .prog-card__days {
+      font-family: 'Cinzel', serif;
+      font-size: 3.5rem;
+      font-weight: 400;
+      color: rgba(201,162,39,0.15);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .prog-card__name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: #f5f0e8;
+      margin-bottom: 0.4rem;
+    }
+
+    .prog-card__ko {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.85rem;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1.5rem;
+    }
+
+    .prog-card__list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .prog-card__list li {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.5);
+      line-height: 1.7;
+      padding-left: 1rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+    }
+
+    .prog-card__list li::before {
+      content: '◦';
+      position: absolute;
+      left: 0;
+      color: rgba(201,162,39,0.4);
+    }
+
+    .prog-card__tag {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      border: 1px solid rgba(201,162,39,0.2);
+      padding: 0.3rem 0.75rem;
+    }
+
+    /* ─── SCHEDULE (timeline) ─── */
+    .cv-sched {
+      background: #030810;
+      padding: 7rem 1.5rem;
+    }
+
+    .cv-sched__inner {
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    .cv-sched__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .cv-sched__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 4rem;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
       content: '';
       position: absolute;
-      top: 0;
       left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--color-gold-500), transparent);
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(201,162,39,0.4), rgba(201,162,39,0.05));
     }
 
-    .program-card__duration {
-      font-family: var(--font-display);
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-      letter-spacing: var(--tracking-widest);
-      text-transform: uppercase;
-      margin-bottom: var(--space-3);
+    .tl-item {
+      position: relative;
+      padding: 0 0 3rem 2rem;
     }
 
-    .program-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-2xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-      letter-spacing: var(--tracking-wide);
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -0.3rem;
+      top: 0.35rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(201,162,39,0.6);
+      border: 1px solid rgba(201,162,39,0.9);
     }
 
-    .program-card__subtitle {
-      font-family: var(--font-serif);
-      font-size: var(--text-base);
-      color: var(--text-tertiary);
-      font-style: italic;
-      margin-bottom: var(--space-6);
+    .tl-item__time {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 0.4rem;
     }
 
-    .program-card__description {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-6);
-    }
-
-    .program-card__details {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 var(--space-8);
-      border-top: 1px solid var(--border-subtle);
-      padding-top: var(--space-6);
-    }
-
-    .program-card__details li {
-      display: flex;
-      justify-content: space-between;
-      padding: var(--space-2) 0;
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-    }
-
-    .program-card__details li span:first-child {
-      color: var(--text-tertiary);
-    }
-
-    .program-card__price {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-6);
-    }
-
-    .program-card__price small {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      font-family: var(--font-body);
-    }
-
-    .preparation-section {
-      padding: var(--space-20) 0;
-    }
-
-    .preparation-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .preparation-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .preparation-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .preparation-item {
-      text-align: center;
-      padding: var(--space-8);
-    }
-
-    .preparation-item__icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto var(--space-4);
-      opacity: 0.8;
-    }
-
-    .preparation-item__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-    }
-
-    .preparation-item__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .testimonial-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .testimonial {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-      text-align: center;
-    }
-
-    .testimonial__quote {
-      font-family: var(--font-serif);
-      font-size: var(--text-2xl);
-      color: var(--text-primary);
-      line-height: var(--leading-relaxed);
-      font-style: italic;
-      margin-bottom: var(--space-8);
-    }
-
-    .testimonial__author {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-    }
-
-    .testimonial__author strong {
-      display: block;
-      color: var(--color-gold-500);
+    .tl-item__event {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
       font-weight: 500;
-      margin-bottom: var(--space-1);
+      color: #f5f0e8;
+      margin-bottom: 0.3rem;
     }
 
-    .faq-section {
-      padding: var(--space-20) 0;
+    .tl-item__desc {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.83rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 1.8;
     }
 
-    .faq-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
+    /* ─── WHAT AWAITS ─── */
+    .cv-await {
+      background: #000;
+      padding: 7rem 1.5rem;
       text-align: center;
-      margin-bottom: var(--space-12);
-      letter-spacing: var(--tracking-wide);
+      position: relative;
+      overflow: hidden;
     }
 
-    .faq-list {
-      max-width: var(--max-width-prose);
+    .cv-await::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(201,162,39,0.04) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cv-await__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .cv-await__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 3rem;
+    }
+
+    .cv-await__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto 4rem;
+    }
+
+    @media (max-width: 760px) {
+      .cv-await__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .await-item {
+      text-align: center;
+    }
+
+    .await-item__symbol {
+      font-size: 1.6rem;
+      margin-bottom: 0.75rem;
+      opacity: 0.5;
+    }
+
+    .await-item__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #f5f0e8;
+      margin-bottom: 0.4rem;
+    }
+
+    .await-item__desc {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      line-height: 1.7;
+    }
+
+    /* ─── TESTIMONIAL ─── */
+    .cv-test {
+      background: #060d18;
+      padding: 7rem 1.5rem;
+    }
+
+    .cv-test__inner {
+      max-width: 680px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
     }
 
-    .faq-item {
-      border-bottom: 1px solid var(--border-subtle);
-      padding: var(--space-6) 0;
+    .cv-test__quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(245,240,232,0.7);
+      line-height: 2;
+      margin-bottom: 2rem;
+      padding-left: 2rem;
+      border-left: 2px solid rgba(201,162,39,0.3);
     }
 
-    .faq-item__question {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
+    .cv-test__attr {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.3);
+      padding-left: 2rem;
     }
 
-    .faq-item__answer {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
+    /* ─── CTA ─── */
+    .cv-cta {
+      background: #030810;
+      padding: 6rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(201,162,39,0.08);
     }
+
+    .cv-cta__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 0.75rem;
+    }
+
+    .cv-cta__sub {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-set { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      border: 1px solid rgba(201,162,39,0.5);
+      color: #c9a227;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.4s ease;
+    }
+
+    .btn-gold:hover { background: rgba(201,162,39,0.08); border-color: #c9a227; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      border: 1px solid rgba(245,240,232,0.12);
+      color: rgba(245,240,232,0.5);
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.4s ease;
+    }
+
+    .btn-ghost:hover { border-color: rgba(245,240,232,0.3); color: rgba(245,240,232,0.8); }
+
+    /* ─── REVEAL ─── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    [data-reveal].is-revealed { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../../philosophy/" class="nav__link">Philosophy</a>
-          <a href="../" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
-          <a href="../../forum/" class="nav__link">Forum</a>
-          <a href="../../library/" class="nav__link">Library</a>
-          <a href="../../visit/" class="nav__link">Visit</a>
-        </div>
-
-        <div class="nav__actions">
-          <a href="../../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="../../" class="nav__logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="#c9a227" stroke-width="1" fill="none"/>
+          <polygon points="14,7 21,11 21,18 14,22 7,18 7,11" stroke="#c9a227" stroke-width="0.5" fill="none" opacity="0.4"/>
+          <circle cx="14" cy="14" r="2" fill="#c9a227" opacity="0.6"/>
+        </svg>
+        <span>Alexandria</span>
+      </a>
+      <div class="nav__links">
+        <a href="../../philosophy/" class="nav__link">철학</a>
+        <a href="../" class="nav__link is-active">생츄어리</a>
+        <a href="../../library/" class="nav__link">도서관</a>
+        <a href="../../forum/" class="nav__link">포럼</a>
+        <a href="../../visit/" class="nav__link nav__link--cta">방문 신청</a>
       </div>
-    </div>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../../philosophy/" class="nav__link">Philosophy</a>
-      <a href="../" class="nav__link">Sanctuary</a>
-      <a href="../../forum/" class="nav__link">Forum</a>
-      <a href="../../library/" class="nav__link">Library</a>
-      <a href="../../visit/" class="nav__link">Visit</a>
+      <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="cave-hero">
-    <div class="container container-narrow" style="position: relative; z-index: 1;">
-      <nav class="breadcrumb" data-animate>
-        <a href="../">Sanctuary</a>
-        <span>›</span>
-        <span>Cave Retreat</span>
-      </nav>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl);">
-        Cave Retreat
+  <!-- HERO -->
+  <section class="cv-hero">
+    <div class="cv-hero__rings">
+      <div class="cv-hero__ring"></div>
+      <div class="cv-hero__ring"></div>
+      <div class="cv-hero__ring"></div>
+      <div class="cv-hero__ring"></div>
+      <div class="cv-hero__ring"></div>
+    </div>
+
+    <div class="cv-hero__breadcrumb">
+      <a href="../../">Alexandria</a>
+      <span>›</span>
+      <a href="../">생츄어리</a>
+      <span>›</span>
+      <span style="color: rgba(201,162,39,0.7);">동굴 수련</span>
+    </div>
+
+    <div class="cv-hero__body">
+      <p class="cv-hero__en">Space 01 · Cave Retreat</p>
+      <h1 class="cv-hero__title">
+        동굴 수련
+        <em>Entering the Dark</em>
       </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-4);">
-        동굴수행 · Donggul Suhaeng
-      </p>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6); font-size: var(--text-lg);">
-        Enter the silence. Meet yourself.
-      </p>
-    </div>
-  </header>
-
-  <!-- Introduction -->
-  <section class="cave-intro" data-animate>
-    <div class="cave-intro__content">
-      <p>
-        For millennia, humans have sought the darkness of caves for transformation. In the absence of light, time dissolves. In the absence of sound, the chattering mind finally quiets. What remains is essence—the awareness that was always there, obscured by the noise of ordinary life.
-      </p>
-      <p>
-        The caves of Palgongsan are not merely holes in rock. They are temples carved by water and time, sanctified by generations of seekers. Some caves are large enough to stand; others require crawling. All of them require surrender.
-      </p>
-      <blockquote>
-        <p>"In the cave, I finally understood what teachers mean by 'beginner's mind.' With no reference points—no light, no sound, no schedule—everything became new. Even breathing felt like a discovery."</p>
-        <cite>— Former Retreatant</cite>
-      </blockquote>
-      <p>
-        Our cave retreat program is not for everyone. It requires physical fitness, psychological stability, and a genuine calling. We screen all applicants carefully, not to exclude, but to ensure safety and readiness. The mountain gives generously to those who are prepared.
+      <p class="cv-hero__sub">
+        빛이 없어야만<br>
+        보이는 것들이 있습니다
       </p>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- Programs -->
-  <section class="programs-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Retreat Programs</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Choose Your Depth</h2>
-      <p class="section-subtitle" style="margin-top: var(--space-4);">
-        Each retreat builds upon the last. First-time participants begin with the Threshold.
+  <!-- PERSONAL STORY -->
+  <section class="cv-story">
+    <div class="cv-story__inner">
+      <p class="cv-story__label" data-reveal>창립자의 기록</p>
+      <p class="cv-story__text" data-reveal>
+        조현병을 앓던 누나가 처음으로 입원한 날,<br>
+        나는 병원 로비에 혼자 앉아 있었다.<br><br>
+        형광등 아래, 나는 처음으로 생각했다.<br>
+        <strong>"죽음이란 이런 건가."</strong><br><br>
+        소독 냄새, 번호표, 링거 소리.<br>
+        인간이 이렇게 끝나야 한다면,<br>
+        내가 만들 수 있는 다른 공간이 있을 것이라고.
       </p>
+      <p class="cv-story__attr" data-reveal>창립자 익명 기록 · 2019년 가을</p>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="cv-prog">
+    <div class="cv-prog__header" data-reveal>
+      <p class="cv-prog__label">프로그램</p>
+      <h2 class="cv-prog__title">어둠의 깊이를 선택하세요</h2>
     </div>
 
-    <div class="program-cards">
-      <!-- 3-Day -->
-      <article class="program-card">
-        <span class="program-card__duration">3 Days</span>
-        <h3 class="program-card__title">The Threshold</h3>
-        <p class="program-card__subtitle">문턱 · Munteok</p>
-        <p class="program-card__description">
-          An introduction to cave practice. You'll spend increasing periods in cave darkness—from hours to a full day—while receiving guidance on meditation technique and the psychology of isolation.
-        </p>
-        <ul class="program-card__details">
-          <li><span>Cave Time</span><span>Up to 24 hours</span></li>
-          <li><span>Accommodation</span><span>Hermitage</span></li>
-          <li><span>Meals</span><span>Simple fasting</span></li>
-          <li><span>Guidance</span><span>Daily sessions</span></li>
+    <div class="cv-prog__grid">
+
+      <div class="prog-card" data-reveal>
+        <div class="prog-card__days">03</div>
+        <h3 class="prog-card__name">Opening</h3>
+        <p class="prog-card__ko">입문 3일 수련</p>
+        <ul class="prog-card__list">
+          <li>일출~일몰 동굴 체류</li>
+          <li>야간 지도자 동반</li>
+          <li>매일 저녁 나눔 모임</li>
+          <li>MIDI 음악 명상 세션</li>
+          <li>사망 명상 입문 가이드</li>
         </ul>
-        <div class="program-card__price">
-          ₩900,000 <small>/ all inclusive</small>
-        </div>
-        <a href="../../visit/" class="btn btn-primary" style="width: 100%;">Apply for Threshold</a>
-      </article>
+        <span class="prog-card__tag">입문자 추천</span>
+      </div>
 
-      <!-- 7-Day -->
-      <article class="program-card">
-        <span class="program-card__duration">7 Days</span>
-        <h3 class="program-card__title">The Descent</h3>
-        <p class="program-card__subtitle">하강 · Hagang</p>
-        <p class="program-card__description">
-          A deeper immersion. After preparation days, you'll enter the cave for 72 continuous hours of darkness and silence. This is where the real work begins—and where breakthroughs occur.
-        </p>
-        <ul class="program-card__details">
-          <li><span>Cave Time</span><span>72 hours continuous</span></li>
-          <li><span>Accommodation</span><span>Cave chamber</span></li>
-          <li><span>Meals</span><span>Light provisions</span></li>
-          <li><span>Guidance</span><span>Pre & post sessions</span></li>
+      <div class="prog-card" data-reveal>
+        <div class="prog-card__days">07</div>
+        <h3 class="prog-card__name">Deepening</h3>
+        <p class="prog-card__ko">심화 7일 수련</p>
+        <ul class="prog-card__list">
+          <li>24시간 동굴 체류 (3일)</li>
+          <li>단식 옵션 (동의 후 진행)</li>
+          <li>침묵 프로토콜 적용</li>
+          <li>유서 / 생애 기록 작업</li>
+          <li>개인 지도자 배정</li>
         </ul>
-        <div class="program-card__price">
-          ₩2,100,000 <small>/ all inclusive</small>
-        </div>
-        <a href="../../visit/" class="btn btn-primary" style="width: 100%;">Apply for Descent</a>
-      </article>
+        <span class="prog-card__tag">심화 과정</span>
+      </div>
 
-      <!-- 21-Day -->
-      <article class="program-card">
-        <span class="program-card__duration">21 Days</span>
-        <h3 class="program-card__title">The Return</h3>
-        <p class="program-card__subtitle">귀환 · Gwihwan</p>
-        <p class="program-card__description">
-          The traditional length for deep transformation. Extended cave time (up to 7 days) alternates with integration periods. You will not be the same person who entered. Requires prior retreat experience.
-        </p>
-        <ul class="program-card__details">
-          <li><span>Cave Time</span><span>Up to 7 days</span></li>
-          <li><span>Accommodation</span><span>Private hermitage</span></li>
-          <li><span>Meals</span><span>Modified fasting</span></li>
-          <li><span>Guidance</span><span>Comprehensive support</span></li>
+      <div class="prog-card" data-reveal>
+        <div class="prog-card__days">21</div>
+        <h3 class="prog-card__name">Threshold</h3>
+        <p class="prog-card__ko">문턱 21일 수련</p>
+        <ul class="prog-card__list">
+          <li>완전 침묵 21일</li>
+          <li>의료진 주기적 확인</li>
+          <li>개인 제의 설계 지원</li>
+          <li>가족 서신 대행 서비스</li>
+          <li>알렉산드리아 아카이브 기록</li>
         </ul>
-        <div class="program-card__price">
-          ₩6,300,000 <small>/ all inclusive</small>
+        <span class="prog-card__tag">초대 전용</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SCHEDULE: ONE DAY IN THE CAVE -->
+  <section class="cv-sched">
+    <div class="cv-sched__inner">
+      <p class="cv-sched__label" data-reveal>일과</p>
+      <h2 class="cv-sched__title" data-reveal>동굴 안의 하루</h2>
+
+      <div class="timeline" data-reveal>
+        <div class="tl-item">
+          <p class="tl-item__time">05:00 — 일출 전</p>
+          <p class="tl-item__event">입실 및 침묵 시작</p>
+          <p class="tl-item__desc">개인 침구와 물만 가지고 입실합니다. 전자기기는 보관함에 반납합니다.</p>
         </div>
-        <a href="../../visit/" class="btn btn-primary" style="width: 100%;">Apply for Return</a>
-      </article>
-    </div>
-  </section>
-
-  <!-- Preparation -->
-  <section class="preparation-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Before You Come</span>
-    <h2 style="margin-top: var(--space-4);">Preparing for the Cave</h2>
-    <p>
-      The cave retreat is a profound undertaking. Proper preparation—physical, mental, and spiritual—makes all the difference.
-    </p>
-
-    <div class="preparation-grid">
-      <div class="preparation-item">
-        <svg class="preparation-item__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="20" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M16 52 C16 40 24 34 32 34 C40 34 48 40 48 52" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-        </svg>
-        <h3 class="preparation-item__title">Physical Readiness</h3>
-        <p class="preparation-item__text">
-          Cave environments require basic fitness. You should be able to sit comfortably for extended periods and navigate uneven terrain. Medical clearance required.
-        </p>
-      </div>
-
-      <div class="preparation-item">
-        <svg class="preparation-item__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="32" cy="32" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="32" y1="12" x2="32" y2="24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="preparation-item__title">Meditation Experience</h3>
-        <p class="preparation-item__text">
-          Prior meditation experience is strongly recommended. If you're new to practice, we offer introductory programs at the sanctuary before cave retreats.
-        </p>
-      </div>
-
-      <div class="preparation-item">
-        <svg class="preparation-item__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="16" y="12" width="32" height="40" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="22" y1="20" x2="42" y2="20" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="22" y1="28" x2="42" y2="28" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="22" y1="36" x2="36" y2="36" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="preparation-item__title">Application Process</h3>
-        <p class="preparation-item__text">
-          Complete our application form and schedule a video interview. We'll discuss your intentions, assess readiness, and answer all your questions.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonial -->
-  <section class="testimonial-section" data-animate>
-    <div class="container">
-      <div class="ornament">✦</div>
-      <div class="testimonial">
-        <p class="testimonial__quote">
-          "I was terrified before entering. By the third day, I didn't want to leave. The cave became my womb, my temple, my mirror. I saw myself clearly—perhaps for the first time—and what I saw was not the fearful person I thought I was, but something much older, much quieter, much more at peace."
-        </p>
-        <div class="testimonial__author">
-          <strong>Soyeon K.</strong>
-          21-Day Retreat Participant, 2025
+        <div class="tl-item">
+          <p class="tl-item__time">06:00</p>
+          <p class="tl-item__event">새벽 명상 (선택)</p>
+          <p class="tl-item__desc">그레고리안 성가 또는 범패 MIDI 음악이 동굴 내 스피커로 흘러나옵니다. 참여 여부는 자유입니다.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-item__time">12:00</p>
+          <p class="tl-item__event">식사 (소식)</p>
+          <p class="tl-item__desc">동굴 입구 선반에 소박한 공양이 놓입니다. 먹지 않아도 됩니다.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-item__time">14:00 — 17:00</p>
+          <p class="tl-item__event">자유 시간</p>
+          <p class="tl-item__desc">쓰기, 누워 있기, 울기, 잠자기. 어떤 것도 강요하지 않습니다.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-item__time">19:00 — 21:00</p>
+          <p class="tl-item__event">나눔 모임 (소그룹)</p>
+          <p class="tl-item__desc">3인 이내 그룹으로 모입니다. 말하지 않아도 됩니다. 함께 있는 것이 전부입니다.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-item__time">21:00 이후</p>
+          <p class="tl-item__event">야간 침묵</p>
+          <p class="tl-item__desc">동굴은 완전한 어둠이 됩니다. 당신만의 시간입니다.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="faq-section" data-animate>
-    <h2>Common Questions</h2>
+  <!-- WHAT AWAITS -->
+  <section class="cv-await">
+    <p class="cv-await__label" data-reveal>동굴이 주는 것</p>
+    <h2 class="cv-await__title" data-reveal>어둠 안에서 만나는 것들</h2>
 
-    <div class="faq-list">
-      <div class="faq-item">
-        <h3 class="faq-item__question">Is it completely dark?</h3>
-        <p class="faq-item__answer">
-          Yes. The cave chambers have no artificial light. You will experience complete darkness—what meditators call "the fertile void." This is essential to the practice. A small emergency light is always within reach.
-        </p>
+    <div class="cv-await__grid" data-reveal>
+      <div class="await-item">
+        <div class="await-item__symbol">◾</div>
+        <h3 class="await-item__title">완전한 어둠</h3>
+        <p class="await-item__desc">빛 공해 없는<br>천연 암흑</p>
       </div>
+      <div class="await-item">
+        <div class="await-item__symbol">◽</div>
+        <h3 class="await-item__title">완전한 침묵</h3>
+        <p class="await-item__desc">팔공산 자연음<br>외에 소음 없음</p>
+      </div>
+      <div class="await-item">
+        <div class="await-item__symbol">△</div>
+        <h3 class="await-item__title">자신의 죽음</h3>
+        <p class="await-item__desc">상상 속에서<br>미리 죽어보기</p>
+      </div>
+      <div class="await-item">
+        <div class="await-item__symbol">○</div>
+        <h3 class="await-item__title">내면의 음악</h3>
+        <p class="await-item__desc">MIDI 성가<br>자유 청취</p>
+      </div>
+    </div>
+  </section>
 
-      <div class="faq-item">
-        <h3 class="faq-item__question">What about claustrophobia?</h3>
-        <p class="faq-item__answer">
-          Surprisingly, most participants report that the cave feels expansive rather than confining. The darkness removes visual boundaries, creating a sense of infinite space. However, if you have severe claustrophobia, please discuss this with us before applying.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">How do I eat and drink?</h3>
-        <p class="faq-item__answer">
-          Food and water are provided in the cave. Meals are simple—rice, vegetables, tea—designed to sustain without distracting. Extended retreats include modified fasting protocols developed with nutritional experts.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">What if I need to leave early?</h3>
-        <p class="faq-item__answer">
-          You can exit at any time. A signaling system connects you to staff who are always nearby. Your safety and psychological wellbeing are paramount. There is no shame in adjusting the retreat to your needs.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">Is it cold in the caves?</h3>
-        <p class="faq-item__answer">
-          Our caves maintain a consistent temperature of 14-16°C (57-61°F) year-round. Warm bedding, meditation cushions, and thermal clothing are provided. Most participants find the temperature comfortable.
-        </p>
-      </div>
+  <!-- TESTIMONIAL -->
+  <section class="cv-test">
+    <div class="cv-test__inner" data-reveal>
+      <p class="cv-test__quote">
+        "7일째 되던 날 밤,<br>
+        나는 아무것도 보이지 않는 어둠 안에서<br>
+        처음으로 울었습니다.<br>
+        아버지 때문이었는지, 나 자신 때문이었는지<br>
+        지금도 모릅니다. 중요하지 않은 것 같습니다."
+      </p>
+      <p class="cv-test__attr">입주자 #2144 · 7일 심화 수련 참가자</p>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="section" style="padding-top: 0;">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        The cave awaits. Are you ready to enter?
-      </p>
-      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-        <a href="../../visit/" class="btn btn-primary">Apply Now</a>
-        <a href="../" class="btn btn-secondary">Explore Other Spaces</a>
-      </div>
+  <section class="cv-cta">
+    <h2 class="cv-cta__title" data-reveal>동굴 수련 신청</h2>
+    <p class="cv-cta__sub" data-reveal>
+      입문 과정은 월 1회 진행됩니다. 인원은 최대 4명입니다.
+    </p>
+    <div class="btn-set" data-reveal>
+      <a href="../../visit/" class="btn-gold">방문 신청하기 →</a>
+      <a href="../" class="btn-ghost">← 생츄어리로 돌아가기</a>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
-      </div>
-    </div>
-  </footer>
-
   <script src="../../assets/js/app.js"></script>
+  <script>
+    (function () {
+      const els = document.querySelectorAll('[data-reveal]');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('is-revealed'), i * 80);
+            obs.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      els.forEach(el => obs.observe(el));
+    })();
+  </script>
 </body>
 </html>

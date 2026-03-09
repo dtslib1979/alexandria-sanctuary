@@ -1,739 +1,722 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contemplative residence programs at Alexandria Sanctuary - Extended stays for deep practice at Palgongsan, Korea.">
+  <meta name="description" content="입주 공간 — 알렉산드리아 생츄어리. 말기 질환 또는 생의 전환점에 선 분들을 위한 3개월~1년 장기 공동 생활 공간. 팔공산.">
+  <title>입주 공간 — Alexandria Sanctuary</title>
 
-  <title>Contemplative Residence - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="../../assets/css/design-system.css">
   <link rel="stylesheet" href="../../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../../assets/icons/emblem.svg">
 
   <style>
-    .residence-hero {
-      min-height: 80vh;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── HERO ─── */
+    .rs-hero {
+      min-height: 100vh;
+      background: #060d18;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.08), transparent 50%),
-        var(--bg-primary);
-    }
-
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      margin-bottom: var(--space-6);
-    }
-
-    .breadcrumb a {
-      color: var(--text-tertiary);
-      text-decoration: none;
-      transition: color var(--duration-normal);
-    }
-
-    .breadcrumb a:hover {
-      color: var(--color-gold-500);
-    }
-
-    .breadcrumb span {
-      color: var(--color-gold-500);
-    }
-
-    .residence-intro {
-      padding: var(--space-20) 0;
-    }
-
-    .residence-intro__content {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .residence-intro__content p {
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-      margin-bottom: var(--space-6);
-    }
-
-    .life-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .life-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-xl);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
-    }
-
-    .life-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-8);
-      text-align: center;
-    }
-
-    .life-card__icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto var(--space-6);
-      opacity: 0.8;
-    }
-
-    .life-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .life-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .accommodation-section {
-      padding: var(--space-20) 0;
-    }
-
-    .accommodation-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .accommodation-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .room-types {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .room-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
+      position: relative;
       overflow: hidden;
     }
 
-    .room-card__image {
-      aspect-ratio: 16/10;
-      background: var(--bg-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .room-card__image svg {
-      width: 80px;
-      height: 80px;
-      opacity: 0.4;
-    }
-
-    .room-card__content {
-      padding: var(--space-8);
-    }
-
-    .room-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .room-card__subtitle {
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-4);
-    }
-
-    .room-card__features {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 var(--space-6);
-    }
-
-    .room-card__features li {
-      padding: var(--space-2) 0;
-      padding-left: var(--space-5);
-      position: relative;
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-    }
-
-    .room-card__features li::before {
-      content: '·';
+    .rs-hero__bg {
       position: absolute;
-      left: 0;
-      color: var(--color-gold-500);
-      font-weight: bold;
+      inset: 0;
+      opacity: 0.06;
     }
 
-    .room-card__price {
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
+    .rs-hero__bg svg { width: 100%; height: 100%; }
+
+    .rs-hero__glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 60%, rgba(201,162,39,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 30%, rgba(10,22,40,0.8) 0%, transparent 60%);
+      pointer-events: none;
     }
 
-    .room-card__price small {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      font-family: var(--font-body);
+    .rs-hero__body {
+      position: relative;
+      z-index: 2;
+      padding: 9rem 1.5rem 6rem;
+      max-width: 840px;
+      margin-left: max(3rem, calc(50vw - 540px));
     }
 
-    .programs-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .program-table {
-      max-width: var(--max-width-lg);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
-    }
-
-    .program-row {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      gap: var(--space-6);
-      padding: var(--space-6) 0;
-      border-bottom: 1px solid var(--border-subtle);
+    .rs-hero__breadcrumb {
+      display: flex;
+      gap: 0.75rem;
       align-items: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: rgba(201,162,39,0.4);
+      margin-bottom: 3rem;
     }
 
-    .program-row:first-child {
-      border-top: 1px solid var(--border-subtle);
+    .rs-hero__breadcrumb a {
+      color: rgba(201,162,39,0.4);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .rs-hero__breadcrumb a:hover { color: rgba(201,162,39,0.8); }
+
+    .rs-hero__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 2rem;
     }
 
-    .program-row__duration {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--color-gold-500);
-      letter-spacing: var(--tracking-wide);
+    .rs-hero__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.8rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      line-height: 1.08;
+      margin-bottom: 1rem;
     }
 
-    .program-row__description {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .program-row__price {
-      text-align: right;
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-    }
-
-    .program-row__price small {
+    .rs-hero__title em {
       display: block;
-      font-size: var(--text-xs);
-      color: var(--text-tertiary);
-      font-family: var(--font-body);
-      margin-top: var(--space-1);
-    }
-
-    @media (max-width: 768px) {
-      .program-row {
-        grid-template-columns: 1fr;
-        gap: var(--space-2);
-        text-align: center;
-      }
-
-      .program-row__price {
-        text-align: center;
-      }
-    }
-
-    .community-section {
-      padding: var(--space-20) 0;
-    }
-
-    .community-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .community-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .community-section blockquote {
-      max-width: var(--max-width-prose);
-      margin: var(--space-10) auto;
-      padding: var(--space-8);
-      border-left: 2px solid var(--color-gold-500);
-      background: var(--bg-secondary);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    }
-
-    .community-section blockquote p {
-      font-family: var(--font-serif);
       font-style: italic;
-      color: var(--text-primary);
-      font-size: var(--text-lg);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-2);
+      color: #c9a227;
+      font-size: 0.52em;
     }
 
-    .community-section blockquote cite {
-      font-style: normal;
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
+    .rs-hero__sub {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 2;
+      max-width: 480px;
     }
 
-    .eligibility-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
+    /* ─── WHO ─── */
+    .rs-who {
+      background: #030810;
+      padding: 7rem 1.5rem;
     }
 
-    .eligibility-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-12);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .eligibility-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
+    .rs-who__inner {
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
     }
 
-    .eligibility-item {
+    @media (max-width: 760px) {
+      .rs-who__inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    .rs-who__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .rs-who__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      line-height: 1.3;
+      margin-bottom: 2rem;
+    }
+
+    .rs-who__body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.5);
+      line-height: 2.1;
+    }
+
+    .who-list { list-style: none; }
+
+    .who-list li {
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(201,162,39,0.08);
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+
+    .who-list li:last-child { border-bottom: none; }
+
+    .who-list__mark {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(201,162,39,0.5);
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .who-list__text {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.6);
+      line-height: 1.8;
+    }
+
+    /* ─── STORY ─── */
+    .rs-story {
+      background: #000;
+      padding: 8rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rs-story::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(201,162,39,0.03) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .rs-story__inner {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rs-story__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 3rem;
+    }
+
+    .rs-story__text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(245,240,232,0.75);
+      line-height: 2;
+      margin-bottom: 2.5rem;
+    }
+
+    .rs-story__text strong {
+      font-style: normal;
+      color: #c9a227;
+      font-weight: 500;
+    }
+
+    .rs-story__attr {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.3);
+      padding-left: 1.5rem;
+      border-left: 1px solid rgba(201,162,39,0.2);
+    }
+
+    /* ─── DETAIL GRID ─── */
+    .rs-detail {
+      background: #060d18;
+      padding: 7rem 1.5rem;
+    }
+
+    .rs-detail__header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .rs-detail__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .rs-detail__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+    }
+
+    .rs-detail__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 680px) {
+      .rs-detail__grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .detail-cell {
+      background: rgba(245,240,232,0.015);
+      border: 1px solid rgba(201,162,39,0.07);
+      padding: 2.5rem;
+      transition: background 0.4s ease;
+    }
+
+    .detail-cell:hover { background: rgba(201,162,39,0.025); }
+
+    .detail-cell__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-cell__value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #f5f0e8;
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-cell__desc {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.83rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      line-height: 1.8;
+    }
+
+    /* ─── COMMUNITY RHYTHM ─── */
+    .rs-comm {
+      background: #030810;
+      padding: 7rem 1.5rem;
       text-align: center;
     }
 
-    .eligibility-item__number {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--color-gold-500);
-      opacity: 0.5;
-      margin-bottom: var(--space-3);
+    .rs-comm__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.6);
+      margin-bottom: 1rem;
     }
 
-    .eligibility-item__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
+    .rs-comm__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 1.5rem;
     }
 
-    .eligibility-item__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
+    .rs-comm__body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.93rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 2.1;
+      max-width: 600px;
+      margin: 0 auto 4rem;
     }
+
+    .rs-comm__rhythm {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .rs-comm__rhythm { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .rhythm-day {
+      background: rgba(245,240,232,0.02);
+      border: 1px solid rgba(201,162,39,0.08);
+      padding: 1rem 0.5rem;
+      text-align: center;
+    }
+
+    .rhythm-day__name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .rhythm-day__activity {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 1.5;
+    }
+
+    /* ─── TESTIMONIAL ─── */
+    .rs-test {
+      background: #060d18;
+      padding: 7rem 1.5rem;
+    }
+
+    .rs-test__inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .rs-test__quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(245,240,232,0.7);
+      line-height: 2;
+      margin-bottom: 2rem;
+      padding-left: 2rem;
+      border-left: 2px solid rgba(201,162,39,0.3);
+    }
+
+    .rs-test__attr {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.3);
+      padding-left: 2rem;
+    }
+
+    /* ─── CTA ─── */
+    .rs-cta {
+      background: #030810;
+      padding: 6rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(201,162,39,0.08);
+    }
+
+    .rs-cta__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 0.75rem;
+    }
+
+    .rs-cta__sub {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-set { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      border: 1px solid rgba(201,162,39,0.5);
+      color: #c9a227;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.4s ease;
+    }
+    .btn-gold:hover { background: rgba(201,162,39,0.08); border-color: #c9a227; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      border: 1px solid rgba(245,240,232,0.12);
+      color: rgba(245,240,232,0.5);
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.4s ease;
+    }
+    .btn-ghost:hover { border-color: rgba(245,240,232,0.3); color: rgba(245,240,232,0.8); }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    [data-reveal].is-revealed { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../../philosophy/" class="nav__link">Philosophy</a>
-          <a href="../" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
-          <a href="../../forum/" class="nav__link">Forum</a>
-          <a href="../../library/" class="nav__link">Library</a>
-          <a href="../../visit/" class="nav__link">Visit</a>
-        </div>
-
-        <div class="nav__actions">
-          <a href="../../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="../../" class="nav__logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="#c9a227" stroke-width="1" fill="none"/>
+          <polygon points="14,7 21,11 21,18 14,22 7,18 7,11" stroke="#c9a227" stroke-width="0.5" fill="none" opacity="0.4"/>
+          <circle cx="14" cy="14" r="2" fill="#c9a227" opacity="0.6"/>
+        </svg>
+        <span>Alexandria</span>
+      </a>
+      <div class="nav__links">
+        <a href="../../philosophy/" class="nav__link">철학</a>
+        <a href="../" class="nav__link is-active">생츄어리</a>
+        <a href="../../library/" class="nav__link">도서관</a>
+        <a href="../../forum/" class="nav__link">포럼</a>
+        <a href="../../visit/" class="nav__link nav__link--cta">방문 신청</a>
       </div>
-    </div>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../../philosophy/" class="nav__link">Philosophy</a>
-      <a href="../" class="nav__link">Sanctuary</a>
-      <a href="../../forum/" class="nav__link">Forum</a>
-      <a href="../../library/" class="nav__link">Library</a>
-      <a href="../../visit/" class="nav__link">Visit</a>
+      <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="residence-hero">
-    <div class="container container-narrow">
-      <nav class="breadcrumb" data-animate>
-        <a href="../">Sanctuary</a>
+  <!-- HERO -->
+  <section class="rs-hero">
+    <div class="rs-hero__bg">
+      <svg viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect x="200" y="100" width="400" height="300" stroke="#c9a227" stroke-width="0.8"/>
+        <rect x="220" y="120" width="360" height="260" stroke="#c9a227" stroke-width="0.3"/>
+        <line x1="200" y1="250" x2="600" y2="250" stroke="#c9a227" stroke-width="0.3"/>
+        <line x1="400" y1="100" x2="400" y2="400" stroke="#c9a227" stroke-width="0.3"/>
+        <rect x="700" y="200" width="500" height="400" stroke="#c9a227" stroke-width="0.8"/>
+        <rect x="750" y="250" width="200" height="150" stroke="#c9a227" stroke-width="0.3"/>
+        <rect x="1000" y="250" width="160" height="150" stroke="#c9a227" stroke-width="0.3"/>
+        <line x1="700" y1="350" x2="1200" y2="350" stroke="#c9a227" stroke-width="0.3"/>
+        <rect x="200" y="500" width="180" height="140" stroke="#c9a227" stroke-width="0.5"/>
+        <rect x="400" y="500" width="180" height="140" stroke="#c9a227" stroke-width="0.5"/>
+        <rect x="600" y="500" width="180" height="140" stroke="#c9a227" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="rs-hero__glow"></div>
+
+    <div class="rs-hero__body">
+      <div class="rs-hero__breadcrumb">
+        <a href="../../">Alexandria</a>
         <span>›</span>
-        <span>Residence</span>
-      </nav>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl);">
-        Contemplative Residence
+        <a href="../">생츄어리</a>
+        <span>›</span>
+        <span style="color: rgba(201,162,39,0.7);">입주 공간</span>
+      </div>
+      <p class="rs-hero__label">Space 02 · Residence</p>
+      <h1 class="rs-hero__title">
+        입주 공간
+        <em>Long-term Dwelling</em>
       </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-4);">
-        명상의 집 · Myeongsang-ui Jip
-      </p>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6); font-size: var(--text-lg);">
-        Make your practice your life.<br>Make the sanctuary your home.
-      </p>
-    </div>
-  </header>
-
-  <!-- Introduction -->
-  <section class="residence-intro" data-animate>
-    <div class="residence-intro__content">
-      <p>
-        Some journeys cannot be completed in a weekend. Some transformations require seasons. The contemplative residence program offers what modern life so rarely permits: unhurried time for the soul's deepest work.
-      </p>
-      <p>
-        As a resident, you'll live within the sanctuary community—sharing meals, participating in daily practice, contributing to the life of the place through work meditation. But you'll also have solitude: your own room, time for personal study, and freedom to walk the mountain paths whenever the spirit calls.
-      </p>
-      <p>
-        We are not a monastery. We impose no beliefs, demand no vows. We simply offer structure and support for those who need time apart from the ordinary world to discover what they already know.
+      <p class="rs-hero__sub">
+        집으로 돌아갈 수 없을 때,<br>
+        아직 병원은 이르다고 느낄 때,<br>
+        여기에 머물러도 됩니다.
       </p>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- Life at Residence -->
-  <section class="life-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Daily Life</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">The Rhythm of Residence</h2>
-    </div>
-
-    <div class="life-grid">
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="40" r="25" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="40" y1="20" x2="40" y2="40" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="40" y1="40" x2="52" y2="48" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="40" cy="40" r="3" fill="var(--color-gold-500)"/>
-        </svg>
-        <h3 class="life-card__title">Morning Practice</h3>
-        <p class="life-card__text">
-          Each day begins with communal meditation at 6am. The practice is silent, formless—you bring your own tradition or sit in simple awareness.
+  <!-- WHO IS IT FOR -->
+  <section class="rs-who">
+    <div class="rs-who__inner">
+      <div class="rs-who__left" data-reveal>
+        <p class="rs-who__label">누구를 위한 공간인가</p>
+        <h2 class="rs-who__title">전환점에 선<br>사람들</h2>
+        <p class="rs-who__body">
+          알렉산드리아 입주 공간은<br>
+          말기 진단을 받았지만 요양병원이 아닌 곳을 원하는 분들,<br>
+          가족이 돌보기 어려운 상황에 놓인 분들,<br>
+          그리고 단순히 죽음 앞에서 홀로 생각하고 싶은 분들을 위해<br>
+          존재합니다.
         </p>
-      </article>
-
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 50 C20 35 30 25 40 25 C50 25 60 35 60 50" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <rect x="25" y="50" width="30" height="15" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <circle cx="40" cy="38" r="8" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-        </svg>
-        <h3 class="life-card__title">Work Meditation</h3>
-        <p class="life-card__text">
-          Three hours daily of mindful work: gardening, cooking, cleaning, building. Labor becomes practice. Practice becomes service.
-        </p>
-      </article>
-
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="22" y="20" width="36" height="45" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="28" y1="30" x2="52" y2="30" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="28" y1="38" x2="52" y2="38" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="28" y1="46" x2="44" y2="46" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="life-card__title">Personal Study</h3>
-        <p class="life-card__text">
-          Full access to the library, study rooms, and guidance from resident teachers. Follow your questions wherever they lead.
-        </p>
-      </article>
-
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="30" cy="40" r="12" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="50" cy="40" r="12" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M38 40 A12 12 0 0 1 42 40" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="life-card__title">Community Meals</h3>
-        <p class="life-card__text">
-          Shared vegetarian meals taken in mindful silence at breakfast and lunch. Dinner is optional and conversational.
-        </p>
-      </article>
-
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M25 55 L40 20 L55 55" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <path d="M20 55 L60 55" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <circle cx="40" cy="35" r="5" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-        </svg>
-        <h3 class="life-card__title">Mountain Walking</h3>
-        <p class="life-card__text">
-          The trails of Palgongsan are yours to explore. Daily walks are encouraged—the mountain teaches what books cannot.
-        </p>
-      </article>
-
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="30" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="28" cy="52" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="52" cy="52" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="40" y1="40" x2="32" y2="46" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="40" y1="40" x2="48" y2="46" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="life-card__title">Weekly Gatherings</h3>
-        <p class="life-card__text">
-          Forum events, teacher talks, and community circles. You're part of something larger—a sangha of seekers.
-        </p>
-      </article>
+      </div>
+      <div class="rs-who__right" data-reveal>
+        <ul class="who-list">
+          <li><span class="who-list__mark"></span><span class="who-list__text">말기 진단 후 병원이 아닌 공간을 원하는 분</span></li>
+          <li><span class="who-list__mark"></span><span class="who-list__text">가족이 없거나 돌봄 공백 상황에 놓인 분</span></li>
+          <li><span class="who-list__mark"></span><span class="who-list__text">임종 전 정리할 시간이 필요한 분</span></li>
+          <li><span class="who-list__mark"></span><span class="who-list__text">특정 종교 없이 영적 탐색을 원하는 분</span></li>
+          <li><span class="who-list__mark"></span><span class="who-list__text">생의 전환점에서 장기적 성찰이 필요한 분</span></li>
+          <li><span class="who-list__mark"></span><span class="who-list__text">알렉산드리아 동굴 수련 이후 계속 머물고 싶은 분</span></li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- Accommodation -->
-  <section class="accommodation-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Your Space</span>
-    <h2 style="margin-top: var(--space-4);">Accommodations</h2>
-    <p>
-      Each resident has a private room—simple, beautiful, conducive to stillness. All rooms include a bed, desk, chair, and window. Nothing more, nothing less.
+  <!-- STORY -->
+  <section class="rs-story">
+    <div class="rs-story__inner">
+      <p class="rs-story__label" data-reveal>입주자의 기록</p>
+      <p class="rs-story__text" data-reveal>
+        어머니가 치매 4기 진단을 받은 날,<br>
+        나는 요양병원 안내 책자를 들고 집으로 왔다.<br><br>
+        한 장 한 장 넘기면서<br>
+        <strong>어머니가 이름을 잃어갈 장소</strong>를 골랐다.<br><br>
+        그 순간 나는 생각했다.<br>
+        '내가 내 어머니를 어딘가에 두는 것이 아니라,<br>
+        어머니가 선택한 공간에 머무는 것이라면 달라지지 않을까.'<br><br>
+        그래서 알렉산드리아를 만들었습니다.
+      </p>
+      <p class="rs-story__attr" data-reveal>창립자 익명 기록 · 입주 공간 설계 동기</p>
+    </div>
+  </section>
+
+  <!-- SPACE DETAILS -->
+  <section class="rs-detail">
+    <div class="rs-detail__header" data-reveal>
+      <p class="rs-detail__label">공간 정보</p>
+      <h2 class="rs-detail__title">머무는 것의 조건들</h2>
+    </div>
+
+    <div class="rs-detail__grid">
+      <div class="detail-cell" data-reveal>
+        <p class="detail-cell__label">기간</p>
+        <p class="detail-cell__value">3개월 — 12개월</p>
+        <p class="detail-cell__desc">최소 3개월, 최대 1년. 상황에 따라 연장 협의 가능.</p>
+      </div>
+      <div class="detail-cell" data-reveal>
+        <p class="detail-cell__label">정원</p>
+        <p class="detail-cell__value">최대 8인</p>
+        <p class="detail-cell__desc">개인실 보장. 공유 공간은 거실, 주방, 명상실, 마당.</p>
+      </div>
+      <div class="detail-cell" data-reveal>
+        <p class="detail-cell__label">의료 지원</p>
+        <p class="detail-cell__value">주 2회 방문 간호</p>
+        <p class="detail-cell__desc">협력 가정의학과 의사 주 2회 방문. 응급 시 대구 병원 연계.</p>
+      </div>
+      <div class="detail-cell" data-reveal>
+        <p class="detail-cell__label">음식</p>
+        <p class="detail-cell__value">공동 조리 · 소식</p>
+        <p class="detail-cell__desc">입주자들이 함께 요리합니다. 불가 시 자원봉사자가 지원합니다.</p>
+      </div>
+      <div class="detail-cell" data-reveal>
+        <p class="detail-cell__label">디지털</p>
+        <p class="detail-cell__value">제한적 인터넷</p>
+        <p class="detail-cell__desc">내부 네트워크 접근 가능. 외부 소셜미디어는 스스로 조절.</p>
+      </div>
+      <div class="detail-cell" data-reveal>
+        <p class="detail-cell__label">음악</p>
+        <p class="detail-cell__value">MIDI 앰비언트</p>
+        <p class="detail-cell__desc">공용 공간에서 공개 도메인 성가, 범패, 티베트 음악 상시 재생.</p>
+      </div>
+      <div class="detail-cell" data-reveal>
+        <p class="detail-cell__label">비용</p>
+        <p class="detail-cell__value">능력에 따라</p>
+        <p class="detail-cell__desc">정해진 요금이 없습니다. 후원금으로 운영됩니다. 무료도 가능합니다.</p>
+      </div>
+      <div class="detail-cell" data-reveal>
+        <p class="detail-cell__label">방문</p>
+        <p class="detail-cell__value">가족 · 지인 환영</p>
+        <p class="detail-cell__desc">사전 동의 후 방문 가능. 방문자 숙박 공간도 마련되어 있습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEEKLY RHYTHM -->
+  <section class="rs-comm">
+    <p class="rs-comm__label" data-reveal>공동체 리듬</p>
+    <h2 class="rs-comm__title" data-reveal>일주일의 흐름</h2>
+    <p class="rs-comm__body" data-reveal>
+      강요하는 일과는 없습니다.<br>
+      그러나 원하는 분들이 자연스럽게 모이는 리듬이 있습니다.
     </p>
 
-    <div class="room-types">
-      <article class="room-card">
-        <div class="room-card__image">
-          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="15" y="25" width="50" height="35" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <rect x="25" y="45" width="18" height="15" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <rect x="50" y="30" width="10" height="10" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-          </svg>
-        </div>
-        <div class="room-card__content">
-          <h3 class="room-card__title">Garden Room</h3>
-          <p class="room-card__subtitle">정원방 · Ground floor, garden view</p>
-          <ul class="room-card__features">
-            <li>12㎡ private room</li>
-            <li>Direct garden access</li>
-            <li>Shared bathroom</li>
-            <li>Morning sunlight</li>
-          </ul>
-          <div class="room-card__price">
-            ₩1,800,000 <small>/ month</small>
-          </div>
-        </div>
-      </article>
-
-      <article class="room-card">
-        <div class="room-card__image">
-          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="15" y="20" width="50" height="40" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <rect x="25" y="40" width="18" height="20" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <rect x="48" y="25" width="12" height="15" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <path d="M20 20 L40 8 L60 20" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-          </svg>
-        </div>
-        <div class="room-card__content">
-          <h3 class="room-card__title">Mountain Room</h3>
-          <p class="room-card__subtitle">산방 · Upper floor, mountain view</p>
-          <ul class="room-card__features">
-            <li>15㎡ private room</li>
-            <li>Palgongsan vista</li>
-            <li>Private bathroom</li>
-            <li>Small meditation alcove</li>
-          </ul>
-          <div class="room-card__price">
-            ₩2,400,000 <small>/ month</small>
-          </div>
-        </div>
-      </article>
+    <div class="rs-comm__rhythm" data-reveal>
+      <div class="rhythm-day">
+        <p class="rhythm-day__name">월</p>
+        <p class="rhythm-day__activity">아침 산책<br>08:00</p>
+      </div>
+      <div class="rhythm-day">
+        <p class="rhythm-day__name">화</p>
+        <p class="rhythm-day__activity">도서관<br>오후 자유</p>
+      </div>
+      <div class="rhythm-day">
+        <p class="rhythm-day__name">수</p>
+        <p class="rhythm-day__activity">공동 요리<br>12:00</p>
+      </div>
+      <div class="rhythm-day">
+        <p class="rhythm-day__name">목</p>
+        <p class="rhythm-day__activity">나눔 모임<br>19:00</p>
+      </div>
+      <div class="rhythm-day">
+        <p class="rhythm-day__name">금</p>
+        <p class="rhythm-day__activity">음악 감상<br>21:00</p>
+      </div>
+      <div class="rhythm-day">
+        <p class="rhythm-day__name">토</p>
+        <p class="rhythm-day__activity">포럼 시청<br>또는 침묵</p>
+      </div>
+      <div class="rhythm-day">
+        <p class="rhythm-day__name">일</p>
+        <p class="rhythm-day__activity">완전<br>자유</p>
+      </div>
     </div>
   </section>
 
-  <!-- Programs -->
-  <section class="programs-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Residency Options</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Program Durations</h2>
-      <p class="section-subtitle" style="margin-top: var(--space-4);">
-        All programs include room, meals, and full access to sanctuary facilities and programs.
+  <!-- TESTIMONIAL -->
+  <section class="rs-test">
+    <div class="rs-test__inner" data-reveal>
+      <p class="rs-test__quote">
+        "처음 왔을 때 나는 설명을 원했습니다.<br>
+        왜 아픈지, 왜 지금 이래야 하는지.<br><br>
+        여기서는 아무도 설명하려 하지 않았습니다.<br>
+        그냥 옆에 앉아 있었습니다.<br>
+        그것이 내가 원하던 것이었다는 걸, 그때 알았습니다."
       </p>
-    </div>
-
-    <div class="program-table">
-      <div class="program-row">
-        <div class="program-row__duration">3 Months</div>
-        <div class="program-row__description">
-          An introduction to contemplative living. Ideal for sabbaticals, life transitions, or exploring whether extended practice is your path.
-        </div>
-        <div class="program-row__price">
-          ₩5,100,000
-          <small>Garden Room</small>
-        </div>
-      </div>
-
-      <div class="program-row">
-        <div class="program-row__duration">6 Months</div>
-        <div class="program-row__description">
-          Deep immersion. Time enough for the mind to truly settle and for genuine transformation to take root. Our most popular option.
-        </div>
-        <div class="program-row__price">
-          ₩9,600,000
-          <small>Garden Room</small>
-        </div>
-      </div>
-
-      <div class="program-row">
-        <div class="program-row__duration">1 Year</div>
-        <div class="program-row__description">
-          The traditional period for serious practice. Four seasons on the mountain, watching the dharma unfold in maple leaves and snow.
-        </div>
-        <div class="program-row__price">
-          ₩18,000,000
-          <small>Garden Room</small>
-        </div>
-      </div>
-    </div>
-
-    <p style="max-width: var(--max-width-prose); margin: var(--space-8) auto 0; text-align: center; font-size: var(--text-sm); color: var(--text-tertiary); padding: 0 var(--container-padding);">
-      * Mountain Room rates are approximately 33% higher. Scholarship support available for those with financial need.
-    </p>
-  </section>
-
-  <!-- Community -->
-  <section class="community-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Living Together</span>
-    <h2 style="margin-top: var(--space-4);">The Resident Community</h2>
-    <p>
-      You will share the sanctuary with 15-20 fellow residents from around the world. Some are young seekers on gap years; others are elders preparing for life's final chapters. What unites us is the recognition that something is missing in ordinary life—and the courage to seek it.
-    </p>
-    <blockquote>
-      <p>
-        "I came for three months and stayed for a year. The community became my family—not because we agreed on everything, but because we shared silence. In silence, differences dissolve."
-      </p>
-      <cite>— Resident, 2025</cite>
-    </blockquote>
-  </section>
-
-  <!-- Eligibility -->
-  <section class="eligibility-section" data-animate>
-    <h2>Who Should Apply</h2>
-
-    <div class="eligibility-grid">
-      <div class="eligibility-item">
-        <div class="eligibility-item__number">I</div>
-        <h3 class="eligibility-item__title">Genuine Seekers</h3>
-        <p class="eligibility-item__text">
-          Those with sincere questions about meaning, purpose, and the nature of mind. No particular belief system required.
-        </p>
-      </div>
-
-      <div class="eligibility-item">
-        <div class="eligibility-item__number">II</div>
-        <h3 class="eligibility-item__title">Self-Sufficient Adults</h3>
-        <p class="eligibility-item__text">
-          Capable of basic self-care, community living, and contributing to shared responsibilities. Ages 21-85.
-        </p>
-      </div>
-
-      <div class="eligibility-item">
-        <div class="eligibility-item__number">III</div>
-        <h3 class="eligibility-item__title">Those in Transition</h3>
-        <p class="eligibility-item__text">
-          Career changers, recent retirees, those recovering from loss. Times of transition are ideal for deep practice.
-        </p>
-      </div>
-
-      <div class="eligibility-item">
-        <div class="eligibility-item__number">IV</div>
-        <h3 class="eligibility-item__title">Community Contributors</h3>
-        <p class="eligibility-item__text">
-          Willing to participate in work meditation and support the sanctuary's mission. We build this place together.
-        </p>
-      </div>
+      <p class="rs-test__attr">입주자 #3301 · 7개월 거주</p>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="section" style="padding-top: var(--space-10);">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        Ready to make the sanctuary your home?
-      </p>
-      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-        <a href="../../visit/" class="btn btn-primary">Apply for Residency</a>
-        <a href="../cave-retreat/" class="btn btn-secondary">Try a Retreat First</a>
-      </div>
+  <section class="rs-cta">
+    <h2 class="rs-cta__title" data-reveal>입주 문의</h2>
+    <p class="rs-cta__sub" data-reveal>현재 입주 정원은 8인입니다. 대기자 명단에 등록하실 수 있습니다.</p>
+    <div class="btn-set" data-reveal>
+      <a href="../../visit/" class="btn-gold">입주 신청하기 →</a>
+      <a href="../" class="btn-ghost">← 생츄어리로 돌아가기</a>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
-      </div>
-    </div>
-  </footer>
-
   <script src="../../assets/js/app.js"></script>
+  <script>
+    (function () {
+      const els = document.querySelectorAll('[data-reveal]');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('is-revealed'), i * 80);
+            obs.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      els.forEach(el => obs.observe(el));
+    })();
+  </script>
 </body>
 </html>

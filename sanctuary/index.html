@@ -1,582 +1,859 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore the sacred spaces of Alexandria Sanctuary - Cave retreats, contemplative residence, and compassionate hospice care at Palgongsan, Korea.">
+  <meta name="description" content="알렉산드리아 생츄어리 — 팔공산 기슭, 죽음을 준비하는 세 개의 공간. 동굴 수련, 입주 공간, 임종 케어.">
+  <title>생츄어리 — Alexandria Sanctuary</title>
 
-  <title>The Sanctuary - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="../assets/css/design-system.css">
   <link rel="stylesheet" href="../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
 
   <style>
-    .sanctuary-hero {
-      min-height: 85vh;
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── HERO ─── */
+    .s-hero {
+      position: relative;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.06), transparent 50%),
-        radial-gradient(ellipse at bottom left, rgba(201, 162, 39, 0.04), transparent 40%),
-        var(--bg-primary);
-      position: relative;
+      overflow: hidden;
+      background: #060d18;
     }
 
-    .sanctuary-hero::before {
-      content: '';
+    .s-hero__canvas {
       position: absolute;
       inset: 0;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(201,162,39,0.1)"/></svg>');
-      background-size: 80px 80px;
-      opacity: 0.5;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
     }
 
-    .sanctuary-intro {
-      padding: var(--space-20) 0;
+    /* Mountain silhouette SVG background */
+    .s-hero__mountain {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background:
+        linear-gradient(to top, rgba(6,13,24,1) 0%, rgba(6,13,24,0.6) 40%, transparent 100%);
+      z-index: 1;
+    }
+
+    .s-hero__mountain svg {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.18;
+    }
+
+    .s-hero__body {
+      position: relative;
+      z-index: 2;
+      padding: 0 1.5rem;
+      max-width: 820px;
+    }
+
+    .s-hero__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: #c9a227;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0.8;
+    }
+
+    .s-hero__heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .s-hero__heading em {
+      display: block;
+      font-style: italic;
+      color: #c9a227;
+      font-size: 0.72em;
+    }
+
+    .s-hero__sub {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.55);
+      line-height: 1.9;
+      max-width: 540px;
+      margin: 0 auto 3rem;
+    }
+
+    .s-hero__scroll {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(201,162,39,0.5);
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: scrollPulse 2.5s ease-in-out infinite;
+    }
+
+    .s-hero__scroll span {
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(201,162,39,0.6), transparent);
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.5; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(6px); }
+    }
+
+    /* ─── DECLARATION ─── */
+    .s-decl {
+      background: #030810;
+      padding: 8rem 1.5rem;
       text-align: center;
     }
 
-    .sanctuary-intro p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-6);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
+    .s-decl__inner {
+      max-width: 700px;
+      margin: 0 auto;
     }
 
-    .spaces-section {
-      padding: var(--space-20) 0;
-    }
-
-    .space-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-12);
-      align-items: center;
-      margin-bottom: var(--space-20);
-      padding: 0 var(--container-padding);
-      max-width: var(--max-width-xl);
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .space-card:nth-child(even) {
-      direction: rtl;
-    }
-
-    .space-card:nth-child(even) > * {
-      direction: ltr;
-    }
-
-    .space-card__image {
-      aspect-ratio: 4/3;
-      background: var(--bg-secondary);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      position: relative;
-      border: 1px solid var(--border-subtle);
-    }
-
-    .space-card__image-inner {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        radial-gradient(ellipse at center, rgba(201, 162, 39, 0.1), transparent 70%);
-    }
-
-    .space-card__icon {
-      width: 120px;
-      height: 120px;
-      opacity: 0.6;
-    }
-
-    .space-card__content {
-      padding: var(--space-8);
-    }
-
-    .space-card__label {
-      font-family: var(--font-display);
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-      letter-spacing: var(--tracking-widest);
-      text-transform: uppercase;
-      margin-bottom: var(--space-3);
-    }
-
-    .space-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .space-card__subtitle {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--color-gold-500);
+    .s-decl__quote {
+      font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      margin-bottom: var(--space-4);
+      font-size: clamp(1.4rem, 3vw, 2.1rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      line-height: 1.65;
+      margin-bottom: 3rem;
     }
 
-    .space-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-6);
+    .s-decl__quote strong {
+      color: #c9a227;
+      font-style: normal;
+      font-weight: 500;
     }
 
-    .space-card__features {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 var(--space-6);
+    .s-decl__rule {
+      width: 60px;
+      height: 1px;
+      background: rgba(201,162,39,0.4);
+      margin: 0 auto 3rem;
     }
 
-    .space-card__features li {
-      padding: var(--space-2) 0;
-      padding-left: var(--space-6);
-      position: relative;
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
+    .s-decl__body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.5);
+      line-height: 2;
     }
 
-    .space-card__features li::before {
-      content: '✦';
-      position: absolute;
-      left: 0;
-      color: var(--color-gold-500);
-      font-size: var(--text-xs);
+    /* ─── SPACES GRID ─── */
+    .s-spaces {
+      padding: 7rem 1.5rem;
+      background: #060d18;
+    }
+
+    .s-spaces__header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .s-spaces__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #c9a227;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+    }
+
+    .s-spaces__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+      color: #f5f0e8;
+    }
+
+    .s-spaces__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     @media (max-width: 900px) {
-      .space-card {
-        grid-template-columns: 1fr;
-        gap: var(--space-8);
-      }
-
-      .space-card:nth-child(even) {
-        direction: ltr;
-      }
-
-      .space-card__image {
-        aspect-ratio: 16/9;
-      }
+      .s-spaces__grid { grid-template-columns: 1fr; gap: 3rem; }
     }
 
-    .mountain-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-      text-align: center;
-    }
-
-    .mountain-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .mountain-section p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-6);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-    }
-
-    .mountain-stats {
+    .space-card {
+      position: relative;
+      min-height: 560px;
       display: flex;
-      justify-content: center;
-      gap: var(--space-12);
-      margin-top: var(--space-10);
-      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 3rem 2.5rem;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: pointer;
+      background: #090f1e;
     }
 
-    .stat {
-      text-align: center;
+    .space-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(6,13,24,0.97) 0%, rgba(6,13,24,0.5) 50%, rgba(6,13,24,0.2) 100%);
+      transition: opacity 0.8s ease;
+      z-index: 1;
     }
 
-    .stat__number {
-      font-family: var(--font-display);
-      font-size: var(--text-4xl);
-      color: var(--color-gold-500);
-      display: block;
+    .space-card:hover::before {
+      opacity: 0.7;
     }
 
-    .stat__label {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      letter-spacing: var(--tracking-wide);
+    /* Unique ambient bg per card */
+    .space-card--cave .space-card__bg {
+      background:
+        radial-gradient(ellipse at 30% 30%, rgba(15,25,50,1) 0%, rgba(6,13,24,1) 70%),
+        radial-gradient(circle at 60% 80%, rgba(201,162,39,0.04) 0%, transparent 40%);
+    }
+
+    .space-card--residence .space-card__bg {
+      background:
+        radial-gradient(ellipse at 70% 20%, rgba(20,30,55,1) 0%, rgba(6,13,24,1) 70%),
+        radial-gradient(circle at 30% 70%, rgba(201,162,39,0.05) 0%, transparent 40%);
+    }
+
+    .space-card--hospice .space-card__bg {
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(25,15,30,1) 0%, rgba(6,13,24,1) 70%),
+        radial-gradient(circle at 80% 30%, rgba(201,162,39,0.04) 0%, transparent 35%);
+    }
+
+    .space-card__bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-card:hover .space-card__bg {
+      transform: scale(1.04);
+    }
+
+    /* Geometric accent per card */
+    .space-card__geo {
+      position: absolute;
+      top: 2.5rem;
+      right: 2.5rem;
+      z-index: 2;
+      opacity: 0.25;
+      transition: opacity 0.5s ease;
+    }
+
+    .space-card:hover .space-card__geo { opacity: 0.5; }
+
+    .space-card__geo svg {
+      width: 80px;
+      height: 80px;
+    }
+
+    .space-card__content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .space-card__number {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      margin-top: var(--space-2);
+      color: #c9a227;
+      margin-bottom: 1.5rem;
+      opacity: 0.7;
     }
 
-    .daily-rhythm {
-      padding: var(--space-20) 0;
+    .space-card__name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.1rem;
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
     }
 
-    .daily-rhythm h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
+    .space-card__name-ko {
+      display: block;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(201,162,39,0.7);
+      margin-bottom: 1.2rem;
     }
 
-    .daily-rhythm > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
+    .space-card__desc {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.5);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      max-width: 280px;
     }
 
-    .rhythm-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--space-6);
-      max-width: var(--max-width-lg);
+    .space-card__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #c9a227;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,162,39,0.3);
+      padding-bottom: 0.25rem;
+      transition: all 0.3s ease;
+    }
+
+    .space-card:hover .space-card__cta {
+      gap: 1.25rem;
+      border-color: rgba(201,162,39,0.7);
+    }
+
+    /* ─── CONDITION SECTION ─── */
+    .s-cond {
+      background: #030810;
+      padding: 7rem 1.5rem;
+    }
+
+    .s-cond__inner {
+      max-width: 900px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
     }
 
-    .rhythm-item {
+    .s-cond__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #c9a227;
+      margin-bottom: 3rem;
+      opacity: 0.7;
       text-align: center;
-      padding: var(--space-6);
-      background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
     }
 
-    .rhythm-item__time {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-2);
+    .s-cond__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 5rem;
     }
 
-    .rhythm-item__activity {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-1);
+    @media (max-width: 680px) {
+      .s-cond__grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
 
-    .rhythm-item__korean {
-      font-family: var(--font-korean-serif);
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
+    .cond-item {
+      border-left: 1px solid rgba(201,162,39,0.2);
+      padding-left: 1.5rem;
+    }
+
+    .cond-item__icon {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+      opacity: 0.6;
+    }
+
+    .cond-item__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #f5f0e8;
+      margin-bottom: 0.5rem;
+    }
+
+    .cond-item__body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 1.9;
+    }
+
+    /* ─── MAP SECTION ─── */
+    .s-map {
+      background: #060d18;
+      padding: 7rem 1.5rem;
+      text-align: center;
+    }
+
+    .s-map__label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #c9a227;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+    }
+
+    .s-map__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 4rem;
+    }
+
+    /* CSS-drawn site plan */
+    .s-map__plan {
+      max-width: 700px;
+      margin: 0 auto 4rem;
+      position: relative;
+      height: 340px;
+      border: 1px solid rgba(201,162,39,0.12);
+    }
+
+    .s-map__plan svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .s-map__desc {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.45);
+      line-height: 2;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ─── CTA STRIP ─── */
+    .s-cta {
+      background: #000;
+      padding: 6rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(201,162,39,0.08);
+    }
+
+    .s-cta__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: #f5f0e8;
+      margin-bottom: 0.75rem;
+    }
+
+    .s-cta__sub {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.4);
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2.5rem;
+      background: transparent;
+      border: 1px solid rgba(201,162,39,0.5);
+      color: #c9a227;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+
+    .btn-gold:hover {
+      background: rgba(201,162,39,0.08);
+      border-color: #c9a227;
+    }
+
+    /* ─── SCROLL ANIMATE ─── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    [data-reveal].is-revealed {
+      opacity: 1;
+      transform: none;
     }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../philosophy/" class="nav__link">Philosophy</a>
-          <a href="./" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
-          <a href="../forum/" class="nav__link">Forum</a>
-          <a href="../library/" class="nav__link">Library</a>
-          <a href="../visit/" class="nav__link">Visit</a>
-        </div>
-
-        <div class="nav__actions">
-          <a href="../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="../" class="nav__logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="#c9a227" stroke-width="1" fill="none"/>
+          <polygon points="14,7 21,11 21,18 14,22 7,18 7,11" stroke="#c9a227" stroke-width="0.5" fill="none" opacity="0.4"/>
+          <circle cx="14" cy="14" r="2" fill="#c9a227" opacity="0.6"/>
+        </svg>
+        <span>Alexandria</span>
+      </a>
+      <div class="nav__links">
+        <a href="../philosophy/" class="nav__link">철학</a>
+        <a href="../sanctuary/" class="nav__link is-active">생츄어리</a>
+        <a href="../library/" class="nav__link">도서관</a>
+        <a href="../forum/" class="nav__link">포럼</a>
+        <a href="../visit/" class="nav__link nav__link--cta">방문 신청</a>
       </div>
-    </div>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../philosophy/" class="nav__link">Philosophy</a>
-      <a href="./" class="nav__link">Sanctuary</a>
-      <a href="../forum/" class="nav__link">Forum</a>
-      <a href="../library/" class="nav__link">Library</a>
-      <a href="../visit/" class="nav__link">Visit</a>
+      <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="sanctuary-hero">
-    <div class="container container-narrow" style="position: relative; z-index: 1;">
-      <span class="section-label" data-animate>The Sanctuary</span>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl); margin-top: var(--space-4);">
-        Sacred Spaces for<br>Every Season of Life
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="모바일 메뉴">
+    <nav>
+      <a href="../philosophy/" class="nav__link">철학</a>
+      <a href="../sanctuary/" class="nav__link">생츄어리</a>
+      <a href="../library/" class="nav__link">도서관</a>
+      <a href="../forum/" class="nav__link">포럼</a>
+      <a href="../visit/" class="nav__link">방문 신청</a>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <section class="s-hero">
+    <canvas class="s-hero__canvas" id="heroCanvas"></canvas>
+
+    <!-- Mountain silhouette -->
+    <div class="s-hero__mountain">
+      <svg viewBox="0 0 1440 500" preserveAspectRatio="xMidYMax meet" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,500 L0,380 L120,280 L200,320 L320,180 L420,250 L520,120 L600,190 L720,60 L820,150 L940,80 L1020,160 L1140,100 L1240,200 L1320,140 L1440,220 L1440,500 Z" fill="#c9a227"/>
+        <path d="M0,500 L0,420 L180,320 L260,360 L380,260 L500,310 L620,200 L720,260 L840,170 L960,230 L1080,160 L1200,240 L1320,190 L1440,260 L1440,500 Z" fill="#0a1628" fill-opacity="0.8"/>
+      </svg>
+    </div>
+
+    <div class="s-hero__body">
+      <p class="s-hero__label">팔공산 · 경상북도 · 대한민국</p>
+      <h1 class="s-hero__heading">
+        The Sanctuary
+        <em>몸이 머무는 곳</em>
       </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6);">
-        From weekend retreats to final passage,<br>
-        Alexandria offers places of profound peace.
+      <p class="s-hero__sub">
+        알렉산드리아는 디지털 공간이기도 하지만,<br>
+        팔공산 기슭에 실제로 존재하는 물리적 공간이기도 합니다.<br>
+        세 개의 공간이 죽음을 다르게 껴안습니다.
       </p>
-    </div>
-  </header>
-
-  <!-- Introduction -->
-  <section class="sanctuary-intro">
-    <div class="container container-narrow" data-animate>
-      <p>
-        The sanctuary is not a building—it is a landscape. Nestled on the slopes of Palgongsan mountain, our spaces emerge from the terrain itself: caves carved by millennia of wind and water, gardens that follow the natural contours, and buildings that whisper rather than shout.
-      </p>
-      <p>
-        Whether you come for three days or three years, the mountain will be your teacher. The silence will speak what words cannot.
-      </p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Three Spaces -->
-  <section class="spaces-section">
-    <div class="container container-narrow text-center" data-animate>
-      <span class="section-label">Three Dwelling Places</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Choose Your Path</h2>
-    </div>
-
-    <!-- Cave Retreat -->
-    <article class="space-card" data-animate>
-      <div class="space-card__image">
-        <div class="space-card__image-inner">
-          <svg class="space-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 75 Q25 45 50 35 Q75 45 85 75" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <ellipse cx="50" cy="75" rx="30" ry="15" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <circle cx="50" cy="55" r="8" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <path d="M50 47 L50 35" stroke="var(--color-gold-500)" stroke-width="1"/>
-          </svg>
-        </div>
-      </div>
-      <div class="space-card__content">
-        <span class="space-card__label">Pillar I</span>
-        <h3 class="space-card__title">Cave Retreat</h3>
-        <p class="space-card__subtitle">동굴수행 · Donggul Suhaeng</p>
-        <p class="space-card__text">
-          Enter the womb of the mountain. Our natural caves have sheltered contemplatives for centuries. In total darkness and silence, the mind turns inward. What remains when all distraction falls away?
-        </p>
-        <ul class="space-card__features">
-          <li>3-day, 7-day, and 21-day silent retreats</li>
-          <li>Natural cave chambers heated by geothermal warmth</li>
-          <li>Guidance from experienced meditation teachers</li>
-          <li>Integration sessions to bring insights into daily life</li>
-        </ul>
-        <a href="./cave-retreat/" class="btn btn-primary">Explore Cave Retreats</a>
-      </div>
-    </article>
-
-    <!-- Contemplative Residence -->
-    <article class="space-card" data-animate>
-      <div class="space-card__image">
-        <div class="space-card__image-inner">
-          <svg class="space-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="25" y="40" width="50" height="40" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <path d="M20 40 L50 20 L80 40" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <rect x="42" y="55" width="16" height="25" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <line x1="50" y1="55" x2="50" y2="80" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <circle cx="50" cy="15" r="3" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-          </svg>
-        </div>
-      </div>
-      <div class="space-card__content">
-        <span class="space-card__label">Pillar II</span>
-        <h3 class="space-card__title">Contemplative Residence</h3>
-        <p class="space-card__subtitle">명상의 집 · Myeongsang-ui Jip</p>
-        <p class="space-card__text">
-          For those seeking extended immersion, our residency program offers a home within the sanctuary. Live alongside fellow seekers, participate in daily practice, and weave contemplation into the fabric of ordinary life.
-        </p>
-        <ul class="space-card__features">
-          <li>3-month, 6-month, and 1-year residencies available</li>
-          <li>Private quarters with mountain views</li>
-          <li>Shared meals, work practice, and communal gatherings</li>
-          <li>Access to library, gardens, and all sanctuary programs</li>
-        </ul>
-        <a href="./residence/" class="btn btn-primary">Learn About Residency</a>
-      </div>
-    </article>
-
-    <!-- Hospice Care -->
-    <article class="space-card" data-animate>
-      <div class="space-card__image">
-        <div class="space-card__image-inner">
-          <svg class="space-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="30" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <path d="M50 30 L50 70 M35 42 L50 30 L65 42 M35 58 L50 70 L65 58" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <circle cx="50" cy="50" r="6" fill="var(--color-gold-500)" opacity="0.3"/>
-          </svg>
-        </div>
-      </div>
-      <div class="space-card__content">
-        <span class="space-card__label">Pillar III</span>
-        <h3 class="space-card__title">Hospice Care</h3>
-        <p class="space-card__subtitle">돌봄의 집 · Dolbom-ui Jip</p>
-        <p class="space-card__text">
-          When the final journey approaches, Alexandria offers a place to die with dignity, surrounded by beauty and love. Our hospice integrates the highest standards of medical care with deep spiritual support.
-        </p>
-        <ul class="space-card__features">
-          <li>24-hour palliative care by trained nurses</li>
-          <li>Spiritual companions from all traditions</li>
-          <li>Private suites with gardens and mountain views</li>
-          <li>Family accommodation and bereavement support</li>
-        </ul>
-        <a href="./hospice/" class="btn btn-primary">Discover Hospice Care</a>
-      </div>
-    </article>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- The Mountain -->
-  <section class="mountain-section" data-animate>
-    <div class="container container-narrow">
-      <span class="section-label">Our Location</span>
-      <h2 style="margin-top: var(--space-4);">Palgongsan</h2>
-      <p>
-        The "Mountain of Eight Merits" has been sacred ground for over 1,500 years. Its caves sheltered the first Buddhist monks to arrive in Korea. Its slopes hold dozens of temples and hermitages. The mountain does not merely host Alexandria—it teaches us.
-      </p>
-      <p>
-        From our sanctuary, you can walk to ancient temple sites, meditate by waterfalls, or simply sit and watch the mist rise through the pines. The mountain is not separate from the practice—it is the practice.
-      </p>
-
-      <div class="mountain-stats">
-        <div class="stat">
-          <span class="stat__number">1,193m</span>
-          <span class="stat__label">Summit Elevation</span>
-        </div>
-        <div class="stat">
-          <span class="stat__number">1,500+</span>
-          <span class="stat__label">Years of Practice</span>
-        </div>
-        <div class="stat">
-          <span class="stat__number">30+</span>
-          <span class="stat__label">Temple Sites</span>
-        </div>
-        <div class="stat">
-          <span class="stat__number">4</span>
-          <span class="stat__label">Seasons of Beauty</span>
-        </div>
+      <div class="s-hero__scroll">
+        내려가기
+        <span></span>
       </div>
     </div>
   </section>
 
-  <!-- Daily Rhythm -->
-  <section class="daily-rhythm" data-animate>
-    <div class="container">
-      <span class="section-label" style="display: block; text-align: center;">Life at Alexandria</span>
-      <h2 style="margin-top: var(--space-4);">The Daily Rhythm</h2>
-      <p>
-        Each day at Alexandria follows a gentle structure—not rigid rules, but an invitation to flow with the natural rhythms of mountain life.
+  <!-- DECLARATION -->
+  <section class="s-decl">
+    <div class="s-decl__inner">
+      <p class="s-decl__quote" data-reveal>
+        "우리는 죽음을<br>
+        <strong>병원 밖으로</strong> 데려오고 싶었다."
       </p>
+      <div class="s-decl__rule"></div>
+      <p class="s-decl__body" data-reveal>
+        현대 사회는 죽음을 병원 안에 가뒀습니다.<br>
+        냉백한 형광등 아래, 심전도 소리와 함께, 혼자.<br><br>
+        팔공산에는 다른 가능성이 있습니다.<br>
+        산이 있고, 침묵이 있고, 당신의 이야기를 들어줄 사람이 있습니다.
+      </p>
+    </div>
+  </section>
 
-      <div class="rhythm-grid">
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">5:30</div>
-          <div class="rhythm-item__activity">Morning Bell</div>
-          <div class="rhythm-item__korean">새벽종</div>
+  <!-- THREE SPACES -->
+  <section class="s-spaces">
+    <div class="s-spaces__header" data-reveal>
+      <p class="s-spaces__label">세 개의 공간</p>
+      <h2 class="s-spaces__title">같은 산, 다른 문</h2>
+    </div>
+
+    <div class="s-spaces__grid">
+
+      <!-- CAVE RETREAT -->
+      <a href="./cave-retreat/" class="space-card space-card--cave" data-reveal>
+        <div class="space-card__bg"></div>
+        <div class="space-card__geo">
+          <svg viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="35" stroke="#c9a227" stroke-width="0.8"/>
+            <circle cx="40" cy="40" r="20" stroke="#c9a227" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="40" cy="40" r="5" fill="#c9a227" opacity="0.4"/>
+          </svg>
         </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">6:00</div>
-          <div class="rhythm-item__activity">Meditation</div>
-          <div class="rhythm-item__korean">명상</div>
+        <div class="space-card__content">
+          <p class="space-card__number">Space 01</p>
+          <h3 class="space-card__name">
+            Cave Retreat
+            <span class="space-card__name-ko">동굴 수련</span>
+          </h3>
+          <p class="space-card__desc">
+            팔공산 천연 동굴에서의 3일, 7일, 21일 프로그램.<br>
+            완전한 어둠, 완전한 침묵.<br>
+            자신의 죽음을 상상하는 시간.
+          </p>
+          <span class="space-card__cta">탐색하기 →</span>
         </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">7:30</div>
-          <div class="rhythm-item__activity">Breakfast</div>
-          <div class="rhythm-item__korean">아침공양</div>
+      </a>
+
+      <!-- RESIDENCE -->
+      <a href="./residence/" class="space-card space-card--residence" data-reveal>
+        <div class="space-card__bg"></div>
+        <div class="space-card__geo">
+          <svg viewBox="0 0 80 80" fill="none">
+            <rect x="10" y="10" width="60" height="60" stroke="#c9a227" stroke-width="0.8"/>
+            <rect x="22" y="22" width="36" height="36" stroke="#c9a227" stroke-width="0.5" opacity="0.5"/>
+            <rect x="34" y="34" width="12" height="12" fill="#c9a227" opacity="0.4"/>
+          </svg>
         </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">9:00</div>
-          <div class="rhythm-item__activity">Work Practice</div>
-          <div class="rhythm-item__korean">작무</div>
+        <div class="space-card__content">
+          <p class="space-card__number">Space 02</p>
+          <h3 class="space-card__name">
+            Residence
+            <span class="space-card__name-ko">입주 공간</span>
+          </h3>
+          <p class="space-card__desc">
+            3개월에서 1년, 장기 입주 프로그램.<br>
+            말기 질환 또는 생의 전환점에 선 분들을 위한<br>
+            공동 생활 공간.
+          </p>
+          <span class="space-card__cta">탐색하기 →</span>
         </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">12:00</div>
-          <div class="rhythm-item__activity">Lunch</div>
-          <div class="rhythm-item__korean">점심공양</div>
+      </a>
+
+      <!-- HOSPICE -->
+      <a href="./hospice/" class="space-card space-card--hospice" data-reveal>
+        <div class="space-card__bg"></div>
+        <div class="space-card__geo">
+          <svg viewBox="0 0 80 80" fill="none">
+            <polygon points="40,5 75,65 5,65" stroke="#c9a227" stroke-width="0.8" fill="none"/>
+            <polygon points="40,20 62,60 18,60" stroke="#c9a227" stroke-width="0.5" fill="none" opacity="0.5"/>
+            <polygon points="40,38 50,55 30,55" fill="#c9a227" opacity="0.4"/>
+          </svg>
         </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">14:00</div>
-          <div class="rhythm-item__activity">Rest or Study</div>
-          <div class="rhythm-item__korean">휴식 · 공부</div>
+        <div class="space-card__content">
+          <p class="space-card__number">Space 03</p>
+          <h3 class="space-card__name">
+            Hospice
+            <span class="space-card__name-ko">임종 케어</span>
+          </h3>
+          <p class="space-card__desc">
+            삶의 마지막 단계를 위한 공간.<br>
+            의료적 처치보다 존재적 동반.<br>
+            종교 없이, 의례 없이, 함께 있음.
+          </p>
+          <span class="space-card__cta">탐색하기 →</span>
         </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">17:00</div>
-          <div class="rhythm-item__activity">Evening Walk</div>
-          <div class="rhythm-item__korean">산책</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CONDITIONS -->
+  <section class="s-cond">
+    <div class="s-cond__inner">
+      <p class="s-cond__label">이 공간에 오는 조건</p>
+      <div class="s-cond__grid">
+        <div class="cond-item" data-reveal>
+          <div class="cond-item__icon">◦</div>
+          <h3 class="cond-item__title">종교 없음</h3>
+          <p class="cond-item__body">
+            특정 종교를 강요하지 않습니다.<br>
+            불교, 천주교, 무속, 무종교 모두 환영합니다.<br>
+            당신의 언어로 죽음을 말하면 됩니다.
+          </p>
         </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">18:00</div>
-          <div class="rhythm-item__activity">Dinner</div>
-          <div class="rhythm-item__korean">저녁공양</div>
+        <div class="cond-item" data-reveal>
+          <div class="cond-item__icon">◦</div>
+          <h3 class="cond-item__title">치료 목적 아님</h3>
+          <p class="cond-item__body">
+            알렉산드리아는 병원이 아닙니다.<br>
+            무언가를 치료하거나 고치려 하지 않습니다.<br>
+            지금 있는 그대로를 함께 바라봅니다.
+          </p>
         </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">19:30</div>
-          <div class="rhythm-item__activity">Evening Gathering</div>
-          <div class="rhythm-item__korean">저녁모임</div>
+        <div class="cond-item" data-reveal>
+          <div class="cond-item__icon">◦</div>
+          <h3 class="cond-item__title">침묵의 존중</h3>
+          <p class="cond-item__body">
+            말하지 않아도 됩니다.<br>
+            눈물을 설명하지 않아도 됩니다.<br>
+            침묵은 대화의 한 형태입니다.
+          </p>
         </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">21:00</div>
-          <div class="rhythm-item__activity">Noble Silence</div>
-          <div class="rhythm-item__korean">침묵의 시간</div>
+        <div class="cond-item" data-reveal>
+          <div class="cond-item__icon">◦</div>
+          <h3 class="cond-item__title">기록과 익명성</h3>
+          <p class="cond-item__body">
+            당신의 이야기는 동의 없이 기록되지 않습니다.<br>
+            공유를 원한다면 익명으로 알렉산드리아 아카이브에<br>
+            남길 수 있습니다.
+          </p>
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- SITE MAP / LOCATION -->
+  <section class="s-map">
+    <p class="s-map__label" data-reveal>위치</p>
+    <h2 class="s-map__title" data-reveal>팔공산, 경상북도</h2>
+
+    <!-- Schematic plan (SVG) -->
+    <div class="s-map__plan" data-reveal>
+      <svg viewBox="0 0 700 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid -->
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(201,162,39,0.06)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="700" height="340" fill="url(#grid)"/>
+
+        <!-- Mountain path -->
+        <path d="M 0,340 L 0,260 L 60,200 L 120,230 L 200,140 L 280,180 L 350,80 L 420,140 L 500,100 L 580,160 L 640,120 L 700,160 L 700,340 Z"
+          fill="rgba(201,162,39,0.04)" stroke="rgba(201,162,39,0.15)" stroke-width="1"/>
+
+        <!-- Cave Retreat -->
+        <rect x="80" y="180" width="100" height="70" rx="2" fill="rgba(6,13,24,0.8)" stroke="rgba(201,162,39,0.4)" stroke-width="1"/>
+        <text x="130" y="208" text-anchor="middle" fill="rgba(201,162,39,0.8)" font-family="Cinzel,serif" font-size="8" letter-spacing="1">CAVE</text>
+        <text x="130" y="222" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-family="Noto Sans KR,sans-serif" font-size="7">동굴 수련</text>
+        <circle cx="130" cy="240" r="4" fill="rgba(201,162,39,0.3)" stroke="rgba(201,162,39,0.6)" stroke-width="1"/>
+
+        <!-- Residence -->
+        <rect x="290" y="150" width="120" height="80" rx="2" fill="rgba(6,13,24,0.8)" stroke="rgba(201,162,39,0.4)" stroke-width="1"/>
+        <text x="350" y="180" text-anchor="middle" fill="rgba(201,162,39,0.8)" font-family="Cinzel,serif" font-size="8" letter-spacing="1">RESIDENCE</text>
+        <text x="350" y="196" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-family="Noto Sans KR,sans-serif" font-size="7">입주 공간</text>
+        <circle cx="350" cy="215" r="4" fill="rgba(201,162,39,0.3)" stroke="rgba(201,162,39,0.6)" stroke-width="1"/>
+
+        <!-- Hospice -->
+        <rect x="520" y="160" width="110" height="75" rx="2" fill="rgba(6,13,24,0.8)" stroke="rgba(201,162,39,0.4)" stroke-width="1"/>
+        <text x="575" y="188" text-anchor="middle" fill="rgba(201,162,39,0.8)" font-family="Cinzel,serif" font-size="8" letter-spacing="1">HOSPICE</text>
+        <text x="575" y="204" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-family="Noto Sans KR,sans-serif" font-size="7">임종 케어</text>
+        <circle cx="575" cy="222" r="4" fill="rgba(201,162,39,0.3)" stroke="rgba(201,162,39,0.6)" stroke-width="1"/>
+
+        <!-- Paths connecting -->
+        <path d="M 180,215 Q 235,215 290,190" stroke="rgba(201,162,39,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
+        <path d="M 410,190 Q 465,180 520,195" stroke="rgba(201,162,39,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
+
+        <!-- Main entrance -->
+        <path d="M 350,340 L 350,310" stroke="rgba(201,162,39,0.3)" stroke-width="1.5"/>
+        <text x="350" y="330" text-anchor="middle" fill="rgba(201,162,39,0.5)" font-family="Cinzel,serif" font-size="7" letter-spacing="1">입구</text>
+
+        <!-- Compass rose -->
+        <g transform="translate(650, 30)">
+          <circle cx="0" cy="0" r="16" stroke="rgba(201,162,39,0.2)" stroke-width="1" fill="none"/>
+          <path d="M 0,-14 L 0,14 M -14,0 L 14,0" stroke="rgba(201,162,39,0.3)" stroke-width="0.8"/>
+          <text x="0" y="-18" text-anchor="middle" fill="rgba(201,162,39,0.5)" font-family="Cinzel,serif" font-size="8">N</text>
+        </g>
+      </svg>
+    </div>
+
+    <p class="s-map__desc" data-reveal>
+      팔공산 동화사 인근.<br>
+      대구에서 차로 40분, 경산에서 30분.<br>
+      구체적인 주소는 방문 신청 확정 후 안내됩니다.
+    </p>
   </section>
 
   <!-- CTA -->
-  <section class="section" style="padding-top: 0;">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        Ready to explore the sanctuary in person?
-      </p>
-      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-        <a href="../visit/" class="btn btn-primary">Plan Your Visit</a>
-        <a href="../forum/" class="btn btn-secondary">Attend an Event First</a>
-      </div>
-    </div>
+  <section class="s-cta">
+    <h2 class="s-cta__title" data-reveal>이 공간이 당신을 위한 것인지<br>알고 싶다면</h2>
+    <p class="s-cta__sub" data-reveal>방문 신청서를 작성하시면 담당자가 연락드립니다</p>
+    <a href="../visit/" class="btn-gold" data-reveal>방문 신청하기 →</a>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
-      </div>
-    </div>
-  </footer>
-
   <script src="../assets/js/app.js"></script>
+  <script>
+    // Hero canvas — subtle star field
+    (function () {
+      const canvas = document.getElementById('heroCanvas');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function initStars() {
+        stars = [];
+        const count = Math.floor((canvas.width * canvas.height) / 8000);
+        for (let i = 0; i < count; i++) {
+          stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 1.2 + 0.2,
+            a: Math.random() * 0.6 + 0.1,
+            phase: Math.random() * Math.PI * 2,
+            speed: 0.005 + Math.random() * 0.008
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (const s of stars) {
+          s.phase += s.speed;
+          const a = s.a * (0.5 + 0.5 * Math.sin(s.phase));
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(245,240,232,${a})`;
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      initStars();
+      draw();
+      window.addEventListener('resize', () => { resize(); initStars(); });
+    })();
+
+    // Scroll reveal
+    (function () {
+      const els = document.querySelectorAll('[data-reveal]');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('is-revealed'), i * 80);
+            obs.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      els.forEach(el => obs.observe(el));
+    })();
+  </script>
 </body>
 </html>
