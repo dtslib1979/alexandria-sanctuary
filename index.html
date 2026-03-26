@@ -3,393 +3,1598 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Alexandria Sanctuary - A global spiritual sanctuary for contemplative living, wisdom cultivation, and sacred passage at Palgongsan, Korea.">
+  <meta name="description" content="Alexandria Sanctuary — A sacred space for the final chapter. Seven gates into contemplative living, Palgongsan, Korea.">
+  <title>Alexandria Sanctuary — Where the Final Gate Opens</title>
 
-  <title>Alexandria Sanctuary - Where Wisdom Meets Mortality</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="assets/css/design-system.css">
-  <link rel="stylesheet" href="assets/css/components.css">
-
-  <!-- Favicon & Icons -->
   <link rel="icon" type="image/svg+xml" href="assets/icons/emblem.svg">
-  <link rel="apple-touch-icon" href="assets/icons/emblem.svg">
   <link rel="manifest" href="manifest.json">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
   <style>
-    /* Page-specific intro animation */
-    .intro-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: var(--bg-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 1.5s var(--ease-smooth), visibility 1.5s;
+    /* ═══════════════════════════════════════════════
+       RESET & ROOT
+    ═══════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:           #08060400;
+      --bg-solid:     #080604;
+      --bg-panel:     #0D0A07;
+      --gold:         #C8A96E;
+      --gold-dim:     #8B6A30;
+      --gold-bright:  #E8C98E;
+      --parchment:    #EAE4D6;
+      --parchment-60: rgba(234,228,214,0.6);
+      --parchment-30: rgba(234,228,214,0.3);
+      --mahogany:     #1E1408;
+
+      --g1: #1E1C4A;   /* indigo — Gate I   */
+      --g2: #0E2233;   /* abyss  — Gate II  */
+      --g3: #2E1A0E;   /* ember  — Gate III */
+      --g4: #142214;   /* forest — Gate IV  */
+      --g5: #1E1633;   /* violet — Gate V   */
+      --g6: #080C08;   /* cave   — Gate VI  */
+      --g7: #2E2000;   /* amber  — Gate VII */
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
     }
 
-    .intro-overlay.is-hidden {
+    html {
+      background: var(--bg-solid);
+      color: var(--parchment);
+      overflow-x: hidden;
+      scroll-behavior: auto;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ═══════════════════════════════════════════════
+       CUSTOM CURSOR
+    ═══════════════════════════════════════════════ */
+    #cur-dot, #cur-ring {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 99999;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      will-change: transform, left, top;
+    }
+
+    #cur-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      transition: width .2s, height .2s, background .3s;
+    }
+
+    #cur-ring {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(200,169,110,0.5);
+      mix-blend-mode: screen;
+      transition: width .4s var(--ease-out),
+                  height .4s var(--ease-out),
+                  border-color .4s,
+                  opacity .3s;
+    }
+
+    body.cur-hover  #cur-ring { width: 64px; height: 64px; border-color: var(--gold); }
+    body.cur-gate   #cur-ring { width: 80px; height: 80px; border-color: var(--gold-bright); opacity: .6; }
+    body.cur-hidden #cur-dot,
+    body.cur-hidden #cur-ring { opacity: 0; }
+
+    /* ═══════════════════════════════════════════════
+       GRAIN OVERLAY
+    ═══════════════════════════════════════════════ */
+    .grain {
+      position: fixed; inset: -200%;
+      width: 400%; height: 400%;
+      z-index: 9900; pointer-events: none;
+      opacity: .028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain-move 0.7s steps(1) infinite;
+    }
+    @keyframes grain-move {
+      0%  { transform: translate(0,0); }
+      14% { transform: translate(-4%,-8%); }
+      28% { transform: translate(-14%,4%); }
+      42% { transform: translate(6%,-22%); }
+      57% { transform: translate(-4%,22%); }
+      71% { transform: translate(14%,-2%); }
+      85% { transform: translate(-2%,12%); }
+    }
+
+    /* ═══════════════════════════════════════════════
+       SCROLL PROGRESS BAR — right edge
+    ═══════════════════════════════════════════════ */
+    .scroll-bar {
+      position: fixed; right: 22px; top: 50%;
+      transform: translateY(-50%);
+      width: 1px; height: 100px;
+      background: rgba(200,169,110,.12);
+      z-index: 200;
+    }
+    .scroll-bar__fill {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 0%;
+      background: var(--gold);
+      transition: height .08s;
+    }
+    .scroll-bar__nub {
+      position: absolute; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 5px; height: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+      top: 0%;
+      transition: top .08s;
+    }
+
+    /* ═══════════════════════════════════════════════
+       INTRO OVERLAY
+    ═══════════════════════════════════════════════ */
+    #intro {
+      position: fixed; inset: 0; z-index: 9500;
+      background: #030201;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0;
+    }
+    #intro.done { display: none; }
+
+    .intro-emblem {
+      width: 56px; height: 56px;
+      margin-bottom: 48px;
+      opacity: 0; transform: scale(0.8);
+    }
+
+    .intro-row {
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .intro-row span {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.4vw, 23px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--parchment);
+      letter-spacing: .02em;
+      transform: translateY(110%);
+    }
+
+    .intro-attr {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .4em;
+      color: var(--gold);
+      margin-top: 20px;
       opacity: 0;
-      visibility: hidden;
+      transform: translateY(16px);
+    }
+
+    /* ═══════════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 400;
+      padding: 28px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: padding .4s var(--ease-out), background .4s;
+    }
+    .nav.scrolled {
+      background: rgba(8,6,4,.88);
+      backdrop-filter: blur(24px) saturate(1.5);
+      padding: 16px 48px;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px; letter-spacing: .32em;
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex; gap: 44px; list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px; letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--parchment-60);
+      transition: color .3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-enter {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px; letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 10px 26px;
+      transition: background .3s, color .3s;
+    }
+    .nav-enter:hover { background: var(--gold); color: var(--bg-solid); }
+
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .nav { padding: 20px 24px; }
+      .nav.scrolled { padding: 12px 24px; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       § 1  HERO
+    ═══════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      height: 100vh; min-height: 600px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    #star-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+    }
+
+    .hero-inner {
+      position: relative; z-index: 10;
+      text-align: center; padding: 0 24px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 36px;
+      opacity: 0;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(62px, 11.5vw, 156px);
+      font-weight: 400;
+      letter-spacing: .14em;
+      line-height: .9;
+      color: var(--parchment);
+      display: flex; justify-content: center;
+    }
+
+    .ht-char {
+      display: inline-block;
+      transform: translateY(115%) rotate(6deg);
+      opacity: 0;
+    }
+
+    .hero-kr {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(11px, 1.4vw, 15px);
+      letter-spacing: .6em;
+      color: var(--gold);
+      margin-top: 18px;
+      opacity: 0;
+    }
+
+    .hero-tagline {
+      font-size: clamp(16px, 1.9vw, 21px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--parchment-60);
+      margin-top: 40px;
+      line-height: 1.6;
+      opacity: 0;
+    }
+
+    .hero-btns {
+      margin-top: 56px;
+      display: flex; gap: 20px; justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+    }
+
+    .btn {
+      font-family: 'Cinzel', serif;
+      font-size: 10px; letter-spacing: .22em;
+      text-transform: uppercase;
+      padding: 15px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: color .35s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg-solid);
+    }
+    .btn-primary:hover { background: var(--gold-bright); }
+
+    .btn-outline {
+      border: 1px solid rgba(200,169,110,.35);
+      color: var(--parchment-60);
+      transition: border-color .35s, color .35s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ripple on click */
+    .btn::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,.08);
+      opacity: 0; transition: opacity .3s;
+    }
+    .btn:active::after { opacity: 1; }
+
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: 0;
+    }
+    .hero-scroll span {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .3em;
+      color: var(--gold-dim);
+    }
+    .hero-scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      animation: pulse-line 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse-line {
+      0%,100% { opacity:.4; transform: scaleY(1); }
+      50%      { opacity:1;  transform: scaleY(1.25); }
+    }
+
+    /* ═══════════════════════════════════════════════
+       § 2  SEVEN GATES
+    ═══════════════════════════════════════════════ */
+    .gates-wrap {
+      position: relative;
+      padding: 130px 0;
+      background: #050403;
+      overflow: hidden;
+    }
+
+    .gates-ambient {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      transition: background 1.8s var(--ease-in-out);
+      z-index: 0;
+    }
+
+    .gates-head {
+      position: relative; z-index: 1;
+      padding: 0 48px;
+      margin-bottom: 72px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+    }
+
+    .gates-question {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 3vw, 36px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--parchment-60);
+      margin-top: 12px;
+    }
+
+    .gates-drag-hint {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .3em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .gates-drag-hint::before {
+      content: '';
+      display: block; width: 32px; height: 1px;
+      background: var(--gold-dim);
+    }
+
+    .gates-scroll-wrap {
+      position: relative; z-index: 1;
+      overflow-x: auto; overflow-y: visible;
+      scrollbar-width: none;
+      padding: 16px 48px 56px;
+      cursor: grab;
+    }
+    .gates-scroll-wrap::-webkit-scrollbar { display: none; }
+    .gates-scroll-wrap:active { cursor: grabbing; }
+
+    .gates-row {
+      display: flex; gap: 20px;
+      width: max-content;
+    }
+
+    /* Gate card */
+    .gcard {
+      position: relative;
+      width: 300px; height: 460px;
+      flex-shrink: 0;
+      border: 1px solid rgba(200,169,110,.1);
+      padding: 44px 32px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: border-color .5s;
+    }
+
+    /* ambient glow layer */
+    .gcard::before {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: 0; z-index: 0;
+      transition: opacity .6s;
+    }
+    .gcard[data-g="1"]::before { background: radial-gradient(circle at 30% 60%, rgba(30,28,74,.9), transparent 70%); }
+    .gcard[data-g="2"]::before { background: radial-gradient(circle at 30% 60%, rgba(14,34,51,.9), transparent 70%); }
+    .gcard[data-g="3"]::before { background: radial-gradient(circle at 30% 60%, rgba(46,26,14,.9), transparent 70%); }
+    .gcard[data-g="4"]::before { background: radial-gradient(circle at 30% 60%, rgba(20,34,20,.9), transparent 70%); }
+    .gcard[data-g="5"]::before { background: radial-gradient(circle at 30% 60%, rgba(30,22,51,.9), transparent 70%); }
+    .gcard[data-g="6"]::before { background: radial-gradient(circle at 30% 60%, rgba(8,12,8,.95), transparent 70%); }
+    .gcard[data-g="7"]::before { background: radial-gradient(circle at 30% 60%, rgba(46,32,0,.9), transparent 70%); }
+
+    .gcard:hover::before { opacity: 1; }
+    .gcard:hover { border-color: rgba(200,169,110,.3); }
+
+    .gcard > * { position: relative; z-index: 1; }
+
+    .gcard-roman {
+      position: absolute; top: 20px; right: 20px; z-index: 0;
+      font-family: 'Cinzel', serif;
+      font-size: 88px; font-weight: 400;
+      color: rgba(200,169,110,.06);
+      line-height: 1;
+      transition: color .5s;
+    }
+    .gcard:hover .gcard-roman { color: rgba(200,169,110,.12); }
+
+    .gcard-label {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .4em;
+      color: var(--gold); text-transform: uppercase;
+    }
+
+    .gcard-icon {
+      width: 44px; height: 44px;
+      margin: 22px 0 18px;
+      opacity: .55;
+      transition: opacity .4s;
+    }
+    .gcard:hover .gcard-icon { opacity: 1; }
+
+    .gcard-en {
+      font-family: 'Cinzel', serif;
+      font-size: 20px; font-weight: 400;
+      line-height: 1.25;
+      color: var(--parchment);
+      margin-bottom: 8px;
+    }
+    .gcard-kr {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 11px; letter-spacing: .08em;
+      color: var(--gold-dim);
+      margin-bottom: 18px;
+    }
+    .gcard-desc {
+      font-size: 13.5px; font-style: italic;
+      color: var(--parchment-60);
+      line-height: 1.65;
+    }
+
+    .gcard-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .28em;
+      color: var(--gold); text-transform: uppercase;
+      margin-top: 28px;
+      transition: gap .35s var(--ease-out);
+    }
+    .gcard-link::after { content: '→'; font-size: 11px; }
+    .gcard-link:hover { gap: 18px; }
+
+    /* ═══════════════════════════════════════════════
+       SECTION BASE HELPERS
+    ═══════════════════════════════════════════════ */
+    .sec { padding: 130px 0; }
+    .sec-dark { background: var(--bg-panel); }
+
+    .wrap {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .sec-label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .48em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .sec-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(30px, 4.5vw, 58px);
+      font-weight: 400; line-height: 1.1;
+      color: var(--parchment);
+    }
+
+    /* Clip-path reveal */
+    .clip-reveal {
+      overflow: hidden;
+    }
+    .clip-reveal > * {
+      transform: translateY(100%);
+      display: block;
+    }
+    .clip-reveal.visible > * {
+      transform: translateY(0);
+      transition: transform 1.1s var(--ease-out);
+    }
+
+    /* ═══════════════════════════════════════════════
+       § 3  DIALOGUES
+    ═══════════════════════════════════════════════ */
+    .dial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-top: 80px;
+    }
+    @media (max-width: 800px) { .dial-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+    .branch-head {
+      font-family: 'Cinzel', serif;
+      font-size: 11px; letter-spacing: .32em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    /* SVG path-draw animation */
+    .tree-svg { overflow: visible; }
+    .tree-svg path, .tree-svg line, .tree-svg circle {
+      stroke: var(--gold-dim);
+      fill: none;
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+    .tree-svg .node { fill: var(--gold); stroke: none; }
+    .tree-svg text { fill: var(--parchment-60); stroke: none; font-family: 'Cinzel', serif; }
+
+    .draw-path {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      transition: stroke-dashoffset 0s;
+    }
+    .draw-path.drawn {
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1.8s var(--ease-out);
+    }
+    .draw-path.drawn.delay1 { transition-delay: .3s; }
+    .draw-path.drawn.delay2 { transition-delay: .6s; }
+
+    .branch-note {
+      font-size: 15px; font-style: italic;
+      color: var(--parchment-60);
+      margin-top: 20px; line-height: 1.75;
+    }
+
+    /* Partner spotlight card */
+    .partner-card {
+      position: relative;
+      border: 1px solid rgba(200,169,110,.14);
+      padding: 56px;
+      margin-top: 80px;
+      overflow: hidden;
+      background: transparent;
+      transition: background .4s;
+    }
+
+    .partner-inner {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 64px;
+      align-items: center;
+      margin-top: 32px;
+    }
+    @media (max-width: 700px) {
+      .partner-inner { grid-template-columns: 1fr; gap: 32px; }
+      .partner-card { padding: 36px 24px; }
+    }
+
+    .partner-name {
+      font-family: 'Cinzel', serif;
+      font-size: 26px; letter-spacing: .08em;
+      color: var(--parchment);
+      margin-bottom: 6px;
+    }
+    .partner-handle {
+      font-family: 'Cinzel', serif;
+      font-size: 10px; letter-spacing: .2em;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .partner-role {
+      font-size: 14px; font-style: italic;
+      color: var(--parchment-60);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .partner-quote {
+      font-size: 19px; font-style: italic;
+      line-height: 1.55;
+      color: var(--parchment);
+      border-left: 2px solid var(--gold-dim);
+      padding-left: 24px;
+    }
+
+    .orn { text-align: center; color: var(--gold-dim); letter-spacing: 20px; font-size: 18px; }
+
+    /* ═══════════════════════════════════════════════
+       § 4  PALGONGSAN PARALLAX
+    ═══════════════════════════════════════════════ */
+    .palg-wrap {
+      position: relative;
+      height: 78vh; min-height: 480px;
+      overflow: hidden;
+      display: flex; align-items: center;
+    }
+    .palg-img {
+      position: absolute; inset: -12%;
+      width: 124%; height: 124%;
+      object-fit: cover;
+      will-change: transform;
+    }
+    .palg-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(100deg, rgba(8,6,4,.92) 38%, rgba(8,6,4,.25));
+    }
+    .palg-text {
+      position: relative; z-index: 2;
+      padding-left: clamp(32px, 8vw, 120px);
+    }
+    .palg-en {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(44px, 7vw, 96px);
+      font-weight: 400; letter-spacing: .14em;
+      line-height: .92;
+      color: var(--parchment);
+    }
+    .palg-kr {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(13px, 1.8vw, 18px);
+      letter-spacing: .5em;
+      color: var(--gold);
+      margin: 14px 0;
+    }
+    .palg-body {
+      font-size: clamp(15px, 1.5vw, 17px);
+      font-style: italic; font-weight: 300;
+      color: var(--parchment-60);
+      line-height: 1.8;
+      max-width: 420px;
+      margin-top: 20px;
+    }
+    .palg-coords {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .3em;
+      color: var(--gold-dim);
+      margin-top: 28px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       § 5  THREE PATHS
+    ═══════════════════════════════════════════════ */
+    .paths-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      margin-top: 80px;
+    }
+    @media (max-width: 900px) { .paths-grid { grid-template-columns: 1fr; } }
+
+    .path-card {
+      position: relative;
+      padding: 60px 44px;
+      border: 1px solid rgba(200,169,110,.09);
+      overflow: hidden;
+      transition: background .5s;
+    }
+    .path-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(140deg, rgba(200,169,110,.04), transparent 55%);
+      opacity: 0; transition: opacity .5s;
+    }
+    .path-card:hover::before { opacity: 1; }
+
+    .path-num {
+      position: absolute; bottom: -16px; right: 16px;
+      font-family: 'Cinzel', serif;
+      font-size: 110px; font-weight: 400;
+      color: rgba(200,169,110,.035);
+      line-height: 1;
       pointer-events: none;
     }
 
-    .intro-text {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      font-style: italic;
-      color: var(--text-secondary);
+    .path-icon {
+      width: 40px; height: 40px;
+      margin-bottom: 30px; opacity: .5;
+      transition: opacity .4s;
+    }
+    .path-card:hover .path-icon { opacity: .9; }
+
+    .path-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px; letter-spacing: .08em;
+      color: var(--parchment);
+      margin-bottom: 14px;
+    }
+    .path-body {
+      font-size: 15px; font-style: italic;
+      color: var(--parchment-60);
+      line-height: 1.7; margin-bottom: 36px;
+    }
+    .path-cta {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .28em;
+      color: var(--gold); text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: gap .35s var(--ease-out);
+    }
+    .path-cta::after { content: '→'; font-size: 11px; }
+    .path-cta:hover { gap: 18px; }
+
+    /* ═══════════════════════════════════════════════
+       § 6  MANIFESTO
+    ═══════════════════════════════════════════════ */
+    .manifesto-wrap {
+      padding: 170px 0;
+      position: relative; overflow: hidden;
       text-align: center;
-      max-width: 40ch;
-      line-height: var(--leading-relaxed);
-      opacity: 0;
-      animation: fadeIn 2s var(--ease-smooth) 0.5s forwards;
+    }
+    .manifesto-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(200,169,110,.035) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #manifesto-text {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(24px, 3.8vw, 52px);
+      font-weight: 400; line-height: 1.45;
+      color: var(--parchment);
+      max-width: 880px;
+      margin: 0 auto; padding: 0 40px;
+    }
+    .mw {
+      display: inline-block;
+      opacity: 0; transform: translateY(28px);
     }
 
-    .intro-text span {
-      display: block;
-      margin-top: var(--space-4);
-      font-style: normal;
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-      letter-spacing: var(--tracking-wider);
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    .footer {
+      padding: 80px 48px 40px;
+      border-top: 1px solid rgba(200,169,110,.1);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 56px;
+      margin-bottom: 56px;
+    }
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer { padding: 56px 24px 32px; }
+    }
+
+    .footer-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 16px; letter-spacing: .28em;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .footer-blurb {
+      font-size: 14px; font-style: italic;
+      color: var(--parchment-60); line-height: 1.7;
+      max-width: 270px;
+    }
+    .footer-col-h {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .4em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .footer-links a { font-size: 14px; color: var(--parchment-60); transition: color .3s; }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 36px;
+      border-top: 1px solid rgba(200,169,110,.07);
+    }
+    .footer-copy {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .2em;
+      color: var(--parchment-30);
+    }
+    .footer-coord {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .2em;
+      color: var(--gold-dim);
     }
   </style>
 </head>
 <body>
-  <!-- Cinematic Intro Overlay -->
-  <div class="intro-overlay" id="introOverlay">
-    <p class="intro-text">
-      "To prepare for death is to prepare for life.<br>
-      The two are one."
-      <span>— Thich Nhat Hanh</span>
-    </p>
+
+  <!-- ── Custom cursor ── -->
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
+
+  <!-- ── Film grain ── -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ── Scroll progress ── -->
+  <div class="scroll-bar" aria-hidden="true">
+    <div class="scroll-bar__fill" id="sb-fill"></div>
+    <div class="scroll-bar__nub"  id="sb-nub"></div>
   </div>
 
-  <!-- Navigation -->
-  <nav class="nav" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="./" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="21" stroke="currentColor" stroke-width="1" opacity="0.3"/>
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
+  <!-- ═══════════════════════════════════
+       § 0  INTRO
+  ═══════════════════════════════════ -->
+  <div id="intro" role="presentation">
+    <svg class="intro-emblem" id="intro-emb" viewBox="0 0 56 56" fill="none">
+      <circle cx="28" cy="28" r="26" stroke="#C8A96E" stroke-width=".8" opacity=".35"/>
+      <circle cx="28" cy="28" r="18" stroke="#C8A96E" stroke-width=".8"/>
+      <path d="M28 12 L28 44 M20 22 L28 12 L36 22 M20 34 L28 44 L36 34"
+            stroke="#C8A96E" stroke-width="1.2" fill="none"/>
+    </svg>
+    <div class="intro-row"><span id="il1">"To prepare for death is to prepare for life.</span></div>
+    <div class="intro-row"><span id="il2">The two are one."</span></div>
+    <p class="intro-attr" id="ia">— Thich Nhat Hanh</p>
+  </div>
 
-        <div class="nav__menu">
-          <a href="philosophy/" class="nav__link">Philosophy</a>
-          <a href="sanctuary/" class="nav__link">Sanctuary</a>
-          <a href="forum/" class="nav__link">Forum</a>
-          <a href="library/" class="nav__link">Library</a>
-          <a href="visit/" class="nav__link">Visit</a>
-        </div>
-
-        <div class="nav__actions">
-          <a href="visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="philosophy/" class="nav__link">Philosophy</a>
-      <a href="sanctuary/" class="nav__link">Sanctuary</a>
-      <a href="forum/" class="nav__link">Forum</a>
-      <a href="library/" class="nav__link">Library</a>
-      <a href="visit/" class="nav__link">Visit</a>
-    </div>
+  <!-- ═══════════════════════════════════
+       NAV
+  ═══════════════════════════════════ -->
+  <nav class="nav" id="main-nav">
+    <a href="./" class="nav-logo">
+      <svg width="26" height="26" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="20" stroke="#C8A96E" stroke-width=".8"/>
+        <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26"
+              stroke="#C8A96E" stroke-width="1.1" fill="none"/>
+      </svg>
+      ALEXANDRIA
+    </a>
+    <ul class="nav-links">
+      <li><a href="philosophy/">Philosophy</a></li>
+      <li><a href="sanctuary/">Sanctuary</a></li>
+      <li><a href="forum/">Forum</a></li>
+      <li><a href="library/">Library</a></li>
+    </ul>
+    <a href="visit/" class="nav-enter mag">Enter</a>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- ═══════════════════════════════════
+       § 1  HERO
+  ═══════════════════════════════════ -->
   <section class="hero">
-    <div class="hero__bg">
-      <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920&q=80" alt="Misty mountain at dawn">
-      <div class="hero__overlay"></div>
-    </div>
-
-    <div class="hero__content">
-      <p class="hero__quote">
-        "We are not preparing for death.<br>
-        We are preparing for the deepest embrace of life."
+    <canvas id="star-canvas"></canvas>
+    <div class="hero-inner">
+      <p class="hero-eyebrow" id="h-eye">PALGONGSAN · DAEGU · KOREA · EST. MMXXVI</p>
+      <h1 class="hero-title" id="h-title">ALEXANDRIA</h1>
+      <p class="hero-kr"   id="h-kr">알 렉 산 드 리 아</p>
+      <p class="hero-tagline" id="h-tag">
+        Where the final chapter<br>becomes the most luminous.
       </p>
+      <div class="hero-btns" id="h-btns">
+        <a href="#gates" class="btn btn-primary mag">Enter the Gates</a>
+        <a href="visit/" class="btn btn-outline mag">Residence Inquiry</a>
+      </div>
+    </div>
+    <div class="hero-scroll" id="h-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
 
-      <h1 class="hero__title">Alexandria</h1>
-      <p class="hero__subtitle">알렉산드리아</p>
+  <!-- ═══════════════════════════════════
+       § 2  SEVEN GATES
+  ═══════════════════════════════════ -->
+  <section class="gates-wrap" id="gates">
+    <div class="gates-ambient" id="g-ambient"></div>
 
-      <p class="hero__tagline">
-        A global sanctuary where ancient wisdom meets modern care.<br>
-        Where the final chapter becomes the most meaningful.
+    <div class="gates-head">
+      <div>
+        <span class="sec-label clip-reveal"><span>The Seven Gates</span></span>
+        <p class="gates-question clip-reveal"><span>Which gate are you standing before?</span></p>
+      </div>
+      <p class="gates-drag-hint">Drag to explore</p>
+    </div>
+
+    <div class="gates-scroll-wrap" id="g-scroll">
+      <div class="gates-row" id="g-row">
+
+        <!-- I -->
+        <div class="gcard" data-g="1">
+          <div class="gcard-roman">I</div>
+          <div>
+            <span class="gcard-label">Gate I</span>
+            <svg class="gcard-icon" viewBox="0 0 44 44" fill="none" stroke="#C8A96E" stroke-width="1">
+              <path d="M22 6 C13 6 8 14 8 22 C8 30 13 38 22 38"/>
+              <path d="M22 6 C31 6 36 14 36 22" opacity=".35"/>
+              <circle cx="22" cy="22" r="3" fill="#C8A96E"/>
+              <path d="M22 12 L22 19 M28 16 L22 22"/>
+            </svg>
+            <h2 class="gcard-en">The Fracture<br>of Mind</h2>
+            <p class="gcard-kr">정신의 붕괴</p>
+            <p class="gcard-desc">When the mind shatters, what remains? Psychosis, dementia — and the grace of accompaniment.</p>
+          </div>
+          <a href="sanctuary/hospice/" class="gcard-link">Watch Series</a>
+        </div>
+
+        <!-- II -->
+        <div class="gcard" data-g="2">
+          <div class="gcard-roman">II</div>
+          <div>
+            <span class="gcard-label">Gate II</span>
+            <svg class="gcard-icon" viewBox="0 0 44 44" fill="none" stroke="#C8A96E" stroke-width="1">
+              <circle cx="22" cy="22" r="13" opacity=".3"/>
+              <circle cx="22" cy="22" r="7"  opacity=".6"/>
+              <circle cx="22" cy="22" r="2" fill="#C8A96E"/>
+              <path d="M22 9 L22 5 M22 39 L22 35 M9 22 L5 22 M39 22 L35 22" stroke-width=".7"/>
+            </svg>
+            <h2 class="gcard-en">The Dissolution<br>of Self</h2>
+            <p class="gcard-kr">자아의 소멸</p>
+            <p class="gcard-desc">If the self dissolves, does the person remain? Consciousness, dementia, and the threshold of identity.</p>
+          </div>
+          <a href="sanctuary/hospice/" class="gcard-link">Watch Series</a>
+        </div>
+
+        <!-- III -->
+        <div class="gcard" data-g="3">
+          <div class="gcard-roman">III</div>
+          <div>
+            <span class="gcard-label">Gate III</span>
+            <svg class="gcard-icon" viewBox="0 0 44 44" fill="none" stroke="#C8A96E" stroke-width="1">
+              <path d="M22 4 L22 32"/>
+              <path d="M13 14 L22 4 L31 14"/>
+              <circle cx="22" cy="37" r="4" opacity=".45"/>
+              <path d="M9 28 L22 22 L35 28" opacity=".35"/>
+            </svg>
+            <h2 class="gcard-en">The Touch<br>of God</h2>
+            <p class="gcard-kr">신의 접속</p>
+            <p class="gcard-desc">Does God actually touch the human soul? Spirit, grace, communion — a cross-faith inquiry.</p>
+          </div>
+          <a href="forum/" class="gcard-link">Watch Series</a>
+        </div>
+
+        <!-- IV -->
+        <div class="gcard" data-g="4">
+          <div class="gcard-roman">IV</div>
+          <div>
+            <span class="gcard-label">Gate IV</span>
+            <svg class="gcard-icon" viewBox="0 0 44 44" fill="none" stroke="#C8A96E" stroke-width="1">
+              <rect x="6"  y="6"  width="13" height="13" opacity=".5"/>
+              <rect x="25" y="6"  width="13" height="13" opacity=".3"/>
+              <rect x="6"  y="25" width="13" height="13" opacity=".3"/>
+              <rect x="25" y="25" width="13" height="13" opacity=".5"/>
+              <circle cx="22" cy="22" r="3" fill="#C8A96E" opacity=".55"/>
+            </svg>
+            <h2 class="gcard-en">Inside<br>&amp; Outside</h2>
+            <p class="gcard-kr">제도의 안과 밖</p>
+            <p class="gcard-desc">Is enlightenment possible within an institution? Buddhist monks, pastors, and philosophers in dialogue.</p>
+          </div>
+          <a href="forum/" class="gcard-link">Watch Series</a>
+        </div>
+
+        <!-- V -->
+        <div class="gcard" data-g="5">
+          <div class="gcard-roman">V</div>
+          <div>
+            <span class="gcard-label">Gate V</span>
+            <svg class="gcard-icon" viewBox="0 0 44 44" fill="none" stroke="#C8A96E" stroke-width="1">
+              <path d="M6 22 Q14 14 22 22 Q30 30 38 22"/>
+              <path d="M6 30 Q14 22 22 30 Q30 38 38 30" opacity=".35"/>
+              <path d="M6 14 Q14 6 22 14 Q30 22 38 14"  opacity=".18"/>
+            </svg>
+            <h2 class="gcard-en">Sound<br>&amp; Soul</h2>
+            <p class="gcard-kr">소리와 영혼</p>
+            <p class="gcard-desc">Can sound reach God? Gregorian chant, Buddhist Beompae, and the sacred acoustics of devotion.</p>
+          </div>
+          <a href="library/" class="gcard-link">Watch Series</a>
+        </div>
+
+        <!-- VI -->
+        <div class="gcard" data-g="6">
+          <div class="gcard-roman">VI</div>
+          <div>
+            <span class="gcard-label">Gate VI</span>
+            <svg class="gcard-icon" viewBox="0 0 44 44" fill="none" stroke="#C8A96E" stroke-width="1">
+              <path d="M6 38 Q6 18 22 10 Q38 18 38 38"/>
+              <path d="M14 38 Q14 24 22 18 Q30 24 30 38" opacity=".45"/>
+              <circle cx="22" cy="30" r="3" fill="#C8A96E" opacity=".35"/>
+            </svg>
+            <h2 class="gcard-en">The Forbidden<br>Gate</h2>
+            <p class="gcard-kr">금기의 문</p>
+            <p class="gcard-desc">Holotropic breath, sensory deprivation, cave retreat. Where does consciousness end?</p>
+          </div>
+          <a href="sanctuary/cave-retreat/" class="gcard-link">Watch Series</a>
+        </div>
+
+        <!-- VII -->
+        <div class="gcard" data-g="7">
+          <div class="gcard-roman">VII</div>
+          <div>
+            <span class="gcard-label">Gate VII</span>
+            <svg class="gcard-icon" viewBox="0 0 44 44" fill="none" stroke="#C8A96E" stroke-width="1">
+              <circle cx="22" cy="22" r="15"/>
+              <circle cx="22" cy="22" r="8" opacity=".45"/>
+              <circle cx="22" cy="22" r="2.5" fill="#C8A96E"/>
+              <path d="M22 7 L22 3 M22 41 L22 37 M7 22 L3 22 M41 22 L37 22"
+                    stroke-width=".7" opacity=".35"/>
+            </svg>
+            <h2 class="gcard-en">The Final<br>Gate</h2>
+            <p class="gcard-kr">마지막 게이트</p>
+            <p class="gcard-desc">What does it mean to die well? Alexandria residence — membership in the final passage.</p>
+          </div>
+          <a href="sanctuary/residence/" class="gcard-link">Watch Series</a>
+        </div>
+
+      </div><!-- /gates-row -->
+    </div><!-- /scroll-wrap -->
+  </section>
+
+  <!-- ═══════════════════════════════════
+       § 3  CROSS-RELIGION DIALOGUES
+  ═══════════════════════════════════ -->
+  <section class="sec">
+    <div class="wrap">
+      <span class="sec-label clip-reveal"><span>Cross-Religion Dialogues</span></span>
+      <h2 class="sec-title clip-reveal"><span>No faith imposed.<br>Every door open.</span></h2>
+
+      <div class="dial-grid">
+
+        <!-- Abrahamic -->
+        <div>
+          <p class="branch-head">Abrahamic Line</p>
+          <svg class="tree-svg" viewBox="0 0 240 180" width="240" height="180">
+            <line class="draw-path" x1="120" y1="20" x2="120" y2="55"/>
+            <line class="draw-path delay1" x1="120" y1="55" x2="60"  y2="95"/>
+            <line class="draw-path delay1" x1="120" y1="55" x2="120" y2="95"/>
+            <line class="draw-path delay1" x1="120" y1="55" x2="180" y2="95"/>
+            <circle class="node" cx="120" cy="20" r="4"/>
+            <circle class="node" style="opacity:.5" cx="60"  cy="95" r="3.5"/>
+            <circle class="node" style="opacity:.5" cx="120" cy="95" r="3.5"/>
+            <circle class="node" style="opacity:.5" cx="180" cy="95" r="3.5"/>
+            <text x="120" y="10" font-size="8" text-anchor="middle" letter-spacing="2">SOURCE</text>
+            <text x="52"  y="115" font-size="7.5" text-anchor="middle">Protestant</text>
+            <text x="120" y="115" font-size="7.5" text-anchor="middle">Catholic</text>
+            <text x="188" y="115" font-size="7.5" text-anchor="middle">Islam</text>
+          </svg>
+          <p class="branch-note">
+            Understanding Protestant Christianity requires knowing its Catholic root —
+            and its parallel in Islam. All three share one Abrahamic origin.
+          </p>
+        </div>
+
+        <!-- Indic -->
+        <div>
+          <p class="branch-head">Indic Line</p>
+          <svg class="tree-svg" viewBox="0 0 240 180" width="240" height="180">
+            <line class="draw-path" x1="120" y1="20" x2="120" y2="55"/>
+            <line class="draw-path delay1" x1="120" y1="55" x2="80"  y2="95"/>
+            <line class="draw-path delay1" x1="120" y1="55" x2="160" y2="95"/>
+            <circle class="node" cx="120" cy="20" r="4"/>
+            <circle class="node" style="opacity:.5" cx="80"  cy="95" r="3.5"/>
+            <circle class="node" style="opacity:.5" cx="160" cy="95" r="3.5"/>
+            <text x="120" y="10" font-size="8" text-anchor="middle" letter-spacing="2">VEDIC ROOT</text>
+            <text x="80"  y="115" font-size="7.5" text-anchor="middle">Buddhism</text>
+            <text x="160" y="115" font-size="7.5" text-anchor="middle">Hinduism</text>
+          </svg>
+          <p class="branch-note">
+            Buddhism cannot be fully understood without its Hindu origin.
+            The root illuminates the branch.
+          </p>
+        </div>
+      </div>
+
+      <!-- Partner card -->
+      <div class="partner-card" id="partner-card">
+        <p class="orn">✦ ✦ ✦</p>
+        <div class="partner-inner">
+          <div>
+            <p class="partner-name">REV. PARK</p>
+            <p class="partner-handle">@one_spoon_bible</p>
+            <p class="partner-role">Gate III · Gate IV Partner<br>Cross-Religion Dialogue Host</p>
+            <a href="https://www.youtube.com/@one_spoon_bible" class="gcard-link">View Channel</a>
+          </div>
+          <blockquote class="partner-quote">
+            "Where does God actually touch the human soul? Not metaphor — actual contact.
+            That is the question we bring to every dialogue."
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       § 4  PALGONGSAN
+  ═══════════════════════════════════ -->
+  <div class="palg-wrap">
+    <img class="palg-img" id="palg-img"
+         src="https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?w=1600&q=80"
+         alt="Palgongsan mountain in mist">
+    <div class="palg-ov"></div>
+    <div class="palg-text">
+      <div class="clip-reveal"><span class="palg-en">PALGONGSAN</span></div>
+      <p class="palg-kr">팔 공 산</p>
+      <p class="palg-body">
+        Mountain of Eight Merits.<br>
+        A site of pilgrimage for over a thousand years.<br>
+        Where the boundary between the mundane<br>and the sacred grows permanently thin.
       </p>
-
-      <div class="hero__actions">
-        <a href="philosophy/" class="btn btn-primary btn-lg">Discover Our Philosophy</a>
-        <a href="sanctuary/" class="btn btn-secondary btn-lg">Explore the Sanctuary</a>
-      </div>
+      <p class="palg-coords">35°58′N · 128°69′E · DAEGU, KOREA</p>
     </div>
+  </div>
 
-    <div class="hero__scroll">
-      <span>Scroll to Explore</span>
-      <div class="hero__scroll-line"></div>
+  <!-- ═══════════════════════════════════
+       § 5  THREE PATHS
+  ═══════════════════════════════════ -->
+  <section class="sec sec-dark">
+    <div class="wrap">
+      <span class="sec-label clip-reveal"><span>How Do You Arrive</span></span>
+      <h2 class="sec-title clip-reveal"><span>Three Paths Into Alexandria</span></h2>
     </div>
-  </section>
+    <div class="paths-grid">
 
-  <!-- Philosophy Intro -->
-  <section class="section">
-    <div class="container container-narrow">
-      <div class="quote-block" data-animate>
-        <div class="quote-block__mark">"</div>
-        <p class="quote-block__text">
-          The ancient Library of Alexandria gathered the wisdom of the world.
-          Our sanctuary gathers the wisdom needed for life's most sacred passage.
-        </p>
+      <div class="path-card">
+        <span class="path-num">01</span>
+        <svg class="path-icon" viewBox="0 0 40 40" fill="none" stroke="#C8A96E" stroke-width="1">
+          <path d="M6 36 Q6 18 20 10 Q34 18 34 36"/>
+          <path d="M13 36 Q13 22 20 16 Q27 22 27 36" opacity=".4"/>
+          <circle cx="20" cy="28" r="2.5" fill="#C8A96E" opacity=".5"/>
+        </svg>
+        <h3 class="path-title">Cave Retreat</h3>
+        <p class="path-body">Days of silence. Darkness. Stillness. A passage into the ancient cave tradition of contemplation.</p>
+        <a href="sanctuary/cave-retreat/" class="path-cta">Inquire</a>
       </div>
 
-      <div class="divider"></div>
-
-      <div class="prose" style="margin: 0 auto;" data-animate>
-        <p>
-          Nestled in the sacred mountains of Palgongsan, Korea, Alexandria is not merely a place of care—it is a sanctuary for the soul. Here, Eastern contemplative traditions meet Western philosophical inquiry in service of humanity's most profound question: How do we live fully, knowing we must die?
-        </p>
-        <p>
-          We believe that preparing for death is not morbid—it is the most life-affirming act. Through cave meditation, wisdom teachings, and compassionate community, we offer a space where the final chapter of life becomes not an ending, but a culmination.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Five Pillars -->
-  <section class="section section-dark">
-    <div class="container">
-      <div class="section-header" data-animate>
-        <span class="section-label">The Five Pillars</span>
-        <h2 class="section-title">Pathways to Wisdom</h2>
-        <p class="section-subtitle">
-          Five integrated approaches to contemplative living and sacred passage.
-        </p>
+      <div class="path-card">
+        <span class="path-num">02</span>
+        <svg class="path-icon" viewBox="0 0 40 40" fill="none" stroke="#C8A96E" stroke-width="1">
+          <path d="M20 36 C20 36 5 25 5 15 C5 9 9 5 15 5 C18 5 20 9 20 9 C20 9 22 5 25 5 C31 5 35 9 35 15 C35 25 20 36 20 36Z"/>
+        </svg>
+        <h3 class="path-title">Residence</h3>
+        <p class="path-body">A place to call home in the final years. Holistic care woven with spiritual companionship.</p>
+        <a href="sanctuary/residence/" class="path-cta">Inquire</a>
       </div>
 
-      <div class="pillars">
-        <!-- Cave -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M8 40 Q8 20 24 12 Q40 20 40 40"/>
-              <circle cx="24" cy="28" r="4"/>
-              <path d="M24 32 L24 36" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Cave</span>
-          <h3 class="pillar-card__title">동굴수행</h3>
-          <p class="pillar-card__description">
-            Deep meditation retreats in natural and crafted cave spaces, following ancient contemplative traditions.
-          </p>
-        </article>
-
-        <!-- Forum -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="24" cy="16" r="6"/>
-              <circle cx="12" cy="32" r="5"/>
-              <circle cx="36" cy="32" r="5"/>
-              <path d="M24 22 L24 27 M18 28 L12 27 M30 28 L36 27"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Forum</span>
-          <h3 class="pillar-card__title">지혜의 광장</h3>
-          <p class="pillar-card__description">
-            Global dialogues with wisdom teachers, philosophers, and contemplatives. Live broadcasts and intimate gatherings.
-          </p>
-        </article>
-
-        <!-- Library -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="8" y="12" width="32" height="28" rx="2"/>
-              <path d="M24 12 L24 40"/>
-              <path d="M12 18 L20 18 M28 18 L36 18"/>
-              <path d="M12 24 L20 24 M28 24 L36 24"/>
-              <path d="M12 30 L20 30 M28 30 L36 30"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Library</span>
-          <h3 class="pillar-card__title">영혼의 서재</h3>
-          <p class="pillar-card__description">
-            A curated archive of wisdom teachings on death, dying, and the art of living fully.
-          </p>
-        </article>
-
-        <!-- Care -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M24 40 C24 40 8 28 8 18 C8 12 12 8 18 8 C22 8 24 12 24 12 C24 12 26 8 30 8 C36 8 40 12 40 18 C40 28 24 40 24 40Z"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Care</span>
-          <h3 class="pillar-card__title">돌봄의 집</h3>
-          <p class="pillar-card__description">
-            Holistic residential care integrating medical excellence with spiritual companionship.
-          </p>
-        </article>
-
-        <!-- Legacy -->
-        <article class="pillar-card" data-animate>
-          <div class="pillar-card__icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="24" cy="24" r="16"/>
-              <path d="M24 14 L24 24 L32 28"/>
-              <circle cx="24" cy="24" r="3"/>
-            </svg>
-          </div>
-          <span class="pillar-card__name">Legacy</span>
-          <h3 class="pillar-card__title">유산 프로젝트</h3>
-          <p class="pillar-card__description">
-            Preserve your story, wisdom, and love for generations through guided life review and digital legacy.
-          </p>
-        </article>
+      <div class="path-card">
+        <span class="path-num">03</span>
+        <svg class="path-icon" viewBox="0 0 40 40" fill="none" stroke="#C8A96E" stroke-width="1">
+          <circle cx="20" cy="13" r="5"/>
+          <circle cx="10" cy="28" r="4"/>
+          <circle cx="30" cy="28" r="4"/>
+          <path d="M20 18 L20 24 M16 24 L10 24 M24 24 L30 24"/>
+        </svg>
+        <h3 class="path-title">Partnership</h3>
+        <p class="path-body">Wisdom teachers, philosophers, clergy. Join the ongoing inquiry as a dialogue partner.</p>
+        <a href="forum/" class="path-cta">Inquire</a>
       </div>
+
     </div>
   </section>
 
-  <!-- Featured Speaker -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header" data-animate>
-        <span class="section-label">Wisdom Teachers</span>
-        <h2 class="section-title">Voices of the Forum</h2>
-        <p class="section-subtitle">
-          Encounters with minds that illuminate the path.
-        </p>
-      </div>
-
-      <div class="quote-block" data-animate style="max-width: 800px; margin: 0 auto;">
-        <div class="quote-block__mark">"</div>
-        <p class="quote-block__text">
-          "Death is not the opposite of life. Life has no opposite. The opposite of death is birth. Life is eternal."
-        </p>
-        <p class="quote-block__author">Eckhart Tolle</p>
-      </div>
-
-      <div class="text-center mt-12" data-animate>
-        <a href="forum/" class="btn btn-secondary btn-lg">Explore Upcoming Forums</a>
-      </div>
-    </div>
+  <!-- ═══════════════════════════════════
+       § 6  MANIFESTO
+  ═══════════════════════════════════ -->
+  <section class="manifesto-wrap">
+    <p id="manifesto-text">
+      We are not preparing for death.
+      We are preparing for the deepest embrace of life.
+    </p>
   </section>
 
-  <!-- Location Preview -->
-  <section class="section section-dark">
-    <div class="container">
-      <div class="section-header" data-animate>
-        <span class="section-label">Sacred Ground</span>
-        <h2 class="section-title">Palgongsan, Korea</h2>
-        <p class="section-subtitle">
-          팔공산 — The mountain of eight merits, a place of pilgrimage for over a thousand years.
-        </p>
-      </div>
-
-      <div style="position: relative; aspect-ratio: 21/9; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-8);" data-animate>
-        <img src="https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?w=1600&q=80" alt="Mountain temple in mist" style="width: 100%; height: 100%; object-fit: cover;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(to right, var(--bg-secondary), transparent 50%, var(--bg-secondary));"></div>
-      </div>
-
-      <div class="prose" style="margin: 0 auto; text-align: center;" data-animate>
-        <p>
-          Our sanctuary rests where ancient temples have stood for centuries. Here, the boundary between the mundane and the sacred grows thin. The mountain air carries the echo of countless prayers, and the stones remember the footsteps of pilgrims.
-        </p>
-      </div>
-
-      <div class="text-center mt-12" data-animate>
-        <a href="visit/" class="btn btn-primary btn-lg">Plan Your Visit</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="section" style="padding: var(--space-40) 0;">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <h2 class="section-title mt-8" data-animate style="margin-bottom: var(--space-6);">
-        Begin Your Journey
-      </h2>
-      <p class="section-subtitle" data-animate style="margin-bottom: var(--space-12);">
-        Whether you seek a weekend of contemplation or a place to call home in your final years, Alexandria welcomes you.
-      </p>
-      <div data-animate>
-        <a href="visit/" class="btn btn-primary btn-lg">Contact Us</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════ -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer__top">
-        <div class="footer__brand">
-          <a href="./" class="footer__logo">
-            <svg width="32" height="32" viewBox="0 0 44 44" fill="none">
-              <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-              <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            </svg>
-            <span class="nav__logo-text">Alexandria</span>
-          </a>
-          <p class="footer__description">
-            A global sanctuary for contemplative living and sacred passage. Palgongsan, Daegu, Korea.
-          </p>
-        </div>
-
-        <div>
-          <h4 class="footer__column-title">Sanctuary</h4>
-          <nav class="footer__links">
-            <a href="sanctuary/cave-retreat/" class="footer__link">Cave Retreat</a>
-            <a href="sanctuary/residence/" class="footer__link">Residence</a>
-            <a href="sanctuary/hospice/" class="footer__link">Hospice Care</a>
-          </nav>
-        </div>
-
-        <div>
-          <h4 class="footer__column-title">Wisdom</h4>
-          <nav class="footer__links">
-            <a href="forum/" class="footer__link">Forum</a>
-            <a href="library/" class="footer__link">Library</a>
-            <a href="philosophy/" class="footer__link">Philosophy</a>
-          </nav>
-        </div>
-
-        <div>
-          <h4 class="footer__column-title">Connect</h4>
-          <nav class="footer__links">
-            <a href="visit/" class="footer__link">Visit</a>
-            <a href="#about" class="footer__link">About</a>
-            <a href="#gate" class="footer__link">Contact</a>
-          </nav>
-        </div>
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand">ALEXANDRIA</p>
+        <p class="footer-blurb">A sanctuary for contemplative living and sacred passage. Palgongsan, Daegu, Korea.</p>
       </div>
-
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation. All rights reserved.</span>
-        <span>Palgongsan, Daegu, Korea</span>
+      <div>
+        <p class="footer-col-h">Sanctuary</p>
+        <ul class="footer-links">
+          <li><a href="sanctuary/cave-retreat/">Cave Retreat</a></li>
+          <li><a href="sanctuary/residence/">Residence</a></li>
+          <li><a href="sanctuary/hospice/">Hospice Care</a></li>
+        </ul>
       </div>
+      <div>
+        <p class="footer-col-h">Wisdom</p>
+        <ul class="footer-links">
+          <li><a href="forum/">Forum</a></li>
+          <li><a href="library/">Library</a></li>
+          <li><a href="philosophy/">Philosophy</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-h">Connect</p>
+        <ul class="footer-links">
+          <li><a href="visit/">Visit</a></li>
+          <li><a href="https://www.youtube.com/@alexandria-y6k">YouTube</a></li>
+          <li><a href="https://www.youtube.com/@one_spoon_bible">Dialogue Partner</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Alexandria Sanctuary Foundation. All rights reserved.</span>
+      <span class="footer-coord">35°58′N · 128°69′E</span>
     </div>
   </footer>
 
-  <script src="assets/js/app.js"></script>
+  <!-- ═══════════════════════════════════
+       GSAP CDN
+  ═══════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+  (() => {
+    'use strict';
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ─── UTIL ──────────────────────────────────── */
+    const $ = (s, ctx = document) => ctx.querySelector(s);
+    const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
+
+    /* ─── INTRO ─────────────────────────────────── */
+    const intro = $('#intro');
+    const introTL = gsap.timeline({
+      onComplete() {
+        gsap.to(intro, {
+          opacity: 0, duration: 1.1, ease: 'power2.inOut',
+          onComplete: () => intro.classList.add('done')
+        });
+        playHero();
+      }
+    });
+
+    introTL
+      .to('#intro-emb', { opacity: 1, scale: 1, duration: 1, ease: 'power3.out', delay: .3 })
+      .to('#il1',       { y: '0%', opacity: 1, duration: .95, ease: 'power3.out' }, '+=.15')
+      .to('#il2',       { y: '0%', opacity: 1, duration: .95, ease: 'power3.out' }, '-=.5')
+      .to('#ia',        { opacity: 1, y: 0,    duration: .8,  ease: 'power3.out' }, '+=.3')
+      .to({},           { duration: 1.9 });
+
+    /* ─── HERO ──────────────────────────────────── */
+    function playHero() {
+      // Split title into chars
+      const titleEl = $('#h-title');
+      titleEl.innerHTML = 'ALEXANDRIA'.split('').map(c =>
+        `<span class="ht-char">${c}</span>`
+      ).join('');
+
+      gsap.to('#h-eye', { opacity: 1, duration: .8, ease: 'power2.out' });
+      gsap.to($$('.ht-char'), {
+        y: 0, opacity: 1, rotation: 0,
+        duration: 1.3, stagger: .055, ease: 'power4.out', delay: .1
+      });
+      gsap.to('#h-kr',     { opacity: 1, duration: .9, delay: .7 });
+      gsap.to('#h-tag',    { opacity: 1, y: 0, duration: .9, delay: .9, ease: 'power3.out' });
+      gsap.to('#h-btns',   { opacity: 1, duration: .8, delay: 1.1 });
+      gsap.to('#h-scroll', { opacity: 1, duration: .8, delay: 1.6 });
+    }
+
+    /* ─── STAR CANVAS ───────────────────────────── */
+    const cv = $('#star-canvas');
+    const cx2 = cv.getContext('2d');
+    let W, H, stars;
+
+    function initStars() {
+      W = cv.width  = cv.offsetWidth;
+      H = cv.height = cv.offsetHeight;
+      stars = Array.from({ length: 220 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.3 + .2,
+        a: Math.random() * .75 + .08,
+        sp: Math.random() * .14 + .02,
+        dr: (Math.random() - .5) * .06,
+      }));
+    }
+
+    function tickStars() {
+      cx2.clearRect(0, 0, W, H);
+
+      // radial vignette
+      const g = cx2.createRadialGradient(W/2, H/2, 0, W/2, H/2, W * .75);
+      g.addColorStop(0, 'rgba(30,18,8,.35)');
+      g.addColorStop(1, 'rgba(8,6,4,0)');
+      cx2.fillStyle = g;
+      cx2.fillRect(0, 0, W, H);
+
+      stars.forEach(s => {
+        // glow
+        if (s.r > 1) {
+          const gl = cx2.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 4);
+          gl.addColorStop(0, `rgba(200,169,110,${s.a * .15})`);
+          gl.addColorStop(1, 'transparent');
+          cx2.fillStyle = gl;
+          cx2.beginPath();
+          cx2.arc(s.x, s.y, s.r * 4, 0, Math.PI * 2);
+          cx2.fill();
+        }
+        // dot
+        cx2.beginPath();
+        cx2.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        cx2.fillStyle = `rgba(200,169,110,${s.a})`;
+        cx2.fill();
+
+        s.y -= s.sp; s.x += s.dr;
+        s.a += (Math.random() - .5) * .018;
+        s.a = Math.max(.04, Math.min(.88, s.a));
+        if (s.y < 0)          { s.y = H; s.x = Math.random() * W; }
+        if (s.x < 0 || s.x > W) s.x = Math.random() * W;
+      });
+
+      requestAnimationFrame(tickStars);
+    }
+
+    initStars();
+    tickStars();
+    window.addEventListener('resize', initStars, { passive: true });
+
+    /* ─── CUSTOM CURSOR ─────────────────────────── */
+    const dot  = $('#cur-dot');
+    const ring = $('#cur-ring');
+    let mx = -200, my = -200, rx = -200, ry = -200;
+    const body = document.body;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px';
+      dot.style.top  = my + 'px';
+    });
+
+    // Smooth ring lag
+    (function loopCursor() {
+      rx += (mx - rx) * .11;
+      ry += (my - ry) * .11;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(loopCursor);
+    })();
+
+    $$('a, button, .gcard, .path-card, .btn').forEach(el => {
+      el.addEventListener('mouseenter', () => body.classList.add('cur-hover'));
+      el.addEventListener('mouseleave', () => body.classList.remove('cur-hover'));
+    });
+    $$('.gcard').forEach(el => {
+      el.addEventListener('mouseenter', () => body.classList.add('cur-gate'));
+      el.addEventListener('mouseleave', () => body.classList.remove('cur-gate'));
+    });
+    document.addEventListener('mouseleave', () => body.classList.add('cur-hidden'));
+    document.addEventListener('mouseenter', () => body.classList.remove('cur-hidden'));
+
+    /* ─── MAGNETIC BUTTONS ──────────────────────── */
+    $$('.mag').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width  / 2);
+        const dy = e.clientY - (r.top  + r.height / 2);
+        gsap.to(btn, { x: dx * .38, y: dy * .38, duration: .45, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: .7, ease: 'elastic.out(1,.4)' });
+      });
+    });
+
+    /* ─── GATE CARD — 3D TILT ───────────────────── */
+    $$('.gcard').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width  - .5;
+        const ny = (e.clientY - r.top)  / r.height - .5;
+        gsap.to(card, {
+          rotateY: nx * 14, rotateX: -ny * 14,
+          duration: .5, ease: 'power2.out',
+          transformPerspective: 900
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { rotateY: 0, rotateX: 0, duration: .9, ease: 'elastic.out(1,.35)' });
+      });
+    });
+
+    /* ─── GATE AMBIENT COLOR ────────────────────── */
+    const ambient = $('#g-ambient');
+    const gColors = {
+      1: 'rgba(30,28,74,.28)',
+      2: 'rgba(14,34,51,.28)',
+      3: 'rgba(46,26,14,.28)',
+      4: 'rgba(20,34,20,.28)',
+      5: 'rgba(30,22,51,.28)',
+      6: 'rgba(8,12,8,.42)',
+      7: 'rgba(46,32,0,.32)',
+    };
+    $$('.gcard').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        ambient.style.background = gColors[card.dataset.g] || 'transparent';
+      });
+      card.addEventListener('mouseleave', () => {
+        ambient.style.background = 'transparent';
+      });
+    });
+
+    /* ─── HORIZONTAL DRAG SCROLL ────────────────── */
+    const gWrap = $('#g-scroll');
+    let dragOn = false, startX, sl0;
+
+    gWrap.addEventListener('mousedown', e => {
+      dragOn = true;
+      startX = e.pageX - gWrap.offsetLeft;
+      sl0 = gWrap.scrollLeft;
+    });
+    gWrap.addEventListener('mouseleave', () => { dragOn = false; });
+    gWrap.addEventListener('mouseup',    () => { dragOn = false; });
+    gWrap.addEventListener('mousemove',  e => {
+      if (!dragOn) return;
+      e.preventDefault();
+      gWrap.scrollLeft = sl0 - (e.pageX - gWrap.offsetLeft - startX) * 1.6;
+    });
+
+    // Touch
+    let tx0, tsl0;
+    gWrap.addEventListener('touchstart', e => {
+      tx0  = e.touches[0].pageX;
+      tsl0 = gWrap.scrollLeft;
+    }, { passive: true });
+    gWrap.addEventListener('touchmove', e => {
+      gWrap.scrollLeft = tsl0 + (tx0 - e.touches[0].pageX);
+    }, { passive: true });
+
+    /* ─── NAV SCROLL ────────────────────────────── */
+    const nav = $('#main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 55);
+    }, { passive: true });
+
+    /* ─── SCROLL PROGRESS ───────────────────────── */
+    const sbFill = $('#sb-fill');
+    const sbNub  = $('#sb-nub');
+    window.addEventListener('scroll', () => {
+      const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+      sbFill.style.height = pct + '%';
+      sbNub.style.top = pct + '%';
+    }, { passive: true });
+
+    /* ─── CLIP-REVEAL (IntersectionObserver) ────── */
+    const revIO = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('visible');
+          revIO.unobserve(en.target);
+        }
+      });
+    }, { threshold: .15 });
+    $$('.clip-reveal').forEach(el => revIO.observe(el));
+
+    /* ─── GSAP SCROLL-TRIGGERED REVEALS ────────── */
+    // Gate cards entrance
+    gsap.from('.gcard', {
+      y: 70, opacity: 0, duration: 1.1, stagger: .1, ease: 'power3.out',
+      scrollTrigger: { trigger: '#g-row', start: 'top 88%', toggleActions: 'play none none none' }
+    });
+
+    // Path cards
+    gsap.from('.path-card', {
+      y: 56, opacity: 0, duration: 1, stagger: .14, ease: 'power3.out',
+      scrollTrigger: { trigger: '.paths-grid', start: 'top 82%', toggleActions: 'play none none none' }
+    });
+
+    // Dialogue grid
+    gsap.from('.dial-grid > *', {
+      y: 48, opacity: 0, duration: 1, stagger: .2, ease: 'power3.out',
+      scrollTrigger: { trigger: '.dial-grid', start: 'top 80%', toggleActions: 'play none none none' }
+    });
+
+    // Partner card
+    gsap.from('#partner-card', {
+      y: 40, opacity: 0, duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: '#partner-card', start: 'top 82%', toggleActions: 'play none none none' }
+    });
+
+    /* ─── MANIFESTO WORD REVEAL ─────────────────── */
+    const mEl = $('#manifesto-text');
+    const mWords = mEl.textContent.trim().split(/\s+/);
+    mEl.innerHTML = mWords.map(w => `<span class="mw">${w}&nbsp;</span>`).join('');
+
+    gsap.to('.mw', {
+      opacity: 1, y: 0, duration: .85, stagger: .065, ease: 'power3.out',
+      scrollTrigger: { trigger: mEl, start: 'top 76%', toggleActions: 'play none none none' }
+    });
+
+    /* ─── PALGONGSAN PARALLAX ───────────────────── */
+    gsap.to('#palg-img', {
+      y: '14%', ease: 'none',
+      scrollTrigger: {
+        trigger: '.palg-wrap',
+        start: 'top bottom', end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    /* ─── SVG TREE DRAW-ON ──────────────────────── */
+    $$('.draw-path').forEach(el => {
+      const len = el instanceof SVGGeometryElement ? el.getTotalLength() : 120;
+      el.style.strokeDasharray  = len;
+      el.style.strokeDashoffset = len;
+    });
+
+    const treeIO = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.querySelectorAll('.draw-path').forEach(p => p.classList.add('drawn'));
+          treeIO.unobserve(en.target);
+        }
+      });
+    }, { threshold: .3 });
+    $$('.tree-svg').forEach(s => treeIO.observe(s));
+
+    /* ─── PARTNER CARD SPOTLIGHT ────────────────── */
+    const pCard = $('#partner-card');
+    pCard.addEventListener('mousemove', e => {
+      const r = pCard.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      pCard.style.background =
+        `radial-gradient(320px circle at ${x}px ${y}px, rgba(200,169,110,.06) 0%, transparent 60%)`;
+    });
+    pCard.addEventListener('mouseleave', () => { pCard.style.background = ''; });
+
+    /* ─── SMOOTH ANCHOR SCROLL ──────────────────── */
+    $$('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = $(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const y = target.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      });
+    });
+
+  })();
+  </script>
+
 </body>
 </html>

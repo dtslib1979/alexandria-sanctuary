@@ -3,619 +3,1500 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Cave retreat programs at Alexandria Sanctuary - Deep meditation in natural mountain caves at Palgongsan, Korea.">
+  <meta name="description" content="Cave Retreat — Gate VI of Alexandria Sanctuary. Darkness retreat, holotropic breathwork, silence protocol at Palgongsan, Korea.">
+  <title>Cave Retreat — Gate VI · Alexandria Sanctuary</title>
 
-  <title>Cave Retreat - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/emblem.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="../../assets/css/design-system.css">
-  <link rel="stylesheet" href="../../assets/css/components.css">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="../../assets/icons/emblem.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    .cave-hero {
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center, rgba(10, 22, 40, 0.9), var(--bg-primary)),
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.05), transparent 50%);
-      position: relative;
+    /* ═══════════════════════════════════════════════
+       RESET & ROOT
+    ═══════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-solid:     #080604;
+      --bg-panel:     #0D0A07;
+      --gold:         #C8A96E;
+      --gold-dim:     #8B6A30;
+      --gold-bright:  #E8C98E;
+      --parchment:    #EAE4D6;
+      --parchment-60: rgba(234,228,214,0.6);
+      --parchment-30: rgba(234,228,214,0.3);
+      --parchment-15: rgba(234,228,214,0.15);
+      --g6:           #080C08;
+      --gold-10:      rgba(200,169,110,0.10);
+      --gold-20:      rgba(200,169,110,0.20);
+      --gold-40:      rgba(200,169,110,0.40);
+      --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
     }
 
-    .cave-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 30% 40%, rgba(201, 162, 39, 0.03) 0%, transparent 30%),
-        radial-gradient(circle at 70% 60%, rgba(201, 162, 39, 0.02) 0%, transparent 25%);
+    html {
+      background: var(--bg-solid);
+      color: var(--parchment);
+      overflow-x: hidden;
+      scroll-behavior: auto;
+      cursor: none;
     }
 
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      margin-bottom: var(--space-6);
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      line-height: 1.8;
+      overflow-x: hidden;
+      background: var(--bg-solid);
     }
 
-    .breadcrumb a {
-      color: var(--text-tertiary);
-      text-decoration: none;
-      transition: color var(--duration-normal);
+    /* ═══════════════════════════════════════════════
+       CURSOR
+    ═══════════════════════════════════════════════ */
+    #cursor-dot,
+    #cursor-ring {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
     }
 
-    .breadcrumb a:hover {
-      color: var(--color-gold-500);
+    #cursor-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      transition: opacity 0.3s;
     }
 
-    .breadcrumb span {
-      color: var(--color-gold-500);
+    #cursor-ring {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--gold-40);
+      transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), border-color 0.3s, opacity 0.3s;
     }
 
-    .cave-intro {
-      padding: var(--space-20) 0;
+    a:hover ~ #cursor-ring,
+    button:hover ~ #cursor-ring {
+      width: 42px;
+      height: 42px;
+      border-color: var(--gold);
     }
 
-    .cave-intro__content {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
+    /* ═══════════════════════════════════════════════
+       FILM GRAIN
+    ═══════════════════════════════════════════════ */
+    #grain {
+      position: fixed;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      pointer-events: none;
+      z-index: 9990;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      animation: grain-shift 0.8s steps(1) infinite;
     }
 
-    .cave-intro__content p {
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-      margin-bottom: var(--space-6);
+    @keyframes grain-shift {
+      0%   { transform: translate(0, 0); }
+      10%  { transform: translate(-3%, -4%); }
+      20%  { transform: translate(-6%, 2%); }
+      30%  { transform: translate(3%, -5%); }
+      40%  { transform: translate(-4%, 6%); }
+      50%  { transform: translate(-6%, -3%); }
+      60%  { transform: translate(5%, 3%); }
+      70%  { transform: translate(2%, -7%); }
+      80%  { transform: translate(-5%, 4%); }
+      90%  { transform: translate(4%, -2%); }
+      100% { transform: translate(-2%, 5%); }
     }
 
-    .cave-intro__content blockquote {
-      padding: var(--space-8);
-      margin: var(--space-10) 0;
-      border-left: 2px solid var(--color-gold-500);
-      background: var(--bg-secondary);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    /* ═══════════════════════════════════════════════
+       SCROLL PROGRESS BAR
+    ═══════════════════════════════════════════════ */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 1px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+      z-index: 9998;
+      transform-origin: left;
     }
 
-    .cave-intro__content blockquote p {
-      font-style: italic;
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-    }
-
-    .cave-intro__content blockquote cite {
-      font-style: normal;
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-    }
-
-    .programs-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .program-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-xl);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
-    }
-
-    .program-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-10);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .program-card::before {
-      content: '';
-      position: absolute;
+    /* ═══════════════════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════════════════ */
+    nav {
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--color-gold-500), transparent);
-    }
-
-    .program-card__duration {
-      font-family: var(--font-display);
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-      letter-spacing: var(--tracking-widest);
-      text-transform: uppercase;
-      margin-bottom: var(--space-3);
-    }
-
-    .program-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-2xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .program-card__subtitle {
-      font-family: var(--font-serif);
-      font-size: var(--text-base);
-      color: var(--text-tertiary);
-      font-style: italic;
-      margin-bottom: var(--space-6);
-    }
-
-    .program-card__description {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-6);
-    }
-
-    .program-card__details {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 var(--space-8);
-      border-top: 1px solid var(--border-subtle);
-      padding-top: var(--space-6);
-    }
-
-    .program-card__details li {
+      z-index: 100;
+      padding: 24px 48px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      padding: var(--space-2) 0;
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
+      background: linear-gradient(to bottom, rgba(8,6,4,0.95) 0%, transparent 100%);
     }
 
-    .program-card__details li span:first-child {
-      color: var(--text-tertiary);
-    }
-
-    .program-card__price {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-6);
-    }
-
-    .program-card__price small {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      font-family: var(--font-body);
-    }
-
-    .preparation-section {
-      padding: var(--space-20) 0;
-    }
-
-    .preparation-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .preparation-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .preparation-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .preparation-item {
-      text-align: center;
-      padding: var(--space-8);
-    }
-
-    .preparation-item__icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto var(--space-4);
-      opacity: 0.8;
-    }
-
-    .preparation-item__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-    }
-
-    .preparation-item__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .testimonial-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .testimonial {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-      text-align: center;
-    }
-
-    .testimonial__quote {
-      font-family: var(--font-serif);
-      font-size: var(--text-2xl);
-      color: var(--text-primary);
-      line-height: var(--leading-relaxed);
-      font-style: italic;
-      margin-bottom: var(--space-8);
-    }
-
-    .testimonial__author {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-    }
-
-    .testimonial__author strong {
-      display: block;
-      color: var(--color-gold-500);
+    .nav-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
       font-weight: 500;
-      margin-bottom: var(--space-1);
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-decoration: none;
+      text-transform: uppercase;
     }
 
-    .faq-section {
-      padding: var(--space-20) 0;
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
     }
 
-    .faq-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
+    .nav-links a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--parchment-60);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 14px;
+      background: var(--gold-40);
+    }
+
+    /* ═══════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      margin-bottom: var(--space-12);
-      letter-spacing: var(--tracking-wide);
+      padding: 120px 48px 80px;
+      background: var(--g6);
+      overflow: hidden;
     }
 
-    .faq-list {
-      max-width: var(--max-width-prose);
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(8,12,8,0) 0%, rgba(4,4,3,0.7) 70%, rgba(2,2,1,0.95) 100%);
+      pointer-events: none;
+    }
+
+    .hero-bg-pulse {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 40% 30% at 50% 50%, rgba(200,169,110,0.025) 0%, transparent 70%);
+      animation: hero-breathe 8s ease-in-out infinite;
+    }
+
+    @keyframes hero-breathe {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.08); }
+    }
+
+    .gate-badge {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      opacity: 0;
+    }
+
+    .gate-badge-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold-40);
+    }
+
+    .gate-badge-text {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 1;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(52px, 10vw, 120px);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--parchment);
+      line-height: 1.0;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      opacity: 0;
+    }
+
+    .hero-title span {
+      display: block;
+      color: var(--gold);
+      font-size: clamp(24px, 4vw, 52px);
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      margin-bottom: 8px;
+    }
+
+    .hero-divider {
+      position: relative;
+      z-index: 1;
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-40), transparent);
+      margin: 0 auto 32px;
+      opacity: 0;
+    }
+
+    .hero-subtitle {
+      position: relative;
+      z-index: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.5vw, 22px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment-60);
+      letter-spacing: 0.06em;
+      max-width: 520px;
+      opacity: 0;
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+    }
+
+    .hero-scroll-hint span {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.4em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold-40), transparent);
+      animation: scroll-fall 2.2s ease-in-out infinite;
+    }
+
+    @keyframes scroll-fall {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       SECTIONS COMMON
+    ═══════════════════════════════════════════════ */
+    section {
+      position: relative;
+      padding: 100px 48px;
+    }
+
+    .section-inner {
+      max-width: 820px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
     }
 
-    .faq-item {
-      border-bottom: 1px solid var(--border-subtle);
-      padding: var(--space-6) 0;
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.4em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
-    .faq-item__question {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--gold-40);
     }
 
-    .faq-item__answer {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
+    .section-heading {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--parchment);
+      margin-bottom: 40px;
+      line-height: 1.3;
     }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    /* ═══════════════════════════════════════════════
+       SECTION I — WHAT IS THE CAVE
+    ═══════════════════════════════════════════════ */
+    .cave-intro {
+      background: var(--bg-solid);
+      border-top: 1px solid rgba(200,169,110,0.08);
+    }
+
+    .cave-intro .prose {
+      font-size: clamp(17px, 2vw, 20px);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--parchment-60);
+    }
+
+    .cave-intro .prose p + p {
+      margin-top: 28px;
+    }
+
+    .cave-intro .prose em {
+      font-style: italic;
+      color: var(--parchment);
+    }
+
+    .cave-centerline {
+      display: block;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(15px, 2vw, 19px);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin: 48px 0;
+      position: relative;
+    }
+
+    .cave-centerline::before,
+    .cave-centerline::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 60px;
+      height: 1px;
+      background: var(--gold-40);
+    }
+
+    .cave-centerline::before { right: calc(50% + 200px); }
+    .cave-centerline::after  { left:  calc(50% + 200px); }
+
+    /* ═══════════════════════════════════════════════
+       SECTION II — THE PRACTICE
+    ═══════════════════════════════════════════════ */
+    .practices {
+      background: var(--g6);
+      border-top: 1px solid rgba(200,169,110,0.06);
+    }
+
+    .practice-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .practice-item {
+      padding: 48px 0;
+      border-bottom: 1px solid rgba(200,169,110,0.08);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 32px;
+      align-items: start;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .practice-item:first-child {
+      border-top: 1px solid rgba(200,169,110,0.08);
+    }
+
+    .practice-numeral {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: var(--gold-dim);
+      padding-top: 6px;
+    }
+
+    .practice-body {}
+
+    .practice-name {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--parchment);
+      margin-bottom: 16px;
+    }
+
+    .practice-desc {
+      font-size: clamp(15px, 1.8vw, 18px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--parchment-60);
+    }
+
+    .practice-tag {
+      display: inline-block;
+      margin-top: 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      border: 1px solid var(--gold-20);
+      padding: 5px 14px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SECTION III — DURATION & STRUCTURE
+    ═══════════════════════════════════════════════ */
+    .duration {
+      background: var(--bg-solid);
+      border-top: 1px solid rgba(200,169,110,0.06);
+    }
+
+    .duration-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: rgba(200,169,110,0.08);
+      border: 1px solid rgba(200,169,110,0.08);
+      margin-top: 48px;
+    }
+
+    .duration-cell {
+      background: var(--bg-solid);
+      padding: 40px 32px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .duration-cell-number {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .duration-cell-unit {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .duration-cell-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--parchment-60);
+      line-height: 1.7;
+    }
+
+    .duration-note {
+      margin-top: 40px;
+      padding: 28px 32px;
+      border: 1px solid rgba(200,169,110,0.12);
+      background: var(--bg-panel);
+    }
+
+    .duration-note p {
+      font-size: 15px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment-60);
+      line-height: 1.8;
+    }
+
+    .duration-note strong {
+      font-weight: 500;
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    /* ═══════════════════════════════════════════════
+       SECTION IV — WHO THIS IS FOR
+    ═══════════════════════════════════════════════ */
+    .who-for {
+      background: var(--g6);
+      border-top: 1px solid rgba(200,169,110,0.06);
+    }
+
+    .who-for .prose {
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--parchment-60);
+    }
+
+    .who-for .prose p + p {
+      margin-top: 28px;
+    }
+
+    .who-for .prose em {
+      font-style: italic;
+      color: var(--parchment);
+    }
+
+    .who-for .prose strong {
+      font-weight: 500;
+      color: var(--gold);
+    }
+
+    .readiness-list {
+      list-style: none;
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .readiness-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      font-size: clamp(15px, 1.8vw, 17px);
+      font-weight: 300;
+      color: var(--parchment-60);
+      opacity: 0;
+      transform: translateX(-16px);
+    }
+
+    .readiness-list li::before {
+      content: '—';
+      color: var(--gold-dim);
+      flex-shrink: 0;
+      font-size: 13px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SECTION V — QUOTE
+    ═══════════════════════════════════════════════ */
+    .quote-section {
+      background: var(--bg-solid);
+      border-top: 1px solid rgba(200,169,110,0.06);
+      text-align: center;
+      padding: 120px 48px;
+    }
+
+    .blockquote-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      opacity: 0;
+    }
+
+    .blockquote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 100px;
+      color: var(--gold-10);
+      line-height: 1;
+      position: absolute;
+      top: -24px;
+      left: -16px;
+      pointer-events: none;
+    }
+
+    blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--parchment);
+      position: relative;
+      z-index: 1;
+      padding: 0 40px;
+    }
+
+    cite {
+      display: block;
+      margin-top: 28px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-style: normal;
+      letter-spacing: 0.3em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SECTION VI — APPLICATION
+    ═══════════════════════════════════════════════ */
+    .application {
+      background: var(--bg-panel);
+      border-top: 1px solid rgba(200,169,110,0.08);
+    }
+
+    .application .section-inner {
+      max-width: 640px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(200,169,110,0.25);
+      color: var(--parchment);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      padding: 10px 0;
+      outline: none;
+      transition: border-color 0.3s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-field select {
+      background: var(--bg-panel);
+      cursor: pointer;
+    }
+
+    .form-field select option {
+      background: var(--bg-panel);
+      color: var(--parchment);
+    }
+
+    .form-field textarea {
+      resize: none;
+      min-height: 100px;
+      border: 1px solid rgba(200,169,110,0.15);
+      padding: 12px 14px;
+      margin-top: 4px;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--gold-40);
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: rgba(234,228,214,0.2);
+      font-style: italic;
+    }
+
+    .form-note {
+      margin-top: 16px;
+      font-size: 13px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment-30);
+      grid-column: 1 / -1;
+    }
+
+    .btn-submit {
+      grid-column: 1 / -1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: transparent;
+      border: 1px solid var(--gold-40);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      padding: 18px 48px;
+      cursor: none;
+      transition: border-color 0.4s, color 0.4s, background 0.4s;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+      border-color: var(--gold);
+      background: var(--gold-10);
+      color: var(--gold-bright);
+    }
+
+    .btn-arrow {
+      font-size: 14px;
+      transition: transform 0.3s var(--ease-out);
+    }
+
+    .btn-submit:hover .btn-arrow {
+      transform: translateX(6px);
+    }
+
+    .form-confirm {
+      display: none;
+      text-align: center;
+      padding: 40px;
+      border: 1px solid rgba(200,169,110,0.15);
+    }
+
+    .form-confirm p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment-60);
+      line-height: 1.8;
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    footer {
+      background: var(--g6);
+      border-top: 1px solid rgba(200,169,110,0.08);
+      padding: 64px 48px;
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .footer-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment-30);
+      margin-bottom: 32px;
+    }
+
+    .footer-gate {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .footer-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .footer-nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--parchment-30);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .footer-nav a:hover {
+      color: var(--gold);
+    }
+
+    .footer-divider {
+      width: 1px;
+      height: 12px;
+      background: rgba(200,169,110,0.2);
+    }
+
+    .footer-copy {
+      margin-top: 40px;
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(234,228,214,0.15);
+      letter-spacing: 0.08em;
+    }
+
+    /* ═══════════════════════════════════════════════
+       DEEP DARK VIGNETTE DIVIDERS
+    ═══════════════════════════════════════════════ */
+    .vignette-sep {
+      position: relative;
+      height: 1px;
+      background: transparent;
+      overflow: visible;
+    }
+
+    .vignette-sep::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-40), transparent);
+    }
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      .nav-brand { font-size: 11px; }
+      section { padding: 72px 24px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .practice-item { grid-template-columns: 1fr; gap: 12px; }
+      .practice-numeral { padding-top: 0; }
+      .duration-grid { grid-template-columns: 1fr; }
+      .hero { padding: 100px 24px 60px; }
+      blockquote { padding: 0 16px; }
+      .cave-centerline::before,
+      .cave-centerline::after { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links li:not(:last-child) { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       SCROLLBAR
+    ═══════════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-solid); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
   </style>
 </head>
+
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../../philosophy/" class="nav__link">Philosophy</a>
-          <a href="../" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
-          <a href="../../forum/" class="nav__link">Forum</a>
-          <a href="../../library/" class="nav__link">Library</a>
-          <a href="../../visit/" class="nav__link">Visit</a>
-        </div>
+  <!-- CURSOR -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
 
-        <div class="nav__actions">
-          <a href="../../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
+  <!-- FILM GRAIN -->
+  <div id="grain" aria-hidden="true"></div>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../../philosophy/" class="nav__link">Philosophy</a>
-      <a href="../" class="nav__link">Sanctuary</a>
-      <a href="../../forum/" class="nav__link">Forum</a>
-      <a href="../../library/" class="nav__link">Library</a>
-      <a href="../../visit/" class="nav__link">Visit</a>
-    </div>
+  <!-- PROGRESS BAR -->
+  <div id="progress-bar" role="progressbar" aria-hidden="true"></div>
+
+  <!-- NAVIGATION -->
+  <nav role="navigation" aria-label="Primary">
+    <a href="../../index.html" class="nav-brand" aria-label="Alexandria Sanctuary — Home">Alexandria</a>
+    <ul class="nav-links">
+      <li><a href="../">Sanctuary</a></li>
+      <div class="nav-divider" aria-hidden="true"></div>
+      <li><a href="../../index.html">Home</a></li>
+    </ul>
   </nav>
 
-  <!-- Hero -->
-  <header class="cave-hero">
-    <div class="container container-narrow" style="position: relative; z-index: 1;">
-      <nav class="breadcrumb" data-animate>
-        <a href="../">Sanctuary</a>
-        <span>›</span>
-        <span>Cave Retreat</span>
-      </nav>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl);">
-        Cave Retreat
-      </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-4);">
-        동굴수행 · Donggul Suhaeng
-      </p>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6); font-size: var(--text-lg);">
-        Enter the silence. Meet yourself.
-      </p>
-    </div>
-  </header>
+  <!-- ═══════════════════════════════════════════
+       HERO — GATE VI
+  ═══════════════════════════════════════════ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg-pulse" aria-hidden="true"></div>
 
-  <!-- Introduction -->
-  <section class="cave-intro" data-animate>
-    <div class="cave-intro__content">
-      <p>
-        For millennia, humans have sought the darkness of caves for transformation. In the absence of light, time dissolves. In the absence of sound, the chattering mind finally quiets. What remains is essence—the awareness that was always there, obscured by the noise of ordinary life.
-      </p>
-      <p>
-        The caves of Palgongsan are not merely holes in rock. They are temples carved by water and time, sanctified by generations of seekers. Some caves are large enough to stand; others require crawling. All of them require surrender.
-      </p>
-      <blockquote>
-        <p>"In the cave, I finally understood what teachers mean by 'beginner's mind.' With no reference points—no light, no sound, no schedule—everything became new. Even breathing felt like a discovery."</p>
-        <cite>— Former Retreatant</cite>
-      </blockquote>
-      <p>
-        Our cave retreat program is not for everyone. It requires physical fitness, psychological stability, and a genuine calling. We screen all applicants carefully, not to exclude, but to ensure safety and readiness. The mountain gives generously to those who are prepared.
-      </p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Programs -->
-  <section class="programs-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Retreat Programs</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Choose Your Depth</h2>
-      <p class="section-subtitle" style="margin-top: var(--space-4);">
-        Each retreat builds upon the last. First-time participants begin with the Threshold.
-      </p>
+    <div class="gate-badge" id="hero-badge">
+      <div class="gate-badge-line"></div>
+      <span class="gate-badge-text">Gate VI · Alexandria Sanctuary · Palgongsan</span>
+      <div class="gate-badge-line"></div>
     </div>
 
-    <div class="program-cards">
-      <!-- 3-Day -->
-      <article class="program-card">
-        <span class="program-card__duration">3 Days</span>
-        <h3 class="program-card__title">The Threshold</h3>
-        <p class="program-card__subtitle">문턱 · Munteok</p>
-        <p class="program-card__description">
-          An introduction to cave practice. You'll spend increasing periods in cave darkness—from hours to a full day—while receiving guidance on meditation technique and the psychology of isolation.
-        </p>
-        <ul class="program-card__details">
-          <li><span>Cave Time</span><span>Up to 24 hours</span></li>
-          <li><span>Accommodation</span><span>Hermitage</span></li>
-          <li><span>Meals</span><span>Simple fasting</span></li>
-          <li><span>Guidance</span><span>Daily sessions</span></li>
-        </ul>
-        <div class="program-card__price">
-          ₩900,000 <small>/ all inclusive</small>
-        </div>
-        <a href="../../visit/" class="btn btn-primary" style="width: 100%;">Apply for Threshold</a>
-      </article>
+    <h1 class="hero-title" id="hero-title">
+      <span>Cave</span>
+      Retreat
+    </h1>
 
-      <!-- 7-Day -->
-      <article class="program-card">
-        <span class="program-card__duration">7 Days</span>
-        <h3 class="program-card__title">The Descent</h3>
-        <p class="program-card__subtitle">하강 · Hagang</p>
-        <p class="program-card__description">
-          A deeper immersion. After preparation days, you'll enter the cave for 72 continuous hours of darkness and silence. This is where the real work begins—and where breakthroughs occur.
-        </p>
-        <ul class="program-card__details">
-          <li><span>Cave Time</span><span>72 hours continuous</span></li>
-          <li><span>Accommodation</span><span>Cave chamber</span></li>
-          <li><span>Meals</span><span>Light provisions</span></li>
-          <li><span>Guidance</span><span>Pre & post sessions</span></li>
-        </ul>
-        <div class="program-card__price">
-          ₩2,100,000 <small>/ all inclusive</small>
-        </div>
-        <a href="../../visit/" class="btn btn-primary" style="width: 100%;">Apply for Descent</a>
-      </article>
+    <div class="hero-divider" id="hero-divider" aria-hidden="true"></div>
 
-      <!-- 21-Day -->
-      <article class="program-card">
-        <span class="program-card__duration">21 Days</span>
-        <h3 class="program-card__title">The Return</h3>
-        <p class="program-card__subtitle">귀환 · Gwihwan</p>
-        <p class="program-card__description">
-          The traditional length for deep transformation. Extended cave time (up to 7 days) alternates with integration periods. You will not be the same person who entered. Requires prior retreat experience.
-        </p>
-        <ul class="program-card__details">
-          <li><span>Cave Time</span><span>Up to 7 days</span></li>
-          <li><span>Accommodation</span><span>Private hermitage</span></li>
-          <li><span>Meals</span><span>Modified fasting</span></li>
-          <li><span>Guidance</span><span>Comprehensive support</span></li>
-        </ul>
-        <div class="program-card__price">
-          ₩6,300,000 <small>/ all inclusive</small>
-        </div>
-        <a href="../../visit/" class="btn btn-primary" style="width: 100%;">Apply for Return</a>
-      </article>
-    </div>
-  </section>
-
-  <!-- Preparation -->
-  <section class="preparation-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Before You Come</span>
-    <h2 style="margin-top: var(--space-4);">Preparing for the Cave</h2>
-    <p>
-      The cave retreat is a profound undertaking. Proper preparation—physical, mental, and spiritual—makes all the difference.
+    <p class="hero-subtitle" id="hero-subtitle">
+      Where the self meets its own dissolution
     </p>
 
-    <div class="preparation-grid">
-      <div class="preparation-item">
-        <svg class="preparation-item__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="20" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M16 52 C16 40 24 34 32 34 C40 34 48 40 48 52" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-        </svg>
-        <h3 class="preparation-item__title">Physical Readiness</h3>
-        <p class="preparation-item__text">
-          Cave environments require basic fitness. You should be able to sit comfortably for extended periods and navigate uneven terrain. Medical clearance required.
-        </p>
-      </div>
+    <div class="hero-scroll-hint" id="hero-scroll" aria-hidden="true">
+      <span>Descend</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
 
-      <div class="preparation-item">
-        <svg class="preparation-item__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="32" cy="32" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="32" y1="12" x2="32" y2="24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="preparation-item__title">Meditation Experience</h3>
-        <p class="preparation-item__text">
-          Prior meditation experience is strongly recommended. If you're new to practice, we offer introductory programs at the sanctuary before cave retreats.
-        </p>
-      </div>
+  <!-- ═══════════════════════════════════════════
+       I — WHAT IS THE CAVE
+  ═══════════════════════════════════════════ -->
+  <section class="cave-intro" aria-labelledby="cave-intro-heading">
+    <div class="section-inner">
+      <p class="section-label reveal">The Inner Chamber</p>
 
-      <div class="preparation-item">
-        <svg class="preparation-item__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="16" y="12" width="32" height="40" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="22" y1="20" x2="42" y2="20" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="22" y1="28" x2="42" y2="28" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="22" y1="36" x2="36" y2="36" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="preparation-item__title">Application Process</h3>
-        <p class="preparation-item__text">
-          Complete our application form and schedule a video interview. We'll discuss your intentions, assess readiness, and answer all your questions.
+      <h2 class="section-heading reveal" id="cave-intro-heading">
+        The cave has no windows.<br>That is the point.
+      </h2>
+
+      <div class="prose">
+        <p class="reveal">
+          Darkness is not the absence of something. It is a presence — the oldest presence there is.
+          Before fire, before language, before the first mark carved in stone, human beings entered caves
+          not to hide but to <em>meet</em>. To stand at the edge of the known self and wait for whatever
+          came next.
+        </p>
+
+        <p class="reveal">
+          Sensory deprivation is not deprivation in the ordinary sense. When the noise of the outer world
+          is removed — the light, the sound, the constant friction of social existence — what remains is
+          not nothing. What remains is <em>everything you have been carrying</em>. The mind turns inward
+          with nowhere else to go. The images rise. The body speaks. The breath becomes the only clock.
+        </p>
+
+        <span class="cave-centerline reveal" aria-hidden="true">The darkness is the teacher.</span>
+
+        <p class="reveal">
+          At Alexandria Sanctuary on Palgongsan, the cave retreat draws from traditions that stretch back
+          thousands of years — Hindu yogic practices, Tibetan dark retreat, the Christian desert fathers
+          who sought God in emptiness, the shamanic underworld journey.
+          These traditions share one understanding: <em>the interior landscape is as vast as the exterior one,
+          and far less explored</em>.
+        </p>
+
+        <p class="reveal">
+          This is not a rest. It is not a vacation. It is not comfortable in the way comfort is usually
+          meant. It is, however, <em>profoundly clarifying</em> — for those prepared to receive what it offers.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Testimonial -->
-  <section class="testimonial-section" data-animate>
-    <div class="container">
-      <div class="ornament">✦</div>
-      <div class="testimonial">
-        <p class="testimonial__quote">
-          "I was terrified before entering. By the third day, I didn't want to leave. The cave became my womb, my temple, my mirror. I saw myself clearly—perhaps for the first time—and what I saw was not the fearful person I thought I was, but something much older, much quieter, much more at peace."
-        </p>
-        <div class="testimonial__author">
-          <strong>Soyeon K.</strong>
-          21-Day Retreat Participant, 2025
+  <div class="vignette-sep" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════
+       II — THE PRACTICE
+  ═══════════════════════════════════════════ -->
+  <section class="practices" aria-labelledby="practices-heading">
+    <div class="section-inner">
+      <p class="section-label reveal">Three Paths</p>
+      <h2 class="section-heading reveal" id="practices-heading">The Practice</h2>
+
+      <ul class="practice-list" role="list">
+
+        <li class="practice-item" aria-labelledby="p1-name">
+          <div class="practice-numeral" aria-hidden="true">I</div>
+          <div class="practice-body">
+            <h3 class="practice-name" id="p1-name">Darkness Retreat</h3>
+            <p class="practice-desc">
+              Three to seven days in complete darkness. No light enters the cave space. No screens,
+              no lamps, no ambient glow. The room is sealed. The eyes remain open or closed — it makes
+              no difference. After the first day, the nervous system begins to reorganize. After the
+              second, the border between waking and dreaming grows permeable. By the third,
+              most participants report that time has become a different thing entirely.
+              <br><br>
+              This is one of the oldest practices known. Tibetan lamas have done it for forty-nine days.
+              The Irish saints entered stone cells. The question is not whether you can survive the darkness —
+              you can. The question is what you find in it.
+            </p>
+            <span class="practice-tag">Ancient Practice · Minimum 3 days</span>
+          </div>
+        </li>
+
+        <li class="practice-item" aria-labelledby="p2-name">
+          <div class="practice-numeral" aria-hidden="true">II</div>
+          <div class="practice-body">
+            <h3 class="practice-name" id="p2-name">Holotropic Breathwork</h3>
+            <p class="practice-desc">
+              Developed by Stanislav Grof and Christina Grof, holotropic breathwork uses accelerated
+              breathing, evocative music, and focused bodywork to access non-ordinary states of
+              consciousness — without substances, without coercion, using only the breath.
+              <br><br>
+              "Holotropic" means moving toward wholeness. In a session lasting two to four hours,
+              the breath becomes a key. What it opens is different for each person. Some encounter
+              biographical material — forgotten scenes from childhood, unresolved grief.
+              Others move into transpersonal territory: archetypes, collective memory, states
+              that have no language yet. The facilitator holds the space. The breath does the work.
+            </p>
+            <span class="practice-tag">Stanislav Grof Method · Facilitated Session</span>
+          </div>
+        </li>
+
+        <li class="practice-item" aria-labelledby="p3-name">
+          <div class="practice-numeral" aria-hidden="true">III</div>
+          <div class="practice-body">
+            <h3 class="practice-name" id="p3-name">Silence Protocol</h3>
+            <p class="practice-desc">
+              No speech. No music. No reading. No writing. Only the sound of breath and the mountain.
+              <br><br>
+              The silence protocol is the structural container for the other practices — and a
+              profound discipline in its own right. Language is not simply a means of communication;
+              it is the primary mechanism by which the conceptual self maintains its shape. When speech
+              stops, something else begins to move. Silence is not passive. In the first hours it is
+              uncomfortable. By the second day, it becomes spacious. By the third, most participants
+              report they have stopped wanting to speak — not because they have nothing to say,
+              but because words suddenly seem very small for what is present.
+            </p>
+            <span class="practice-tag">Noble Silence · Full Duration</span>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <div class="vignette-sep" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════
+       III — DURATION & STRUCTURE
+  ═══════════════════════════════════════════ -->
+  <section class="duration" aria-labelledby="duration-heading">
+    <div class="section-inner" style="max-width:900px;">
+      <p class="section-label reveal">Structure</p>
+      <h2 class="section-heading reveal" id="duration-heading">Duration &amp; Form</h2>
+
+      <div class="duration-grid" role="list">
+        <div class="duration-cell reveal" role="listitem">
+          <div class="duration-cell-number">3</div>
+          <div class="duration-cell-unit">Days — Minimum</div>
+          <p class="duration-cell-desc">The threshold. The nervous system settles. The first layers surface. The minimum necessary to arrive.</p>
+        </div>
+        <div class="duration-cell reveal" role="listitem">
+          <div class="duration-cell-number">5</div>
+          <div class="duration-cell-unit">Days — Recommended</div>
+          <p class="duration-cell-desc">The practice opens. Integration begins before departure. Most participants find this the optimal arc.</p>
+        </div>
+        <div class="duration-cell reveal" role="listitem">
+          <div class="duration-cell-number">7</div>
+          <div class="duration-cell-unit">Days — Full Retreat</div>
+          <p class="duration-cell-desc">For the first retreat, the ceiling. Seven days permits the full cycle: dissolution, reorganization, return.</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- FAQ -->
-  <section class="faq-section" data-animate>
-    <h2>Common Questions</h2>
-
-    <div class="faq-list">
-      <div class="faq-item">
-        <h3 class="faq-item__question">Is it completely dark?</h3>
-        <p class="faq-item__answer">
-          Yes. The cave chambers have no artificial light. You will experience complete darkness—what meditators call "the fertile void." This is essential to the practice. A small emergency light is always within reach.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">What about claustrophobia?</h3>
-        <p class="faq-item__answer">
-          Surprisingly, most participants report that the cave feels expansive rather than confining. The darkness removes visual boundaries, creating a sense of infinite space. However, if you have severe claustrophobia, please discuss this with us before applying.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">How do I eat and drink?</h3>
-        <p class="faq-item__answer">
-          Food and water are provided in the cave. Meals are simple—rice, vegetables, tea—designed to sustain without distracting. Extended retreats include modified fasting protocols developed with nutritional experts.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">What if I need to leave early?</h3>
-        <p class="faq-item__answer">
-          You can exit at any time. A signaling system connects you to staff who are always nearby. Your safety and psychological wellbeing are paramount. There is no shame in adjusting the retreat to your needs.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">Is it cold in the caves?</h3>
-        <p class="faq-item__answer">
-          Our caves maintain a consistent temperature of 14-16°C (57-61°F) year-round. Warm bedding, meditation cushions, and thermal clothing are provided. Most participants find the temperature comfortable.
+      <div class="duration-note reveal">
+        <p>
+          <strong>Pre-retreat consultation is required</strong> for all darkness retreat and holotropic breathwork programs.
+          This is not a formality. The consultation exists to ensure that the practice meets you where you are —
+          and that you arrive with adequate preparation, not as a stranger to your own interior territory.
+          We do not accept applications from those with active psychosis, recent trauma without therapeutic support,
+          or severe cardiovascular conditions. These are not exclusions. They are a form of care.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="section" style="padding-top: 0;">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        The cave awaits. Are you ready to enter?
+  <div class="vignette-sep" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════
+       IV — WHO THIS IS FOR
+  ═══════════════════════════════════════════ -->
+  <section class="who-for" aria-labelledby="who-heading">
+    <div class="section-inner">
+      <p class="section-label reveal">Readiness</p>
+      <h2 class="section-heading reveal" id="who-heading">
+        Not for the curious.
+      </h2>
+
+      <div class="prose">
+        <p class="reveal">
+          The cave retreat is for those who have <em>already knocked on the inner door</em>. The curious
+          are welcome in other programs — in the meditation hall, in the garden, in the forest paths
+          of Palgongsan. But the cave asks more.
+        </p>
+        <p class="reveal">
+          This program is designed for those who <strong>know there is a question</strong> — even if the
+          question has no shape yet. For those who have arrived at the limit of what the ordinary
+          instruments of thought can reach. For those who have sat with meditation long enough to sense
+          that there is a depth below the floor of the familiar.
+        </p>
+        <p class="reveal">
+          It is also for those passing through a major threshold — a grief that will not resolve,
+          a life chapter that has closed without opening a new one, a spiritual aridity that ordinary
+          practice has not touched.
+        </p>
+      </div>
+
+      <ul class="readiness-list" role="list" aria-label="Signs of readiness">
+        <li>You have a regular contemplative practice of some kind — meditation, prayer, breathwork, movement.</li>
+        <li>You can sit with discomfort without immediately reaching for distraction.</li>
+        <li>You are not in acute psychological crisis, but you may be in a profound liminal space.</li>
+        <li>You have a capacity for solitude — not preference for isolation, but genuine ease in your own company.</li>
+        <li>You are willing to not know, for several days, what comes next.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       V — QUOTE
+  ═══════════════════════════════════════════ -->
+  <section class="quote-section" aria-label="Contemplative quote">
+    <div class="blockquote-wrap">
+      <span class="blockquote-mark" aria-hidden="true">"</span>
+      <blockquote>
+        In the cave of the heart, the lamp of awareness burns without fuel.
+        <cite>— Upanishads (paraphrase)</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <div class="vignette-sep" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════
+       VI — APPLICATION
+  ═══════════════════════════════════════════ -->
+  <section class="application" aria-labelledby="application-heading">
+    <div class="section-inner">
+      <p class="section-label reveal">Inquiry</p>
+      <h2 class="section-heading reveal" id="application-heading">Begin Here</h2>
+
+      <p class="reveal" style="font-size:17px; font-weight:300; color:var(--parchment-60); line-height:1.8; margin-bottom:8px;">
+        Send an initial inquiry. We will respond within three to five days with information
+        about availability, the consultation process, and next steps.
       </p>
-      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-        <a href="../../visit/" class="btn btn-primary">Apply Now</a>
-        <a href="../" class="btn btn-secondary">Explore Other Spaces</a>
+
+      <form class="form-grid reveal" id="inquiry-form" novalidate aria-label="Cave retreat inquiry form">
+
+        <div class="form-field">
+          <label for="f-name">Your Name</label>
+          <input type="text" id="f-name" name="name" placeholder="As you wish to be addressed" autocomplete="name" required>
+        </div>
+
+        <div class="form-field">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" name="email" placeholder="Where we may reach you" autocomplete="email" required>
+        </div>
+
+        <div class="form-field full">
+          <label for="f-practice">Practice of Interest</label>
+          <select id="f-practice" name="practice" required>
+            <option value="" disabled selected>Select a practice</option>
+            <option value="darkness">Darkness Retreat</option>
+            <option value="holotropic">Holotropic Breathwork</option>
+            <option value="silence">Silence Protocol</option>
+            <option value="combined">Combined Program</option>
+            <option value="consultation">Pre-retreat Consultation Only</option>
+          </select>
+        </div>
+
+        <div class="form-field full">
+          <label for="f-message">Your Inquiry</label>
+          <textarea id="f-message" name="message" placeholder="What brings you to this threshold..." rows="5"></textarea>
+        </div>
+
+        <p class="form-note">
+          All inquiries are held in confidence. We do not share your information with third parties.
+          There is no commitment implied by submitting this form.
+        </p>
+
+        <button type="submit" class="btn-submit">
+          Send Inquiry
+          <span class="btn-arrow" aria-hidden="true">→</span>
+        </button>
+
+      </form>
+
+      <div class="form-confirm" id="form-confirm" role="alert" aria-live="polite">
+        <p>
+          Your inquiry has been received.<br>
+          We will be in touch within three to five days.<br><br>
+          <em>Until then — the mountain waits.</em>
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
-      </div>
-    </div>
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <p class="footer-brand">Alexandria Sanctuary</p>
+    <p class="footer-tagline">Palgongsan · Korea · A place of deep rest and interior inquiry</p>
+    <p class="footer-gate">Gate VI · Cave Retreat</p>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="../../index.html">Home</a>
+      <div class="footer-divider" aria-hidden="true"></div>
+      <a href="../">The Sanctuary</a>
+      <div class="footer-divider" aria-hidden="true"></div>
+      <a href="../residence/">Residence</a>
+      <div class="footer-divider" aria-hidden="true"></div>
+      <a href="../hospice/">Hospice</a>
+    </nav>
+    <p class="footer-copy">
+      &copy; 2026 Alexandria Sanctuary · Palgongsan, Korea · All inquiries by appointment
+    </p>
   </footer>
 
-  <script src="../../assets/js/app.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ─── CURSOR ──────────────────────────────────────── */
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mouseX = -100, mouseY = -100;
+    let ringX  = -100, ringY  = -100;
+    const LAG  = 0.10; // ring follow speed
+
+    document.addEventListener('mousemove', function (e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    document.addEventListener('mouseenter', function () {
+      dot.style.opacity  = '1';
+      ring.style.opacity = '1';
+    });
+
+    document.addEventListener('mouseleave', function () {
+      dot.style.opacity  = '0';
+      ring.style.opacity = '0';
+    });
+
+    (function cursorLoop() {
+      dot.style.left = mouseX + 'px';
+      dot.style.top  = mouseY + 'px';
+
+      ringX += (mouseX - ringX) * LAG;
+      ringY += (mouseY - ringY) * LAG;
+      ring.style.left = ringX + 'px';
+      ring.style.top  = ringY + 'px';
+
+      requestAnimationFrame(cursorLoop);
+    })();
+
+    /* cursor scale on interactive elements */
+    document.querySelectorAll('a, button, input, select, textarea').forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
+        ring.style.width  = '44px';
+        ring.style.height = '44px';
+        ring.style.borderColor = 'rgba(200,169,110,0.7)';
+      });
+      el.addEventListener('mouseleave', function () {
+        ring.style.width  = '28px';
+        ring.style.height = '28px';
+        ring.style.borderColor = 'rgba(200,169,110,0.4)';
+      });
+    });
+
+    /* ─── SCROLL PROGRESS BAR ─────────────────────────── */
+    var bar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', function () {
+      var scrolled  = window.scrollY;
+      var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      var pct       = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+      bar.style.width = pct + '%';
+    }, { passive: true });
+
+    /* ─── GSAP SETUP ──────────────────────────────────── */
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* Hero entrance */
+    var heroTL = gsap.timeline({ delay: 0.2 });
+    heroTL
+      .to('#hero-badge',    { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, 0)
+      .to('.hero-title',    { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }, 0.25)
+      .to('#hero-divider',  { opacity: 1, duration: 1.0, ease: 'power2.out' }, 0.7)
+      .to('.hero-subtitle', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, 0.85)
+      .to('#hero-scroll',   { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' }, 1.3);
+
+    /* Hero parallax */
+    gsap.to('.hero-bg-pulse', {
+      yPercent: 20,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end:   'bottom top',
+        scrub: 2
+      }
+    });
+
+    /* Generic .reveal elements */
+    gsap.utils.toArray('.reveal').forEach(function (el) {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1.0,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    /* Practice items — staggered */
+    gsap.utils.toArray('.practice-item').forEach(function (el, i) {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1.1,
+        ease: 'power3.out',
+        delay: i * 0.12,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    /* Duration cells — staggered */
+    gsap.utils.toArray('.duration-cell').forEach(function (el, i) {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: i * 0.10,
+        scrollTrigger: {
+          trigger: '.duration-grid',
+          start: 'top 82%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    /* Readiness list — slide from left */
+    gsap.utils.toArray('.readiness-list li').forEach(function (el, i) {
+      gsap.to(el, {
+        opacity: 1,
+        x: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: i * 0.08,
+        scrollTrigger: {
+          trigger: '.readiness-list',
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    /* Quote block */
+    gsap.to('.blockquote-wrap', {
+      opacity: 1,
+      duration: 1.6,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.quote-section',
+        start: 'top 78%',
+        toggleActions: 'play none none none'
+      }
+    });
+
+    /* ─── FORM SUBMISSION ─────────────────────────────── */
+    var form    = document.getElementById('inquiry-form');
+    var confirm = document.getElementById('form-confirm');
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name    = form.querySelector('#f-name').value.trim();
+        var email   = form.querySelector('#f-email').value.trim();
+        var practice = form.querySelector('#f-practice').value;
+
+        if (!name || !email || !practice) {
+          /* simple inline validation — no loud alerts */
+          if (!name)     form.querySelector('#f-name').style.borderBottomColor    = 'rgba(200,100,80,0.6)';
+          if (!email)    form.querySelector('#f-email').style.borderBottomColor   = 'rgba(200,100,80,0.6)';
+          if (!practice) form.querySelector('#f-practice').style.borderBottomColor = 'rgba(200,100,80,0.6)';
+          return;
+        }
+
+        /* Animate out form, show confirm */
+        gsap.to(form, {
+          opacity: 0,
+          y: -12,
+          duration: 0.6,
+          ease: 'power2.in',
+          onComplete: function () {
+            form.style.display = 'none';
+            confirm.style.display = 'block';
+            gsap.fromTo(confirm,
+              { opacity: 0, y: 10 },
+              { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+            );
+          }
+        });
+      });
+
+      /* reset error color on input */
+      form.querySelectorAll('input, select').forEach(function (el) {
+        el.addEventListener('input', function () {
+          el.style.borderBottomColor = '';
+        });
+      });
+    }
+
+  })();
+  </script>
+
 </body>
 </html>

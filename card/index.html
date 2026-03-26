@@ -1,82 +1,665 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alexandria Sanctuary — Branch Card</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #1a1a2e;
-            color: #e0e0e0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .card {
-            background: linear-gradient(135deg, #16213e, #0f3460);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-        .card h1 {
-            font-size: 1.6rem;
-            color: #e94560;
-            margin-bottom: 8px;
-        }
-        .card .tagline {
-            font-size: 0.9rem;
-            color: #a0a0a0;
-            margin-bottom: 24px;
-        }
-        .card .info {
-            text-align: left;
-            margin: 20px 0;
-        }
-        .card .info div {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.85rem;
-        }
-        .card .info span {
-            color: #e94560;
-            font-weight: bold;
-        }
-        .card .tier {
-            display: inline-block;
-            background: #e94560;
-            color: white;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            margin-top: 16px;
-        }
-        .card .hq {
-            margin-top: 20px;
-            font-size: 0.75rem;
-            color: #666;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Alexandria Sanctuary — Card</title>
+  <meta name="description" content="Alexandria Sanctuary — A place of stillness, reflection, and sacred dialogue. Palgongsan, Daegu, Korea.">
+  <meta property="og:title" content="Alexandria Sanctuary">
+  <meta property="og:description" content="A place of stillness. Palgongsan · Daegu · Korea">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    /* ── Reset & Custom Properties ─────────────────────── */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-solid:    #080604;
+      --gold:        #C8A96E;
+      --gold-dim:    #8B6A30;
+      --gold-bright: #E8C98E;
+      --parchment:   #EAE4D6;
+      --bg-panel:    #0D0A07;
+      --transition:  cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Cursor ─────────────────────────────────────────── */
+    * { cursor: none; }
+
+    #cursor-ring {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s var(--transition),
+                  height 0.3s var(--transition),
+                  border-color 0.3s var(--transition),
+                  opacity 0.3s var(--transition);
+      opacity: 0;
+    }
+
+    #cursor-dot {
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      background: var(--gold-bright);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.3s var(--transition);
+    }
+
+    body:hover #cursor-ring,
+    body:hover #cursor-dot { opacity: 1; }
+
+    body.hovering-link #cursor-ring {
+      width: 52px;
+      height: 52px;
+      border-color: var(--gold-bright);
+    }
+
+    /* ── Film Grain ─────────────────────────────────────── */
+    #grain {
+      position: fixed;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.032;
+      animation: grain-shift 0.8s steps(1) infinite;
+    }
+
+    @keyframes grain-shift {
+      0%  { transform: translate(0,     0);     }
+      10% { transform: translate(-2%,  -3%);    }
+      20% { transform: translate(3%,    2%);    }
+      30% { transform: translate(-1%,   4%);    }
+      40% { transform: translate(4%,   -1%);    }
+      50% { transform: translate(-3%,   3%);    }
+      60% { transform: translate(2%,   -4%);    }
+      70% { transform: translate(-4%,   2%);    }
+      80% { transform: translate(1%,   -2%);    }
+      90% { transform: translate(3%,    1%);    }
+    }
+
+    /* ── Base ────────────────────────────────────────────── */
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--bg-solid);
+      color: var(--parchment);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Radial vignette */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 80% 80% at 50% 50%,
+        transparent 40%,
+        rgba(0,0,0,0.72) 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Subtle ambient glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(600px, 90vw);
+      height: min(600px, 90vh);
+      background: radial-gradient(circle, rgba(200,169,110,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Card Wrapper ────────────────────────────────────── */
+    .card {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: min(480px, 94vw);
+      padding: clamp(32px, 5vh, 52px) clamp(24px, 5vw, 48px);
+      text-align: center;
+      gap: 0;
+    }
+
+    /* ── Emblem ──────────────────────────────────────────── */
+    .emblem-wrap {
+      position: relative;
+      width: 88px;
+      height: 88px;
+      margin-bottom: clamp(20px, 3.5vh, 32px);
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.02); }
+    }
+
+    .emblem-wrap svg {
+      width: 88px;
+      height: 88px;
+      overflow: visible;
+    }
+
+    /* ── Title Block ─────────────────────────────────────── */
+    .title-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-bottom: clamp(18px, 3vh, 28px);
+    }
+
+    .title-main {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(28px, 7vw, 42px);
+      letter-spacing: 0.18em;
+      color: var(--gold-bright);
+      line-height: 1.1;
+      margin-bottom: 7px;
+    }
+
+    .title-sub {
+      font-family: 'Cinzel', serif;
+      font-weight: 400;
+      font-size: clamp(9px, 2.4vw, 12px);
+      letter-spacing: 0.52em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 320px;
+      margin-bottom: 16px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dim));
+    }
+
+    .divider::after {
+      background: linear-gradient(to left, transparent, var(--gold-dim));
+    }
+
+    .divider-diamond {
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* Coordinates */
+    .coords-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: clamp(24px, 4vh, 36px);
+    }
+
+    .coords-place {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(10px, 2.8vw, 13px);
+      letter-spacing: 0.28em;
+      color: var(--parchment);
+      opacity: 0.72;
+    }
+
+    .coords-geo {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(9px, 2.4vw, 11px);
+      letter-spacing: 0.18em;
+      color: var(--gold-dim);
+      opacity: 0.85;
+    }
+
+    /* ── Link Buttons ────────────────────────────────────── */
+    .links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      max-width: 360px;
+      margin-bottom: clamp(20px, 3.5vh, 32px);
+    }
+
+    .link-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 16px;
+      border: 1px solid rgba(200,169,110,0.28);
+      background: transparent;
+      color: var(--parchment);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-weight: 400;
+      font-size: clamp(8.5px, 2.2vw, 10.5px);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      overflow: hidden;
+      transition: color 0.38s var(--transition),
+                  border-color 0.38s var(--transition);
+    }
+
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(200,169,110,0.14) 0%,
+        rgba(200,169,110,0.08) 100%
+      );
+      width: 0%;
+      transition: width 0.42s var(--transition);
+    }
+
+    .link-btn:hover::before {
+      width: 100%;
+    }
+
+    .link-btn:hover {
+      color: var(--gold-bright);
+      border-color: rgba(232,201,142,0.6);
+    }
+
+    .link-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── YouTube Link ────────────────────────────────────── */
+    .yt-link {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      color: var(--gold-dim);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(10px, 2.6vw, 12px);
+      letter-spacing: 0.14em;
+      opacity: 0.7;
+      transition: opacity 0.3s var(--transition), color 0.3s var(--transition);
+      margin-bottom: clamp(12px, 2vh, 20px);
+    }
+
+    .yt-link:hover {
+      opacity: 1;
+      color: var(--gold);
+    }
+
+    .yt-link svg {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ── Copyright ───────────────────────────────────────── */
+    .copyright {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(8.5px, 2vw, 10px);
+      letter-spacing: 0.22em;
+      color: var(--gold-dim);
+      opacity: 0.38;
+      text-transform: uppercase;
+    }
+
+    /* ── Initial Hidden State (GSAP animates in) ─────────── */
+    .emblem-wrap,
+    .title-main,
+    .title-sub,
+    .divider,
+    .coords-wrap,
+    .links-grid,
+    .yt-link,
+    .copyright {
+      opacity: 0;
+    }
+
+    /* ── Responsive adjustments ──────────────────────────── */
+    @media (max-height: 680px) {
+      .emblem-wrap { width: 64px; height: 88px; margin-bottom: 16px; }
+      .emblem-wrap svg { width: 64px; height: 64px; }
+      .coords-wrap { margin-bottom: 18px; }
+      .links-grid { gap: 8px; }
+    }
+
+    @media (max-width: 360px) {
+      .links-grid { grid-template-columns: 1fr; max-width: 260px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Alexandria Sanctuary</h1>
-        <div class="tagline">영적 케어 · 글로벌 영어 콘텐츠</div>
-        <div class="info">
-            <div><span>Type:</span> Vertical</div>
-            <div><span>Domain:</span> alexandria-sanctuary</div>
-            <div><span>Browser:</span> MS Edge</div>
-            <div><span>Stack:</span> HTML / CSS / JS</div>
-            <div><span>Hosting:</span> GitHub Pages</div>
-        </div>
-        <div class="tier">Tier 4 — Branch</div>
-        <div class="hq">DTSLIB HQ · dtslib1979</div>
+
+  <!-- Dual Cursor -->
+  <div id="cursor-ring"></div>
+  <div id="cursor-dot"></div>
+
+  <!-- Film Grain Canvas -->
+  <canvas id="grain"></canvas>
+
+  <!-- Card -->
+  <main class="card" role="main">
+
+    <!-- SVG Emblem -->
+    <div class="emblem-wrap" aria-hidden="true">
+      <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="glow-grad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#E8C98E" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#C8A96E" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="gold-ring" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#E8C98E"/>
+            <stop offset="50%"  stop-color="#C8A96E"/>
+            <stop offset="100%" stop-color="#8B6A30"/>
+          </linearGradient>
+          <linearGradient id="gold-inner" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#E8C98E" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#8B6A30" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Ambient glow -->
+        <circle cx="44" cy="44" r="44" fill="url(#glow-grad)"/>
+
+        <!-- Outer ring -->
+        <circle cx="44" cy="44" r="39" stroke="url(#gold-ring)" stroke-width="0.7" fill="none"/>
+
+        <!-- Inner ring -->
+        <circle cx="44" cy="44" r="31" stroke="url(#gold-ring)" stroke-width="0.4" fill="none" stroke-dasharray="3 2.4"/>
+
+        <!-- Central diamond -->
+        <polygon
+          points="44,18 62,44 44,70 26,44"
+          stroke="url(#gold-ring)"
+          stroke-width="0.9"
+          fill="url(#gold-inner)"
+        />
+
+        <!-- Inner diamond accent -->
+        <polygon
+          points="44,28 56,44 44,60 32,44"
+          stroke="url(#gold-ring)"
+          stroke-width="0.4"
+          fill="none"
+          opacity="0.6"
+        />
+
+        <!-- Cardinal tick marks -->
+        <line x1="44" y1="5"  x2="44" y2="11" stroke="#C8A96E" stroke-width="0.7" opacity="0.6"/>
+        <line x1="44" y1="77" x2="44" y2="83" stroke="#C8A96E" stroke-width="0.7" opacity="0.6"/>
+        <line x1="5"  y1="44" x2="11" y2="44" stroke="#C8A96E" stroke-width="0.7" opacity="0.6"/>
+        <line x1="77" y1="44" x2="83" y2="44" stroke="#C8A96E" stroke-width="0.7" opacity="0.6"/>
+
+        <!-- Center point -->
+        <circle cx="44" cy="44" r="2.2" fill="#E8C98E" opacity="0.85"/>
+        <circle cx="44" cy="44" r="1"   fill="#080604"/>
+      </svg>
     </div>
+
+    <!-- Title Block -->
+    <div class="title-wrap">
+      <h1 class="title-main">ALEXANDRIA</h1>
+      <p class="title-sub">S A N C T U A R Y</p>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider" aria-hidden="true">
+      <span class="divider-diamond"></span>
+    </div>
+
+    <!-- Coordinates -->
+    <div class="coords-wrap">
+      <p class="coords-place">PALGONGSAN &nbsp;·&nbsp; DAEGU &nbsp;·&nbsp; KOREA</p>
+      <p class="coords-geo">35°58′N &nbsp;·&nbsp; 128°69′E</p>
+    </div>
+
+    <!-- Links -->
+    <nav class="links-grid" aria-label="Sanctuary navigation">
+      <a href="../index.html" class="link-btn">
+        <span>Enter Sanctuary</span>
+      </a>
+      <a href="../index.html#gates" class="link-btn">
+        <span>Seven Gates</span>
+      </a>
+      <a href="../forum/" class="link-btn">
+        <span>Dialogues</span>
+      </a>
+      <a href="../visit/" class="link-btn">
+        <span>Visit &amp; Inquire</span>
+      </a>
+    </nav>
+
+    <!-- YouTube -->
+    <a
+      href="https://www.youtube.com/@alexandria-y6k"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="yt-link"
+      aria-label="YouTube channel @alexandria-y6k"
+    >
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+      @alexandria-y6k
+    </a>
+
+    <!-- Copyright -->
+    <p class="copyright">
+      &copy; <span id="year"></span> Alexandria Sanctuary — All rights reserved
+    </p>
+
+  </main>
+
+  <script>
+    /* ── Year ─────────────────────────────────────────────── */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ── Film Grain ──────────────────────────────────────── */
+    (function() {
+      const canvas = document.getElementById('grain');
+      const ctx    = canvas.getContext('2d');
+      let W, H;
+
+      function resize() {
+        W = canvas.width  = window.innerWidth  * 2;
+        H = canvas.height = window.innerHeight * 2;
+        canvas.style.width  = window.innerWidth  + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        paint();
+      }
+
+      function paint() {
+        const img = ctx.createImageData(W, H);
+        const d   = img.data;
+        for (let i = 0; i < d.length; i += 4) {
+          const v = (Math.random() * 255) | 0;
+          d[i] = d[i+1] = d[i+2] = v;
+          d[i+3] = 255;
+        }
+        ctx.putImageData(img, 0, 0);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+    })();
+
+    /* ── Dual Cursor ─────────────────────────────────────── */
+    (function() {
+      const ring = document.getElementById('cursor-ring');
+      const dot  = document.getElementById('cursor-dot');
+
+      let mx = -200, my = -200;
+      let rx = -200, ry = -200;
+
+      document.addEventListener('mousemove', function(e) {
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.left = mx + 'px';
+        dot.style.top  = my + 'px';
+      });
+
+      // Lag for ring
+      (function loop() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(loop);
+      })();
+
+      // Hover detection on interactive elements
+      const interactables = document.querySelectorAll('a, button');
+      interactables.forEach(function(el) {
+        el.addEventListener('mouseenter', function() {
+          document.body.classList.add('hovering-link');
+        });
+        el.addEventListener('mouseleave', function() {
+          document.body.classList.remove('hovering-link');
+        });
+      });
+    })();
+
+    /* ── GSAP Entrance Animation ─────────────────────────── */
+    (function() {
+      if (typeof gsap === 'undefined') {
+        // Fallback: just show everything
+        document.querySelectorAll('.card > *, .card .title-wrap > *').forEach(function(el) {
+          el.style.opacity = '1';
+        });
+        return;
+      }
+
+      const tl = gsap.timeline({ delay: 0.18 });
+
+      // Emblem: scale up from 0.8
+      tl.to('.emblem-wrap', {
+        opacity: 1,
+        scale: 1,
+        duration: 1.1,
+        ease: 'power3.out',
+        transformOrigin: '50% 50%',
+        startAt: { scale: 0.8 }
+      });
+
+      // Title chars stagger
+      tl.to('.title-main', {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        startAt: { opacity: 0, y: 14 }
+      }, '-=0.55');
+
+      tl.to('.title-sub', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power2.out',
+        startAt: { opacity: 0, y: 10 }
+      }, '-=0.55');
+
+      // Divider
+      tl.to('.divider', {
+        opacity: 1,
+        scaleX: 1,
+        duration: 0.8,
+        ease: 'power2.out',
+        transformOrigin: '50% 50%',
+        startAt: { opacity: 0, scaleX: 0.3 }
+      }, '-=0.4');
+
+      // Coordinates
+      tl.to('.coords-wrap', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power2.out',
+        startAt: { opacity: 0, y: 10 }
+      }, '-=0.4');
+
+      // Links slide up with stagger
+      tl.to('.link-btn', {
+        opacity: 1,
+        y: 0,
+        duration: 0.65,
+        ease: 'power2.out',
+        stagger: 0.1,
+        startAt: { opacity: 0, y: 18 }
+      }, '-=0.3');
+
+      // YouTube link
+      tl.to('.yt-link', {
+        opacity: 0.7,
+        y: 0,
+        duration: 0.55,
+        ease: 'power2.out',
+        startAt: { opacity: 0, y: 10 }
+      }, '-=0.2');
+
+      // Copyright
+      tl.to('.copyright', {
+        opacity: 0.38,
+        duration: 0.5,
+        ease: 'power1.out'
+      }, '-=0.1');
+    })();
+  </script>
 </body>
 </html>

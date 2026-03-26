@@ -3,696 +3,1613 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Plan your visit to Alexandria Sanctuary - Retreat programs, residency applications, and contact information.">
+  <meta name="description" content="Visit Alexandria Sanctuary — Palgongsan, Daegu, Korea. How to find us, make inquiries, and begin your path.">
+  <title>Visit — Alexandria Sanctuary</title>
 
-  <title>Visit - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="../assets/css/design-system.css">
-  <link rel="stylesheet" href="../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
   <style>
-    .visit-hero {
-      min-height: 70vh;
+    /* ═══════════════════════════════════════════
+       RESET & ROOT
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-solid:     #080604;
+      --bg-panel:     #0D0A07;
+      --gold:         #C8A96E;
+      --gold-dim:     #8B6A30;
+      --gold-bright:  #E8C98E;
+      --parchment:    #EAE4D6;
+      --parchment-60: rgba(234,228,214,0.6);
+      --parchment-30: rgba(234,228,214,0.3);
+      --parchment-12: rgba(234,228,214,0.12);
+      --gold-glow:    rgba(200,169,110,0.18);
+      --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    html {
+      background: var(--bg-solid);
+      color: var(--parchment);
+      overflow-x: hidden;
+      scroll-behavior: auto;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      line-height: 1.75;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ═══════════════════════════════════════════
+       CUSTOM CURSOR
+    ═══════════════════════════════════════════ */
+    #cur-dot, #cur-ring {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 99999;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      will-change: left, top;
+    }
+
+    #cur-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      transition: width .2s var(--ease-out),
+                  height .2s var(--ease-out),
+                  background .3s;
+    }
+
+    #cur-ring {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(200,169,110,0.55);
+      transition: width .25s var(--ease-out),
+                  height .25s var(--ease-out),
+                  border-color .3s;
+    }
+
+    body.cursor-hover #cur-dot {
+      width: 10px; height: 10px;
+      background: var(--gold-bright);
+    }
+    body.cursor-hover #cur-ring {
+      width: 48px; height: 48px;
+      border-color: var(--gold);
+    }
+
+    /* ═══════════════════════════════════════════
+       FILM GRAIN
+    ═══════════════════════════════════════════ */
+    #grain {
+      position: fixed;
+      inset: -20%;
+      width: 140%; height: 140%;
+      pointer-events: none;
+      z-index: 9000;
+      opacity: 0.038;
+      animation: grain-shift 0.9s steps(1) infinite;
+    }
+
+    @keyframes grain-shift {
+      0%   { transform: translate(0,0); }
+      10%  { transform: translate(-2%,-3%); }
+      20%  { transform: translate(3%,1%); }
+      30%  { transform: translate(-1%,3%); }
+      40%  { transform: translate(4%,-2%); }
+      50%  { transform: translate(-3%,4%); }
+      60%  { transform: translate(2%,-1%); }
+      70%  { transform: translate(-4%,2%); }
+      80%  { transform: translate(3%,-3%); }
+      90%  { transform: translate(-2%,1%); }
+      100% { transform: translate(1%,3%); }
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL PROGRESS BAR
+    ═══════════════════════════════════════════ */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-bright));
+      z-index: 9999;
+      box-shadow: 0 0 8px var(--gold-dim);
+    }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 8000;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.08), transparent 50%),
-        var(--bg-primary);
+      justify-content: space-between;
+      padding: 26px 52px;
+      background: linear-gradient(to bottom, rgba(8,6,4,0.97) 0%, transparent 100%);
+      transition: padding .4s var(--ease-out), background .4s;
     }
 
-    .visit-intro {
-      padding: var(--space-16) 0;
+    nav.scrolled {
+      padding: 16px 52px;
+      background: rgba(8,6,4,0.93);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(200,169,110,0.09);
     }
 
-    .visit-intro__content {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-      text-align: center;
+    .nav-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.38em;
+      color: var(--gold);
+      text-transform: uppercase;
     }
 
-    .visit-intro__content p {
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-    }
-
-    .options-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .options-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-xl);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
-    }
-
-    .option-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-8);
-      text-align: center;
-      transition: transform var(--duration-normal), box-shadow var(--duration-normal);
-    }
-
-    .option-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .option-card__icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto var(--space-6);
-      opacity: 0.8;
-    }
-
-    .option-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .option-card__duration {
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-4);
-    }
-
-    .option-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-6);
-    }
-
-    .option-card__price {
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-6);
-    }
-
-    .option-card__price small {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      font-family: var(--font-body);
-    }
-
-    .contact-section {
-      padding: var(--space-20) 0;
-    }
-
-    .contact-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .contact-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .contact-card {
-      text-align: center;
-      padding: var(--space-8);
-      background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .contact-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-3);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .contact-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .contact-card__text a {
-      color: var(--text-primary);
-      text-decoration: none;
-    }
-
-    .contact-card__text a:hover {
-      color: var(--color-gold-500);
-    }
-
-    .location-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .location-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .location-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .location-details {
-      max-width: var(--max-width-md);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .location-item {
+    .nav-links {
       display: flex;
-      gap: var(--space-6);
-      margin-bottom: var(--space-6);
-      padding-bottom: var(--space-6);
-      border-bottom: 1px solid var(--border-subtle);
+      align-items: center;
+      gap: 38px;
+      list-style: none;
     }
 
-    .location-item:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      color: var(--parchment-60);
+      text-transform: uppercase;
+      transition: color .3s;
+      position: relative;
     }
 
-    .location-item__icon {
-      flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      opacity: 0.7;
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width .4s var(--ease-out);
     }
 
-    .location-item__content h3 {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a.active::after { width: 100%; }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    .location-item__content p {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 65% at 50% 42%,
+          rgba(200,169,110,0.10) 0%,
+          rgba(139,106,48,0.05) 40%,
+          transparent 70%),
+        radial-gradient(ellipse 45% 35% at 18% 72%,
+          rgba(139,106,48,0.07) 0%,
+          transparent 60%),
+        radial-gradient(ellipse 55% 45% at 82% 28%,
+          rgba(200,169,110,0.06) 0%,
+          transparent 65%),
+        var(--bg-solid);
     }
 
-    .faq-section {
-      padding: var(--space-20) 0;
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,169,110,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,169,110,0.035) 1px, transparent 1px);
+      background-size: 76px 76px;
+      mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, black 15%, transparent 75%);
     }
 
-    .faq-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
+    .hero-content {
+      position: relative;
+      z-index: 2;
       text-align: center;
-      margin-bottom: var(--space-12);
-      letter-spacing: var(--tracking-wide);
+      padding: 0 24px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.55em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(58px, 10vw, 126px);
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      line-height: 1;
+      color: transparent;
+      background: linear-gradient(160deg,
+        var(--gold-dim) 0%,
+        var(--gold) 28%,
+        var(--gold-bright) 52%,
+        var(--gold) 74%,
+        var(--gold-dim) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.2vw, 23px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment-60);
+      letter-spacing: 0.14em;
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-coords {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      color: var(--gold-dim);
+      margin-bottom: 68px;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .hero-divider {
+      width: 1px;
+      height: 84px;
+      background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+      margin: 0 auto;
+      opacity: 0;
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+
+    /* ═══════════════════════════════════════════
+       SECTION SHARED
+    ═══════════════════════════════════════════ */
+    section {
+      position: relative;
+      padding: 120px 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 52px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.58em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(28px, 3.6vw, 46px);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--gold-bright);
+      line-height: 1.18;
+      margin-bottom: 24px;
+    }
+
+    .section-body {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--parchment-60);
+      line-height: 1.88;
+      max-width: 600px;
+    }
+
+    .gold-rule {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 32px 0;
+    }
+
+    /* reveal states */
+    .reveal       { opacity: 0; transform: translateY(30px); }
+    .reveal-left  { opacity: 0; transform: translateX(-34px); }
+    .reveal-right { opacity: 0; transform: translateX(34px); }
+
+    /* ═══════════════════════════════════════════
+       LOCATION SECTION
+    ═══════════════════════════════════════════ */
+    .location-section {
+      background: var(--bg-solid);
+      border-top: 1px solid rgba(200,169,110,0.08);
+    }
+
+    .location-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .location-facts {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .fact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .fact-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 11px;
+    }
+
+    .fact-text {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--parchment-60);
+      line-height: 1.75;
+    }
+
+    .location-accent {
+      text-align: right;
+    }
+
+    .kr-large {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(64px, 9vw, 108px);
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(200,169,110,0.22);
+      line-height: 1.45;
+      display: block;
+      user-select: none;
+    }
+
+    .kr-label {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.42em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-top: 18px;
+      display: block;
+    }
+
+    /* ═══════════════════════════════════════════
+       VISIT STEPS
+    ═══════════════════════════════════════════ */
+    .steps-section {
+      background: var(--bg-panel);
+      border-top: 1px solid rgba(200,169,110,0.08);
+      border-bottom: 1px solid rgba(200,169,110,0.08);
+    }
+
+    .steps-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .steps-header .section-body {
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 0 52px;
+      padding: 60px 0;
+      border-bottom: 1px solid rgba(200,169,110,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step:first-child { border-top: 1px solid rgba(200,169,110,0.08); }
+
+    .step-bar {
+      position: absolute;
+      left: 0; top: 0;
+      width: 2px; height: 0%;
+      background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+      transition: height 1.1s var(--ease-out);
+    }
+
+    .step.visible .step-bar { height: 100%; }
+
+    .step-num {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      color: var(--gold-dim);
+      padding-top: 7px;
+      text-align: right;
+    }
+
+    .step-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(18px, 2.4vw, 28px);
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      color: var(--gold-bright);
+      margin-bottom: 18px;
+    }
+
+    .step-desc {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--parchment-60);
+      max-width: 540px;
+      line-height: 1.88;
+    }
+
+    .step-note {
+      margin-top: 18px;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--gold-dim);
+      letter-spacing: 0.04em;
+    }
+
+    /* ═══════════════════════════════════════════
+       GETTING HERE
+    ═══════════════════════════════════════════ */
+    .transport-section { background: var(--bg-solid); }
+
+    .transport-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 60px;
+    }
+
+    .transport-card {
+      background: var(--bg-panel);
+      border: 1px solid rgba(200,169,110,0.10);
+      padding: 44px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .4s;
+    }
+
+    .transport-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .6s var(--ease-out);
+    }
+
+    .transport-card:hover { border-color: rgba(200,169,110,0.26); }
+    .transport-card:hover::before { transform: scaleX(1); }
+
+    .transport-origin {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.38em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .transport-title {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--gold-bright);
+      margin-bottom: 28px;
+    }
+
+    .transport-routes {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .route-item {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--parchment-60);
+      line-height: 1.7;
+    }
+
+    .route-mode {
+      font-family: 'Cinzel', serif;
+      font-size: 8px;
+      letter-spacing: 0.32em;
+      color: var(--gold-dim);
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .address-note {
+      margin-top: 60px;
+      padding: 34px 44px;
+      border: 1px solid rgba(200,169,110,0.14);
+      border-left: 3px solid var(--gold-dim);
+      background: rgba(200,169,110,0.03);
+    }
+
+    .address-note p {
+      font-size: 16px;
+      font-style: italic;
+      color: var(--parchment-60);
+      line-height: 1.85;
+    }
+
+    .address-note strong {
+      color: var(--gold);
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    /* ═══════════════════════════════════════════
+       CONTACT FORM
+    ═══════════════════════════════════════════ */
+    .contact-section {
+      background: var(--bg-panel);
+      border-top: 1px solid rgba(200,169,110,0.08);
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 96px;
+      align-items: start;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-field {
+      margin-bottom: 26px;
+      position: relative;
+    }
+
+    .form-field label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.44em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      background: rgba(200,169,110,0.04);
+      border: 1px solid rgba(200,169,110,0.15);
+      color: var(--parchment);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 300;
+      padding: 14px 18px;
+      outline: none;
+      transition: border-color .35s, box-shadow .35s, background .35s;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
+
+    .form-field select {
+      cursor: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6A30' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 18px center;
+      padding-right: 46px;
+    }
+
+    .form-field select option {
+      background: #0D0A07;
+      color: var(--parchment);
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 148px;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: rgba(234,228,214,0.2);
+      font-style: italic;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: rgba(200,169,110,0.55);
+      background: rgba(200,169,110,0.07);
+      box-shadow:
+        0 0 0 3px rgba(200,169,110,0.06),
+        0 0 28px rgba(200,169,110,0.09);
+    }
+
+    .submit-wrap {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .btn-submit-outer {
+      position: relative;
+      display: inline-block;
+    }
+
+    .btn-submit {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.42em;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #080604;
+      background: linear-gradient(135deg, var(--gold-dim), var(--gold), var(--gold-bright));
+      border: none;
+      padding: 18px 42px;
+      cursor: none;
+      transition: box-shadow .4s, filter .3s;
+      will-change: transform;
+    }
+
+    .btn-submit::after {
+      content: '→';
+      font-size: 14px;
+      letter-spacing: 0;
+      transition: transform .3s var(--ease-out);
+    }
+
+    .btn-submit:hover {
+      box-shadow: 0 8px 44px rgba(200,169,110,0.38);
+      filter: brightness(1.09);
+    }
+
+    .btn-submit:hover::after { transform: translateX(5px); }
+
+    .form-note {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--gold-dim);
+      line-height: 1.65;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 56px 32px;
+    }
+
+    .form-success.visible { display: block; }
+
+    .form-success-icon {
+      font-family: 'Cinzel', serif;
+      font-size: 36px;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+
+    .form-success-title {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      letter-spacing: 0.22em;
+      color: var(--gold-bright);
+      margin-bottom: 14px;
+    }
+
+    .form-success-msg {
+      font-size: 16px;
+      font-style: italic;
+      color: var(--parchment-60);
+      line-height: 1.8;
+    }
+
+    /* ═══════════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════════ */
+    .faq-section { background: var(--bg-solid); }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 68px;
     }
 
     .faq-list {
-      max-width: var(--max-width-prose);
+      max-width: 740px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
     }
 
     .faq-item {
-      border-bottom: 1px solid var(--border-subtle);
-      padding: var(--space-6) 0;
+      border-bottom: 1px solid rgba(200,169,110,0.10);
+      overflow: hidden;
     }
 
-    .faq-item__question {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-    }
+    .faq-item:first-child { border-top: 1px solid rgba(200,169,110,0.10); }
 
-    .faq-item__answer {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .newsletter-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .newsletter-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .newsletter-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-8);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .newsletter-form {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
+    .faq-q {
       display: flex;
-      gap: var(--space-3);
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 30px 0;
+      cursor: none;
+      user-select: none;
     }
 
-    .newsletter-form input {
-      flex: 1;
-      padding: var(--space-3) var(--space-4);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-size: var(--text-base);
+    .faq-q-text {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: var(--parchment);
+      font-weight: 400;
+      line-height: 1.55;
+      transition: color .3s;
     }
 
-    .newsletter-form input::placeholder {
-      color: var(--text-tertiary);
+    .faq-item.open .faq-q-text { color: var(--gold); }
+
+    .faq-icon {
+      width: 20px; height: 20px;
+      flex-shrink: 0;
+      position: relative;
     }
 
-    .newsletter-form input:focus {
-      outline: none;
-      border-color: var(--color-gold-500);
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--gold-dim);
+      transition: transform .4s var(--ease-out), opacity .4s;
     }
 
-    @media (max-width: 500px) {
-      .newsletter-form {
-        flex-direction: column;
-      }
+    .faq-icon::before { width: 1px; height: 14px; }
+    .faq-icon::after  { width: 14px; height: 1px; }
+
+    .faq-item.open .faq-icon::before {
+      transform: translate(-50%, -50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .52s var(--ease-out);
+    }
+
+    .faq-a-inner {
+      padding-bottom: 30px;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--parchment-60);
+      line-height: 1.88;
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      background: var(--bg-panel);
+      border-top: 1px solid rgba(200,169,110,0.10);
+      padding: 84px 0 50px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 68px;
+    }
+
+    .footer-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--parchment-30);
+      line-height: 1.75;
+    }
+
+    .footer-col-title {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.48em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--parchment-30);
+      transition: color .3s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(200,169,110,0.07);
+      padding-top: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      color: var(--parchment-30);
+    }
+
+    .footer-coords {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      color: var(--gold-dim);
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 940px) {
+      nav { padding: 20px 24px; }
+      nav.scrolled { padding: 14px 24px; }
+      .nav-links { gap: 22px; }
+      .container { padding: 0 24px; }
+      section { padding: 84px 0; }
+
+      .location-inner { grid-template-columns: 1fr; gap: 52px; }
+      .location-accent { text-align: left; }
+      .kr-large { font-size: clamp(52px, 13vw, 80px); }
+
+      .transport-grid { grid-template-columns: 1fr; }
+
+      .contact-inner { grid-template-columns: 1fr; gap: 52px; }
+      .form-row { grid-template-columns: 1fr; }
+
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; gap: 14px; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .step { grid-template-columns: 48px 1fr; gap: 0 20px; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .hero-title { letter-spacing: 0.1em; }
     }
   </style>
 </head>
+
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../philosophy/" class="nav__link">Philosophy</a>
-          <a href="../sanctuary/" class="nav__link">Sanctuary</a>
-          <a href="../forum/" class="nav__link">Forum</a>
-          <a href="../library/" class="nav__link">Library</a>
-          <a href="./" class="nav__link" style="color: var(--color-gold-500);">Visit</a>
-        </div>
+  <!-- Cursor -->
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
 
-        <div class="nav__actions">
-          <a href="./" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
+  <!-- Film grain -->
+  <svg id="grain" xmlns="http://www.w3.org/2000/svg">
+    <filter id="noise-filter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.74" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noise-filter)"/>
+  </svg>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../philosophy/" class="nav__link">Philosophy</a>
-      <a href="../sanctuary/" class="nav__link">Sanctuary</a>
-      <a href="../forum/" class="nav__link">Forum</a>
-      <a href="../library/" class="nav__link">Library</a>
-      <a href="./" class="nav__link">Visit</a>
-    </div>
+  <!-- Progress bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Nav -->
+  <nav id="main-nav">
+    <a href="../" class="nav-brand">ALEXANDRIA</a>
+    <ul class="nav-links">
+      <li><a href="../sanctuary/">Sanctuary</a></li>
+      <li><a href="../philosophy/">Philosophy</a></li>
+      <li><a href="../library/">Library</a></li>
+      <li><a href="../staff/">Companions</a></li>
+      <li><a href="../visit/" class="active">Visit</a></li>
+    </ul>
   </nav>
 
-  <!-- Hero -->
-  <header class="visit-hero">
-    <div class="container container-narrow">
-      <span class="section-label" data-animate>Begin Your Journey</span>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl); margin-top: var(--space-4);">
-        Visit Alexandria
-      </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6);">
-        The mountain awaits. Choose your path in.
-      </p>
-    </div>
-  </header>
+  <!-- ════ HERO ════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
 
-  <!-- Introduction -->
-  <section class="visit-intro" data-animate>
-    <div class="visit-intro__content">
-      <p>
-        Whether you seek a weekend of stillness, months of deep practice, or compassionate care for life's final chapter, Alexandria offers a place for you. Every journey begins with a single step—reaching out.
-      </p>
+    <div class="hero-content">
+      <p class="hero-eyebrow" id="h-eyebrow">The Way In</p>
+      <h1 class="hero-title" id="h-title">FIND US</h1>
+      <p class="hero-subtitle" id="h-sub">Palgongsan &middot; Daegu &middot; Korea</p>
+      <p class="hero-coords" id="h-coords">35&deg;58&prime;N &middot; 128&deg;69&prime;E</p>
+      <div class="hero-divider" id="h-div"></div>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- Options -->
-  <section class="options-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Ways to Come</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Choose Your Path</h2>
-    </div>
-
-    <div class="options-grid">
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M32 16 L32 32 L42 38" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="option-card__title">Day Visit</h3>
-        <p class="option-card__duration">1 day</p>
-        <p class="option-card__text">
-          Tour the sanctuary, attend a meditation session, have tea in the garden. Get to know us before committing to more.
-        </p>
-        <div class="option-card__price">
-          Free <small>by reservation</small>
-        </div>
-        <a href="#contact" class="btn btn-secondary" style="width: 100%;">Schedule a Visit</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 48 L32 12 L52 48" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <line x1="22" y1="36" x2="42" y2="36" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="option-card__title">Weekend Retreat</h3>
-        <p class="option-card__duration">3 days</p>
-        <p class="option-card__text">
-          Immerse yourself in the rhythm of sanctuary life. Meditation, silence, nature, community. A taste of what's possible.
-        </p>
-        <div class="option-card__price">
-          ₩450,000 <small>all inclusive</small>
-        </div>
-        <a href="#contact" class="btn btn-secondary" style="width: 100%;">Apply Now</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 48 Q25 28 32 38 Q39 48 49 28" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <circle cx="32" cy="20" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="option-card__title">Cave Retreat</h3>
-        <p class="option-card__duration">3-21 days</p>
-        <p class="option-card__text">
-          Enter the darkness of Palgongsan's ancient caves. Profound practice for experienced meditators ready to go deep.
-        </p>
-        <div class="option-card__price">
-          From ₩900,000
-        </div>
-        <a href="../sanctuary/cave-retreat/" class="btn btn-secondary" style="width: 100%;">Learn More</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="16" y="24" width="32" height="24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M12 24 L32 12 L52 24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <rect x="26" y="36" width="12" height="12" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="option-card__title">Residency</h3>
-        <p class="option-card__duration">3-12 months</p>
-        <p class="option-card__text">
-          Make the sanctuary your home. Extended practice, community living, deep transformation over seasons.
-        </p>
-        <div class="option-card__price">
-          From ₩1,800,000 <small>/month</small>
-        </div>
-        <a href="../sanctuary/residence/" class="btn btn-secondary" style="width: 100%;">Learn More</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="16" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M32 20 L32 44 M24 28 L32 20 L40 28 M24 36 L32 44 L40 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="option-card__title">Hospice Care</h3>
-        <p class="option-card__duration">End of life</p>
-        <p class="option-card__text">
-          For those facing terminal illness. Medical excellence meets spiritual depth. Die with dignity and peace.
-        </p>
-        <div class="option-card__price">
-          ₩8,500,000 <small>/month</small>
-        </div>
-        <a href="../sanctuary/hospice/" class="btn btn-secondary" style="width: 100%;">Learn More</a>
-      </article>
-
-      <article class="option-card">
-        <svg class="option-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="40" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="32" cy="42" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="option-card__title">Forum Event</h3>
-        <p class="option-card__duration">1-3 days</p>
-        <p class="option-card__text">
-          Attend a teaching, dialogue, or workshop with visiting wisdom teachers. Open to all.
-        </p>
-        <div class="option-card__price">
-          Varies by event
-        </div>
-        <a href="../forum/" class="btn btn-secondary" style="width: 100%;">See Events</a>
-      </article>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="contact-section" id="contact" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Reach Out</span>
-    <h2 style="margin-top: var(--space-4);">Contact Us</h2>
-    <p>
-      We respond to all inquiries within 48 hours. Reach out in whatever way feels most comfortable.
-    </p>
-
-    <div class="contact-grid">
-      <div class="contact-card">
-        <h3 class="contact-card__title">Email</h3>
-        <p class="contact-card__text">
-          <a href="mailto:welcome@alexandria-sanctuary.org">welcome@alexandria-sanctuary.org</a>
-        </p>
-      </div>
-
-      <div class="contact-card">
-        <h3 class="contact-card__title">Phone</h3>
-        <p class="contact-card__text">
-          <a href="tel:+82537001234">+82 53 700 1234</a><br>
-          <small>Mon-Sat, 9am-5pm KST</small>
-        </p>
-      </div>
-
-      <div class="contact-card">
-        <h3 class="contact-card__title">KakaoTalk</h3>
-        <p class="contact-card__text">
-          <a href="#">@alexandria_sanctuary</a><br>
-          <small>For Korean speakers</small>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Location -->
-  <section class="location-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Finding Us</span>
-    <h2 style="margin-top: var(--space-4);">Getting Here</h2>
-    <p>
-      Alexandria is located on the slopes of Palgongsan, approximately 20km northeast of Daegu city center.
-    </p>
-
-    <div class="location-details">
-      <div class="location-item">
-        <svg class="location-item__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 4 L20 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M4 20 L36 20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="20" cy="20" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <div class="location-item__content">
-          <h3>By Air</h3>
-          <p>
-            Fly to Daegu International Airport (TAE). From there, we can arrange pickup (₩80,000) or you can take a taxi (approximately ₩50,000).
-          </p>
-        </div>
-      </div>
-
-      <div class="location-item">
-        <svg class="location-item__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="16" width="24" height="12" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="14" cy="28" r="3" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="26" cy="28" r="3" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="8" y1="12" x2="32" y2="12" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <div class="location-item__content">
-          <h3>By Train</h3>
-          <p>
-            Take KTX to Dongdaegu Station (from Seoul: 1hr 40min). Bus 급행1 runs from the station to Palgongsan. We can also arrange pickup.
-          </p>
-        </div>
-      </div>
-
-      <div class="location-item">
-        <svg class="location-item__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="16" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M20 24 L20 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M14 36 L26 36" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <div class="location-item__content">
-          <h3>Address</h3>
-          <p>
-            Alexandria Sanctuary<br>
-            123 Palgongsan-ro, Dong-gu<br>
-            Daegu 41028, South Korea
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="faq-section" data-animate>
-    <h2>Common Questions</h2>
-
-    <div class="faq-list">
-      <div class="faq-item">
-        <h3 class="faq-item__question">Do I need meditation experience?</h3>
-        <p class="faq-item__answer">
-          For weekend retreats and forum events, no experience is necessary. Cave retreats and extended residencies do require some prior meditation practice—we'll discuss your background during the application process.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">What about language?</h3>
-        <p class="faq-item__answer">
-          Our programs are conducted in English and Korean. Most visiting teachers speak English. Silence is the primary language of the sanctuary—you'll find that words matter less than you expect.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">Is it religious?</h3>
-        <p class="faq-item__answer">
-          Alexandria is not affiliated with any religion. We draw from Buddhist, Christian, Stoic, and indigenous wisdom traditions while welcoming people of all faiths and none. The practice here is about direct experience, not belief.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">What should I bring?</h3>
-        <p class="faq-item__answer">
-          Comfortable, modest clothing for meditation (nothing tight or revealing). Warm layers—the mountain can be cool. Personal toiletries. Any medications. We provide bedding, towels, and meditation cushions.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">Is there WiFi?</h3>
-        <p class="faq-item__answer">
-          Limited WiFi is available in common areas for essential communications. We encourage—but do not require—digital detox during your stay. The mountain offers better connection than any signal.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-item__question">Can I come alone?</h3>
-        <p class="faq-item__answer">
-          Most people come alone. The community becomes your companions. If you're nervous about traveling solo, reach out—we can connect you with others making the journey.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Newsletter -->
-  <section class="newsletter-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Stay Connected</span>
-    <h2 style="margin-top: var(--space-4);">Monthly Reflections</h2>
-    <p>
-      A letter from the mountain—meditations on mortality, announcements of upcoming events, and invitations to practice. Sent monthly. Unsubscribe anytime.
-    </p>
-
-    <form class="newsletter-form" action="#" method="post">
-      <input type="email" name="email" placeholder="Your email address" required>
-      <button type="submit" class="btn btn-primary">Subscribe</button>
-    </form>
-  </section>
-
-  <!-- Final CTA -->
-  <section class="section">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        The first step is often the hardest.<br>
-        We are here to walk with you.
-      </p>
-      <div class="mt-8" data-animate>
-        <a href="mailto:welcome@alexandria-sanctuary.org" class="btn btn-primary btn-lg">Send Us a Message</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
+  <!-- ════ LOCATION ════ -->
+  <section class="location-section">
     <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
+      <div class="location-inner">
+
+        <div class="location-text reveal-left">
+          <p class="section-eyebrow">The Mountain</p>
+          <h2 class="section-title">Palgongsan</h2>
+          <div class="gold-rule"></div>
+          <p class="section-body">
+            Palgongsan is one of Korea's most sacred mountains — a site of unbroken
+            contemplative tradition stretching across more than a thousand years.
+            Its granite ridges and ancient temple groves have long drawn those
+            who seek stillness, meaning, and the slow passage of time.
+          </p>
+          <div class="location-facts">
+            <div class="fact-item">
+              <div class="fact-dot"></div>
+              <p class="fact-text">Traditional Buddhist mountain territory, home to Donghwasa and Gatbawi — among Korea's most venerated sacred sites, tended since the Silla dynasty.</p>
+            </div>
+            <div class="fact-item">
+              <div class="fact-dot"></div>
+              <p class="fact-text">Approximately 30 minutes north of Daegu city center — close enough to reach, far enough to breathe.</p>
+            </div>
+            <div class="fact-item">
+              <div class="fact-dot"></div>
+              <p class="fact-text">Four distinct seasons mark the mountain's character: cherry blossoms in spring, deep shadow in summer, flame in autumn, silence under snow.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="location-accent reveal-right">
+          <span class="kr-large">팔<br>공<br>산</span>
+          <span class="kr-label">Palgongsan &middot; 八公山</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ VISIT STEPS ════ -->
+  <section class="steps-section">
+    <div class="container">
+
+      <div class="steps-header reveal">
+        <p class="section-eyebrow" style="text-align:center;">The Path to Alexandria</p>
+        <h2 class="section-title" style="text-align:center; max-width:100%;">How a Visit Begins</h2>
+        <div class="gold-rule" style="margin:28px auto;"></div>
+        <p class="section-body" style="text-align:center; max-width:540px; margin:0 auto;">
+          We do not receive unannounced visitors. Every connection with Alexandria
+          moves through three stages — each an act of mutual discernment.
+        </p>
+      </div>
+
+      <div class="steps-list">
+
+        <div class="step" data-step>
+          <div class="step-bar"></div>
+          <div class="step-num">I</div>
+          <div class="step-body">
+            <h3 class="step-title">INQUIRE</h3>
+            <p class="step-desc">
+              All visits begin with a written inquiry — not a form, but a letter.
+              Tell us where you are in your life, what brings you toward a place
+              like this, and what you are quietly looking for. We read every
+              message with care and respond within seven days.
+            </p>
+            <p class="step-note">Send your inquiry using the form below.</p>
+          </div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="step-bar"></div>
+          <div class="step-num">II</div>
+          <div class="step-body">
+            <h3 class="step-title">INITIAL MEETING</h3>
+            <p class="step-desc">
+              Before any visit, we arrange a conversation — by telephone, or in
+              person at a mutually agreed location. This is not an interview.
+              It is a conversation about your needs, your path, and which gate
+              at Alexandria might call to you. There is no obligation on either side.
+            </p>
+            <p class="step-note">By invitation, following your inquiry.</p>
+          </div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="step-bar"></div>
+          <div class="step-num">III</div>
+          <div class="step-body">
+            <h3 class="step-title">EXPERIENCE</h3>
+            <p class="step-desc">
+              From the initial meeting, three paths open. A day visit — arriving
+              at dawn, departing at dusk — for those wishing to feel the mountain
+              and the sanctuary before committing. A retreat stay of several days,
+              structured around your particular gate. Or a residential inquiry,
+              for those considering a longer chapter. All by arrangement only.
+            </p>
+            <p class="step-note">Day visit &middot; Retreat stay &middot; Residential &mdash; as arranged.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ GETTING HERE ════ -->
+  <section class="transport-section">
+    <div class="container">
+
+      <div class="reveal">
+        <p class="section-eyebrow">Directions</p>
+        <h2 class="section-title">Getting Here</h2>
+        <div class="gold-rule"></div>
+        <p class="section-body">
+          Palgongsan is accessible from anywhere in Korea and from major international gateways.
+          Once your visit is arranged, we provide specific directions to our location.
+        </p>
+      </div>
+
+      <div class="transport-grid">
+
+        <div class="transport-card reveal">
+          <p class="transport-origin">From</p>
+          <h3 class="transport-title">대구 &middot; Daegu City</h3>
+          <div class="transport-routes">
+            <div class="route-item">
+              <span class="route-mode">BY CAR</span>
+              <span>Approximately 30 minutes north via Palgong-ro. Easy mountain approach with clear signage to the Palgongsan area.</span>
+            </div>
+            <div class="route-item">
+              <span class="route-mode">BY BUS</span>
+              <span>Approximately 50 minutes from central Daegu. Bus lines 401 and 급행 1 serve the Palgongsan area. Final approach by taxi or on foot.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="transport-card reveal">
+          <p class="transport-origin">From</p>
+          <h3 class="transport-title">서울 &middot; Seoul</h3>
+          <div class="transport-routes">
+            <div class="route-item">
+              <span class="route-mode">KTX</span>
+              <span>Seoul Station to Dongdaegu Station — 1 hour 50 minutes. High-speed service runs throughout the day.</span>
+            </div>
+            <div class="route-item">
+              <span class="route-mode">ARRIVAL</span>
+              <span>From Dongdaegu Station, local bus or taxi to Palgongsan. Approximately 40 minutes from the station to the mountain.</span>
+            </div>
+            <div class="route-item">
+              <span class="route-mode">BY AIR</span>
+              <span>Daegu International Airport (TAE) is 25 minutes from Palgongsan. International connections via Seoul Incheon (ICN).</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="address-note reveal">
+        <p>
+          <strong>We do not publish a street address publicly.</strong>
+          Contact us to receive precise directions. This is not a place one arrives at by chance &mdash;
+          and we prefer it that way. After your inquiry is received and a visit is arranged,
+          you will be sent a private directions document by correspondence.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════ CONTACT FORM ════ -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+
+        <div class="contact-intro reveal-left">
+          <p class="section-eyebrow">Write to Us</p>
+          <h2 class="section-title">Begin with<br>a Letter</h2>
+          <div class="gold-rule"></div>
+          <p class="section-body">
+            There is no intake form here &mdash; only a letter.
+            Tell us what moves you toward a place like this.
+            We will read it carefully and respond in kind.
+          </p>
+          <p class="section-body" style="margin-top:26px;">
+            All correspondence is held in confidence. Your words will not be
+            shared, filed, or processed. They will simply be read by a human
+            being, and answered.
+          </p>
+        </div>
+
+        <div class="contact-form-wrap reveal-right">
+
+          <form id="inquiry-form" novalidate>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="f-name">Your Name</label>
+                <input type="text" id="f-name" name="name"
+                  placeholder="As you wish to be known" autocomplete="off">
+              </div>
+              <div class="form-field">
+                <label for="f-email">Email Address</label>
+                <input type="email" id="f-email" name="email"
+                  placeholder="Where we may reply" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="f-gate">Which gate calls to you</label>
+              <select id="f-gate" name="gate">
+                <option value="" disabled selected>Select a gate &mdash; or leave uncertain</option>
+                <option value="I">Gate I &mdash; Threshold of Words</option>
+                <option value="II">Gate II &mdash; Threshold of Water</option>
+                <option value="III">Gate III &mdash; Threshold of Fire</option>
+                <option value="IV">Gate IV &mdash; Threshold of Earth</option>
+                <option value="V">Gate V &mdash; Threshold of Memory</option>
+                <option value="VI">Gate VI &mdash; Threshold of Silence</option>
+                <option value="VII">Gate VII &mdash; Threshold of Light</option>
+                <option value="unknown">I do not yet know</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="f-message">Your Letter</label>
+              <textarea id="f-message" name="message" rows="6"
+                placeholder="Tell us where you are. What brings you here. What you are quietly looking for. There is no wrong way to begin."></textarea>
+            </div>
+
+            <div class="submit-wrap">
+              <div class="btn-submit-outer" id="submit-outer">
+                <button type="submit" class="btn-submit" id="btn-submit">
+                  Send Inquiry
+                </button>
+              </div>
+              <p class="form-note">We respond within<br>seven days.</p>
+            </div>
+
+          </form>
+
+          <div class="form-success" id="form-success">
+            <div class="form-success-icon">&#10022;</div>
+            <p class="form-success-title">Your Letter Has Been Received</p>
+            <p class="form-success-msg">
+              We read every message with care.<br>
+              A response will come within seven days.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FAQ ════ -->
+  <section class="faq-section">
+    <div class="container">
+
+      <div class="faq-header reveal">
+        <p class="section-eyebrow">Questions</p>
+        <h2 class="section-title">Before You Write</h2>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-text">Is Alexandria open to everyone who applies?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              We receive more inquiries than we can accommodate, and we do not operate
+              on a first-come basis. Every inquiry is read carefully, and we respond
+              to each one &mdash; but an inquiry does not guarantee a visit. What matters most
+              is whether Alexandria can genuinely serve what you are carrying.
+              If we do not think we can, we will say so honestly, and if possible,
+              point you toward something that might.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-text">Do I need to be ill, or facing end of life, to come?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Not in any medical sense. Alexandria is a sanctuary for those in a
+              significant transitional chapter &mdash; which may mean illness, grief,
+              caregiving, or simply arriving at a threshold in one's life that
+              demands a different quality of attention. If you feel the pull of this place,
+              that feeling itself is enough reason to write to us.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-text">What does a typical day at Alexandria look like?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              There is no typical day. The rhythm of each visit is shaped by the person
+              and the gate through which they enter. Some days are structured around
+              conversation, creative work, or reading. Others are given entirely to
+              silence and the mountain. We do not fill time &mdash; we protect it.
+              You will not be scheduled, optimized, or supervised.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="faq-q-text">What language do you work in?</span>
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              English and Korean. Our companions hold sessions in both. If you are
+              writing from outside Korea, please write in whatever language feels
+              most natural &mdash; and we will respond in kind. The mountain itself
+              speaks no language in particular.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+
+        <div>
+          <a href="../" class="footer-brand">ALEXANDRIA</a>
+          <p class="footer-tagline">
+            A sanctuary for the final chapter.<br>
+            Palgongsan &middot; Daegu &middot; Korea.
+          </p>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Sanctuary</p>
+          <ul class="footer-links">
+            <li><a href="../sanctuary/">The Seven Gates</a></li>
+            <li><a href="../sanctuary/#space">The Space</a></li>
+            <li><a href="../sanctuary/#residence">Residence</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Presence</p>
+          <ul class="footer-links">
+            <li><a href="../philosophy/">Philosophy</a></li>
+            <li><a href="../library/">Library</a></li>
+            <li><a href="../staff/">Companions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer-col-title">Find Us</p>
+          <ul class="footer-links">
+            <li><a href="#contact">Write to Us</a></li>
+            <li><a href="#hero">Location</a></li>
+            <li><a href="../feeds/">Updates</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; MMXXVI ALEXANDRIA SANCTUARY &middot; ALL RIGHTS RESERVED</span>
+        <span class="footer-coords">35&deg;58&prime;N &middot; 128&deg;69&prime;E &middot; 팔공산</span>
       </div>
     </div>
   </footer>
 
-  <script src="../assets/js/app.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ─── CURSOR ─────────────────────────────────────── */
+    const dot  = document.getElementById('cur-dot');
+    const ring = document.getElementById('cur-ring');
+
+    let mx = -200, my = -200;
+    let rx = -200, ry = -200;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+
+    // Hover state via JS (better cross-browser than :has)
+    document.querySelectorAll('a, button, .faq-q, .transport-card').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    (function rafCursor() {
+      dot.style.left = mx + 'px';
+      dot.style.top  = my + 'px';
+
+      rx += (mx - rx) * 0.11;
+      ry += (my - ry) * 0.11;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+
+      requestAnimationFrame(rafCursor);
+    })();
+
+    /* ─── PROGRESS BAR ───────────────────────────────── */
+    const bar = document.getElementById('progress-bar');
+
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    /* ─── NAV ────────────────────────────────────────── */
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* ─── GSAP + ScrollTrigger ───────────────────────── */
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* Hero entrance */
+    gsap.to('#h-eyebrow', {
+      opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.3
+    });
+    gsap.to('#h-title', {
+      opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.55
+    });
+    gsap.to('#h-sub', {
+      opacity: 1, y: 0, duration: 1.0, ease: 'power3.out', delay: 0.8
+    });
+    gsap.to('#h-coords', {
+      opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 1.0
+    });
+    gsap.to('#h-div', {
+      opacity: 1, scaleY: 1, duration: 1.1, ease: 'power3.out', delay: 1.2,
+      transformOrigin: 'top center'
+    });
+
+    /* Hero parallax on scroll */
+    ScrollTrigger.create({
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.2,
+      onUpdate: self => {
+        const p = self.progress;
+        gsap.set('#h-title',  { y: p * 64,  opacity: Math.max(0, 1 - p * 0.75) });
+        gsap.set('#h-sub',    { y: p * 38,  opacity: Math.max(0, 1 - p * 0.85) });
+        gsap.set('#h-coords', { y: p * 26,  opacity: Math.max(0, 1 - p * 0.95) });
+        gsap.set('#h-eyebrow',{ y: p * 20,  opacity: Math.max(0, 1 - p * 1.2)  });
+      }
+    });
+
+    /* Generic reveal: .reveal, .reveal-left, .reveal-right */
+    ['reveal', 'reveal-left', 'reveal-right'].forEach(cls => {
+      document.querySelectorAll('.' + cls).forEach((el, i) => {
+        ScrollTrigger.create({
+          trigger: el,
+          start: 'top 86%',
+          onEnter: () => {
+            gsap.to(el, {
+              opacity: 1, x: 0, y: 0,
+              duration: 0.9,
+              delay: i * 0.07,
+              ease: 'power3.out',
+            });
+          },
+          once: true,
+        });
+      });
+    });
+
+    /* Steps side-bar */
+    document.querySelectorAll('[data-step]').forEach(step => {
+      ScrollTrigger.create({
+        trigger: step,
+        start: 'top 78%',
+        onEnter: () => step.classList.add('visible'),
+        once: true,
+      });
+    });
+
+    /* Transport cards stagger */
+    gsap.utils.toArray('.transport-card').forEach((card, i) => {
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top 88%',
+        onEnter: () => {
+          gsap.to(card, {
+            opacity: 1, y: 0,
+            duration: 0.8, delay: i * 0.14,
+            ease: 'power3.out'
+          });
+        },
+        once: true,
+      });
+      gsap.set(card, { opacity: 0, y: 22 });
+    });
+
+    /* ─── MAGNETIC SUBMIT BUTTON ─────────────────────── */
+    const submitOuter = document.getElementById('submit-outer');
+    const submitBtn   = document.getElementById('btn-submit');
+
+    submitOuter.addEventListener('mousemove', e => {
+      const r  = submitOuter.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width  / 2);
+      const dy = e.clientY - (r.top  + r.height / 2);
+      gsap.to(submitBtn, {
+        x: dx * 0.38, y: dy * 0.38,
+        duration: 0.4, ease: 'power2.out'
+      });
+    });
+
+    submitOuter.addEventListener('mouseleave', () => {
+      gsap.to(submitBtn, {
+        x: 0, y: 0,
+        duration: 0.7, ease: 'elastic.out(1, 0.45)'
+      });
+    });
+
+    /* ─── FORM SUBMIT (static demo) ─────────────────── */
+    const form       = document.getElementById('inquiry-form');
+    const successBox = document.getElementById('form-success');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const nameVal = document.getElementById('f-name').value.trim();
+      const emailVal = document.getElementById('f-email').value.trim();
+      const msgVal  = document.getElementById('f-message').value.trim();
+
+      const invalid = [];
+      if (!nameVal)  invalid.push(document.getElementById('f-name'));
+      if (!emailVal) invalid.push(document.getElementById('f-email'));
+      if (!msgVal)   invalid.push(document.getElementById('f-message'));
+
+      if (invalid.length) {
+        invalid.forEach(field => {
+          gsap.fromTo(field,
+            { x: -8 },
+            { x: 0, duration: 0.55, ease: 'elastic.out(1.2, 0.3)' }
+          );
+          field.style.borderColor = 'rgba(200,100,80,0.6)';
+          setTimeout(() => { field.style.borderColor = ''; }, 1400);
+        });
+        return;
+      }
+
+      gsap.to(form, {
+        opacity: 0, y: -18, duration: 0.48, ease: 'power2.in',
+        onComplete: () => {
+          form.style.display = 'none';
+          successBox.classList.add('visible');
+          gsap.from(successBox, { opacity: 0, y: 18, duration: 0.72, ease: 'power3.out' });
+        }
+      });
+    });
+
+    /* ─── FAQ ACCORDION ──────────────────────────────── */
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+
+      q.addEventListener('click', () => {
+        const wasOpen = item.classList.contains('open');
+
+        document.querySelectorAll('.faq-item.open').forEach(open => {
+          open.classList.remove('open');
+          open.querySelector('.faq-a').style.maxHeight = '0';
+        });
+
+        if (!wasOpen) {
+          item.classList.add('open');
+          a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      });
+    });
+
+  })();
+  </script>
+
 </body>
 </html>

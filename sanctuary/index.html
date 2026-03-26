@@ -3,580 +3,1353 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore the sacred spaces of Alexandria Sanctuary - Cave retreats, contemplative residence, and compassionate hospice care at Palgongsan, Korea.">
+  <meta name="description" content="The Sanctuary — Three portals into contemplative living at Alexandria Sanctuary, Palgongsan, Korea.">
+  <title>The Sanctuary — Alexandria Sanctuary</title>
 
-  <title>The Sanctuary - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="../assets/css/design-system.css">
-  <link rel="stylesheet" href="../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
   <style>
-    .sanctuary-hero {
-      min-height: 85vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.06), transparent 50%),
-        radial-gradient(ellipse at bottom left, rgba(201, 162, 39, 0.04), transparent 40%),
-        var(--bg-primary);
-      position: relative;
+    /* ═══════════════════════════════════════════════
+       RESET & ROOT
+    ═══════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-solid:     #080604;
+      --bg-panel:     #0D0A07;
+      --gold:         #C8A96E;
+      --gold-dim:     #8B6A30;
+      --gold-bright:  #E8C98E;
+      --parchment:    #EAE4D6;
+      --parchment-60: rgba(234,228,214,0.6);
+      --parchment-30: rgba(234,228,214,0.3);
+      --mahogany:     #1E1408;
+      --g1:           #1E1C4A;
+      --g2:           #0E2233;
+      --g6:           #080C08;
+      --g7:           #2E2000;
+      --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
     }
 
-    .sanctuary-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(201,162,39,0.1)"/></svg>');
-      background-size: 80px 80px;
-      opacity: 0.5;
+    html {
+      background: var(--bg-solid);
+      color: var(--parchment);
+      overflow-x: hidden;
+      scroll-behavior: auto;
     }
 
-    .sanctuary-intro {
-      padding: var(--space-20) 0;
-      text-align: center;
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
     }
 
-    .sanctuary-intro p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-6);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
+    a  { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ═══════════════════════════════════════════════
+       CUSTOM CURSOR
+    ═══════════════════════════════════════════════ */
+    #cur-dot, #cur-ring {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 99999;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      will-change: transform;
     }
 
-    .spaces-section {
-      padding: var(--space-20) 0;
+    #cur-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      transition: width .2s, height .2s, background .3s;
     }
 
-    .space-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-12);
-      align-items: center;
-      margin-bottom: var(--space-20);
-      padding: 0 var(--container-padding);
-      max-width: var(--max-width-xl);
-      margin-left: auto;
-      margin-right: auto;
+    #cur-ring {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(200,169,110,0.5);
+      mix-blend-mode: screen;
+      transition: width .4s var(--ease-out),
+                  height .4s var(--ease-out),
+                  border-color .4s,
+                  opacity .3s;
     }
 
-    .space-card:nth-child(even) {
-      direction: rtl;
+    body.cur-hover  #cur-ring { width: 64px; height: 64px; border-color: var(--gold); }
+    body.cur-gate   #cur-ring { width: 80px; height: 80px; border-color: var(--gold-bright); opacity: .6; }
+    body.cur-hidden #cur-dot,
+    body.cur-hidden #cur-ring { opacity: 0; }
+
+    /* ═══════════════════════════════════════════════
+       GRAIN OVERLAY — SVG feTurbulence, 7-step keyframe
+    ═══════════════════════════════════════════════ */
+    .grain {
+      position: fixed; inset: -200%;
+      width: 400%; height: 400%;
+      z-index: 9900; pointer-events: none;
+      opacity: .028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain-move 0.7s steps(1) infinite;
+    }
+    @keyframes grain-move {
+      0%   { transform: translate(0, 0); }
+      14%  { transform: translate(-4%, -8%); }
+      28%  { transform: translate(-14%, 4%); }
+      42%  { transform: translate(6%, -22%); }
+      57%  { transform: translate(-4%, 22%); }
+      71%  { transform: translate(14%, -2%); }
+      85%  { transform: translate(-2%, 12%); }
     }
 
-    .space-card:nth-child(even) > * {
-      direction: ltr;
+    /* ═══════════════════════════════════════════════
+       SCROLL PROGRESS BAR — fixed right edge, 1px × 100px
+    ═══════════════════════════════════════════════ */
+    .scroll-bar {
+      position: fixed; right: 22px; top: 50%;
+      transform: translateY(-50%);
+      width: 1px; height: 100px;
+      background: rgba(200,169,110,.12);
+      z-index: 200;
+    }
+    .scroll-bar__fill {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 0%;
+      background: var(--gold);
+      transition: height .08s;
+    }
+    .scroll-bar__nub {
+      position: absolute; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 5px; height: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+      top: 0%;
+      transition: top .08s;
     }
 
-    .space-card__image {
-      aspect-ratio: 4/3;
-      background: var(--bg-secondary);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      position: relative;
-      border: 1px solid var(--border-subtle);
+    /* ═══════════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 400;
+      padding: 28px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: padding .4s var(--ease-out), background .4s;
+    }
+    .nav.scrolled {
+      background: rgba(8,6,4,.88);
+      backdrop-filter: blur(24px) saturate(1.5);
+      padding: 16px 48px;
     }
 
-    .space-card__image-inner {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        radial-gradient(ellipse at center, rgba(201, 162, 39, 0.1), transparent 70%);
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px; letter-spacing: .32em;
+      color: var(--gold);
     }
 
-    .space-card__icon {
-      width: 120px;
-      height: 120px;
-      opacity: 0.6;
+    .nav-logo-emblem {
+      width: 28px; height: 28px;
+      opacity: .85;
     }
 
-    .space-card__content {
-      padding: var(--space-8);
+    .nav-links {
+      display: flex; gap: 44px; list-style: none;
     }
-
-    .space-card__label {
-      font-family: var(--font-display);
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-      letter-spacing: var(--tracking-widest);
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px; letter-spacing: .24em;
       text-transform: uppercase;
-      margin-bottom: var(--space-3);
+      color: var(--parchment-60);
+      transition: color .3s;
     }
+    .nav-links a:hover { color: var(--gold); }
 
-    .space-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
+    .nav-back {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      border: 1px solid rgba(139,106,48,.35);
+      padding: 9px 22px;
+      transition: color .3s, border-color .3s, background .3s;
     }
-
-    .space-card__subtitle {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--color-gold-500);
-      font-style: italic;
-      margin-bottom: var(--space-4);
-    }
-
-    .space-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-6);
-    }
-
-    .space-card__features {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 var(--space-6);
-    }
-
-    .space-card__features li {
-      padding: var(--space-2) 0;
-      padding-left: var(--space-6);
-      position: relative;
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-    }
-
-    .space-card__features li::before {
-      content: '✦';
-      position: absolute;
-      left: 0;
-      color: var(--color-gold-500);
-      font-size: var(--text-xs);
+    .nav-back:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(200,169,110,.06);
     }
 
     @media (max-width: 900px) {
-      .space-card {
-        grid-template-columns: 1fr;
-        gap: var(--space-8);
-      }
-
-      .space-card:nth-child(even) {
-        direction: ltr;
-      }
-
-      .space-card__image {
-        aspect-ratio: 16/9;
-      }
+      .nav { padding: 20px 24px; }
+      .nav.scrolled { padding: 12px 24px; }
+      .nav-links { display: none; }
     }
 
-    .mountain-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
+    /* ═══════════════════════════════════════════════
+       HERO — full viewport
+    ═══════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 120px 48px 80px;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,169,110,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 80% at 15% 85%, rgba(30,20,8,.85) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 80% at 85% 85%, rgba(8,12,8,.85) 0%, transparent 55%),
+        var(--bg-solid);
+      z-index: 0;
+      will-change: transform;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle 1px at center, rgba(200,169,110,.08) 0%, transparent 100%);
+      background-size: 72px 72px;
+      opacity: .5;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 36px;
+      opacity: 0;
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+    }
+    .hero-tag::before,
+    .hero-tag::after {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(52px, 9vw, 114px);
+      font-weight: 400;
+      letter-spacing: .12em;
+      line-height: 1.0;
+      color: var(--parchment);
+      margin-bottom: 36px;
+      opacity: 0;
+    }
+
+    .hero-title .line-1 {
+      display: block;
+      font-size: .48em;
+      color: var(--gold-dim);
+      letter-spacing: .5em;
+      margin-bottom: 8px;
+    }
+
+    .hero-title .line-2 {
+      display: block;
+      background: linear-gradient(140deg, var(--parchment) 20%, var(--gold-bright) 55%, var(--parchment) 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(16px, 2vw, 22px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment-60);
+      letter-spacing: .05em;
+      margin-bottom: 56px;
+      opacity: 0;
+    }
+
+    .hero-divider {
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      opacity: 0;
+    }
+    .hero-divider-line {
+      width: 80px; height: 1px;
+    }
+    .hero-divider-line:first-child {
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .hero-divider-line:last-child {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    .hero-divider-diamond {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .hero-divider-diamond.small {
+      width: 4px; height: 4px;
+      opacity: .5;
+    }
+
+    .hero-scroll-hint {
+      position: absolute; bottom: 44px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      opacity: 0;
+    }
+    .hero-scroll-hint span {
+      font-family: 'Cinzel', serif;
+      font-size: 8px; letter-spacing: .4em;
+      color: var(--gold-dim);
+    }
+    .hero-scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      animation: scroll-pulse 2s ease-in-out infinite;
+    }
+    @keyframes scroll-pulse {
+      0%, 100% { opacity: .3; transform: scaleY(1); }
+      50%       { opacity: 1;  transform: scaleY(1.15); }
+    }
+
+    /* ═══════════════════════════════════════════════
+       INTRO PARAGRAPH
+    ═══════════════════════════════════════════════ */
+    .intro-section {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 100px 48px;
       text-align: center;
     }
-
-    .mountain-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .mountain-section p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-6);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-    }
-
-    .mountain-stats {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-12);
-      margin-top: var(--space-10);
-      flex-wrap: wrap;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat__number {
-      font-family: var(--font-display);
-      font-size: var(--text-4xl);
-      color: var(--color-gold-500);
+    .intro-section .kicker {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 28px;
       display: block;
     }
+    .intro-section p {
+      font-size: clamp(17px, 1.8vw, 21px);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--parchment-60);
+      margin-bottom: 20px;
+    }
+    .intro-section p:last-child { margin-bottom: 0; }
+    .intro-section strong { color: var(--parchment); font-weight: 400; }
 
-    .stat__label {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      letter-spacing: var(--tracking-wide);
+    @media (max-width: 600px) {
+      .intro-section { padding: 72px 24px; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       PATH CARDS SECTION
+    ═══════════════════════════════════════════════ */
+    .paths-section {
+      padding: 40px 48px 120px;
+    }
+
+    .paths-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+    .paths-header .kicker {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .45em;
       text-transform: uppercase;
-      margin-top: var(--space-2);
+      color: var(--gold-dim);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .paths-header h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 400;
+      letter-spacing: .1em;
+      color: var(--parchment);
+      line-height: 1.2;
     }
 
-    .daily-rhythm {
-      padding: var(--space-20) 0;
-    }
-
-    .daily-rhythm h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .daily-rhythm > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-    }
-
-    .rhythm-grid {
+    .paths-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--space-6);
-      max-width: var(--max-width-lg);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1360px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
     }
 
-    .rhythm-item {
+    @media (max-width: 1100px) {
+      .paths-grid { grid-template-columns: 1fr; max-width: 560px; }
+      .paths-section { padding: 40px 24px 80px; }
+    }
+
+    /* ── Card ── */
+    .path-card {
+      position: relative;
+      background: var(--bg-panel);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      min-height: 580px;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: box-shadow .5s var(--ease-out);
+    }
+
+    .path-card--cave     { --accent-glow: rgba(130,160,130,.18); }
+    .path-card--hospice  { --accent-glow: rgba(100,110,200,.15); }
+    .path-card--residence { --accent-glow: rgba(200,169,110,.18); }
+
+    .path-card-ambient {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 80% 70% at 60% 90%, var(--accent-glow, rgba(200,169,110,.12)) 0%, transparent 60%);
+      opacity: .06;
+      transition: opacity .6s var(--ease-out);
+      pointer-events: none;
+    }
+    .path-card:hover .path-card-ambient { opacity: .18; }
+
+    .path-card-border {
+      position: absolute; inset: 0; z-index: 3;
+      border: 1px solid transparent;
+      transition: border-color .5s var(--ease-out);
+      pointer-events: none;
+    }
+    .path-card:hover .path-card-border { border-color: rgba(200,169,110,.3); }
+
+    .path-card-glow {
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 60%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0; z-index: 4;
+      transition: opacity .5s var(--ease-out);
+      pointer-events: none;
+    }
+    .path-card:hover .path-card-glow { opacity: 1; }
+
+    .path-card-inner {
+      position: relative; z-index: 2;
+      padding: 56px 44px 52px;
+      display: flex; flex-direction: column;
+      height: 100%;
+    }
+
+    .path-card-numeral {
+      font-family: 'Cinzel', serif;
+      font-size: 88px; font-weight: 400;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(200,169,110,.1);
+      position: absolute; right: 28px; top: 24px;
+      letter-spacing: -.02em;
+      user-select: none;
+      transition: -webkit-text-stroke-color .5s;
+    }
+    .path-card:hover .path-card-numeral {
+      -webkit-text-stroke-color: rgba(200,169,110,.22);
+    }
+
+    .path-card-gate {
+      font-family: 'Cinzel', serif;
+      font-size: 8px; letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 30px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .path-card-gate::before {
+      content: '';
+      width: 20px; height: 1px;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+
+    .path-card-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(20px, 2.2vw, 28px);
+      font-weight: 500;
+      letter-spacing: .12em;
+      color: var(--parchment);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .path-card-subtitle {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 11px; font-weight: 300;
+      letter-spacing: .1em;
+      color: var(--gold-dim);
+      margin-bottom: 28px;
+    }
+
+    .path-card-divider {
+      width: 40px; height: 1px;
+      background: var(--gold-dim);
+      margin-bottom: 28px;
+      transition: width .5s var(--ease-out), background .4s;
+    }
+    .path-card:hover .path-card-divider { width: 72px; background: var(--gold); }
+
+    .path-card-desc {
+      font-size: clamp(15px, 1.3vw, 17px);
+      font-weight: 300; font-style: italic;
+      color: var(--parchment-60);
+      line-height: 1.8;
+      flex: 1;
+      margin-bottom: 40px;
+    }
+
+    .path-card-cta {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-top: 1px solid rgba(200,169,110,.15);
+      padding-top: 28px;
+      transition: color .3s, gap .4s var(--ease-out);
+    }
+    .path-card:hover .path-card-cta { color: var(--gold-bright); gap: 22px; }
+
+    .path-card-arrow {
+      width: 32px; height: 1px;
+      background: currentColor;
+      position: relative;
+      flex-shrink: 0;
+      transition: width .4s var(--ease-out);
+    }
+    .path-card:hover .path-card-arrow { width: 48px; }
+    .path-card-arrow::after {
+      content: '';
+      position: absolute; right: 0; top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      width: 6px; height: 6px;
+      border-right: 1px solid currentColor;
+      border-top: 1px solid currentColor;
+    }
+
+    /* ═══════════════════════════════════════════════
+       QUOTE SECTION
+    ═══════════════════════════════════════════════ */
+    .quote-section {
+      padding: 120px 48px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .quote-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(200,169,110,.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .quote-mark {
+      font-family: 'Cinzel', serif;
+      font-size: 120px; line-height: 1;
+      color: var(--gold-dim);
+      opacity: .18;
+      margin-bottom: -36px;
+      user-select: none;
+      position: relative; z-index: 1;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3.5vw, 40px);
+      font-weight: 300; font-style: italic;
+      line-height: 1.5;
+      letter-spacing: .02em;
+      color: var(--parchment);
       text-align: center;
-      padding: var(--space-6);
-      background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
+      max-width: 820px;
+      position: relative; z-index: 1;
+      margin-bottom: 32px;
     }
 
-    .rhythm-item__time {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-2);
+    .quote-attr {
+      display: flex; align-items: center; gap: 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      position: relative; z-index: 1;
+    }
+    .quote-attr::before,
+    .quote-attr::after {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--gold-dim);
     }
 
-    .rhythm-item__activity {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-1);
+    @media (max-width: 600px) {
+      .quote-section { padding: 80px 24px; }
     }
 
-    .rhythm-item__korean {
-      font-family: var(--font-korean-serif);
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
+    /* ═══════════════════════════════════════════════
+       PHILOSOPHY SECTION
+    ═══════════════════════════════════════════════ */
+    .philosophy-section {
+      padding: 80px 48px 120px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
     }
+    @media (max-width: 900px) {
+      .philosophy-section {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 24px 80px;
+      }
+      .philosophy-left { position: static; }
+    }
+
+    .philosophy-left {
+      position: sticky; top: 120px;
+    }
+    .philosophy-left .kicker {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .philosophy-left h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 400;
+      letter-spacing: .08em;
+      line-height: 1.3;
+      color: var(--parchment);
+      margin-bottom: 24px;
+    }
+    .philosophy-left .gold-line {
+      width: 48px; height: 1px;
+      background: var(--gold);
+    }
+
+    .philosophy-right p {
+      font-size: clamp(16px, 1.6vw, 19px);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--parchment-60);
+      margin-bottom: 24px;
+    }
+    .philosophy-right p:last-child { margin-bottom: 0; }
+    .philosophy-right strong { color: var(--parchment); font-weight: 400; }
+    .philosophy-right em { color: var(--gold); font-style: italic; }
+
+    /* ═══════════════════════════════════════════════
+       FAITH TRADITIONS STRIP
+    ═══════════════════════════════════════════════ */
+    .traditions-section {
+      padding: 80px 48px;
+      background: var(--bg-panel);
+      position: relative;
+    }
+    .traditions-section::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+    .traditions-section::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .traditions-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .traditions-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .traditions-header .kicker {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .traditions-header p {
+      font-size: clamp(15px, 1.6vw, 18px);
+      font-weight: 300; font-style: italic;
+      color: var(--parchment-60);
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .traditions-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2px;
+    }
+
+    .tradition-item {
+      padding: 36px 24px;
+      text-align: center;
+      border: 1px solid transparent;
+      transition: border-color .4s, background .4s;
+    }
+    .tradition-item:hover {
+      border-color: rgba(200,169,110,.15);
+      background: rgba(200,169,110,.03);
+    }
+    .tradition-symbol {
+      font-size: 30px; line-height: 1;
+      margin-bottom: 14px;
+    }
+    .tradition-name {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .tradition-desc {
+      font-size: 13px; font-style: italic; font-weight: 300;
+      color: var(--parchment-30);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .traditions-section { padding: 60px 24px; }
+      .traditions-list { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    footer {
+      background: var(--bg-solid);
+      border-top: 1px solid rgba(200,169,110,.1);
+      padding: 80px 48px 48px;
+    }
+    .footer-inner { max-width: 1360px; margin: 0 auto; }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    @media (max-width: 900px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 560px) {
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      footer { padding: 60px 24px 40px; }
+    }
+
+    .footer-brand-row {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px; letter-spacing: .32em;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .footer-brand-desc {
+      font-size: 14px; font-weight: 300; font-style: italic;
+      color: var(--parchment-30);
+      line-height: 1.7;
+      max-width: 260px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 14px; font-weight: 300;
+      color: var(--parchment-30);
+      transition: color .3s;
+      letter-spacing: .02em;
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(200,169,110,.08);
+      padding-top: 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px;
+    }
+    @media (max-width: 560px) {
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+    .footer-copyright {
+      font-size: 12px; font-weight: 300;
+      color: rgba(234,228,214,.2);
+      letter-spacing: .06em;
+    }
+    .footer-location {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 11px; font-weight: 300;
+      color: rgba(200,169,110,.25);
+      letter-spacing: .1em;
+    }
+
+    /* ═══════════════════════════════════════════════
+       REVEAL DEFAULTS (before GSAP overrides)
+    ═══════════════════════════════════════════════ */
+    .reveal { opacity: 0; transform: translateY(40px); }
+
+    /* Magnetic wrapper */
+    .magnetic { display: inline-block; }
+
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../philosophy/" class="nav__link">Philosophy</a>
-          <a href="./" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
-          <a href="../forum/" class="nav__link">Forum</a>
-          <a href="../library/" class="nav__link">Library</a>
-          <a href="../visit/" class="nav__link">Visit</a>
-        </div>
+  <!-- Custom cursor -->
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
 
-        <div class="nav__actions">
-          <a href="../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
+  <!-- Film grain -->
+  <div class="grain" aria-hidden="true"></div>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../philosophy/" class="nav__link">Philosophy</a>
-      <a href="./" class="nav__link">Sanctuary</a>
-      <a href="../forum/" class="nav__link">Forum</a>
-      <a href="../library/" class="nav__link">Library</a>
-      <a href="../visit/" class="nav__link">Visit</a>
-    </div>
+  <!-- Scroll progress bar -->
+  <div class="scroll-bar" aria-hidden="true">
+    <div class="scroll-bar__fill" id="sb-fill"></div>
+    <div class="scroll-bar__nub"  id="sb-nub"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <a class="nav-logo magnetic" href="../index.html">
+      <svg class="nav-logo-emblem" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".6"/>
+        <path d="M20 6 L20 34 M6 20 L34 20" stroke="#C8A96E" stroke-width=".5" stroke-opacity=".3"/>
+        <path d="M11.7 11.7 L28.3 28.3 M28.3 11.7 L11.7 28.3" stroke="#C8A96E" stroke-width=".4" stroke-opacity=".18"/>
+        <circle cx="20" cy="20" r="5" stroke="#C8A96E" stroke-width=".7" stroke-opacity=".7"/>
+        <circle cx="20" cy="20" r="1.5" fill="#C8A96E" fill-opacity=".9"/>
+      </svg>
+      ALEXANDRIA
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html#gates">The Gates</a></li>
+      <li><a href="../philosophy/index.html">Philosophy</a></li>
+      <li><a href="../library/index.html">Wisdom</a></li>
+      <li><a href="../forum/index.html">Dialogues</a></li>
+      <li><a href="../visit/index.html">Visit</a></li>
+    </ul>
+
+    <a class="nav-back magnetic" href="../index.html">&#8592; Return</a>
   </nav>
 
-  <!-- Hero -->
-  <header class="sanctuary-hero">
-    <div class="container container-narrow" style="position: relative; z-index: 1;">
-      <span class="section-label" data-animate>The Sanctuary</span>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl); margin-top: var(--space-4);">
-        Sacred Spaces for<br>Every Season of Life
+  <!-- ═══════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <p class="hero-tag" id="hero-tag">The Inner Court</p>
+
+      <h1 class="hero-title" id="hero-title">
+        <span class="line-1">The</span>
+        <span class="line-2">Sanctuary</span>
       </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6);">
-        From weekend retreats to final passage,<br>
-        Alexandria offers places of profound peace.
-      </p>
-    </div>
-  </header>
 
-  <!-- Introduction -->
-  <section class="sanctuary-intro">
-    <div class="container container-narrow" data-animate>
+      <p class="hero-subtitle" id="hero-subtitle">
+        Three portals into contemplative living
+      </p>
+
+      <div class="hero-divider" id="hero-divider">
+        <div class="hero-divider-line"></div>
+        <div class="hero-divider-diamond small"></div>
+        <div class="hero-divider-diamond"></div>
+        <div class="hero-divider-diamond small"></div>
+        <div class="hero-divider-line"></div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint" id="hero-scroll">
+      <span>Descend</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       INTRO
+  ═══════════════════════════════════════════════ -->
+  <section class="intro-section reveal">
+    <span class="kicker">Palgongsan · Korea</span>
+    <p>
+      Nestled in the mountain wilderness of Palgongsan,
+      <strong>Alexandria Sanctuary</strong> holds three distinct paths
+      for those who seek depth over distraction. Each portal has been
+      shaped by centuries of contemplative tradition, adapted for the
+      modern seeker who knows that transformation requires genuine
+      encounter with the unknown.
+    </p>
+    <p>
+      These are not programs. They are <strong>passages</strong> — each
+      demanding something real from those who enter.
+    </p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PATH CARDS
+  ═══════════════════════════════════════════════ -->
+  <section class="paths-section">
+    <header class="paths-header reveal">
+      <span class="kicker">Choose Your Path</span>
+      <h2>Three Ways Into Silence</h2>
+    </header>
+
+    <div class="paths-grid">
+
+      <!-- Cave Retreat -->
+      <article class="path-card path-card--cave" data-card>
+        <div class="path-card-ambient" aria-hidden="true"></div>
+        <div class="path-card-glow"    aria-hidden="true"></div>
+        <div class="path-card-border"  aria-hidden="true"></div>
+        <div class="path-card-inner">
+          <div class="path-card-numeral" aria-hidden="true">VI</div>
+          <p class="path-card-gate">Gate VI</p>
+          <h2 class="path-card-title">Cave Retreat</h2>
+          <p class="path-card-subtitle">동굴 침묵 수련</p>
+          <div class="path-card-divider"></div>
+          <p class="path-card-desc">
+            Days of silence. Sensory deprivation. The ancient cave tradition
+            stripped to its essential bones — darkness, breath, and the
+            dissolution of the ordinary self. No schedule. No agenda.
+            Only what remains when everything else is taken away.
+          </p>
+          <a href="cave-retreat/" class="path-card-cta magnetic">
+            Enter the Cave
+            <span class="path-card-arrow" aria-hidden="true"></span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Hospice Care -->
+      <article class="path-card path-card--hospice" data-card>
+        <div class="path-card-ambient" aria-hidden="true"></div>
+        <div class="path-card-glow"    aria-hidden="true"></div>
+        <div class="path-card-border"  aria-hidden="true"></div>
+        <div class="path-card-inner">
+          <div class="path-card-numeral" aria-hidden="true">I·II</div>
+          <p class="path-card-gate">Gates I &amp; II</p>
+          <h2 class="path-card-title">Compassionate Care</h2>
+          <p class="path-card-subtitle">임종 동행 돌봄</p>
+          <div class="path-card-divider"></div>
+          <p class="path-card-desc">
+            Accompaniment through cognitive dissolution and the final passage.
+            For those navigating the unmapping of the self — dementia,
+            terminal illness, the approaching threshold. Sacred witnessing
+            by those trained in the art of being present without flinching.
+          </p>
+          <a href="hospice/" class="path-card-cta magnetic">
+            Learn of Care
+            <span class="path-card-arrow" aria-hidden="true"></span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Residence -->
+      <article class="path-card path-card--residence" data-card>
+        <div class="path-card-ambient" aria-hidden="true"></div>
+        <div class="path-card-glow"    aria-hidden="true"></div>
+        <div class="path-card-border"  aria-hidden="true"></div>
+        <div class="path-card-inner">
+          <div class="path-card-numeral" aria-hidden="true">VII</div>
+          <p class="path-card-gate">Gate VII</p>
+          <h2 class="path-card-title">Residence</h2>
+          <p class="path-card-subtitle">성소 공동체 거주</p>
+          <div class="path-card-divider"></div>
+          <p class="path-card-desc">
+            A home for the final chapter. Membership in a small, sacred
+            community sustained by shared practice, tended land, and mutual
+            witness. The long arc of belonging — not as retreat, but as the
+            shape of a life lived in full consciousness.
+          </p>
+          <a href="residence/" class="path-card-cta magnetic">
+            Inquire of Residence
+            <span class="path-card-arrow" aria-hidden="true"></span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       JOSEPH CAMPBELL QUOTE
+  ═══════════════════════════════════════════════ -->
+  <section class="quote-section">
+    <div class="quote-mark reveal" aria-hidden="true">&ldquo;</div>
+    <blockquote class="quote-text reveal">
+      The cave you fear to enter holds the treasure you seek.
+    </blockquote>
+    <p class="quote-attr reveal">Joseph Campbell</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PHILOSOPHY
+  ═══════════════════════════════════════════════ */
+  <section class="philosophy-section">
+    <div class="philosophy-left reveal">
+      <span class="kicker">Our Orientation</span>
+      <h2>Non-Dogmatic,<br>Open to All</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="philosophy-right reveal">
       <p>
-        The sanctuary is not a building—it is a landscape. Nestled on the slopes of Palgongsan mountain, our spaces emerge from the terrain itself: caves carved by millennia of wind and water, gardens that follow the natural contours, and buildings that whisper rather than shout.
+        Alexandria Sanctuary draws from the deep wells of contemplative tradition
+        across all faiths — <strong>Buddhist emptiness</strong>, Christian mysticism,
+        <em>Sufi annihilation</em>, Jewish presence, Hindu dissolution, Taoist yielding —
+        without belonging exclusively to any of them. We are not a religious institution.
       </p>
       <p>
-        Whether you come for three days or three years, the mountain will be your teacher. The silence will speak what words cannot.
+        We are a place where those traditions' most essential gift —
+        <strong>the direct encounter with what lies beneath conditioned identity</strong> —
+        is made available to anyone who approaches with sincerity and the willingness
+        to meet themselves honestly.
+      </p>
+      <p>
+        Whether you arrive carrying a lifetime of devotional practice or no practice at all,
+        whether you are dying or accompanying the dying, whether you seek days of darkness
+        or years of quiet belonging — you will find here only what you bring the genuine
+        readiness to find. <em>No conversion. No doctrine. No pretense.</em>
       </p>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- Three Spaces -->
-  <section class="spaces-section">
-    <div class="container container-narrow text-center" data-animate>
-      <span class="section-label">Three Dwelling Places</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Choose Your Path</h2>
-    </div>
-
-    <!-- Cave Retreat -->
-    <article class="space-card" data-animate>
-      <div class="space-card__image">
-        <div class="space-card__image-inner">
-          <svg class="space-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 75 Q25 45 50 35 Q75 45 85 75" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <ellipse cx="50" cy="75" rx="30" ry="15" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <circle cx="50" cy="55" r="8" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <path d="M50 47 L50 35" stroke="var(--color-gold-500)" stroke-width="1"/>
-          </svg>
-        </div>
+  <!-- ═══════════════════════════════════════════════
+       FAITH TRADITIONS
+  ═══════════════════════════════════════════════ -->
+  <section class="traditions-section">
+    <div class="traditions-inner">
+      <div class="traditions-header reveal">
+        <span class="kicker">Traditions Honored</span>
+        <p>We welcome practitioners from all paths, and those who walk no named path.</p>
       </div>
-      <div class="space-card__content">
-        <span class="space-card__label">Pillar I</span>
-        <h3 class="space-card__title">Cave Retreat</h3>
-        <p class="space-card__subtitle">동굴수행 · Donggul Suhaeng</p>
-        <p class="space-card__text">
-          Enter the womb of the mountain. Our natural caves have sheltered contemplatives for centuries. In total darkness and silence, the mind turns inward. What remains when all distraction falls away?
-        </p>
-        <ul class="space-card__features">
-          <li>3-day, 7-day, and 21-day silent retreats</li>
-          <li>Natural cave chambers heated by geothermal warmth</li>
-          <li>Guidance from experienced meditation teachers</li>
-          <li>Integration sessions to bring insights into daily life</li>
-        </ul>
-        <a href="./cave-retreat/" class="btn btn-primary">Explore Cave Retreats</a>
-      </div>
-    </article>
-
-    <!-- Contemplative Residence -->
-    <article class="space-card" data-animate>
-      <div class="space-card__image">
-        <div class="space-card__image-inner">
-          <svg class="space-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="25" y="40" width="50" height="40" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <path d="M20 40 L50 20 L80 40" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <rect x="42" y="55" width="16" height="25" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <line x1="50" y1="55" x2="50" y2="80" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <circle cx="50" cy="15" r="3" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-          </svg>
+      <div class="traditions-list">
+        <div class="tradition-item reveal">
+          <div class="tradition-symbol">&#9784;</div>
+          <span class="tradition-name">Buddhism</span>
+          <span class="tradition-desc">Impermanence &amp; emptiness</span>
         </div>
-      </div>
-      <div class="space-card__content">
-        <span class="space-card__label">Pillar II</span>
-        <h3 class="space-card__title">Contemplative Residence</h3>
-        <p class="space-card__subtitle">명상의 집 · Myeongsang-ui Jip</p>
-        <p class="space-card__text">
-          For those seeking extended immersion, our residency program offers a home within the sanctuary. Live alongside fellow seekers, participate in daily practice, and weave contemplation into the fabric of ordinary life.
-        </p>
-        <ul class="space-card__features">
-          <li>3-month, 6-month, and 1-year residencies available</li>
-          <li>Private quarters with mountain views</li>
-          <li>Shared meals, work practice, and communal gatherings</li>
-          <li>Access to library, gardens, and all sanctuary programs</li>
-        </ul>
-        <a href="./residence/" class="btn btn-primary">Learn About Residency</a>
-      </div>
-    </article>
-
-    <!-- Hospice Care -->
-    <article class="space-card" data-animate>
-      <div class="space-card__image">
-        <div class="space-card__image-inner">
-          <svg class="space-card__icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="30" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <path d="M50 30 L50 70 M35 42 L50 30 L65 42 M35 58 L50 70 L65 58" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <circle cx="50" cy="50" r="6" fill="var(--color-gold-500)" opacity="0.3"/>
-          </svg>
+        <div class="tradition-item reveal">
+          <div class="tradition-symbol">&#10013;</div>
+          <span class="tradition-name">Christianity</span>
+          <span class="tradition-desc">Mystical surrender</span>
         </div>
-      </div>
-      <div class="space-card__content">
-        <span class="space-card__label">Pillar III</span>
-        <h3 class="space-card__title">Hospice Care</h3>
-        <p class="space-card__subtitle">돌봄의 집 · Dolbom-ui Jip</p>
-        <p class="space-card__text">
-          When the final journey approaches, Alexandria offers a place to die with dignity, surrounded by beauty and love. Our hospice integrates the highest standards of medical care with deep spiritual support.
-        </p>
-        <ul class="space-card__features">
-          <li>24-hour palliative care by trained nurses</li>
-          <li>Spiritual companions from all traditions</li>
-          <li>Private suites with gardens and mountain views</li>
-          <li>Family accommodation and bereavement support</li>
-        </ul>
-        <a href="./hospice/" class="btn btn-primary">Discover Hospice Care</a>
-      </div>
-    </article>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- The Mountain -->
-  <section class="mountain-section" data-animate>
-    <div class="container container-narrow">
-      <span class="section-label">Our Location</span>
-      <h2 style="margin-top: var(--space-4);">Palgongsan</h2>
-      <p>
-        The "Mountain of Eight Merits" has been sacred ground for over 1,500 years. Its caves sheltered the first Buddhist monks to arrive in Korea. Its slopes hold dozens of temples and hermitages. The mountain does not merely host Alexandria—it teaches us.
-      </p>
-      <p>
-        From our sanctuary, you can walk to ancient temple sites, meditate by waterfalls, or simply sit and watch the mist rise through the pines. The mountain is not separate from the practice—it is the practice.
-      </p>
-
-      <div class="mountain-stats">
-        <div class="stat">
-          <span class="stat__number">1,193m</span>
-          <span class="stat__label">Summit Elevation</span>
+        <div class="tradition-item reveal">
+          <div class="tradition-symbol">&#9789;</div>
+          <span class="tradition-name">Islam</span>
+          <span class="tradition-desc">Sufi annihilation</span>
         </div>
-        <div class="stat">
-          <span class="stat__number">1,500+</span>
-          <span class="stat__label">Years of Practice</span>
+        <div class="tradition-item reveal">
+          <div class="tradition-symbol">&#10017;</div>
+          <span class="tradition-name">Judaism</span>
+          <span class="tradition-desc">Radical presence</span>
         </div>
-        <div class="stat">
-          <span class="stat__number">30+</span>
-          <span class="stat__label">Temple Sites</span>
+        <div class="tradition-item reveal">
+          <div class="tradition-symbol">&#9775;</div>
+          <span class="tradition-name">Taoism</span>
+          <span class="tradition-desc">Non-doing</span>
         </div>
-        <div class="stat">
-          <span class="stat__number">4</span>
-          <span class="stat__label">Seasons of Beauty</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Daily Rhythm -->
-  <section class="daily-rhythm" data-animate>
-    <div class="container">
-      <span class="section-label" style="display: block; text-align: center;">Life at Alexandria</span>
-      <h2 style="margin-top: var(--space-4);">The Daily Rhythm</h2>
-      <p>
-        Each day at Alexandria follows a gentle structure—not rigid rules, but an invitation to flow with the natural rhythms of mountain life.
-      </p>
-
-      <div class="rhythm-grid">
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">5:30</div>
-          <div class="rhythm-item__activity">Morning Bell</div>
-          <div class="rhythm-item__korean">새벽종</div>
-        </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">6:00</div>
-          <div class="rhythm-item__activity">Meditation</div>
-          <div class="rhythm-item__korean">명상</div>
-        </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">7:30</div>
-          <div class="rhythm-item__activity">Breakfast</div>
-          <div class="rhythm-item__korean">아침공양</div>
-        </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">9:00</div>
-          <div class="rhythm-item__activity">Work Practice</div>
-          <div class="rhythm-item__korean">작무</div>
-        </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">12:00</div>
-          <div class="rhythm-item__activity">Lunch</div>
-          <div class="rhythm-item__korean">점심공양</div>
-        </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">14:00</div>
-          <div class="rhythm-item__activity">Rest or Study</div>
-          <div class="rhythm-item__korean">휴식 · 공부</div>
-        </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">17:00</div>
-          <div class="rhythm-item__activity">Evening Walk</div>
-          <div class="rhythm-item__korean">산책</div>
-        </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">18:00</div>
-          <div class="rhythm-item__activity">Dinner</div>
-          <div class="rhythm-item__korean">저녁공양</div>
-        </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">19:30</div>
-          <div class="rhythm-item__activity">Evening Gathering</div>
-          <div class="rhythm-item__korean">저녁모임</div>
-        </div>
-        <div class="rhythm-item">
-          <div class="rhythm-item__time">21:00</div>
-          <div class="rhythm-item__activity">Noble Silence</div>
-          <div class="rhythm-item__korean">침묵의 시간</div>
+        <div class="tradition-item reveal">
+          <div class="tradition-symbol">&#9651;</div>
+          <span class="tradition-name">No Path</span>
+          <span class="tradition-desc">All are welcome</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="section" style="padding-top: 0;">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        Ready to explore the sanctuary in person?
-      </p>
-      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-        <a href="../visit/" class="btn btn-primary">Plan Your Visit</a>
-        <a href="../forum/" class="btn btn-secondary">Attend an Event First</a>
-      </div>
-    </div>
-  </section>
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-row">
+            <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="20" cy="20" r="19" stroke="#C8A96E" stroke-width=".8" stroke-opacity=".5"/>
+              <circle cx="20" cy="20" r="5" stroke="#C8A96E" stroke-width=".7" stroke-opacity=".7"/>
+              <circle cx="20" cy="20" r="1.5" fill="#C8A96E"/>
+            </svg>
+            ALEXANDRIA
+          </div>
+          <p class="footer-brand-desc">
+            A sacred space for the final chapter.<br>
+            Seven gates into contemplative living.<br>
+            Palgongsan, Korea.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Sanctuary</h4>
+          <ul>
+            <li><a href="cave-retreat/">Cave Retreat</a></li>
+            <li><a href="hospice/">Compassionate Care</a></li>
+            <li><a href="residence/">Residence</a></li>
+            <li><a href="../index.html#gates">All Seven Gates</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Wisdom</h4>
+          <ul>
+            <li><a href="../philosophy/index.html">Philosophy</a></li>
+            <li><a href="../library/index.html">Library</a></li>
+            <li><a href="../forum/index.html">Dialogues</a></li>
+            <li><a href="../staff/index.html">The Guides</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="../visit/index.html">Plan a Visit</a></li>
+            <li><a href="../visit/index.html#contact">Write to Us</a></li>
+            <li><a href="../feeds/index.html">Letters</a></li>
+            <li><a href="../index.html">Home</a></li>
+          </ul>
+        </div>
       </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 Alexandria Sanctuary. All rights reserved.</p>
+        <p class="footer-location">&#54036;&#44277;&#49328; &middot; Palgongsan, North Gyeongsang, Korea</p>
+      </div>
+
     </div>
   </footer>
 
-  <script src="../assets/js/app.js"></script>
+  <!-- ═══════════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    /* ─────────────────────────────────────────
+       CUSTOM CURSOR — RAF lag loop
+    ───────────────────────────────────────── */
+    const dot  = document.getElementById('cur-dot');
+    const ring = document.getElementById('cur-ring');
+    let mx = window.innerWidth  / 2;
+    let my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX;
+      my = e.clientY;
+      dot.style.left = mx + 'px';
+      dot.style.top  = my + 'px';
+    });
+
+    (function rafLoop() {
+      rx += (mx - rx) * 0.11;
+      ry += (my - ry) * 0.11;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(rafLoop);
+    })();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
+    });
+
+    document.querySelectorAll('.path-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        document.body.classList.remove('cur-hover');
+        document.body.classList.add('cur-gate');
+      });
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cur-gate'));
+    });
+
+    document.addEventListener('mouseleave', () => document.body.classList.add('cur-hidden'));
+    document.addEventListener('mouseenter', () => document.body.classList.remove('cur-hidden'));
+
+    /* ─────────────────────────────────────────
+       SCROLL PROGRESS BAR
+    ───────────────────────────────────────── */
+    const sbFill = document.getElementById('sb-fill');
+    const sbNub  = document.getElementById('sb-nub');
+
+    function updateScrollBar() {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+      sbFill.style.height = pct + '%';
+      sbNub.style.top     = pct + '%';
+    }
+    window.addEventListener('scroll', updateScrollBar, { passive: true });
+
+    /* ─────────────────────────────────────────
+       NAV SCROLL STATE
+    ───────────────────────────────────────── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* ─────────────────────────────────────────
+       GSAP + SCROLLTRIGGER
+    ───────────────────────────────────────── */
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero entrance
+    const heroTl = gsap.timeline({ delay: 0.15 });
+    heroTl
+      .to('#hero-tag',     { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' })
+      .to('#hero-title',   { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=0.55')
+      .to('#hero-subtitle',{ opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.75')
+      .to('#hero-divider', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.55')
+      .to('#hero-scroll',  { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.4');
+
+    // Generic reveal elements
+    document.querySelectorAll('.reveal').forEach(el => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1, y: 0,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    });
+
+    // Path cards stagger batch
+    ScrollTrigger.batch('.path-card', {
+      onEnter: batch => {
+        gsap.fromTo(batch,
+          { opacity: 0, y: 52 },
+          { opacity: 1, y: 0, duration: 1.1, stagger: 0.14, ease: 'power3.out', overwrite: true }
+        );
+      },
+      start: 'top 90%',
+      once: true
+    });
+
+    // Hero bg parallax
+    gsap.to('.hero-bg', {
+      yPercent: 22,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    // Quote scale-in
+    gsap.fromTo('.quote-text',
+      { opacity: 0, scale: 0.96 },
+      {
+        opacity: 1, scale: 1,
+        duration: 1.4,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.quote-section',
+          start: 'top 72%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+
+    /* ─────────────────────────────────────────
+       CARD 3D TILT
+    ───────────────────────────────────────── */
+    document.querySelectorAll('.path-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const cx   = rect.left + rect.width  / 2;
+        const cy   = rect.top  + rect.height / 2;
+        const dx   = (e.clientX - cx) / (rect.width  / 2);
+        const dy   = (e.clientY - cy) / (rect.height / 2);
+
+        gsap.to(card, {
+          rotateX: -dy * 5,
+          rotateY:  dx * 7,
+          duration: 0.4,
+          ease: 'power2.out',
+          transformPerspective: 900,
+          transformOrigin: 'center center'
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateX: 0, rotateY: 0,
+          duration: 0.7,
+          ease: 'power3.out'
+        });
+      });
+    });
+
+    /* ─────────────────────────────────────────
+       MAGNETIC EFFECT ON CTA LINKS
+    ───────────────────────────────────────── */
+    document.querySelectorAll('.magnetic').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const rect = el.getBoundingClientRect();
+        const cx   = rect.left + rect.width  / 2;
+        const cy   = rect.top  + rect.height / 2;
+        const dx   = (e.clientX - cx) * 0.22;
+        const dy   = (e.clientY - cy) * 0.22;
+        gsap.to(el, { x: dx, y: dy, duration: 0.4, ease: 'power2.out' });
+      });
+
+      el.addEventListener('mouseleave', () => {
+        gsap.to(el, { x: 0, y: 0, duration: 0.65, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+
+  </script>
 </body>
 </html>

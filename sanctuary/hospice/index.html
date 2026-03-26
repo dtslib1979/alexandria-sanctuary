@@ -3,864 +3,1360 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Hospice care at Alexandria Sanctuary - Compassionate end-of-life care integrating medical excellence with spiritual depth at Palgongsan, Korea.">
+  <meta name="description" content="Compassionate Care — Gates I & II of Alexandria Sanctuary. End-of-life care, dementia accompaniment, and cognitive dissolution support at Palgongsan, Korea.">
+  <title>Compassionate Care — Gates I & II | Alexandria Sanctuary</title>
 
-  <title>Hospice Care - Alexandria Sanctuary</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="../../assets/css/design-system.css">
-  <link rel="stylesheet" href="../../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../../assets/icons/emblem.svg">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
   <style>
-    .hospice-hero {
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: var(--space-32) var(--space-4);
-      background:
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.06), transparent 50%),
-        radial-gradient(ellipse at center bottom, rgba(245, 241, 232, 0.03), transparent 50%),
-        var(--bg-primary);
+    /* ═══════════════════════════════════════════════
+       RESET & ROOT
+    ═══════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-solid:     #080604;
+      --bg-panel:     #0D0A07;
+      --gold:         #C8A96E;
+      --gold-dim:     #8B6A30;
+      --gold-bright:  #E8C98E;
+      --parchment:    #EAE4D6;
+      --parchment-60: rgba(234,228,214,0.6);
+      --parchment-40: rgba(234,228,214,0.4);
+      --parchment-20: rgba(234,228,214,0.2);
+      --g1:           #1E1C4A;
+      --g2:           #0E2233;
+      --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
     }
 
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      margin-bottom: var(--space-6);
+    html {
+      background: var(--bg-solid);
+      color: var(--parchment);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
-    .breadcrumb a {
-      color: var(--text-tertiary);
-      text-decoration: none;
-      transition: color var(--duration-normal);
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      line-height: 1.8;
+      overflow-x: hidden;
+      cursor: none;
     }
 
-    .breadcrumb a:hover {
-      color: var(--color-gold-500);
-    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
 
-    .breadcrumb span {
-      color: var(--color-gold-500);
-    }
-
-    .hospice-intro {
-      padding: var(--space-20) 0;
-    }
-
-    .hospice-intro__content {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .hospice-intro__content p {
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-      margin-bottom: var(--space-6);
-    }
-
-    .hospice-intro__content blockquote {
-      padding: var(--space-8);
-      margin: var(--space-10) 0;
-      border-left: 2px solid var(--color-gold-500);
-      background: var(--bg-secondary);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    }
-
-    .hospice-intro__content blockquote p {
-      font-style: italic;
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-    }
-
-    .hospice-intro__content blockquote cite {
-      font-style: normal;
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-    }
-
-    .care-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .care-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
-    }
-
-    @media (max-width: 768px) {
-      .care-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .care-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-10);
-    }
-
-    .care-card__icon {
-      width: 64px;
-      height: 64px;
-      margin-bottom: var(--space-6);
-      opacity: 0.8;
-    }
-
-    .care-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .care-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-4);
-    }
-
-    .care-card__list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .care-card__list li {
-      padding: var(--space-2) 0;
-      padding-left: var(--space-5);
-      position: relative;
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-    }
-
-    .care-card__list li::before {
-      content: '·';
-      position: absolute;
-      left: 0;
-      color: var(--color-gold-500);
-      font-weight: bold;
-    }
-
-    .space-section {
-      padding: var(--space-20) 0;
-    }
-
-    .space-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .space-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .space-features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-6);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .space-feature {
-      text-align: center;
-      padding: var(--space-6);
-      background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .space-feature__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-    }
-
-    .space-feature__text {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .family-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .family-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .family-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .family-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .family-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-8);
-      text-align: center;
-    }
-
-    .family-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-3);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .family-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .philosophy-section {
-      padding: var(--space-20) 0;
-    }
-
-    .philosophy-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-12);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .philosophy-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-10);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .philosophy-item {
-      text-align: center;
-    }
-
-    .philosophy-item__number {
-      font-family: var(--font-display);
-      font-size: var(--text-4xl);
-      color: var(--color-gold-500);
-      opacity: 0.4;
-      margin-bottom: var(--space-4);
-    }
-
-    .philosophy-item__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-    }
-
-    .philosophy-item__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .testimonial-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .testimonial {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-      text-align: center;
-    }
-
-    .testimonial__quote {
-      font-family: var(--font-serif);
-      font-size: var(--text-2xl);
-      color: var(--text-primary);
-      line-height: var(--leading-relaxed);
-      font-style: italic;
-      margin-bottom: var(--space-8);
-    }
-
-    .testimonial__author {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-    }
-
-    .testimonial__author strong {
-      display: block;
-      color: var(--color-gold-500);
-      font-weight: 500;
-      margin-bottom: var(--space-1);
-    }
-
-    .admission-section {
-      padding: var(--space-20) 0;
-    }
-
-    .admission-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .admission-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .admission-steps {
-      max-width: var(--max-width-md);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .admission-step {
-      display: flex;
-      gap: var(--space-6);
-      margin-bottom: var(--space-8);
-      align-items: flex-start;
-    }
-
-    .admission-step__number {
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
+    /* ═══════════════════════════════════════════════
+       CUSTOM CURSOR
+    ═══════════════════════════════════════════════ */
+    #cur-dot, #cur-ring {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 99999;
       border-radius: 50%;
-      border: 2px solid var(--color-gold-500);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--color-gold-500);
+      transform: translate(-50%, -50%);
+      will-change: transform;
     }
 
-    .admission-step__content h3 {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
+    #cur-dot {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transition: width .25s, height .25s, background .3s, opacity .3s;
     }
 
-    .admission-step__content p {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
+    #cur-ring {
+      width: 34px; height: 34px;
+      border: 1px solid rgba(200,169,110,0.4);
+      mix-blend-mode: screen;
+      transition: width .5s var(--ease-out),
+                  height .5s var(--ease-out),
+                  border-color .4s,
+                  opacity .3s;
     }
 
-    .cost-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
+    body.cur-hover  #cur-ring  { width: 58px; height: 58px; border-color: var(--gold); }
+    body.cur-g1     #cur-ring  { width: 70px; height: 70px; border-color: rgba(100,95,180,0.7); }
+    body.cur-g2     #cur-ring  { width: 70px; height: 70px; border-color: rgba(40,100,160,0.6); }
+    body.cur-hidden #cur-dot,
+    body.cur-hidden #cur-ring  { opacity: 0; }
+
+    /* ═══════════════════════════════════════════════
+       FILM GRAIN
+    ═══════════════════════════════════════════════ */
+    .grain {
+      position: fixed; inset: -200%;
+      width: 400%; height: 400%;
+      z-index: 9900; pointer-events: none;
+      opacity: .022;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain-drift 0.8s steps(1) infinite;
+    }
+    @keyframes grain-drift {
+      0%   { transform: translate(0,0); }
+      12%  { transform: translate(-3%,-6%); }
+      25%  { transform: translate(-12%,3%); }
+      37%  { transform: translate(5%,-18%); }
+      50%  { transform: translate(-3%,19%); }
+      62%  { transform: translate(12%,-2%); }
+      75%  { transform: translate(-2%,10%); }
+      87%  { transform: translate(7%,-5%); }
     }
 
-    .cost-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
+    /* ═══════════════════════════════════════════════
+       SCROLL PROGRESS BAR
+    ═══════════════════════════════════════════════ */
+    .scroll-bar {
+      position: fixed; right: 20px; top: 50%;
+      transform: translateY(-50%);
+      width: 1px; height: 90px;
+      background: rgba(200,169,110,.1);
+      z-index: 400;
+    }
+    .scroll-bar__fill {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 0%;
+      background: var(--gold);
+      transition: height .1s linear;
+    }
+    .scroll-bar__nub {
+      position: absolute; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 4px; height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      top: 0%;
+      transition: top .1s linear;
+    }
+
+    /* ═══════════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500;
+      padding: 26px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: padding .4s var(--ease-out), background .4s;
+    }
+    .nav.scrolled {
+      background: rgba(8,6,4,.90);
+      backdrop-filter: blur(20px) saturate(1.4);
+      padding: 14px 48px;
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 11.5px;
+      letter-spacing: .36em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex; gap: 36px; list-style: none; align-items: center;
+    }
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--parchment-60);
+      transition: color .3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links .nav-sep {
+      color: var(--gold-dim);
+      font-size: 10px;
+      opacity: .4;
+    }
+
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .nav { padding: 18px 24px; }
+      .nav.scrolled { padding: 12px 24px; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(30,28,74,0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 50% 80%, rgba(14,34,51,0.45) 0%, transparent 65%),
+        linear-gradient(180deg, #05040A 0%, #080614 30%, #060C14 60%, #080604 100%);
+    }
+
+    .hero-veil {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 120% 100% at 50% 0%, rgba(30,28,74,0.18) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* Ambient light pulse */
+    .hero-pulse {
+      position: absolute;
+      top: 38%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30,28,74,0.25) 0%, transparent 65%);
+      animation: pulse-breathe 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes pulse-breathe {
+      0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+      50%       { opacity: 0.7; transform: translate(-50%, -50%) scale(1.12); }
+    }
+
+    .hero-inner {
+      position: relative; z-index: 10;
       text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
+      padding: 0 32px;
+      max-width: 860px;
     }
 
-    .cost-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
+    .hero-gate-label {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .5em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 36px;
+      opacity: 0;
     }
 
-    .cost-note {
-      max-width: var(--max-width-prose);
-      margin: var(--space-8) auto 0;
-      padding: var(--space-8);
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      text-align: center;
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(34px, 7vw, 82px);
+      font-weight: 400;
+      letter-spacing: .08em;
+      color: var(--parchment);
+      line-height: 1.1;
+      margin-bottom: 22px;
+      opacity: 0;
     }
 
-    .cost-note p {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-4);
+    .hero-gates {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(11px, 1.6vw, 14px);
+      letter-spacing: .34em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 44px;
+      opacity: 0;
     }
 
-    .cost-note p:last-child {
-      margin-bottom: 0;
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.4vw, 24px);
       font-style: italic;
-      color: var(--color-gold-500);
+      font-weight: 300;
+      color: var(--parchment-60);
+      max-width: 560px;
+      margin: 0 auto 56px;
+      opacity: 0;
+    }
+
+    .hero-divider {
+      width: 1px; height: 72px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      margin: 0 auto;
+      opacity: 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SECTION WRAPPER
+    ═══════════════════════════════════════════════ */
+    .section {
+      padding: clamp(72px, 10vw, 130px) clamp(24px, 6vw, 80px);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px;
+      letter-spacing: .5em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(22px, 3.5vw, 38px);
+      font-weight: 400;
+      letter-spacing: .04em;
+      color: var(--parchment);
+      line-height: 1.25;
+      margin-bottom: 28px;
+    }
+
+    .section-prose {
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 300;
+      color: var(--parchment-60);
+      max-width: 660px;
+      line-height: 1.85;
+    }
+
+    .gold-line {
+      width: 48px; height: 1px;
+      background: var(--gold-dim);
+      margin-bottom: 40px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       GATES SECTION
+    ═══════════════════════════════════════════════ */
+    .gates-wrapper {
+      background: var(--bg-panel);
+      border-top: 1px solid rgba(200,169,110,.06);
+      border-bottom: 1px solid rgba(200,169,110,.06);
+    }
+
+    .gates-inner {
+      padding: clamp(80px, 10vw, 140px) clamp(24px, 6vw, 80px);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .gates-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .gates-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    @media (max-width: 760px) {
+      .gates-grid { grid-template-columns: 1fr; }
+    }
+
+    .gate-card {
+      position: relative;
+      padding: 56px 44px 60px;
+      overflow: hidden;
+      transition: box-shadow .7s var(--ease-out);
+    }
+
+    .gate-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: 0;
+      transition: opacity .7s var(--ease-out);
+      pointer-events: none;
+    }
+
+    .gate-card--g1 {
+      background: linear-gradient(135deg, rgba(30,28,74,0.55) 0%, rgba(15,14,38,0.7) 100%);
+      border: 1px solid rgba(100,95,180,0.12);
+    }
+    .gate-card--g1::before {
+      background: radial-gradient(ellipse 70% 80% at 30% 30%, rgba(80,75,160,0.18) 0%, transparent 60%);
+    }
+    .gate-card--g1:hover::before { opacity: 1; }
+    .gate-card--g1:hover {
+      box-shadow: 0 0 60px rgba(80,75,160,0.14), inset 0 0 40px rgba(80,75,160,0.05);
+    }
+
+    .gate-card--g2 {
+      background: linear-gradient(135deg, rgba(14,34,51,0.55) 0%, rgba(6,16,28,0.7) 100%);
+      border: 1px solid rgba(40,100,160,0.10);
+    }
+    .gate-card--g2::before {
+      background: radial-gradient(ellipse 70% 80% at 70% 30%, rgba(30,80,130,0.18) 0%, transparent 60%);
+    }
+    .gate-card--g2:hover::before { opacity: 1; }
+    .gate-card--g2:hover {
+      box-shadow: 0 0 60px rgba(30,80,130,0.12), inset 0 0 40px rgba(30,80,130,0.05);
+    }
+
+    .gate-number {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .gate-card--g1 .gate-number { color: rgba(140,135,210,0.7); }
+    .gate-card--g2 .gate-number { color: rgba(80,140,190,0.65); }
+
+    .gate-name {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(18px, 2.5vw, 26px);
+      font-weight: 400;
+      letter-spacing: .04em;
+      color: var(--parchment);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .gate-subtitle-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(13px, 1.5vw, 15px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold-dim);
+      letter-spacing: .06em;
+      margin-bottom: 30px;
+    }
+
+    .gate-divider {
+      width: 32px; height: 1px;
+      margin-bottom: 28px;
+    }
+    .gate-card--g1 .gate-divider { background: rgba(140,135,210,0.35); }
+    .gate-card--g2 .gate-divider { background: rgba(80,140,190,0.3); }
+
+    .gate-body {
+      font-size: clamp(15px, 1.8vw, 18px);
+      font-weight: 300;
+      color: var(--parchment-60);
+      line-height: 1.85;
+      margin-bottom: 28px;
+    }
+
+    .gate-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .gate-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 8px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid;
+    }
+    .gate-card--g1 .gate-tag {
+      color: rgba(140,135,210,0.65);
+      border-color: rgba(140,135,210,0.2);
+    }
+    .gate-card--g2 .gate-tag {
+      color: rgba(80,140,190,0.65);
+      border-color: rgba(80,140,190,0.18);
+    }
+
+    .gate-motto {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(14px, 1.8vw, 17px);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.7;
+      padding-top: 28px;
+      border-top: 1px solid rgba(234,228,214,0.06);
+    }
+    .gate-card--g1 .gate-motto { color: rgba(180,175,230,0.55); }
+    .gate-card--g2 .gate-motto { color: rgba(100,160,210,0.5); }
+
+    /* ═══════════════════════════════════════════════
+       APPROACH SECTION — 4 PRINCIPLES
+    ═══════════════════════════════════════════════ */
+    .approach-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px 64px;
+      margin-top: 64px;
+    }
+    @media (max-width: 680px) {
+      .approach-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .principle {
+      position: relative;
+      padding-left: 24px;
+    }
+    .principle::before {
+      content: '';
+      position: absolute; left: 0; top: 8px;
+      width: 1px; height: calc(100% - 8px);
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+    }
+
+    .principle-num {
+      font-family: 'Cinzel', serif;
+      font-size: 8px;
+      letter-spacing: .4em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .principle-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(14px, 1.8vw, 17px);
+      font-weight: 500;
+      letter-spacing: .05em;
+      color: var(--parchment);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .principle-body {
+      font-size: clamp(14px, 1.7vw, 17px);
+      font-weight: 300;
+      color: var(--parchment-40);
+      line-height: 1.85;
+    }
+
+    /* ═══════════════════════════════════════════════
+       WHAT WE OFFER
+    ═══════════════════════════════════════════════ */
+    .offer-wrapper {
+      background: var(--bg-panel);
+      border-top: 1px solid rgba(200,169,110,.05);
+      border-bottom: 1px solid rgba(200,169,110,.05);
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(200,169,110,.04);
+      margin-top: 56px;
+    }
+    @media (max-width: 900px) {
+      .offer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .offer-grid { grid-template-columns: 1fr; }
+    }
+
+    .offer-item {
+      background: var(--bg-panel);
+      padding: 40px 32px;
+      transition: background .5s;
+    }
+    .offer-item:hover { background: #110E0A; }
+
+    .offer-icon {
+      width: 28px; height: 28px;
+      margin-bottom: 22px;
+      opacity: .55;
+    }
+
+    .offer-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(12px, 1.4vw, 14px);
+      font-weight: 400;
+      letter-spacing: .06em;
+      color: var(--gold);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .offer-body {
+      font-size: clamp(13px, 1.5vw, 15px);
+      font-weight: 300;
+      color: var(--parchment-40);
+      line-height: 1.8;
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOR FAMILIES
+    ═══════════════════════════════════════════════ */
+    .families-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .families-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 50%, rgba(30,28,74,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 80% 50%, rgba(14,34,51,0.15) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .families-inner {
+      position: relative; z-index: 1;
+      padding: clamp(80px, 10vw, 130px) clamp(24px, 6vw, 80px);
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    @media (max-width: 760px) {
+      .families-inner { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    .families-text .section-prose {
+      max-width: 100%;
+    }
+
+    .families-callout {
+      border: 1px solid rgba(200,169,110,.1);
+      padding: 44px 40px;
+      background: rgba(200,169,110,.02);
+    }
+
+    .families-callout-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.2vw, 22px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--parchment);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .families-callout-note {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px;
+      letter-spacing: .3em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════════════════
+       MAIN QUOTE
+    ═══════════════════════════════════════════════ */
+    .quote-wrapper {
+      background: var(--bg-panel);
+      border-top: 1px solid rgba(200,169,110,.06);
+      border-bottom: 1px solid rgba(200,169,110,.06);
+    }
+
+    .quote-inner {
+      padding: clamp(80px, 10vw, 120px) clamp(24px, 8vw, 120px);
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: var(--gold-dim);
+      line-height: .6;
+      margin-bottom: 36px;
+      opacity: .35;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 3vw, 30px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--parchment);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .quote-attr {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .4em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════════════════
+       INQUIRY SECTION
+    ═══════════════════════════════════════════════ */
+    .inquiry-inner {
+      padding: clamp(80px, 10vw, 130px) clamp(24px, 6vw, 80px);
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .inquiry-inner { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    .inquiry-note {
+      font-size: clamp(14px, 1.7vw, 17px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--parchment-40);
+      line-height: 1.85;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(200,169,110,.07);
+    }
+
+    .inquiry-cards {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+
+    .inquiry-card {
+      display: flex; align-items: flex-start; gap: 18px;
+      padding: 24px 28px;
+      border: 1px solid rgba(200,169,110,.08);
+      background: var(--bg-panel);
+      transition: border-color .4s, background .4s;
+    }
+    .inquiry-card:hover {
+      border-color: rgba(200,169,110,.2);
+      background: #0F0C09;
+    }
+
+    .inquiry-card-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .inquiry-card--g1 .inquiry-card-dot { background: rgba(140,135,210,0.55); }
+    .inquiry-card--g2 .inquiry-card-dot { background: rgba(80,140,190,0.5); }
+
+    .inquiry-card-label {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .inquiry-card--g1 .inquiry-card-label { color: rgba(140,135,210,0.6); }
+    .inquiry-card--g2 .inquiry-card-label { color: rgba(80,140,190,0.55); }
+
+    .inquiry-card-text {
+      font-size: clamp(13px, 1.5vw, 15px);
+      font-weight: 300;
+      color: var(--parchment-60);
+      line-height: 1.7;
+    }
+
+    .btn-inquiry {
+      display: inline-block;
+      margin-top: 40px;
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--bg-solid);
+      background: var(--gold);
+      padding: 14px 36px;
+      transition: background .3s, color .3s;
+    }
+    .btn-inquiry:hover {
+      background: var(--gold-bright);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      margin-top: 16px;
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      border: 1px solid var(--gold-dim);
+      padding: 12px 32px;
+      transition: border-color .3s, color .3s;
+    }
+    .btn-secondary:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    .footer {
+      border-top: 1px solid rgba(200,169,110,.07);
+      padding: 56px 48px;
+      display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: .4em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    .footer-sub {
+      font-size: 13px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment-20);
+      margin-top: 8px;
+    }
+
+    .footer-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .footer-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--parchment-40);
+      transition: color .3s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-right {
+      font-family: 'Cinzel', serif;
+      font-size: 8px;
+      letter-spacing: .25em;
+      color: var(--parchment-20);
+      text-align: right;
+    }
+
+    @media (max-width: 680px) {
+      .footer { flex-direction: column; align-items: flex-start; padding: 40px 24px; }
+      .footer-right { text-align: left; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       SCROLL-REVEAL BASE STATE
+    ═══════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    .reveal-slow {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    /* ═══════════════════════════════════════════════
+       MOBILE CURSOR HIDE
+    ═══════════════════════════════════════════════ */
+    @media (hover: none) {
+      #cur-dot, #cur-ring { display: none; }
+      body { cursor: auto; }
     }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../../philosophy/" class="nav__link">Philosophy</a>
-          <a href="../" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
-          <a href="../../forum/" class="nav__link">Forum</a>
-          <a href="../../library/" class="nav__link">Library</a>
-          <a href="../../visit/" class="nav__link">Visit</a>
-        </div>
+  <!-- Cursor -->
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
 
-        <div class="nav__actions">
-          <a href="../../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
+  <!-- Film grain -->
+  <div class="grain" aria-hidden="true"></div>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../../philosophy/" class="nav__link">Philosophy</a>
-      <a href="../" class="nav__link">Sanctuary</a>
-      <a href="../../forum/" class="nav__link">Forum</a>
-      <a href="../../library/" class="nav__link">Library</a>
-      <a href="../../visit/" class="nav__link">Visit</a>
-    </div>
+  <!-- Scroll progress -->
+  <div class="scroll-bar" aria-hidden="true">
+    <div class="scroll-bar__fill" id="sb-fill"></div>
+    <div class="scroll-bar__nub"  id="sb-nub"></div>
+  </div>
+
+  <!-- ─── NAV ─────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <a href="../../index.html" class="nav-logo">Alexandria</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><span class="nav-sep">·</span></li>
+      <li><a href="../">Sanctuary</a></li>
+      <li><span class="nav-sep">·</span></li>
+      <li><a href="../../visit/">Plan a Visit</a></li>
+      <li><span class="nav-sep">·</span></li>
+      <li><a href="../../philosophy/">Philosophy</a></li>
+    </ul>
   </nav>
 
-  <!-- Hero -->
-  <header class="hospice-hero">
-    <div class="container container-narrow">
-      <nav class="breadcrumb" data-animate>
-        <a href="../">Sanctuary</a>
-        <span>›</span>
-        <span>Hospice</span>
-      </nav>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl);">
-        Hospice Care
-      </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-4);">
-        돌봄의 집 · Dolbom-ui Jip
-      </p>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6); font-size: var(--text-lg);">
-        A sacred place to complete life's journey<br>with dignity, peace, and love.
+  <!-- ─── HERO ─────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-veil" aria-hidden="true"></div>
+    <div class="hero-pulse" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <p class="hero-gate-label" id="h-label">Alexandria Sanctuary &nbsp;·&nbsp; Palgongsan, Korea</p>
+      <h1 class="hero-title" id="h-title">Compassionate<br>Care</h1>
+      <p class="hero-gates" id="h-gates">Gates I &amp; II</p>
+      <p class="hero-subtitle" id="h-sub">When the mind fractures, we do not look away.</p>
+      <div class="hero-divider" id="h-div"></div>
+    </div>
+  </section>
+
+  <!-- ─── GATES ─────────────────────────────────────── -->
+  <div class="gates-wrapper">
+    <div class="gates-inner">
+
+      <div class="gates-header reveal">
+        <p class="section-label">The Two Gates</p>
+        <h2 class="section-title">Where the journey begins</h2>
+        <div class="gold-line" style="margin: 0 auto;"></div>
+        <p class="section-prose" style="margin: 0 auto; text-align: center; max-width: 540px;">
+          Not all who enter Alexandria Sanctuary come seeking rest. Some come shattered.
+          Some come not knowing they have come at all. These are the first two gates — the gates of
+          the mind's dissolution, held open with absolute care.
+        </p>
+      </div>
+
+      <div class="gates-grid">
+
+        <!-- Gate I -->
+        <div class="gate-card gate-card--g1 reveal"
+             data-cursor="g1">
+          <p class="gate-number">Gate I</p>
+          <h3 class="gate-name">The Fracture of Mind</h3>
+          <p class="gate-subtitle-line">Psychosis &amp; Acute Mental Crisis</p>
+          <div class="gate-divider"></div>
+          <p class="gate-body">
+            When the structure of reality collapses from within — when perception and meaning
+            come apart in a moment of acute crisis — Gate I holds. We do not medicate the
+            experience into silence. We accompany the person through the fracture, present,
+            unhurried, without judgment.
+          </p>
+          <p class="gate-body">
+            Family members who witness a loved one's break often carry their own wound.
+            Gate I care extends to the family unit as a whole. You are not observers here.
+            You are participants in the healing.
+          </p>
+          <div class="gate-tags">
+            <span class="gate-tag">Acute Psychosis</span>
+            <span class="gate-tag">Crisis Stabilisation</span>
+            <span class="gate-tag">Family Accompaniment</span>
+            <span class="gate-tag">Psychiatric Support</span>
+          </div>
+          <p class="gate-motto">"When the mind shatters, someone must remain present."</p>
+        </div>
+
+        <!-- Gate II -->
+        <div class="gate-card gate-card--g2 reveal"
+             data-cursor="g2">
+          <p class="gate-number">Gate II</p>
+          <h3 class="gate-name">The Dissolution of Self</h3>
+          <p class="gate-subtitle-line">Dementia &amp; Alzheimer's Accompaniment</p>
+          <div class="gate-divider"></div>
+          <p class="gate-body">
+            Memory is not identity. As dementia progresses and the self appears to
+            recede — names forgotten, timelines dissolved, faces grown strange —
+            the person remains. Gate II care is rooted in this conviction:
+            the human being does not diminish with the memory.
+          </p>
+          <p class="gate-body">
+            Our work at Gate II is not curative. It is relational. We accompany
+            the person through each stage of erosion with tenderness, maintaining
+            dignity when the self can no longer maintain it for itself.
+          </p>
+          <div class="gate-tags">
+            <span class="gate-tag">Dementia Care</span>
+            <span class="gate-tag">Alzheimer's</span>
+            <span class="gate-tag">Identity Erosion</span>
+            <span class="gate-tag">Long-term Residence</span>
+          </div>
+          <p class="gate-motto">"Even as memory fades, the person remains."</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── OUR APPROACH ─────────────────────────────── -->
+  <section class="section">
+    <div class="reveal">
+      <p class="section-label">Our Approach</p>
+      <h2 class="section-title">Four Principles of Care</h2>
+      <div class="gold-line"></div>
+      <p class="section-prose">
+        These principles are not policies. They are the orientation from which every decision,
+        every conversation, every moment of silence in a care room arises.
       </p>
     </div>
-  </header>
 
-  <!-- Introduction -->
-  <section class="hospice-intro" data-animate>
-    <div class="hospice-intro__content">
-      <p>
-        Death is not a medical failure. It is life's final chapter—and like all chapters, it deserves to be written with care. At Alexandria's hospice, we believe that how we die matters as much as how we live.
-      </p>
-      <p>
-        Our hospice is not a place of waiting. It is a place of living—fully, consciously, with whatever time remains. Here, palliative medicine meets contemplative wisdom. Pain is managed with expertise. Fear is met with presence. And the soul is tended as carefully as the body.
-      </p>
-      <blockquote>
-        <p>"We do not cure at Alexandria. We care. And in that caring, something more profound than cure often happens: acceptance, reconciliation, even gratitude."</p>
-        <cite>— Dr. Minji Park, Medical Director</cite>
+    <div class="approach-grid">
+
+      <div class="principle reveal-slow">
+        <p class="principle-num">I</p>
+        <h3 class="principle-title">Presence Over Cure</h3>
+        <p class="principle-body">
+          We do not promise recovery. We promise that no person in our care will face
+          their dissolution alone. The presence of a compassionate human being,
+          undistracted and unhurried, is the primary medicine at Alexandria.
+        </p>
+      </div>
+
+      <div class="principle reveal-slow">
+        <p class="principle-num">II</p>
+        <h3 class="principle-title">The Family as Part of the Care</h3>
+        <p class="principle-body">
+          When someone we love begins to disappear, we grieve before they are gone.
+          We hold space for families in active, structured ways — not as visitors
+          to a care facility, but as integral members of the care itself.
+        </p>
+      </div>
+
+      <div class="principle reveal-slow">
+        <p class="principle-num">III</p>
+        <h3 class="principle-title">Spiritual Accompaniment Without Imposition</h3>
+        <p class="principle-body">
+          Alexandria Sanctuary is not a religious institution. We are a deeply
+          spiritual one. We accompany each person's inner life on their own terms —
+          whether they hold a faith tradition, a philosophy, or simply a feeling
+          they cannot yet name.
+        </p>
+      </div>
+
+      <div class="principle reveal-slow">
+        <p class="principle-num">IV</p>
+        <h3 class="principle-title">Death as Passage, Not Failure</h3>
+        <p class="principle-body">
+          When death approaches — whether through dementia's final stage or crisis
+          unresolved — we do not treat it as a clinical defeat. We hold the dying
+          and the living with equal care, recognising the threshold as a sacred
+          moment in a sacred life.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── WHAT WE OFFER ─────────────────────────────── -->
+  <div class="offer-wrapper">
+    <div class="section">
+      <div class="reveal">
+        <p class="section-label">What We Offer</p>
+        <h2 class="section-title">Programs &amp; Services</h2>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="offer-grid">
+
+        <div class="offer-item reveal-slow">
+          <svg class="offer-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="14" cy="14" r="10" stroke="#C8A96E" stroke-width="1"/>
+            <circle cx="14" cy="14" r="3" fill="#C8A96E" opacity=".4"/>
+          </svg>
+          <h3 class="offer-title">Day Programmes</h3>
+          <p class="offer-body">
+            Structured days for those living with cognitive change — rhythm, sensory
+            engagement, human contact, and meaning-making within a contained, supportive
+            environment.
+          </p>
+        </div>
+
+        <div class="offer-item reveal-slow">
+          <svg class="offer-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6 22 L14 8 L22 22" stroke="#C8A96E" stroke-width="1" fill="none"/>
+            <line x1="9" y1="17" x2="19" y2="17" stroke="#C8A96E" stroke-width="1" opacity=".5"/>
+          </svg>
+          <h3 class="offer-title">Family Consultation</h3>
+          <p class="offer-body">
+            Regular, private consultations with care staff, chaplains, and psychologists.
+            Guidance on anticipatory grief, caregiving roles, and the difficult
+            decisions that lie ahead.
+          </p>
+        </div>
+
+        <div class="offer-item reveal-slow">
+          <svg class="offer-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="5" y="8" width="18" height="14" rx="1" stroke="#C8A96E" stroke-width="1" fill="none"/>
+            <line x1="14" y1="5" x2="14" y2="8" stroke="#C8A96E" stroke-width="1"/>
+            <line x1="10" y1="14" x2="18" y2="14" stroke="#C8A96E" stroke-width="1" opacity=".4"/>
+          </svg>
+          <h3 class="offer-title">In-Residence Care</h3>
+          <p class="offer-body">
+            Full residential care for those in advanced stages of dementia or
+            prolonged psychiatric crisis — private quarters, continuous attendance,
+            and the whole of Alexandria's environment as therapeutic space.
+          </p>
+        </div>
+
+        <div class="offer-item reveal-slow">
+          <svg class="offer-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M14 5 C14 5 8 10 8 16 C8 19.31 10.69 22 14 22 C17.31 22 20 19.31 20 16 C20 10 14 5 14 5Z" stroke="#C8A96E" stroke-width="1" fill="none"/>
+            <line x1="14" y1="14" x2="14" y2="19" stroke="#C8A96E" stroke-width="1" opacity=".4"/>
+          </svg>
+          <h3 class="offer-title">Spiritual Companionship</h3>
+          <p class="offer-body">
+            One-to-one sessions with a trained spiritual companion — a practice of
+            listening without agenda, sitting with what cannot be fixed, and honouring
+            the interior life of the person regardless of their cognitive state.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── FOR FAMILIES ─────────────────────────────── -->
+  <div class="families-wrapper">
+    <div class="families-bg" aria-hidden="true"></div>
+    <div class="families-inner">
+
+      <div class="families-text">
+        <p class="section-label reveal">For Families</p>
+        <h2 class="section-title reveal">You are not alone in this.</h2>
+        <div class="gold-line reveal"></div>
+        <p class="section-prose reveal">
+          Accompanying someone through dissolution is one of the most sacred acts
+          a human being can perform. To stay present while memory erodes, while
+          the person you love becomes unfamiliar, while crisis replaces the life
+          you knew — this asks everything of a family.
+        </p>
+        <p class="section-prose reveal" style="margin-top: 20px;">
+          We do not ask you to be strong. We ask only that you come. Alexandria
+          holds the weight alongside you. Our care extends as fully to you as to
+          the person in our charge — because love, grief, and exhaustion also
+          require a sanctuary.
+        </p>
+        <p class="inquiry-note reveal">
+          Family members may request confidential support at any point in the care journey,
+          independent of the admission status of their loved one.
+        </p>
+      </div>
+
+      <div class="families-callout reveal-slow">
+        <p class="families-callout-quote">
+          "There is a kind of love that endures past recognition — that stays
+          even when your name is no longer known. This is the love Alexandria
+          exists to honour and to serve."
+        </p>
+        <p class="families-callout-note">Alexandria Sanctuary — Founding Statement</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── QUOTE ─────────────────────────────────────── -->
+  <div class="quote-wrapper">
+    <div class="quote-inner reveal">
+      <p class="quote-mark" aria-hidden="true">"</p>
+      <blockquote class="quote-text">
+        The most important thing is not what happens to a person,
+        but what we do — and who we are — when it happens.
       </blockquote>
-      <p>
-        Our residents come from all backgrounds—Buddhist, Christian, secular, uncertain. We do not impose any belief. We simply create conditions where each person can meet death in their own way, surrounded by beauty, supported by skill, and held by love.
-      </p>
+      <p class="quote-attr">Adapted · On the ethics of accompaniment</p>
     </div>
-  </section>
+  </div>
 
-  <div class="divider"></div>
+  <!-- ─── INQUIRY ─────────────────────────────────────── -->
+  <section>
+    <div class="inquiry-inner">
 
-  <!-- Our Care -->
-  <section class="care-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Our Approach</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Integrative Care</h2>
-      <p class="section-subtitle" style="margin-top: var(--space-4);">
-        Medical excellence and spiritual depth, woven together.
-      </p>
-    </div>
-
-    <div class="care-grid">
-      <article class="care-card">
-        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="12" y="24" width="40" height="28" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M32 12 L32 24" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M24 18 L32 12 L40 18" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M26 38 L32 32 L38 38 L32 44 Z" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-        </svg>
-        <h3 class="care-card__title">Palliative Medicine</h3>
-        <p class="care-card__text">
-          Expert symptom management by board-certified palliative physicians. Pain, nausea, anxiety, breathlessness—all addressed with the latest medical knowledge.
+      <div>
+        <p class="section-label reveal">Begin Here</p>
+        <h2 class="section-title reveal">Arrange a conversation.</h2>
+        <div class="gold-line reveal"></div>
+        <p class="section-prose reveal">
+          Every care journey at Alexandria begins with a conversation — unhurried,
+          private, and without obligation. We listen first. We ask questions that
+          matter. We begin where you are.
         </p>
-        <ul class="care-card__list">
-          <li>24-hour nursing care</li>
-          <li>Physician on call always</li>
-          <li>Advanced pain protocols</li>
-          <li>Comfort-focused approach</li>
-        </ul>
-      </article>
-
-      <article class="care-card">
-        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="20" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M32 16 L32 32 L44 32" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="32" cy="32" r="4" fill="var(--color-gold-500)" opacity="0.3"/>
-        </svg>
-        <h3 class="care-card__title">Spiritual Companionship</h3>
-        <p class="care-card__text">
-          Trained spiritual companions from Buddhist, Christian, and secular contemplative traditions. They listen, sit, pray, or simply offer presence.
+        <p class="inquiry-note reveal">
+          If you are uncertain which gate best describes your situation, tell us.
+          We will listen carefully and help you find the right path into care.
         </p>
-        <ul class="care-card__list">
-          <li>Daily companion visits</li>
-          <li>Multi-faith chaplaincy</li>
-          <li>Meditation guidance</li>
-          <li>Life review facilitation</li>
-        </ul>
-      </article>
-
-      <article class="care-card">
-        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="22" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="42" cy="28" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="32" cy="44" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="care-card__title">Emotional Support</h3>
-        <p class="care-card__text">
-          Licensed therapists and counselors available for patients and families. Grief support before, during, and after death.
-        </p>
-        <ul class="care-card__list">
-          <li>Individual counseling</li>
-          <li>Family therapy</li>
-          <li>Anticipatory grief support</li>
-          <li>Bereavement follow-up</li>
-        </ul>
-      </article>
-
-      <article class="care-card">
-        <svg class="care-card__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 52 Q22 32 32 42 Q42 52 52 32" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <circle cx="32" cy="18" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="care-card__title">Creative Expression</h3>
-        <p class="care-card__text">
-          Art therapy, music, poetry—ways to express what words alone cannot capture. Legacy projects to leave something meaningful behind.
-        </p>
-        <ul class="care-card__list">
-          <li>Art therapy sessions</li>
-          <li>Music at bedside</li>
-          <li>Legacy letter writing</li>
-          <li>Memory book creation</li>
-        </ul>
-      </article>
-    </div>
-  </section>
-
-  <!-- The Space -->
-  <section class="space-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">The Space</span>
-    <h2 style="margin-top: var(--space-4);">Where Beauty Heals</h2>
-    <p>
-      Our hospice suites are not hospital rooms. They are sanctuaries—designed to nourish the spirit even as the body prepares to release.
-    </p>
-
-    <div class="space-features">
-      <div class="space-feature">
-        <h3 class="space-feature__title">Private Suites</h3>
-        <p class="space-feature__text">
-          Each 35㎡ suite includes space for family to stay. No shared rooms. No institutional atmosphere.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Garden Access</h3>
-        <p class="space-feature__text">
-          Every suite opens to a private garden. Even beds can be rolled outside to feel sun and wind.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Mountain Views</h3>
-        <p class="space-feature__text">
-          Floor-to-ceiling windows frame Palgongsan. The mountain is present in every moment.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Natural Materials</h3>
-        <p class="space-feature__text">
-          Wood, stone, natural fibers. Nothing plastic, nothing harsh. Warmth in every surface.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Meditation Alcove</h3>
-        <p class="space-feature__text">
-          A quiet corner in each suite for prayer, meditation, or simple sitting in silence.
-        </p>
-      </div>
-
-      <div class="space-feature">
-        <h3 class="space-feature__title">Family Kitchen</h3>
-        <p class="space-feature__text">
-          A shared kitchen for families to prepare loved ones' favorite foods. Comfort in familiar tastes.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- For Families -->
-  <section class="family-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">For Families</span>
-    <h2 style="margin-top: var(--space-4);">Walking Together</h2>
-    <p>
-      Death is hard for those who remain. We support not just the dying, but those who love them.
-    </p>
-
-    <div class="family-grid">
-      <article class="family-card">
-        <h3 class="family-card__title">Family Accommodations</h3>
-        <p class="family-card__text">
-          Stay in your loved one's suite or in nearby guest rooms. Be present without exhaustion. We provide bedding, meals, and support.
-        </p>
-      </article>
-
-      <article class="family-card">
-        <h3 class="family-card__title">Caregiver Support</h3>
-        <p class="family-card__text">
-          Guidance on how to be present, how to touch, how to speak to someone dying. Practical wisdom for an overwhelming time.
-        </p>
-      </article>
-
-      <article class="family-card">
-        <h3 class="family-card__title">Bereavement Care</h3>
-        <p class="family-card__text">
-          Our relationship doesn't end at death. Grief support groups, counseling, and memorial services continue for a full year.
-        </p>
-      </article>
-    </div>
-  </section>
-
-  <!-- Philosophy -->
-  <section class="philosophy-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Our Philosophy</span>
-    <h2 style="margin-top: var(--space-4);">What We Believe</h2>
-
-    <div class="philosophy-grid">
-      <div class="philosophy-item">
-        <div class="philosophy-item__number">I</div>
-        <h3 class="philosophy-item__title">Death Is Sacred</h3>
-        <p class="philosophy-item__text">
-          The moment of death is as sacred as birth. It deserves beauty, intention, and reverence—not the sterile efficiency of a hospital.
-        </p>
-      </div>
-
-      <div class="philosophy-item">
-        <div class="philosophy-item__number">II</div>
-        <h3 class="philosophy-item__title">Pain Is Optional</h3>
-        <p class="philosophy-item__text">
-          Modern palliative medicine can manage almost all physical suffering. No one should die in pain. We use every tool available.
-        </p>
-      </div>
-
-      <div class="philosophy-item">
-        <div class="philosophy-item__number">III</div>
-        <h3 class="philosophy-item__title">Presence Is Medicine</h3>
-        <p class="philosophy-item__text">
-          Sometimes the most healing thing is simply not being alone. We ensure that no one dies without someone holding their hand.
-        </p>
-      </div>
-
-      <div class="philosophy-item">
-        <div class="philosophy-item__number">IV</div>
-        <h3 class="philosophy-item__title">Meaning Matters</h3>
-        <p class="philosophy-item__text">
-          The dying often have unfinished business—words unsaid, wounds unhealed. We help complete what needs completing.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonial -->
-  <section class="testimonial-section" data-animate>
-    <div class="container">
-      <div class="ornament">✦</div>
-      <div class="testimonial">
-        <p class="testimonial__quote">
-          "My father came to Alexandria terrified of death. He left this world at peace—laughing with his grandchildren, watching the sunset over Palgongsan, whispering gratitude. I didn't know death could be like this. I didn't know it could be beautiful."
-        </p>
-        <div class="testimonial__author">
-          <strong>Hyunjoo K.</strong>
-          Daughter of hospice resident, 2025
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Admission -->
-  <section class="admission-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Getting Started</span>
-    <h2 style="margin-top: var(--space-4);">Admission Process</h2>
-    <p>
-      We welcome anyone facing a life-limiting illness who desires holistic end-of-life care. The process is simple and compassionate.
-    </p>
-
-    <div class="admission-steps">
-      <div class="admission-step">
-        <div class="admission-step__number">1</div>
-        <div class="admission-step__content">
-          <h3>Initial Contact</h3>
-          <p>Call or email us. Our care coordinator will listen to your situation and answer initial questions. No commitment required.</p>
+        <div class="reveal" style="margin-top: 40px;">
+          <a href="../../visit/" class="btn-inquiry">Plan a Visit</a>
+          <br>
+          <a href="../../visit/#contact" class="btn-secondary">Send a Private Enquiry</a>
         </div>
       </div>
 
-      <div class="admission-step">
-        <div class="admission-step__number">2</div>
-        <div class="admission-step__content">
-          <h3>Medical Review</h3>
-          <p>Share medical records with our team. Our physicians will review the case and confirm that hospice care is appropriate.</p>
-        </div>
-      </div>
+      <div class="inquiry-cards reveal-slow">
 
-      <div class="admission-step">
-        <div class="admission-step__number">3</div>
-        <div class="admission-step__content">
-          <h3>Visit</h3>
-          <p>If possible, come see the sanctuary. Walk the gardens, meet the staff, feel the space. This is an important decision.</p>
+        <div class="inquiry-card inquiry-card--g1">
+          <div class="inquiry-card-dot"></div>
+          <div>
+            <p class="inquiry-card-label">Gate I — Acute Crisis</p>
+            <p class="inquiry-card-text">
+              For families navigating an acute psychiatric break, psychosis,
+              or a sudden collapse of mental stability. Urgent consultations
+              are available within 48 hours.
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div class="admission-step">
-        <div class="admission-step__number">4</div>
-        <div class="admission-step__content">
-          <h3>Welcome</h3>
-          <p>When you're ready, we prepare your suite and welcome you home. The journey begins.</p>
+        <div class="inquiry-card inquiry-card--g2">
+          <div class="inquiry-card-dot"></div>
+          <div>
+            <p class="inquiry-card-label">Gate II — Dementia Journey</p>
+            <p class="inquiry-card-text">
+              For individuals and families at any stage of the dementia journey —
+              early diagnosis, middle-stage planning, advanced care, or
+              end-of-life accompaniment.
+            </p>
+          </div>
         </div>
+
+        <div class="inquiry-card" style="border-color: rgba(200,169,110,.08);">
+          <div class="inquiry-card-dot" style="background: rgba(200,169,110,.35);"></div>
+          <div>
+            <p class="inquiry-card-label" style="color: var(--gold-dim);">General Enquiry</p>
+            <p class="inquiry-card-text">
+              Unsure where to begin? You are welcome to reach out without a gate
+              in mind. The conversation itself will find the way.
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Cost -->
-  <section class="cost-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Investment</span>
-    <h2 style="margin-top: var(--space-4);">Cost & Financial Support</h2>
-    <p>
-      Hospice care at Alexandria costs ₩8,500,000 per month, all inclusive—medical care, accommodation, meals, spiritual support, and family stays. This is less than most hospitals and far more humane.
-    </p>
-
-    <div class="cost-note">
-      <p>
-        We believe that dying well should not be a privilege of the wealthy. Our foundation provides scholarship support for those who cannot afford full fees. Please do not let cost prevent you from inquiring.
-      </p>
-      <p>
-        "No one turned away for inability to pay."
-      </p>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="section" style="padding-top: var(--space-10);">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        Questions? Concerns? Simply want to talk?<br>
-        We are here to listen.
-      </p>
-      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-        <a href="../../visit/" class="btn btn-primary">Contact Us</a>
-        <a href="../../philosophy/" class="btn btn-secondary">Learn Our Philosophy</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
+  <!-- ─── FOOTER ─────────────────────────────────────── -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
-      </div>
+    <div>
+      <p class="footer-logo">Alexandria Sanctuary</p>
+      <p class="footer-sub">Palgongsan, Daegu, Republic of Korea</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../">Sanctuary</a></li>
+      <li><a href="../../philosophy/">Philosophy</a></li>
+      <li><a href="../../visit/">Visit</a></li>
+      <li><a href="../../library/">Library</a></li>
+    </ul>
+    <div class="footer-right">
+      <p>Gates I &amp; II &nbsp;·&nbsp; Compassionate Care</p>
+      <p style="margin-top:6px; opacity:.5;">© Alexandria Sanctuary</p>
     </div>
   </footer>
 
-  <script src="../../assets/js/app.js"></script>
+  <!-- ═══════════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════════ -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── Cursor ── */
+    const dot  = document.getElementById('cur-dot');
+    const ring = document.getElementById('cur-ring');
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+    const LAG = 0.085; // gentle lag — compassionate rhythm
+
+    document.addEventListener('mousemove', function (e) {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+
+    document.addEventListener('mouseleave', function () {
+      document.body.classList.add('cur-hidden');
+    });
+    document.addEventListener('mouseenter', function () {
+      document.body.classList.remove('cur-hidden');
+    });
+
+    // Hover states
+    document.querySelectorAll('a, button, .gate-card, .offer-item, .inquiry-card, .btn-inquiry, .btn-secondary').forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
+        const cursor = el.dataset.cursor;
+        if (cursor === 'g1') {
+          document.body.classList.remove('cur-hover', 'cur-g2');
+          document.body.classList.add('cur-g1');
+        } else if (cursor === 'g2') {
+          document.body.classList.remove('cur-hover', 'cur-g1');
+          document.body.classList.add('cur-g2');
+        } else {
+          document.body.classList.remove('cur-g1', 'cur-g2');
+          document.body.classList.add('cur-hover');
+        }
+      });
+      el.addEventListener('mouseleave', function () {
+        document.body.classList.remove('cur-hover', 'cur-g1', 'cur-g2');
+      });
+    });
+
+    function animateCursor() {
+      rx += (mx - rx) * LAG;
+      ry += (my - ry) * LAG;
+      dot.style.left  = mx + 'px';
+      dot.style.top   = my + 'px';
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    /* ── Scroll progress ── */
+    const sbFill = document.getElementById('sb-fill');
+    const sbNub  = document.getElementById('sb-nub');
+
+    function updateScrollBar() {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct   = total > 0 ? (window.scrollY / total) * 100 : 0;
+      sbFill.style.height = pct + '%';
+      sbNub.style.top     = pct + '%';
+    }
+    window.addEventListener('scroll', updateScrollBar, { passive: true });
+
+    /* ── Nav scroll state ── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* ── GSAP + ScrollTrigger ── */
+    window.addEventListener('load', function () {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* Hero entrance — slow, gentle */
+      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+      tl.to('#h-label',  { opacity: 1, duration: 1.4, delay: 0.3 })
+        .to('#h-title',  { opacity: 1, duration: 1.6, ease: 'power1.out' }, '-=0.8')
+        .to('#h-gates',  { opacity: 1, duration: 1.2 }, '-=0.8')
+        .to('#h-sub',    { opacity: 1, duration: 1.4 }, '-=0.6')
+        .to('#h-div',    { opacity: 1, duration: 1.2 }, '-=0.5');
+
+      /* ScrollTrigger: .reveal elements */
+      gsap.utils.toArray('.reveal').forEach(function (el) {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 1.4,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+
+      /* ScrollTrigger: .reveal-slow elements — more gentle */
+      gsap.utils.toArray('.reveal-slow').forEach(function (el, i) {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 1.8,
+          ease: 'power1.out',
+          delay: (i % 2) * 0.18,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 90%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+    });
+
+  }());
+  </script>
+
 </body>
 </html>

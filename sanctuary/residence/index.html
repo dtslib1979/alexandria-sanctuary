@@ -3,737 +3,1482 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contemplative residence programs at Alexandria Sanctuary - Extended stays for deep practice at Palgongsan, Korea.">
+  <meta name="description" content="Alexandria Residence — Gate VII. A sacred community for those choosing to live their final years with intention. Palgongsan, Korea.">
 
-  <title>Contemplative Residence - Alexandria Sanctuary</title>
+  <title>Residence — Gate VII | Alexandria Sanctuary</title>
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="../../assets/css/design-system.css">
-  <link rel="stylesheet" href="../../assets/css/components.css">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../../assets/icons/emblem.svg">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
   <style>
-    .residence-hero {
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: var(--space-32) var(--space-4);
+    /* ═══════════════════════════════════════════════
+       RESET & ROOT
+    ═══════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-solid:      #080604;
+      --bg-panel:      #0D0A07;
+      --gold:          #C8A96E;
+      --gold-dim:      #8B6A30;
+      --gold-bright:   #E8C98E;
+      --parchment:     #EAE4D6;
+      --parchment-60:  rgba(234,228,214,0.6);
+      --parchment-30:  rgba(234,228,214,0.3);
+      --g7:            #2E2000;
+      --g7-light:      #3D2A00;
+      --amber:         #D4913A;
+      --amber-dim:     #7A4A12;
+      --amber-glow:    rgba(212,145,58,0.15);
+      --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    html {
+      background: var(--bg-solid);
+      color: var(--parchment);
+      overflow-x: hidden;
+      scroll-behavior: auto;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ═══════════════════════════════════════════════
+       CUSTOM DUAL CURSOR
+    ═══════════════════════════════════════════════ */
+    #cur-dot, #cur-ring {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 99999;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      will-change: transform;
+    }
+
+    #cur-dot {
+      width: 6px; height: 6px;
+      background: var(--amber);
+      transition: width .2s, height .2s, background .3s;
+    }
+
+    #cur-ring {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(212,145,58,0.45);
+      mix-blend-mode: screen;
+      transition: width .45s var(--ease-out),
+                  height .45s var(--ease-out),
+                  border-color .4s,
+                  opacity .3s;
+    }
+
+    body.cur-hover  #cur-ring { width: 68px; height: 68px; border-color: var(--amber); }
+    body.cur-gate   #cur-ring { width: 88px; height: 88px; border-color: var(--gold-bright); opacity: .55; }
+    body.cur-hidden #cur-dot,
+    body.cur-hidden #cur-ring { opacity: 0; }
+
+    /* ═══════════════════════════════════════════════
+       FILM GRAIN OVERLAY
+    ═══════════════════════════════════════════════ */
+    .grain {
+      position: fixed; inset: -200%;
+      width: 400%; height: 400%;
+      z-index: 9900; pointer-events: none;
+      opacity: .030;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain-move 0.7s steps(1) infinite;
+    }
+    @keyframes grain-move {
+      0%   { transform: translate(0, 0); }
+      14%  { transform: translate(-4%, -8%); }
+      28%  { transform: translate(-14%, 4%); }
+      42%  { transform: translate(6%, -22%); }
+      57%  { transform: translate(-4%, 22%); }
+      71%  { transform: translate(14%, -2%); }
+      85%  { transform: translate(-2%, 12%); }
+    }
+
+    /* ═══════════════════════════════════════════════
+       SCROLL PROGRESS BAR
+    ═══════════════════════════════════════════════ */
+    .scroll-bar {
+      position: fixed; right: 22px; top: 50%;
+      transform: translateY(-50%);
+      width: 1px; height: 100px;
+      background: rgba(212,145,58,.10);
+      z-index: 200;
+    }
+    .scroll-bar__fill {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 0%;
+      background: var(--amber);
+      transition: height .08s;
+    }
+    .scroll-bar__nub {
+      position: absolute; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 5px; height: 5px;
+      background: var(--amber);
+      border-radius: 50%;
+      top: 0%;
+      transition: top .08s;
+    }
+
+    /* ═══════════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 400;
+      padding: 28px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: padding .4s var(--ease-out), background .4s;
+    }
+    .nav.scrolled {
+      background: rgba(8,6,4,.90);
+      backdrop-filter: blur(24px) saturate(1.6);
+      padding: 16px 48px;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px; letter-spacing: .32em;
+      color: var(--gold);
+    }
+    .nav-logo-emblem {
+      width: 28px; height: 28px;
+      opacity: .85;
+    }
+
+    .nav-links {
+      display: flex; gap: 40px; list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px; letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--parchment-60);
+      transition: color .3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a.active { color: var(--amber); }
+
+    .nav-back {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      border: 1px solid rgba(139,106,48,.35);
+      padding: 9px 22px;
+      transition: color .3s, border-color .3s, background .3s;
+    }
+    .nav-back:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(200,169,110,.06);
+    }
+
+    @media (max-width: 900px) {
+      .nav { padding: 20px 24px; }
+      .nav.scrolled { padding: 12px 24px; }
+      .nav-links { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 140px 48px 100px;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.08), transparent 50%),
-        var(--bg-primary);
+        radial-gradient(ellipse 90% 65% at 50% 38%, rgba(46,32,0,.55) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 50% at 50% 60%, rgba(212,145,58,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 40% at 50% 100%, rgba(46,32,0,.80) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 80% at 10% 80%, rgba(12,8,0,.90) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 80% at 90% 80%, rgba(12,8,0,.90) 0%, transparent 55%),
+        var(--bg-solid);
+      z-index: 0;
+      will-change: transform;
     }
 
-    .breadcrumb {
-      display: flex;
+    .hero-bg-grid {
+      position: absolute; inset: 0; z-index: 1;
+      background-image: radial-gradient(circle 1px at center, rgba(212,145,58,.06) 0%, transparent 100%);
+      background-size: 72px 72px;
+      opacity: .6;
+    }
+
+    .hero-bg-vignette {
+      position: absolute; inset: 0; z-index: 2;
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 40%, rgba(8,6,4,.7) 100%);
+    }
+
+    .hero-content {
+      position: relative; z-index: 3;
+      text-align: center;
+      max-width: 920px;
+    }
+
+    .gate-badge {
+      display: inline-flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      margin-bottom: var(--space-6);
+      gap: 6px;
+      margin-bottom: 44px;
+      opacity: 0;
     }
 
-    .breadcrumb a {
-      color: var(--text-tertiary);
-      text-decoration: none;
-      transition: color var(--duration-normal);
+    .gate-badge-roman {
+      font-family: 'Cinzel', serif;
+      font-size: 11px; letter-spacing: .55em;
+      color: var(--amber-dim);
+      text-transform: uppercase;
     }
 
-    .breadcrumb a:hover {
-      color: var(--color-gold-500);
+    .gate-badge-numeral {
+      font-family: 'Cinzel', serif;
+      font-size: 48px;
+      font-weight: 400;
+      letter-spacing: .08em;
+      background: linear-gradient(135deg, var(--amber-dim) 0%, var(--amber) 50%, var(--gold-bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
     }
 
-    .breadcrumb span {
-      color: var(--color-gold-500);
+    .gate-badge-line {
+      width: 1px; height: 28px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
     }
 
-    .residence-intro {
-      padding: var(--space-20) 0;
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .55em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+      margin-bottom: 22px;
+      opacity: 0;
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; width: 44px; height: 1px;
+      background: currentColor; flex-shrink: 0;
     }
 
-    .residence-intro__content {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(60px, 11vw, 130px);
+      font-weight: 400;
+      letter-spacing: .18em;
+      line-height: 1.0;
+      margin-bottom: 28px;
+      opacity: 0;
+      background: linear-gradient(140deg,
+        var(--gold-bright) 0%,
+        var(--amber) 30%,
+        var(--gold-bright) 60%,
+        #A8720A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .residence-intro__content p {
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      line-height: var(--leading-loose);
-      margin-bottom: var(--space-6);
-    }
-
-    .life-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .life-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-xl);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
-    }
-
-    .life-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-8);
-      text-align: center;
-    }
-
-    .life-card__icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto var(--space-6);
-      opacity: 0.8;
-    }
-
-    .life-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .life-card__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .accommodation-section {
-      padding: var(--space-20) 0;
-    }
-
-    .accommodation-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .accommodation-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto var(--space-12);
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .room-types {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
-      margin: 0 auto;
-      padding: 0 var(--container-padding);
-    }
-
-    .room-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-    }
-
-    .room-card__image {
-      aspect-ratio: 16/10;
-      background: var(--bg-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .room-card__image svg {
-      width: 80px;
-      height: 80px;
-      opacity: 0.4;
-    }
-
-    .room-card__content {
-      padding: var(--space-8);
-    }
-
-    .room-card__title {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .room-card__subtitle {
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
-      margin-bottom: var(--space-4);
-    }
-
-    .room-card__features {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 var(--space-6);
-    }
-
-    .room-card__features li {
-      padding: var(--space-2) 0;
-      padding-left: var(--space-5);
-      position: relative;
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-    }
-
-    .room-card__features li::before {
-      content: '·';
-      position: absolute;
-      left: 0;
-      color: var(--color-gold-500);
-      font-weight: bold;
-    }
-
-    .room-card__price {
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-    }
-
-    .room-card__price small {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      font-family: var(--font-body);
-    }
-
-    .programs-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
-    }
-
-    .program-table {
-      max-width: var(--max-width-lg);
-      margin: var(--space-12) auto 0;
-      padding: 0 var(--container-padding);
-    }
-
-    .program-row {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      gap: var(--space-6);
-      padding: var(--space-6) 0;
-      border-bottom: 1px solid var(--border-subtle);
-      align-items: center;
-    }
-
-    .program-row:first-child {
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    .program-row__duration {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      color: var(--color-gold-500);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .program-row__description {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-    }
-
-    .program-row__price {
-      text-align: right;
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-    }
-
-    .program-row__price small {
-      display: block;
-      font-size: var(--text-xs);
-      color: var(--text-tertiary);
-      font-family: var(--font-body);
-      margin-top: var(--space-1);
-    }
-
-    @media (max-width: 768px) {
-      .program-row {
-        grid-template-columns: 1fr;
-        gap: var(--space-2);
-        text-align: center;
-      }
-
-      .program-row__price {
-        text-align: center;
-      }
-    }
-
-    .community-section {
-      padding: var(--space-20) 0;
-    }
-
-    .community-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-4);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .community-section > p {
-      max-width: var(--max-width-prose);
-      margin: 0 auto;
-      font-size: var(--text-lg);
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: var(--leading-loose);
-      padding: 0 var(--container-padding);
-    }
-
-    .community-section blockquote {
-      max-width: var(--max-width-prose);
-      margin: var(--space-10) auto;
-      padding: var(--space-8);
-      border-left: 2px solid var(--color-gold-500);
-      background: var(--bg-secondary);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    }
-
-    .community-section blockquote p {
-      font-family: var(--font-serif);
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 300;
       font-style: italic;
-      color: var(--text-primary);
-      font-size: var(--text-lg);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-2);
+      color: var(--parchment-60);
+      letter-spacing: .04em;
+      margin-bottom: 52px;
+      opacity: 0;
     }
 
-    .community-section blockquote cite {
-      font-style: normal;
-      font-size: var(--text-sm);
-      color: var(--color-gold-500);
+    .hero-sub-note {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(13px, 1.3vw, 16px);
+      font-weight: 300;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+      opacity: 0;
     }
 
-    .eligibility-section {
-      padding: var(--space-20) 0;
-      background: var(--bg-secondary);
+    .hero-divider {
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      margin: 36px 0;
+      opacity: 0;
+    }
+    .hero-divider-line { width: 72px; height: 1px; }
+    .hero-divider-line:first-child { background: linear-gradient(90deg, transparent, var(--amber)); }
+    .hero-divider-line:last-child  { background: linear-gradient(90deg, var(--amber), transparent); }
+    .hero-divider-diamond {
+      width: 6px; height: 6px;
+      background: var(--amber);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .hero-divider-diamond.sm { width: 4px; height: 4px; opacity: .45; }
+
+    .hero-scroll-hint {
+      position: absolute; bottom: 44px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      opacity: 0;
+    }
+    .hero-scroll-hint span {
+      font-family: 'Cinzel', serif;
+      font-size: 8px; letter-spacing: .4em;
+      color: var(--amber-dim);
+    }
+    .hero-scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--amber-dim), transparent);
+      animation: scroll-pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes scroll-pulse {
+      0%, 100% { opacity: .3; transform: scaleY(1); }
+      50%       { opacity: .9; transform: scaleY(1.15); }
     }
 
-    .eligibility-section h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: var(--space-12);
-      letter-spacing: var(--tracking-wide);
-    }
-
-    .eligibility-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: var(--space-8);
-      max-width: var(--max-width-lg);
+    /* ═══════════════════════════════════════════════
+       SECTION SCAFFOLD
+    ═══════════════════════════════════════════════ */
+    .section {
+      padding: 120px 48px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 var(--container-padding);
+    }
+    .section--full { max-width: none; }
+
+    .section-kicker {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px; letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+      display: block;
+      margin-bottom: 20px;
     }
 
-    .eligibility-item {
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(28px, 3.5vw, 46px);
+      font-weight: 400;
+      letter-spacing: .08em;
+      color: var(--parchment);
+      line-height: 1.25;
+      margin-bottom: 24px;
+    }
+
+    .section-title .amber { color: var(--amber); }
+
+    .section-body {
+      font-size: clamp(16px, 1.7vw, 20px);
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--parchment-60);
+    }
+    .section-body p { margin-bottom: 22px; }
+    .section-body p:last-child { margin-bottom: 0; }
+    .section-body strong { color: var(--parchment); font-weight: 400; }
+
+    .divider-amber {
+      display: flex; align-items: center; gap: 18px;
+      margin: 0 auto 0;
+    }
+    .divider-amber-line { flex: 1; height: 1px; background: rgba(212,145,58,.15); }
+    .divider-amber-diamond {
+      width: 5px; height: 5px;
+      background: var(--amber-dim);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .reveal { opacity: 0; transform: translateY(32px); }
+
+    @media (max-width: 600px) {
+      .section { padding: 80px 24px; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       INTRO BAND
+    ═══════════════════════════════════════════════ */
+    .intro-band {
+      background: var(--g7);
+      border-top: 1px solid rgba(212,145,58,.12);
+      border-bottom: 1px solid rgba(212,145,58,.12);
+      padding: 100px 48px;
+    }
+    .intro-band-inner {
+      max-width: 820px;
+      margin: 0 auto;
       text-align: center;
     }
+    .intro-band p {
+      font-size: clamp(19px, 2.2vw, 26px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.85;
+      color: var(--parchment-60);
+      margin-bottom: 24px;
+    }
+    .intro-band p:last-child { margin-bottom: 0; }
+    .intro-band strong { color: var(--gold-bright); font-weight: 400; font-style: normal; }
 
-    .eligibility-item__number {
-      font-family: var(--font-display);
-      font-size: var(--text-3xl);
-      color: var(--color-gold-500);
-      opacity: 0.5;
-      margin-bottom: var(--space-3);
+    /* ═══════════════════════════════════════════════
+       SETTING — PARALLAX MOUNTAIN
+    ═══════════════════════════════════════════════ */
+    .mountain-section {
+      position: relative;
+      height: 480px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
     }
 
-    .eligibility-item__title {
-      font-family: var(--font-serif);
-      font-size: var(--text-xl);
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
+    .mountain-bg {
+      position: absolute; inset: -20%;
+      background:
+        radial-gradient(ellipse 100% 60% at 50% 60%, rgba(46,32,0,.70) 0%, transparent 70%),
+        linear-gradient(180deg,
+          rgba(8,6,4,1) 0%,
+          rgba(20,12,0,.40) 30%,
+          rgba(30,18,0,.50) 60%,
+          rgba(8,6,4,1) 100%),
+        url('../../assets/mountain-palgongsan.jpg') center/cover no-repeat;
+      will-change: transform;
     }
 
-    .eligibility-item__text {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
+    .mountain-bg-fallback {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 120% 80% at 50% 80%,
+          rgba(60,38,0,.80) 0%,
+          rgba(30,18,0,.60) 40%,
+          transparent 70%),
+        repeating-linear-gradient(
+          170deg,
+          rgba(46,32,0,.35) 0px,
+          transparent 3px,
+          rgba(70,48,0,.20) 6px,
+          transparent 9px
+        ),
+        var(--bg-solid);
+    }
+
+    .mountain-content {
+      position: relative; z-index: 2;
+      text-align: center;
+    }
+    .mountain-content .kicker {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .mountain-content h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 400;
+      letter-spacing: .15em;
+      color: var(--parchment);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .mountain-content p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(15px, 1.6vw, 19px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--parchment-60);
+      letter-spacing: .05em;
+    }
+
+    /* ═══════════════════════════════════════════════
+       RESIDENT LIFE — 4 ASPECTS GRID
+    ═══════════════════════════════════════════════ */
+    .aspects-section {
+      padding: 120px 48px;
+      background: var(--bg-panel);
+    }
+    .aspects-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 88px;
+    }
+    .aspects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 760px) {
+      .aspects-grid { grid-template-columns: 1fr; }
+    }
+
+    .aspect-card {
+      background: var(--bg-solid);
+      padding: 60px 52px;
+      position: relative;
+      overflow: hidden;
+      transition: background .5s;
+    }
+    .aspect-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber-dim), transparent);
+      opacity: 0;
+      transition: opacity .5s;
+    }
+    .aspect-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--amber-glow) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity .6s;
+    }
+    .aspect-card:hover { background: rgba(20,12,0,.95); }
+    .aspect-card:hover::before { opacity: 1; }
+    .aspect-card:hover::after  { opacity: 1; }
+
+    .aspect-number {
+      font-family: 'Cinzel', serif;
+      font-size: 10px; letter-spacing: .45em;
+      color: var(--amber-dim);
+      margin-bottom: 28px;
+      display: block;
+      position: relative; z-index: 1;
+    }
+
+    .aspect-icon {
+      width: 44px; height: 44px;
+      margin-bottom: 28px;
+      position: relative; z-index: 1;
+    }
+    .aspect-icon svg { width: 100%; height: 100%; }
+
+    .aspect-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      color: var(--gold-bright);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+
+    .aspect-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--parchment-60);
+      position: relative; z-index: 1;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SETTING — TEXT SECTION
+    ═══════════════════════════════════════════════ */
+    .setting-section {
+      padding: 120px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    @media (max-width: 820px) {
+      .setting-section {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+
+    .setting-text .section-title { margin-bottom: 30px; }
+
+    .setting-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      padding-left: 40px;
+      border-left: 1px solid rgba(212,145,58,.15);
+    }
+    .setting-fact-label {
+      font-family: 'Cinzel', serif;
+      font-size: 8px; letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .setting-fact-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--parchment-60);
+      line-height: 1.6;
+    }
+    .setting-fact-value strong { color: var(--parchment); font-weight: 400; }
+
+    /* ═══════════════════════════════════════════════
+       MEMBERSHIP SECTION
+    ═══════════════════════════════════════════════ */
+    .membership-section {
+      padding: 120px 48px;
+      background: var(--g7);
+      border-top: 1px solid rgba(212,145,58,.10);
+      border-bottom: 1px solid rgba(212,145,58,.10);
+    }
+    .membership-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 820px) {
+      .membership-inner {
+        grid-template-columns: 1fr;
+        gap: 56px;
+      }
+    }
+
+    .membership-tenets {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .tenet-item {
+      padding: 28px 32px;
+      background: rgba(8,6,4,.45);
+      border-left: 2px solid var(--amber-dim);
+      transition: background .4s, border-color .4s;
+    }
+    .tenet-item:hover {
+      background: rgba(8,6,4,.80);
+      border-color: var(--amber);
+    }
+    .tenet-item p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--parchment-60);
+    }
+    .tenet-item p strong {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .membership-statement {
+      position: sticky;
+      top: 120px;
+    }
+    .membership-statement blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 2.5vw, 30px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.75;
+      color: var(--gold-bright);
+      border-left: 1px solid var(--amber-dim);
+      padding-left: 32px;
+      margin-bottom: 40px;
+    }
+    .membership-statement .attribution {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+    }
+
+    /* ═══════════════════════════════════════════════
+       CENTRAL QUOTE
+    ═══════════════════════════════════════════════ */
+    .quote-section {
+      padding: 140px 48px;
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .quote-section::before {
+      content: '\201C';
+      position: absolute; top: 80px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 180px;
+      line-height: 1;
+      color: var(--amber-dim);
+      opacity: .12;
+      pointer-events: none;
+    }
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 3vw, 38px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--parchment);
+      margin-bottom: 36px;
+      position: relative; z-index: 1;
+    }
+    .quote-text em {
+      color: var(--gold-bright);
+      font-style: italic;
+    }
+    .quote-attr {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+      display: flex; align-items: center; justify-content: center; gap: 18px;
+    }
+    .quote-attr::before, .quote-attr::after {
+      content: ''; width: 40px; height: 1px;
+      background: var(--amber-dim); flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       INQUIRY / APPLICATION CTA
+    ═══════════════════════════════════════════════ */
+    .inquiry-section {
+      padding: 120px 48px;
+      text-align: center;
+      background: var(--bg-panel);
+      border-top: 1px solid rgba(212,145,58,.08);
+    }
+    .inquiry-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .inquiry-inner .section-kicker { text-align: center; }
+    .inquiry-inner .section-title { text-align: center; margin-bottom: 28px; }
+    .inquiry-inner .section-body { text-align: center; margin-bottom: 56px; }
+
+    .cta-cluster {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-primary {
+      font-family: 'Cinzel', serif;
+      font-size: 10px; letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--bg-solid);
+      background: var(--amber);
+      padding: 18px 44px;
+      transition: background .3s, transform .3s var(--ease-out), box-shadow .4s;
+    }
+    .cta-primary:hover {
+      background: var(--gold-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(212,145,58,.25);
+    }
+
+    .cta-secondary {
+      font-family: 'Cinzel', serif;
+      font-size: 10px; letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid rgba(212,145,58,.35);
+      padding: 18px 44px;
+      transition: color .3s, border-color .3s, background .3s;
+    }
+    .cta-secondary:hover {
+      color: var(--gold-bright);
+      border-color: var(--gold-bright);
+      background: rgba(212,145,58,.06);
+    }
+
+    .inquiry-note {
+      margin-top: 36px;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--parchment-30);
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    .footer {
+      padding: 80px 48px 56px;
+      border-top: 1px solid rgba(212,145,58,.12);
+      background: var(--bg-solid);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+    @media (max-width: 760px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    .footer-brand .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 14px; letter-spacing: .35em;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .footer-brand .brand-sub {
+      font-family: 'Cinzel', serif;
+      font-size: 8px; letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .footer-brand .brand-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--parchment-30);
+    }
+
+    .footer-nav-label {
+      font-family: 'Cinzel', serif;
+      font-size: 8px; letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .footer-nav-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .footer-nav-list a {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px; letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--parchment-30);
+      transition: color .3s;
+    }
+    .footer-nav-list a:hover { color: var(--gold); }
+
+    .footer-contact .footer-nav-label { color: var(--amber-dim); }
+    .footer-contact p {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--parchment-30);
+      font-style: italic;
+    }
+    .footer-contact a {
+      color: var(--gold-dim);
+      transition: color .3s;
+      font-style: normal;
+    }
+    .footer-contact a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 28px;
+      border-top: 1px solid rgba(212,145,58,.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-bottom p {
+      font-size: 12px;
+      color: var(--parchment-30);
+      font-family: 'Cinzel', serif;
+      letter-spacing: .18em;
+    }
+    .footer-gate-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: .38em;
+      color: var(--amber-dim);
+      text-transform: uppercase;
     }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav is-scrolled" id="nav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="../../" class="nav__logo">
-          <svg class="nav__logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="16" stroke="var(--color-gold-500)" stroke-width="1"/>
-            <path d="M22 10 L22 34 M14 18 L22 10 L30 18 M14 26 L22 34 L30 26" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="nav__logo-text">Alexandria</span>
-        </a>
 
-        <div class="nav__menu">
-          <a href="../../philosophy/" class="nav__link">Philosophy</a>
-          <a href="../" class="nav__link" style="color: var(--color-gold-500);">Sanctuary</a>
-          <a href="../../forum/" class="nav__link">Forum</a>
-          <a href="../../library/" class="nav__link">Library</a>
-          <a href="../../visit/" class="nav__link">Visit</a>
-        </div>
+  <!-- Custom Dual Cursor -->
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
 
-        <div class="nav__actions">
-          <a href="../../visit/" class="btn btn-secondary btn-sm">Begin Your Journey</a>
-          <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
+  <!-- Film Grain -->
+  <div class="grain" aria-hidden="true"></div>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="nav__mobile-menu" id="mobileMenu">
-      <a href="../../philosophy/" class="nav__link">Philosophy</a>
-      <a href="../" class="nav__link">Sanctuary</a>
-      <a href="../../forum/" class="nav__link">Forum</a>
-      <a href="../../library/" class="nav__link">Library</a>
-      <a href="../../visit/" class="nav__link">Visit</a>
-    </div>
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-bar" aria-hidden="true">
+    <div class="scroll-bar__fill" id="scrollFill"></div>
+    <div class="scroll-bar__nub"  id="scrollNub"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="../../index.html" class="nav-logo">
+      <img src="../../assets/icons/emblem.svg" alt="Alexandria Emblem" class="nav-logo-emblem" onerror="this.style.display='none'">
+      ALEXANDRIA
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../index.html">The Sanctuary</a></li>
+      <li><a href="../cave-retreat/index.html">Cave Retreat</a></li>
+      <li><a href="../hospice/index.html">Hospice</a></li>
+      <li><a href="#" class="active">Residence</a></li>
+      <li><a href="../../visit/index.html">Visit</a></li>
+    </ul>
+
+    <a href="../index.html" class="nav-back">← The Sanctuary</a>
   </nav>
 
-  <!-- Hero -->
-  <header class="residence-hero">
-    <div class="container container-narrow">
-      <nav class="breadcrumb" data-animate>
-        <a href="../">Sanctuary</a>
-        <span>›</span>
-        <span>Residence</span>
-      </nav>
-      <h1 class="section-title" data-animate style="font-size: var(--text-5xl);">
-        Contemplative Residence
-      </h1>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-4);">
-        명상의 집 · Myeongsang-ui Jip
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-bg-grid"></div>
+    <div class="hero-bg-vignette"></div>
+
+    <div class="hero-content">
+      <div class="gate-badge" id="gateBadge">
+        <span class="gate-badge-roman">Gate</span>
+        <span class="gate-badge-numeral">VII</span>
+        <span class="gate-badge-line"></span>
+      </div>
+
+      <p class="hero-eyebrow" id="heroEye">The Final Chapter</p>
+
+      <h1 class="hero-title" id="heroTitle">RESIDENCE</h1>
+
+      <p class="hero-subtitle" id="heroSub">
+        A community of people who have chosen to live<br>
+        their final years with intention.
       </p>
-      <p class="section-subtitle" data-animate style="margin-top: var(--space-6); font-size: var(--text-lg);">
-        Make your practice your life.<br>Make the sanctuary your home.
+
+      <div class="hero-divider" id="heroDivider">
+        <div class="hero-divider-line"></div>
+        <div class="hero-divider-diamond sm"></div>
+        <div class="hero-divider-diamond"></div>
+        <div class="hero-divider-diamond sm"></div>
+        <div class="hero-divider-line"></div>
+      </div>
+
+      <p class="hero-sub-note" id="heroNote">Palgongsan &nbsp;·&nbsp; Korea &nbsp;·&nbsp; Sacred Community</p>
+    </div>
+
+    <div class="hero-scroll-hint" id="scrollHint">
+      <span>Descend</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ INTRO BAND ═══════════ -->
+  <div class="intro-band">
+    <div class="intro-band-inner reveal">
+      <p>
+        <strong>Not a nursing home.</strong> Not a hospital. Not a managed facility.
+      </p>
+      <p>
+        Alexandria Residence is a <strong>community of people</strong> who have chosen to live their final years with intention — on a sacred mountain, among companions who understand that the last chapter deserves the same depth of attention as any other.
+      </p>
+      <p>
+        Here, the end of life is not managed. It is <strong>accompanied</strong>.
       </p>
     </div>
-  </header>
+  </div>
 
-  <!-- Introduction -->
-  <section class="residence-intro" data-animate>
-    <div class="residence-intro__content">
+  <!-- ═══════════ MOUNTAIN PARALLAX ═══════════ -->
+  <section class="mountain-section" id="mountainSection">
+    <div class="mountain-bg-fallback"></div>
+    <div class="mountain-bg" id="mountainBg"></div>
+    <div class="mountain-content reveal">
+      <span class="kicker">The Setting</span>
+      <h2>Palgongsan</h2>
+      <p>Sacred mountain of the Korean peninsula</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ WHAT IS RESIDENCE ═══════════ -->
+  <section class="section" style="padding-top:120px; padding-bottom:80px;">
+    <div class="reveal">
+      <span class="section-kicker">Alexandria Residence</span>
+      <h2 class="section-title">A Sacred Space for <span class="amber">Intentional Living</span></h2>
+    </div>
+    <div class="section-body reveal" style="max-width:760px;">
       <p>
-        Some journeys cannot be completed in a weekend. Some transformations require seasons. The contemplative residence program offers what modern life so rarely permits: unhurried time for the soul's deepest work.
+        Palgongsan has been a site of spiritual practice for over a thousand years. Monasteries, hermitages, and meditation halls occupy its slopes. The mountain itself seems to hold a particular quality of quiet — an atmosphere that slows the interior noise that modern life accumulates.
       </p>
       <p>
-        As a resident, you'll live within the sanctuary community—sharing meals, participating in daily practice, contributing to the life of the place through work meditation. But you'll also have solitude: your own room, time for personal study, and freedom to walk the mountain paths whenever the spirit calls.
+        Alexandria Residence is built within this context. Our community occupies a small number of residences set among the mountain's foothills, connected to the broader Sanctuary grounds. Residents move between private space and shared life according to their own rhythm.
       </p>
       <p>
-        We are not a monastery. We impose no beliefs, demand no vows. We simply offer structure and support for those who need time apart from the ordinary world to discover what they already know.
+        We exist because we believe that how one lives in the last years shapes the quality of the final passage — and that <strong>no one should face that passage without genuine companionship</strong>.
       </p>
     </div>
   </section>
 
-  <div class="divider"></div>
+  <!-- ═══════════ DIVIDER ═══════════ -->
+  <div style="padding: 0 48px; max-width:1200px; margin:0 auto;">
+    <div class="divider-amber">
+      <div class="divider-amber-line"></div>
+      <div class="divider-amber-diamond"></div>
+      <div class="divider-amber-line"></div>
+    </div>
+  </div>
 
-  <!-- Life at Residence -->
-  <section class="life-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Daily Life</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">The Rhythm of Residence</h2>
+  <!-- ═══════════ THE RESIDENT LIFE — 4 ASPECTS ═══════════ -->
+  <section class="aspects-section">
+    <div class="aspects-header reveal">
+      <span class="section-kicker">The Resident Life</span>
+      <h2 class="section-title">Four Aspects of the Community</h2>
+      <p class="section-body" style="max-width:560px; margin:0 auto;">
+        Life at Alexandria Residence is shaped by four interwoven commitments — each one a response to what the final chapter of life actually requires.
+      </p>
     </div>
 
-    <div class="life-grid">
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="40" r="25" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="40" y1="20" x2="40" y2="40" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="40" y1="40" x2="52" y2="48" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="40" cy="40" r="3" fill="var(--color-gold-500)"/>
-        </svg>
-        <h3 class="life-card__title">Morning Practice</h3>
-        <p class="life-card__text">
-          Each day begins with communal meditation at 6am. The practice is silent, formless—you bring your own tradition or sit in simple awareness.
-        </p>
-      </article>
+    <div class="aspects-grid">
 
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 50 C20 35 30 25 40 25 C50 25 60 35 60 50" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <rect x="25" y="50" width="30" height="15" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <circle cx="40" cy="38" r="8" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-        </svg>
-        <h3 class="life-card__title">Work Meditation</h3>
-        <p class="life-card__text">
-          Three hours daily of mindful work: gardening, cooking, cleaning, building. Labor becomes practice. Practice becomes service.
-        </p>
-      </article>
-
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="22" y="20" width="36" height="45" rx="2" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="28" y1="30" x2="52" y2="30" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="28" y1="38" x2="52" y2="38" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="28" y1="46" x2="44" y2="46" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="life-card__title">Personal Study</h3>
-        <p class="life-card__text">
-          Full access to the library, study rooms, and guidance from resident teachers. Follow your questions wherever they lead.
-        </p>
-      </article>
-
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="30" cy="40" r="12" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="50" cy="40" r="12" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <path d="M38 40 A12 12 0 0 1 42 40" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-        </svg>
-        <h3 class="life-card__title">Community Meals</h3>
-        <p class="life-card__text">
-          Shared vegetarian meals taken in mindful silence at breakfast and lunch. Dinner is optional and conversational.
-        </p>
-      </article>
-
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M25 55 L40 20 L55 55" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-          <path d="M20 55 L60 55" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <circle cx="40" cy="35" r="5" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-        </svg>
-        <h3 class="life-card__title">Mountain Walking</h3>
-        <p class="life-card__text">
-          The trails of Palgongsan are yours to explore. Daily walks are encouraged—the mountain teaches what books cannot.
-        </p>
-      </article>
-
-      <article class="life-card">
-        <svg class="life-card__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="30" r="10" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="28" cy="52" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <circle cx="52" cy="52" r="8" stroke="var(--color-gold-500)" stroke-width="1.5"/>
-          <line x1="40" y1="40" x2="32" y2="46" stroke="var(--color-gold-500)" stroke-width="1"/>
-          <line x1="40" y1="40" x2="48" y2="46" stroke="var(--color-gold-500)" stroke-width="1"/>
-        </svg>
-        <h3 class="life-card__title">Weekly Gatherings</h3>
-        <p class="life-card__text">
-          Forum events, teacher talks, and community circles. You're part of something larger—a sangha of seekers.
-        </p>
-      </article>
-    </div>
-  </section>
-
-  <!-- Accommodation -->
-  <section class="accommodation-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Your Space</span>
-    <h2 style="margin-top: var(--space-4);">Accommodations</h2>
-    <p>
-      Each resident has a private room—simple, beautiful, conducive to stillness. All rooms include a bed, desk, chair, and window. Nothing more, nothing less.
-    </p>
-
-    <div class="room-types">
-      <article class="room-card">
-        <div class="room-card__image">
-          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="15" y="25" width="50" height="35" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <rect x="25" y="45" width="18" height="15" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <rect x="50" y="30" width="10" height="10" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
+      <!-- Aspect 1: Daily Rhythm -->
+      <div class="aspect-card reveal">
+        <span class="aspect-number">I &nbsp;/&nbsp; IV</span>
+        <div class="aspect-icon">
+          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="18" stroke="#8B6A30" stroke-width="1"/>
+            <line x1="22" y1="6" x2="22" y2="12" stroke="#C8A96E" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="22" y1="32" x2="22" y2="38" stroke="#8B6A30" stroke-width="1" stroke-linecap="round"/>
+            <line x1="6" y1="22" x2="12" y2="22" stroke="#8B6A30" stroke-width="1" stroke-linecap="round"/>
+            <line x1="32" y1="22" x2="38" y2="22" stroke="#8B6A30" stroke-width="1" stroke-linecap="round"/>
+            <line x1="22" y1="22" x2="22" y2="14" stroke="#C8A96E" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="22" y1="22" x2="29" y2="22" stroke="#C8A96E" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="22" cy="22" r="2" fill="#C8A96E"/>
           </svg>
         </div>
-        <div class="room-card__content">
-          <h3 class="room-card__title">Garden Room</h3>
-          <p class="room-card__subtitle">정원방 · Ground floor, garden view</p>
-          <ul class="room-card__features">
-            <li>12㎡ private room</li>
-            <li>Direct garden access</li>
-            <li>Shared bathroom</li>
-            <li>Morning sunlight</li>
-          </ul>
-          <div class="room-card__price">
-            ₩1,800,000 <small>/ month</small>
-          </div>
-        </div>
-      </article>
+        <h3 class="aspect-title">Daily Rhythm</h3>
+        <p class="aspect-body">
+          Morning begins with silence — a gentle shared practice before the day's conversation. Meals are taken together, unhurried. Afternoons hold space for personal contemplation, creative work, or simply being on the mountain. Evenings gather the community for reflection, sometimes a teaching, always connection. The rhythm is not rigorous. It is held.
+        </p>
+      </div>
 
-      <article class="room-card">
-        <div class="room-card__image">
-          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="15" y="20" width="50" height="40" stroke="var(--color-gold-500)" stroke-width="1.5" fill="none"/>
-            <rect x="25" y="40" width="18" height="20" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <rect x="48" y="25" width="12" height="15" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
-            <path d="M20 20 L40 8 L60 20" stroke="var(--color-gold-500)" stroke-width="1" fill="none"/>
+      <!-- Aspect 2: Spiritual Companionship -->
+      <div class="aspect-card reveal">
+        <span class="aspect-number">II &nbsp;/&nbsp; IV</span>
+        <div class="aspect-icon">
+          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="14" r="6" stroke="#C8A96E" stroke-width="1"/>
+            <path d="M10 36c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#8B6A30" stroke-width="1"/>
+            <path d="M30 20c2 1.5 4 4 4 8" stroke="#8B6A30" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
+            <path d="M14 20c-2 1.5-4 4-4 8" stroke="#8B6A30" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
+            <circle cx="36" cy="16" r="4" stroke="#8B6A30" stroke-width="1"/>
+            <circle cx="8" cy="16" r="4" stroke="#8B6A30" stroke-width="1"/>
           </svg>
         </div>
-        <div class="room-card__content">
-          <h3 class="room-card__title">Mountain Room</h3>
-          <p class="room-card__subtitle">산방 · Upper floor, mountain view</p>
-          <ul class="room-card__features">
-            <li>15㎡ private room</li>
-            <li>Palgongsan vista</li>
-            <li>Private bathroom</li>
-            <li>Small meditation alcove</li>
-          </ul>
-          <div class="room-card__price">
-            ₩2,400,000 <small>/ month</small>
-          </div>
+        <h3 class="aspect-title">Spiritual Companionship</h3>
+        <p class="aspect-body">
+          Residents have access to teachers and guides from across traditions — Buddhist, Christian, Taoist, and others. No path is imposed. No creed is required. What we offer is presence: someone who has walked the territory before and can sit alongside you as you walk it now. The question is not which religion. The question is whether you are accompanied.
+        </p>
+      </div>
+
+      <!-- Aspect 3: Physical Care -->
+      <div class="aspect-card reveal">
+        <span class="aspect-number">III &nbsp;/&nbsp; IV</span>
+        <div class="aspect-icon">
+          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="20" width="24" height="14" rx="2" stroke="#8B6A30" stroke-width="1"/>
+            <path d="M22 10v8M18 14h8" stroke="#C8A96E" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="14" y="24" width="5" height="5" rx="1" stroke="#8B6A30" stroke-width="1"/>
+            <rect x="25" y="24" width="5" height="5" rx="1" stroke="#8B6A30" stroke-width="1"/>
+          </svg>
         </div>
-      </article>
+        <h3 class="aspect-title">Physical Care</h3>
+        <p class="aspect-body">
+          Holistic care is woven into the fabric of residence rather than delivered as an intervention. Medical needs are coordinated with practitioners who understand that physical care and spiritual accompaniment are not separate things. As needs change over time, care adapts — always aiming toward comfort, dignity, and presence rather than mere management of symptoms.
+        </p>
+      </div>
+
+      <!-- Aspect 4: The Final Passage -->
+      <div class="aspect-card reveal">
+        <span class="aspect-number">IV &nbsp;/&nbsp; IV</span>
+        <div class="aspect-icon">
+          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 6 L22 38" stroke="#8B6A30" stroke-width="1" stroke-dasharray="2 3"/>
+            <path d="M22 6 C 16 14 10 18 10 26 C 10 32 16 38 22 38 C 28 38 34 32 34 26 C 34 18 28 14 22 6Z" stroke="#C8A96E" stroke-width="1" fill="none"/>
+            <circle cx="22" cy="26" r="3" fill="#8B6A30"/>
+            <path d="M22 6 L22 23" stroke="#C8A96E" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="aspect-title">The Final Passage</h3>
+        <p class="aspect-body">
+          When the time comes, it is met with the same quality of attention that has characterized all of residence. A sacred accompaniment: a room prepared, a community present, practitioners who know how to hold the space between breaths. Not clinical. Not alone. For those who have lived their final years in this community, the final passage is the natural conclusion of a life deliberately lived — and it is never met in solitude.
+        </p>
+      </div>
+
     </div>
   </section>
 
-  <!-- Programs -->
-  <section class="programs-section" data-animate>
-    <div class="container container-narrow text-center">
-      <span class="section-label">Residency Options</span>
-      <h2 class="section-title" style="margin-top: var(--space-4);">Program Durations</h2>
-      <p class="section-subtitle" style="margin-top: var(--space-4);">
-        All programs include room, meals, and full access to sanctuary facilities and programs.
+  <!-- ═══════════ SETTING — DETAIL ═══════════ -->
+  <div class="setting-section reveal">
+    <div class="setting-text">
+      <span class="section-kicker">The Mountain</span>
+      <h2 class="section-title">Palgongsan — <span class="amber">Sacred Ground</span></h2>
+      <div class="section-body">
+        <p>
+          Palgongsan rises northeast of Daegu in the North Gyeongsang province of Korea. Its name — Eight Duke Mountain — carries echoes of the Goryeo dynasty, when eight generals are said to have fallen defending the kingdom here.
+        </p>
+        <p>
+          For over twelve centuries it has been a mountain of practice. Donghaksa, Gatbawi, Sudobyeoksa — these names have been spoken by pilgrims across generations. The mountain knows how to hold people who are moving through threshold states.
+        </p>
+        <p>
+          We chose this ground deliberately. The mountain air carries a particular clarity in all four seasons. Spring brings azalea and forsythia. Summer, deep green silence. Autumn, the full ceremony of colour. Winter, the stripped-back dignity of bare branches and grey light. Each season teaches something the final chapter of life can use.
+        </p>
+      </div>
+    </div>
+
+    <div class="setting-facts">
+      <div>
+        <span class="setting-fact-label">Location</span>
+        <div class="setting-fact-value"><strong>Palgongsan</strong><br>North Gyeongsang Province<br>Republic of Korea</div>
+      </div>
+      <div>
+        <span class="setting-fact-label">Elevation</span>
+        <div class="setting-fact-value"><strong>1,193 m</strong> at summit<br>Residences at foothills</div>
+      </div>
+      <div>
+        <span class="setting-fact-label">Spiritual Heritage</span>
+        <div class="setting-fact-value">Buddhist temples &amp;<br>hermitages since the <strong>8th century</strong></div>
+      </div>
+      <div>
+        <span class="setting-fact-label">Seasonal Character</span>
+        <div class="setting-fact-value">All four seasons in full expression.<br><strong>Each one, a teaching.</strong></div>
+      </div>
+      <div>
+        <span class="setting-fact-label">Nearest City</span>
+        <div class="setting-fact-value"><strong>Daegu</strong> — 40 min<br>Seoul — 2.5 hr by KTX</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ CENTRAL QUOTE ═══════════ -->
+  <section class="quote-section">
+    <div class="reveal">
+      <p class="quote-text">
+        "To die well, one must have <em>lived toward death</em> — not in dread, but in the same spirit of attention one would bring to any meaningful threshold."
+      </p>
+      <div class="quote-attr">Alexandria Sanctuary</div>
+    </div>
+  </section>
+
+  <!-- ═══════════ MEMBERSHIP ═══════════ -->
+  <section class="membership-section">
+    <div class="membership-inner">
+
+      <div class="membership-tenets reveal">
+        <span class="section-kicker" style="display:block; margin-bottom:36px;">Membership</span>
+
+        <div class="tenet-item">
+          <p><strong>Invitation &amp; Application</strong>Membership to Alexandria Residence is by invitation and considered application. We meet with prospective residents and their families before any commitment is made — in both directions.</p>
+        </div>
+
+        <div class="tenet-item">
+          <p><strong>Intentional Capacity</strong>Capacity is kept intentionally limited. A small community can hold each person fully. We will not expand beyond the point where genuine accompaniment is possible.</p>
+        </div>
+
+        <div class="tenet-item">
+          <p><strong>The Earlier Gates</strong>Priority is given to those who have walked through Alexandria's earlier gates — the Cave Retreat, the Hospice Volunteer program, the long-term contemplative fellowships. The Residence is, in many ways, the continuation of a relationship that has been deepening for years.</p>
+        </div>
+
+        <div class="tenet-item">
+          <p><strong>First Arrivals</strong>We also receive those who arrive at Gate VII without prior history here. What we ask is not a history with us, but a genuine readiness to live with intention.</p>
+        </div>
+      </div>
+
+      <div class="membership-statement reveal">
+        <blockquote>
+          "We are not a facility. We are a community. The distinction is not semantic — it defines every decision we make about how this place is run, what it feels like to live here, and what it means to die here."
+        </blockquote>
+        <span class="attribution">— Alexandria Sanctuary, Founding Charter</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ INQUIRY / APPLICATION CTA ═══════════ -->
+  <section class="inquiry-section">
+    <div class="inquiry-inner reveal">
+      <span class="section-kicker">Begin the Conversation</span>
+      <h2 class="section-title">Inquiry &amp; Application</h2>
+      <div class="section-body">
+        <p>
+          If you or someone you love is considering Alexandria Residence, we invite an initial conversation. There is no form to fill before we speak. Begin simply by coming to visit, or writing to us directly.
+        </p>
+        <p>
+          The right timing is rarely certain. We find that most people who eventually join the community arrive after a period of discernment — sometimes years. Begin the conversation early. Let it develop at its own pace.
+        </p>
+      </div>
+
+      <div class="cta-cluster">
+        <a href="../../visit/index.html" class="cta-primary">Plan a Visit</a>
+        <a href="../../contact/index.html" class="cta-secondary">Write to Us</a>
+      </div>
+
+      <p class="inquiry-note">
+        All initial inquiries are treated with complete confidentiality.
       </p>
     </div>
-
-    <div class="program-table">
-      <div class="program-row">
-        <div class="program-row__duration">3 Months</div>
-        <div class="program-row__description">
-          An introduction to contemplative living. Ideal for sabbaticals, life transitions, or exploring whether extended practice is your path.
-        </div>
-        <div class="program-row__price">
-          ₩5,100,000
-          <small>Garden Room</small>
-        </div>
-      </div>
-
-      <div class="program-row">
-        <div class="program-row__duration">6 Months</div>
-        <div class="program-row__description">
-          Deep immersion. Time enough for the mind to truly settle and for genuine transformation to take root. Our most popular option.
-        </div>
-        <div class="program-row__price">
-          ₩9,600,000
-          <small>Garden Room</small>
-        </div>
-      </div>
-
-      <div class="program-row">
-        <div class="program-row__duration">1 Year</div>
-        <div class="program-row__description">
-          The traditional period for serious practice. Four seasons on the mountain, watching the dharma unfold in maple leaves and snow.
-        </div>
-        <div class="program-row__price">
-          ₩18,000,000
-          <small>Garden Room</small>
-        </div>
-      </div>
-    </div>
-
-    <p style="max-width: var(--max-width-prose); margin: var(--space-8) auto 0; text-align: center; font-size: var(--text-sm); color: var(--text-tertiary); padding: 0 var(--container-padding);">
-      * Mountain Room rates are approximately 33% higher. Scholarship support available for those with financial need.
-    </p>
   </section>
 
-  <!-- Community -->
-  <section class="community-section" data-animate>
-    <span class="section-label" style="display: block; text-align: center;">Living Together</span>
-    <h2 style="margin-top: var(--space-4);">The Resident Community</h2>
-    <p>
-      You will share the sanctuary with 15-20 fellow residents from around the world. Some are young seekers on gap years; others are elders preparing for life's final chapters. What unites us is the recognition that something is missing in ordinary life—and the courage to seek it.
-    </p>
-    <blockquote>
-      <p>
-        "I came for three months and stayed for a year. The community became my family—not because we agreed on everything, but because we shared silence. In silence, differences dissolve."
-      </p>
-      <cite>— Resident, 2025</cite>
-    </blockquote>
-  </section>
-
-  <!-- Eligibility -->
-  <section class="eligibility-section" data-animate>
-    <h2>Who Should Apply</h2>
-
-    <div class="eligibility-grid">
-      <div class="eligibility-item">
-        <div class="eligibility-item__number">I</div>
-        <h3 class="eligibility-item__title">Genuine Seekers</h3>
-        <p class="eligibility-item__text">
-          Those with sincere questions about meaning, purpose, and the nature of mind. No particular belief system required.
-        </p>
-      </div>
-
-      <div class="eligibility-item">
-        <div class="eligibility-item__number">II</div>
-        <h3 class="eligibility-item__title">Self-Sufficient Adults</h3>
-        <p class="eligibility-item__text">
-          Capable of basic self-care, community living, and contributing to shared responsibilities. Ages 21-85.
-        </p>
-      </div>
-
-      <div class="eligibility-item">
-        <div class="eligibility-item__number">III</div>
-        <h3 class="eligibility-item__title">Those in Transition</h3>
-        <p class="eligibility-item__text">
-          Career changers, recent retirees, those recovering from loss. Times of transition are ideal for deep practice.
-        </p>
-      </div>
-
-      <div class="eligibility-item">
-        <div class="eligibility-item__number">IV</div>
-        <h3 class="eligibility-item__title">Community Contributors</h3>
-        <p class="eligibility-item__text">
-          Willing to participate in work meditation and support the sanctuary's mission. We build this place together.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="section" style="padding-top: var(--space-10);">
-    <div class="container container-narrow text-center">
-      <div class="ornament" data-animate>✦</div>
-      <p class="section-subtitle mt-8" data-animate>
-        Ready to make the sanctuary your home?
-      </p>
-      <div class="mt-8" data-animate style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-        <a href="../../visit/" class="btn btn-primary">Apply for Residency</a>
-        <a href="../cave-retreat/" class="btn btn-secondary">Try a Retreat First</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
+  <!-- ═══════════ FOOTER ═══════════ -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <span>&copy; 2026 Alexandria Sanctuary Foundation</span>
-        <span>Palgongsan, Daegu, Korea</span>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <p class="brand-name">ALEXANDRIA</p>
+        <span class="brand-sub">Sanctuary · Palgongsan · Korea</span>
+        <p class="brand-desc">A contemplative sanctuary on the sacred mountain. Seven gates. One intention: to live and die well.</p>
       </div>
+
+      <nav>
+        <span class="footer-nav-label">The Sanctuary</span>
+        <ul class="footer-nav-list">
+          <li><a href="../cave-retreat/index.html">Cave Retreat</a></li>
+          <li><a href="../hospice/index.html">Hospice</a></li>
+          <li><a href="#">Residence</a></li>
+          <li><a href="../../visit/index.html">Visit</a></li>
+          <li><a href="../../index.html">Home</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-contact">
+        <span class="footer-nav-label">Contact</span>
+        <p>
+          For residence inquiries, visit, or any correspondence:<br><br>
+          <a href="mailto:residence@alexandria-sanctuary.org">residence@alexandria-sanctuary.org</a><br><br>
+          All communications are received in confidence and responded to with care.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Alexandria Sanctuary. All rights reserved.</p>
+      <span class="footer-gate-tag">Gate VII &nbsp;·&nbsp; Residence &nbsp;·&nbsp; The Final Chapter</span>
     </div>
   </footer>
 
-  <script src="../../assets/js/app.js"></script>
+  <!-- ═══════════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════════ -->
+  <script>
+    // ── Cursor ──────────────────────────────────
+    (function () {
+      const dot  = document.getElementById('cur-dot');
+      const ring = document.getElementById('cur-ring');
+      let mx = -200, my = -200;
+      let rx = -200, ry = -200;
+      const LAG = 0.10; // settled, not urgent
+
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+      document.addEventListener('mouseleave', () => document.body.classList.add('cur-hidden'));
+      document.addEventListener('mouseenter', () => document.body.classList.remove('cur-hidden'));
+
+      const links = document.querySelectorAll('a, button, .aspect-card, .tenet-item');
+      const gates  = document.querySelectorAll('.cta-primary, .cta-secondary, .gate-badge');
+
+      links.forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
+      });
+      gates.forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cur-gate'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cur-gate'));
+      });
+
+      function tick() {
+        dot.style.left  = mx + 'px';
+        dot.style.top   = my + 'px';
+        rx += (mx - rx) * LAG;
+        ry += (my - ry) * LAG;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+
+    // ── Nav scroll ──────────────────────────────
+    (function () {
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      }, { passive: true });
+    })();
+
+    // ── Scroll progress bar ──────────────────────
+    (function () {
+      const fill = document.getElementById('scrollFill');
+      const nub  = document.getElementById('scrollNub');
+      window.addEventListener('scroll', () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+        fill.style.height = pct + '%';
+        nub.style.top     = pct + '%';
+      }, { passive: true });
+    })();
+
+    // ── GSAP + ScrollTrigger ──────────────────────
+    window.addEventListener('load', function () {
+      if (typeof gsap === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero entrance — unhurried, warm
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl
+        .to('#gateBadge',  { opacity: 1, y: 0, duration: 1.4, delay: 0.3 }, 0)
+        .to('#heroEye',    { opacity: 1, y: 0, duration: 1.2 }, 0.7)
+        .to('#heroTitle',  { opacity: 1, y: 0, duration: 1.4 }, 1.0)
+        .to('#heroSub',    { opacity: 1, y: 0, duration: 1.2 }, 1.5)
+        .to('#heroDivider',{ opacity: 1, y: 0, duration: 1.0 }, 1.8)
+        .to('#heroNote',   { opacity: 1, y: 0, duration: 1.0 }, 2.0)
+        .to('#scrollHint', { opacity: 1, y: 0, duration: 1.0 }, 2.4);
+
+      // Slow parallax on hero bg
+      gsap.to('#heroBg', {
+        yPercent: 18,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.5,
+        }
+      });
+
+      // Mountain parallax — slower, more settled
+      gsap.to('#mountainBg', {
+        yPercent: 22,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#mountainSection',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2.0,
+        }
+      });
+
+      // Reveal elements on scroll — slow, dignified
+      document.querySelectorAll('.reveal').forEach(el => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1, y: 0,
+            duration: 1.4,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            }
+          }
+        );
+      });
+
+      // Aspect cards — stagger the grid
+      gsap.fromTo('.aspect-card',
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1, y: 0,
+          duration: 1.2,
+          stagger: 0.22,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.aspects-grid',
+            start: 'top 80%',
+          }
+        }
+      );
+
+      // Tenet items — stagger
+      gsap.fromTo('.tenet-item',
+        { opacity: 0, x: -24 },
+        {
+          opacity: 1, x: 0,
+          duration: 1.0,
+          stagger: 0.18,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.membership-tenets',
+            start: 'top 82%',
+          }
+        }
+      );
+
+      // Warm amber glow on membership blockquote hover (complementary to CSS)
+      const bq = document.querySelector('.membership-statement blockquote');
+      if (bq) {
+        bq.addEventListener('mouseenter', () => {
+          gsap.to(bq, { textShadow: '0 0 80px rgba(212,145,58,0.08)', duration: 0.6 });
+        });
+        bq.addEventListener('mouseleave', () => {
+          gsap.to(bq, { textShadow: 'none', duration: 0.6 });
+        });
+      }
+
+      // Subtle amber pulse on Gate VII badge in hero
+      gsap.to('.gate-badge-numeral', {
+        opacity: 0.8,
+        duration: 3.5,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut',
+        delay: 2.8,
+      });
+    });
+  </script>
 </body>
 </html>
