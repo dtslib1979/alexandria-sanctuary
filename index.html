@@ -168,7 +168,6 @@
     .intro-emblem {
       width: 56px; height: 56px;
       margin-bottom: 48px;
-      opacity: 0; transform: scale(0.8);
     }
 
     .intro-row {
@@ -1296,7 +1295,8 @@
   <div class="palg-wrap">
     <img class="palg-img" id="palg-img"
          src="https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?w=1600&q=80"
-         alt="Palgongsan mountain in mist">
+         alt="Palgongsan mountain in mist"
+         onerror="this.style.display='none'">
     <div class="palg-ov"></div>
     <div class="palg-text">
       <div class="clip-reveal"><span class="palg-en">PALGONGSAN</span></div>
@@ -1411,12 +1411,28 @@
   <!-- ═══════════════════════════════════
        GSAP CDN
   ═══════════════════════════════════ -->
+  <!-- Fallback: GSAP 4초 안에 안 뜨면 강제 표시 -->
+  <script>
+    window._asEmergency = setTimeout(function() {
+      var intro = document.getElementById('intro');
+      if (intro) { intro.style.opacity='0'; intro.style.pointerEvents='none';
+        setTimeout(function(){ intro.classList.add('done'); }, 400); }
+      ['h-eye','h-kr','h-tag','h-btns','h-scroll'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) { el.style.opacity='1'; el.style.transform='none'; }
+      });
+      var title = document.getElementById('h-title');
+      if (title) { title.style.opacity='1'; title.style.transform='none'; }
+    }, 4000);
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script>
   (() => {
     'use strict';
+    if (!window.gsap) return; // GSAP 로드 실패시 emergency 타이머가 처리
+    clearTimeout(window._asEmergency); // GSAP 정상 로드, 타이머 취소
     gsap.registerPlugin(ScrollTrigger);
 
     /* ─── UTIL ──────────────────────────────────── */
@@ -1436,11 +1452,11 @@
     });
 
     introTL
-      .to('#intro-emb', { opacity: 1, scale: 1, duration: 1, ease: 'power3.out', delay: .3 })
-      .to('#il1',       { y: '0%', opacity: 1, duration: .95, ease: 'power3.out' }, '+=.15')
-      .to('#il2',       { y: '0%', opacity: 1, duration: .95, ease: 'power3.out' }, '-=.5')
-      .to('#ia',        { opacity: 1, y: 0,    duration: .8,  ease: 'power3.out' }, '+=.3')
-      .to({},           { duration: 1.9 });
+      .from('#intro-emb', { opacity: 0, scale: 0.8, duration: .7, ease: 'power3.out', delay: .2 })
+      .from('#il1',        { y: '110%', duration: .75, ease: 'power3.out' }, '+=.1')
+      .from('#il2',        { y: '110%', duration: .75, ease: 'power3.out' }, '-=.45')
+      .from('#ia',         { opacity: 0, y: 12,  duration: .6, ease: 'power3.out' }, '+=.15')
+      .to({},              { duration: 1.2 });
 
     /* ─── HERO ──────────────────────────────────── */
     function playHero() {
