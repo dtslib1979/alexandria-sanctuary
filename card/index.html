@@ -2,693 +2,250 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Alexandria Sanctuary — Card</title>
-  <meta name="description" content="Alexandria Sanctuary — A place of stillness, reflection, and sacred dialogue. Palgongsan, Daegu, Korea.">
-  <meta property="og:title" content="Alexandria Sanctuary">
-  <meta property="og:description" content="A place of stillness. Palgongsan · Daegu · Korea">
-  <meta property="og:type" content="website">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alexandria — Card</title>
+  <meta name="description" content="Alexandria Sanctuary — Where the Final Gate Opens. Palgongsan, Daegu, Korea.">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap"></noscript>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
   <style>
-    /* ── Reset & Custom Properties ─────────────────────── */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#080604;--gold:#C8A96E;--gdim:#8B6A30;--gbright:#E8C98E;
+      --p:#EAE4D6;--p60:rgba(234,228,214,.6);--p30:rgba(234,228,214,.3);
     }
-
-    :root {
-      --bg-solid:    #080604;
-      --gold:        #C8A96E;
-      --gold-dim:    #8B6A30;
-      --gold-bright: #E8C98E;
-      --parchment:   #EAE4D6;
-      --bg-panel:    #0D0A07;
-      --transition:  cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* ── Cursor ─────────────────────────────────────────── */
-    * { cursor: none; }
-
-    #cursor-ring {
-      position: fixed;
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s var(--transition),
-                  height 0.3s var(--transition),
-                  border-color 0.3s var(--transition),
-                  opacity 0.3s var(--transition);
-      opacity: 0;
-    }
-
-    #cursor-dot {
-      position: fixed;
-      width: 5px;
-      height: 5px;
-      background: var(--gold-bright);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 10000;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      transition: opacity 0.3s var(--transition);
-    }
-
-    body:hover #cursor-ring,
-    body:hover #cursor-dot { opacity: 1; }
-
-    body.hovering-link #cursor-ring {
-      width: 52px;
-      height: 52px;
-      border-color: var(--gold-bright);
-    }
-
-    /* ── Film Grain ─────────────────────────────────────── */
-    #grain {
-      position: fixed;
-      inset: -50%;
-      width: 200%;
-      height: 200%;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.032;
-      animation: grain-shift 0.8s steps(1) infinite;
-    }
-
-    @keyframes grain-shift {
-      0%  { transform: translate(0,     0);     }
-      10% { transform: translate(-2%,  -3%);    }
-      20% { transform: translate(3%,    2%);    }
-      30% { transform: translate(-1%,   4%);    }
-      40% { transform: translate(4%,   -1%);    }
-      50% { transform: translate(-3%,   3%);    }
-      60% { transform: translate(2%,   -4%);    }
-      70% { transform: translate(-4%,   2%);    }
-      80% { transform: translate(1%,   -2%);    }
-      90% { transform: translate(3%,    1%);    }
-    }
-
-    /* ── Base ────────────────────────────────────────────── */
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    body {
-      background: var(--bg-solid);
-      color: var(--parchment);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      position: relative;
-    }
-
-    /* Radial vignette */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(
-        ellipse 80% 80% at 50% 50%,
-        transparent 40%,
-        rgba(0,0,0,0.72) 100%
-      );
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Subtle ambient glow */
-    body::after {
-      content: '';
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(600px, 90vw);
-      height: min(600px, 90vh);
-      background: radial-gradient(circle, rgba(200,169,110,0.04) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── Card Wrapper ────────────────────────────────────── */
-    .card {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: min(480px, 94vw);
-      padding: clamp(32px, 5vh, 52px) clamp(24px, 5vw, 48px);
-      text-align: center;
-      gap: 0;
-    }
-
-    /* ── Emblem ──────────────────────────────────────────── */
-    .emblem-wrap {
-      position: relative;
-      width: 88px;
-      height: 88px;
-      margin-bottom: clamp(20px, 3.5vh, 32px);
-      animation: breathe 4s ease-in-out infinite;
-    }
-
-    @keyframes breathe {
-      0%, 100% { transform: scale(1); }
-      50%       { transform: scale(1.02); }
-    }
-
-    .emblem-wrap svg {
-      width: 88px;
-      height: 88px;
-      overflow: visible;
-    }
-
-    /* ── Title Block ─────────────────────────────────────── */
-    .title-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      margin-bottom: clamp(18px, 3vh, 28px);
-    }
-
-    .title-main {
-      font-family: 'Cinzel', serif;
-      font-weight: 500;
-      font-size: clamp(28px, 7vw, 42px);
-      letter-spacing: 0.18em;
-      color: var(--gold-bright);
-      line-height: 1.1;
-      margin-bottom: 7px;
-    }
-
-    .title-sub {
-      font-family: 'Cinzel', serif;
-      font-weight: 400;
-      font-size: clamp(9px, 2.4vw, 12px);
-      letter-spacing: 0.52em;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    /* Divider */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-      max-width: 320px;
-      margin-bottom: 16px;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold-dim));
-    }
-
-    .divider::after {
-      background: linear-gradient(to left, transparent, var(--gold-dim));
-    }
-
-    .divider-diamond {
-      width: 5px;
-      height: 5px;
-      background: var(--gold);
-      transform: rotate(45deg);
-      flex-shrink: 0;
-    }
-
-    /* Coordinates */
-    .coords-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      margin-bottom: clamp(24px, 4vh, 36px);
-    }
-
-    .coords-place {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(10px, 2.8vw, 13px);
-      letter-spacing: 0.28em;
-      color: var(--parchment);
-      opacity: 0.72;
-    }
-
-    .coords-geo {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(9px, 2.4vw, 11px);
-      letter-spacing: 0.18em;
-      color: var(--gold-dim);
-      opacity: 0.85;
-    }
-
-    /* ── Link Buttons ────────────────────────────────────── */
-    .links-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      width: 100%;
-      max-width: 360px;
-      margin-bottom: clamp(20px, 3.5vh, 32px);
-    }
-
-    .link-btn {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 13px 16px;
-      border: 1px solid rgba(200,169,110,0.28);
-      background: transparent;
-      color: var(--parchment);
-      text-decoration: none;
-      font-family: 'Cinzel', serif;
-      font-weight: 400;
-      font-size: clamp(8.5px, 2.2vw, 10.5px);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      overflow: hidden;
-      transition: color 0.38s var(--transition),
-                  border-color 0.38s var(--transition);
-    }
-
-    .link-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(200,169,110,0.14) 0%,
-        rgba(200,169,110,0.08) 100%
-      );
-      width: 0%;
-      transition: width 0.42s var(--transition);
-    }
-
-    .link-btn:hover::before {
-      width: 100%;
-    }
-
-    .link-btn:hover {
-      color: var(--gold-bright);
-      border-color: rgba(232,201,142,0.6);
-    }
-
-    .link-btn span {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── YouTube Link ────────────────────────────────────── */
-    .yt-link {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      text-decoration: none;
-      color: var(--gold-dim);
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(10px, 2.6vw, 12px);
-      letter-spacing: 0.14em;
-      opacity: 0.7;
-      transition: opacity 0.3s var(--transition), color 0.3s var(--transition);
-      margin-bottom: clamp(12px, 2vh, 20px);
-    }
-
-    .yt-link:hover {
-      opacity: 1;
-      color: var(--gold);
-    }
-
-    .yt-link svg {
-      width: 13px;
-      height: 13px;
-      fill: currentColor;
-      flex-shrink: 0;
-    }
-
-    /* ── Copyright ───────────────────────────────────────── */
-    .copyright {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(8.5px, 2vw, 10px);
-      letter-spacing: 0.22em;
-      color: var(--gold-dim);
-      opacity: 0.38;
-      text-transform: uppercase;
-    }
-
-    /* ── Initial Hidden State (GSAP animates in) ─────────── */
-    .emblem-wrap,
-    .title-main,
-    .title-sub,
-    .divider,
-    .coords-wrap,
-    .links-grid,
-    .yt-link,
-    .copyright {
-      opacity: 0;
-    }
-
-    /* ── Responsive adjustments ──────────────────────────── */
-    @media (max-height: 680px) {
-      .emblem-wrap { width: 64px; height: 88px; margin-bottom: 16px; }
-      .emblem-wrap svg { width: 64px; height: 64px; }
-      .coords-wrap { margin-bottom: 18px; }
-      .links-grid { gap: 8px; }
-    }
-
-    @media (max-width: 360px) {
-      .links-grid { grid-template-columns: 1fr; max-width: 260px; }
-    }
-
-    /* ═══ MOBILE OPTIMIZATION ═══ */
-    @media (hover: none) {
-      #cur-dot, #cur-ring { display: none; }
-      body { cursor: auto; }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; flex-direction: column; position: fixed; inset: 0; background: rgba(8,6,4,.97); justify-content: center; align-items: center; gap: 32px; z-index: 8999; }
-      .nav-links.open { display: flex; }
-      .nav-burger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
-      .nav-burger span { display: block; width: 24px; height: 1px; background: var(--gold); transition: .3s; }
-      section, .section { padding: 80px 24px !important; }
-      .hero-title, h1 { font-size: clamp(32px, 9vw, 64px) !important; }
-      .sec-title, h2 { font-size: clamp(22px, 6vw, 36px) !important; }
-      h3 { font-size: clamp(16px, 4vw, 22px) !important; }
-      [class*="grid"], [class*="cards"], [class*="cols"] { grid-template-columns: 1fr !important; }
-      .footer-grid, footer > div { grid-template-columns: 1fr !important; gap: 32px !important; }
-      a, button { min-height: 44px; }
-      .scroll-bar { display: none; }
-    }
-
-    @media (max-width: 480px) {
-      section, .section { padding: 56px 20px !important; }
-      .hero-title, h1 { font-size: clamp(28px, 8vw, 44px) !important; }
-      .card-links { grid-template-columns: 1fr !important; }
-      .card-title { font-size: clamp(32px, 10vw, 56px) !important; }
-      .card-sub { letter-spacing: 0.15em !important; font-size: 11px !important; }
-    }
+    html{background:var(--bg);color:var(--p);overflow-x:hidden}
+    body{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.7;cursor:none;min-height:100vh;overflow-x:hidden}
+    @media(hover:none){body{cursor:auto}}
+    a{color:inherit;text-decoration:none}
+    .grain{position:fixed;inset:-30%;width:160%;height:160%;z-index:9900;pointer-events:none;opacity:.028;will-change:transform;contain:layout style paint;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation:grain-move .7s steps(1) infinite}
+    @keyframes grain-move{0%{transform:translate(0,0)}14%{transform:translate(-4%,-8%)}28%{transform:translate(-14%,4%)}42%{transform:translate(6%,-22%)}57%{transform:translate(-4%,22%)}71%{transform:translate(14%,-2%)}85%{transform:translate(-2%,12%)}}
+    @media(prefers-reduced-motion:reduce){.grain{animation:none}}
+    #cur-dot,#cur-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:99999;border-radius:50%;transform:translate(-50%,-50%)}
+    #cur-dot{width:5px;height:5px;background:var(--gold)}
+    #cur-ring{width:36px;height:36px;border:1px solid rgba(200,169,110,.5);transition:width .3s,height .3s,border-color .3s}
+    body.cur-hover #cur-ring{width:56px;height:56px;border-color:var(--gold)}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(8,6,4,.88),transparent);transition:padding .4s,background .4s}
+    .nav.sc{background:rgba(8,6,4,.9);backdrop-filter:blur(20px);padding:14px 48px}
+    .nav-logo{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.28em;color:var(--gold);display:flex;align-items:center;gap:10px}
+    .nav-logo svg{width:20px;height:20px}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.22em;color:var(--p60);transition:color .3s}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-cta{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;border:1px solid var(--gdim);padding:9px 22px;color:var(--gold);transition:background .3s,color .3s}
+    .nav-cta:hover{background:var(--gold);color:var(--bg)}
+    @media(max-width:768px){.nav-links{display:none}.nav,.nav.sc{padding:18px 24px}}
+    #star-cv{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+    .main{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:110px 24px 80px;gap:0}
+    .visit-badge{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.25em;color:var(--gdim);margin-bottom:32px;opacity:.8}
+    .scene{perspective:1200px}
+    .card-wrap{width:340px;height:200px;position:relative;transform-style:preserve-3d;cursor:pointer;transition:box-shadow .3s}
+    .card-wrap:hover{box-shadow:0 0 60px rgba(200,169,110,.08)}
+    .face{position:absolute;inset:0;backface-visibility:hidden;padding:30px 34px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,rgba(13,10,7,.99),rgba(22,15,6,.97));border:1px solid rgba(200,169,110,.2)}
+    .back{transform:rotateY(180deg)}
+    .card-wrap.flipped{transform:rotateY(180deg)}
+    .embl svg{width:26px;height:26px;color:var(--gold)}
+    .ctitle{font-family:'Cinzel',serif;font-size:21px;letter-spacing:.16em}
+    .ctag{font-size:11px;font-style:italic;color:var(--p60);margin-top:4px}
+    .cloc{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:.32em;color:var(--gdim)}
+    .back-inner{display:flex;align-items:center;gap:20px}
+    .qr-svg{width:68px;height:68px;flex-shrink:0}
+    .links{display:flex;flex-direction:column;gap:10px}
+    .links a{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.15em;color:var(--gold);display:flex;align-items:center;gap:6px}
+    .links a svg{width:12px;height:12px;flex-shrink:0}
+    .hint{margin-top:12px;font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.22em;color:var(--gdim);opacity:.7}
+    #pcv{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0}
+    .actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:36px;position:relative;z-index:3}
+    .btn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;padding:11px 26px;border:1px solid var(--gdim);color:var(--gold);background:transparent;cursor:pointer;transition:background .3s,color .3s;display:inline-flex;align-items:center;gap:7px}
+    .btn:hover,.btn:focus{background:var(--gold);color:var(--bg);outline:none}
+    .visit-msg{margin-top:28px;font-size:13px;font-style:italic;color:var(--p60);text-align:center;max-width:300px;opacity:0;position:relative;z-index:3}
+    footer{position:relative;z-index:1;text-align:center;padding:28px;border-top:1px solid rgba(200,169,110,.07)}
+    footer p{font-size:11px;color:var(--p30);letter-spacing:.1em}
+    footer a{color:var(--gdim)}
+    @media(max-width:400px){.card-wrap{width:300px;height:182px}.face{padding:24px 26px}}
   </style>
 </head>
 <body>
+  <div class="grain"></div>
+  <canvas id="star-cv"></canvas>
+  <canvas id="pcv"></canvas>
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
 
-  <!-- Dual Cursor -->
-  <div id="cursor-ring"></div>
-  <div id="cursor-dot"></div>
-
-  <!-- Film Grain Canvas -->
-  <canvas id="grain"></canvas>
-
-  <!-- Card -->
-  <main class="card" role="main">
-
-    <!-- SVG Emblem -->
-    <div class="emblem-wrap" aria-hidden="true">
-      <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="glow-grad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%"   stop-color="#E8C98E" stop-opacity="0.18"/>
-            <stop offset="100%" stop-color="#C8A96E" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="gold-ring" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse">
-            <stop offset="0%"   stop-color="#E8C98E"/>
-            <stop offset="50%"  stop-color="#C8A96E"/>
-            <stop offset="100%" stop-color="#8B6A30"/>
-          </linearGradient>
-          <linearGradient id="gold-inner" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse">
-            <stop offset="0%"   stop-color="#E8C98E" stop-opacity="0.55"/>
-            <stop offset="100%" stop-color="#8B6A30" stop-opacity="0.3"/>
-          </linearGradient>
-        </defs>
-
-        <!-- Ambient glow -->
-        <circle cx="44" cy="44" r="44" fill="url(#glow-grad)"/>
-
-        <!-- Outer ring -->
-        <circle cx="44" cy="44" r="39" stroke="url(#gold-ring)" stroke-width="0.7" fill="none"/>
-
-        <!-- Inner ring -->
-        <circle cx="44" cy="44" r="31" stroke="url(#gold-ring)" stroke-width="0.4" fill="none" stroke-dasharray="3 2.4"/>
-
-        <!-- Central diamond -->
-        <polygon
-          points="44,18 62,44 44,70 26,44"
-          stroke="url(#gold-ring)"
-          stroke-width="0.9"
-          fill="url(#gold-inner)"
-        />
-
-        <!-- Inner diamond accent -->
-        <polygon
-          points="44,28 56,44 44,60 32,44"
-          stroke="url(#gold-ring)"
-          stroke-width="0.4"
-          fill="none"
-          opacity="0.6"
-        />
-
-        <!-- Cardinal tick marks -->
-        <line x1="44" y1="5"  x2="44" y2="11" stroke="#C8A96E" stroke-width="0.7" opacity="0.6"/>
-        <line x1="44" y1="77" x2="44" y2="83" stroke="#C8A96E" stroke-width="0.7" opacity="0.6"/>
-        <line x1="5"  y1="44" x2="11" y2="44" stroke="#C8A96E" stroke-width="0.7" opacity="0.6"/>
-        <line x1="77" y1="44" x2="83" y2="44" stroke="#C8A96E" stroke-width="0.7" opacity="0.6"/>
-
-        <!-- Center point -->
-        <circle cx="44" cy="44" r="2.2" fill="#E8C98E" opacity="0.85"/>
-        <circle cx="44" cy="44" r="1"   fill="#080604"/>
-      </svg>
-    </div>
-
-    <!-- Title Block -->
-    <div class="title-wrap">
-      <h1 class="title-main">ALEXANDRIA</h1>
-      <p class="title-sub">S A N C T U A R Y</p>
-    </div>
-
-    <!-- Divider -->
-    <div class="divider" aria-hidden="true">
-      <span class="divider-diamond"></span>
-    </div>
-
-    <!-- Coordinates -->
-    <div class="coords-wrap">
-      <p class="coords-place">PALGONGSAN &nbsp;·&nbsp; DAEGU &nbsp;·&nbsp; KOREA</p>
-      <p class="coords-geo">35°58′N &nbsp;·&nbsp; 128°69′E</p>
-    </div>
-
-    <!-- Links -->
-    <nav class="links-grid" aria-label="Sanctuary navigation">
-      <a href="../index.html" class="link-btn">
-        <span>Enter Sanctuary</span>
-      </a>
-      <a href="../index.html#gates" class="link-btn">
-        <span>Seven Gates</span>
-      </a>
-      <a href="../forum/" class="link-btn">
-        <span>Dialogues</span>
-      </a>
-      <a href="../visit/" class="link-btn">
-        <span>Visit &amp; Inquire</span>
-      </a>
-    </nav>
-
-    <!-- YouTube -->
-    <a
-      href="https://www.youtube.com/@alexandria-y6k"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="yt-link"
-      aria-label="YouTube channel @alexandria-y6k"
-    >
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-      </svg>
-      @alexandria-y6k
+  <nav class="nav" id="nav">
+    <a href="../" class="nav-logo">
+      <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="14" cy="14" r="11"/><line x1="14" y1="3" x2="14" y2="25"/>
+        <line x1="3" y1="14" x2="25" y2="14"/><circle cx="14" cy="14" r="4"/>
+      </svg>ALEXANDRIA
     </a>
+    <ul class="nav-links">
+      <li><a href="../philosophy/">WISDOM</a></li>
+      <li><a href="../sanctuary/">SANCTUARY</a></li>
+      <li><a href="../forum/">DIALOGUES</a></li>
+    </ul>
+    <a href="../visit/" class="nav-cta">VISIT</a>
+  </nav>
 
-    <!-- Copyright -->
-    <p class="copyright">
-      &copy; <span id="year"></span> Alexandria Sanctuary — All rights reserved
-    </p>
+  <main class="main">
+    <div class="visit-badge" id="vbadge"></div>
 
+    <div class="scene">
+      <div class="card-wrap" id="card">
+        <div class="face front">
+          <div class="embl"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1"><circle cx="14" cy="14" r="11"/><line x1="14" y1="3" x2="14" y2="25"/><line x1="3" y1="14" x2="25" y2="14"/><circle cx="14" cy="14" r="4"/></svg></div>
+          <div><div class="ctitle">ALEXANDRIA</div><div class="ctag">Where the Final Gate Opens</div></div>
+          <div class="cloc">PALGONGSAN · DAEGU · KOREA</div>
+        </div>
+        <div class="face back">
+          <div class="back-inner">
+            <svg class="qr-svg" viewBox="0 0 64 64" fill="none">
+              <rect x="2" y="2" width="26" height="26" stroke="#C8A96E" stroke-width="1.5"/>
+              <rect x="8" y="8" width="14" height="14" fill="#C8A96E" opacity=".55"/>
+              <rect x="36" y="2" width="26" height="26" stroke="#C8A96E" stroke-width="1.5"/>
+              <rect x="42" y="8" width="14" height="14" fill="#C8A96E" opacity=".55"/>
+              <rect x="2" y="36" width="26" height="26" stroke="#C8A96E" stroke-width="1.5"/>
+              <rect x="8" y="42" width="14" height="14" fill="#C8A96E" opacity=".55"/>
+              <rect x="36" y="36" width="6" height="6" fill="#C8A96E" opacity=".45"/>
+              <rect x="44" y="36" width="6" height="6" fill="#C8A96E" opacity=".7"/>
+              <rect x="52" y="36" width="6" height="6" fill="#C8A96E" opacity=".3"/>
+              <rect x="36" y="44" width="6" height="6" fill="#C8A96E" opacity=".8"/>
+              <rect x="44" y="44" width="6" height="6" fill="#C8A96E" opacity=".4"/>
+              <rect x="52" y="44" width="6" height="6" fill="#C8A96E" opacity=".6"/>
+              <rect x="36" y="52" width="6" height="6" fill="#C8A96E" opacity=".5"/>
+              <rect x="52" y="52" width="6" height="6" fill="#C8A96E" opacity=".75"/>
+            </svg>
+            <div class="links">
+              <a href="https://www.youtube.com/@alexandria-y6k" target="_blank" rel="noopener">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.5 5.5l5 2.5-5 2.5V5.5z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1116 0A8 8 0 010 8zm8-7a7 7 0 100 14A7 7 0 008 1z"/></svg>
+                @alexandria-y6k
+              </a>
+              <a href="../">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+                alexandria-sanctuary
+              </a>
+              <a href="../visit/">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg>
+                INQUIRE
+              </a>
+            </div>
+          </div>
+          <div class="cloc">© 2026 ALEXANDRIA SANCTUARY</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint" id="hint">CLICK CARD TO REVEAL</div>
+
+    <div class="actions">
+      <button class="btn" id="btn-share">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><line x1="5.5" y1="7" x2="10.5" y2="4"/><line x1="5.5" y1="9" x2="10.5" y2="12"/></svg>
+        SHARE
+      </button>
+      <button class="btn" id="btn-copy">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1"/><path d="M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v7a1 1 0 001 1h2"/></svg>
+        COPY LINK
+      </button>
+      <a href="../visit/" class="btn">ENTER THE GATE →</a>
+    </div>
+    <div class="visit-msg" id="vmsg"></div>
   </main>
 
+  <footer><p>Alexandria Sanctuary &nbsp;·&nbsp; <a href="../">Home</a> &nbsp;·&nbsp; <a href="../visit/">Visit</a></p></footer>
+
   <script>
-    /* ── Year ─────────────────────────────────────────────── */
-    document.getElementById('year').textContent = new Date().getFullYear();
+  (() => {
+    'use strict';
+    const isTouch = window.matchMedia('(hover:none)').matches;
 
-    /* ── Film Grain ──────────────────────────────────────── */
-    (function() {
-      const canvas = document.getElementById('grain');
-      const ctx    = canvas.getContext('2d');
-      let W, H;
+    /* visits */
+    const v = (parseInt(localStorage.getItem('ax-visits')||'0'))+1;
+    localStorage.setItem('ax-visits', v);
+    document.getElementById('vbadge').textContent = v===1?'FIRST VISIT':`VISIT ${v}`;
+    const msgs = ['First steps through the gate.','The gate remembers you.','A familiar soul returns.','You keep returning to the threshold.','The Sanctuary knows you now.'];
+    const vmsg = document.getElementById('vmsg');
+    vmsg.textContent = msgs[Math.min(v-1, msgs.length-1)];
+    gsap.to(vmsg,{opacity:1,duration:1.2,delay:1.4});
 
-      function resize() {
-        W = canvas.width  = window.innerWidth  * 2;
-        H = canvas.height = window.innerHeight * 2;
-        canvas.style.width  = window.innerWidth  + 'px';
-        canvas.style.height = window.innerHeight + 'px';
-        paint();
-      }
+    /* stars */
+    const cv=document.getElementById('star-cv'), ctx=cv.getContext('2d');
+    let W,H,stars,vig=null,rafId;
+    const N=isTouch?70:150;
+    function initS(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;vig=null;stars=Array.from({length:N},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+.2,a:Math.random()*.55+.1,sp:Math.random()*.09+.02,dr:(Math.random()-.5)*.04}));}
+    function tickS(){
+      ctx.clearRect(0,0,W,H);
+      if(!vig){vig=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,W*.7);vig.addColorStop(0,'rgba(20,12,4,.28)');vig.addColorStop(1,'rgba(8,6,4,0)');}
+      ctx.fillStyle=vig;ctx.fillRect(0,0,W,H);
+      stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(200,169,110,${s.a})`;ctx.fill();s.y-=s.sp;s.x+=s.dr;s.a+=(Math.random()-.5)*.014;s.a=Math.max(.04,Math.min(.7,s.a));if(s.y<0){s.y=H;s.x=Math.random()*W;}if(s.x<0||s.x>W)s.x=Math.random()*W;});
+      rafId=requestAnimationFrame(tickS);
+    }
+    initS();tickS();
+    document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(rafId);else rafId=requestAnimationFrame(tickS);});
+    let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(initS,200);},{passive:true});
 
-      function paint() {
-        const img = ctx.createImageData(W, H);
-        const d   = img.data;
-        for (let i = 0; i < d.length; i += 4) {
-          const v = (Math.random() * 255) | 0;
-          d[i] = d[i+1] = d[i+2] = v;
-          d[i+3] = 255;
-        }
-        ctx.putImageData(img, 0, 0);
-      }
+    /* cursor */
+    if(!isTouch){
+      const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+      let mx=-200,my=-200,rx=-200,ry=-200;
+      document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';},{passive:true});
+      (function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+      document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('cur-hover'));el.addEventListener('mouseleave',()=>document.body.classList.remove('cur-hover'));});
+    }else{document.getElementById('cur-dot').style.display='none';document.getElementById('cur-ring').style.display='none';}
 
-      window.addEventListener('resize', resize);
-      resize();
-    })();
+    /* nav */
+    window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>40),{passive:true});
 
-    /* ── Dual Cursor ─────────────────────────────────────── */
-    (function() {
-      const ring = document.getElementById('cursor-ring');
-      const dot  = document.getElementById('cursor-dot');
+    /* card tilt */
+    const card=document.getElementById('card');
+    let flipped=false;
+    if(!isTouch){
+      card.addEventListener('mousemove',e=>{if(flipped)return;const r=card.getBoundingClientRect();const nx=(e.clientX-r.left)/r.width-.5,ny=(e.clientY-r.top)/r.height-.5;gsap.to(card,{rotateY:nx*14,rotateX:-ny*9,duration:.4,ease:'power2.out',overwrite:true});});
+      card.addEventListener('mouseleave',()=>{if(flipped)return;gsap.to(card,{rotateY:0,rotateX:0,duration:.9,ease:'elastic.out(1,.4)',overwrite:true});});
+    }
 
-      let mx = -200, my = -200;
-      let rx = -200, ry = -200;
+    /* particles */
+    const pcv=document.getElementById('pcv'),pctx=pcv.getContext('2d');
+    let pts=[];
+    function rPcv(){pcv.width=innerWidth;pcv.height=innerHeight;}
+    rPcv();window.addEventListener('resize',rPcv,{passive:true});
+    function burst(){
+      const cx=innerWidth/2,cy=innerHeight/2;
+      for(let i=0;i<48;i++){const a=Math.random()*Math.PI*2,sp=Math.random()*5+1.5;pts.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-2.5,r:Math.random()*3+.8,a:1});}
+      gsap.to(pcv,{opacity:1,duration:.15});
+      (function lp(){pctx.clearRect(0,0,pcv.width,pcv.height);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.14;p.a-=.022;pctx.beginPath();pctx.arc(p.x,p.y,p.r,0,Math.PI*2);pctx.fillStyle=`rgba(200,169,110,${Math.max(0,p.a)})`;pctx.fill();});pts=pts.filter(p=>p.a>0);if(pts.length)requestAnimationFrame(lp);else gsap.to(pcv,{opacity:0,duration:.4});})();
+    }
 
-      document.addEventListener('mousemove', function(e) {
-        mx = e.clientX;
-        my = e.clientY;
-        dot.style.left = mx + 'px';
-        dot.style.top  = my + 'px';
-      });
+    /* flip */
+    const hint=document.getElementById('hint');
+    card.addEventListener('click',()=>{
+      flipped=!flipped;card.classList.toggle('flipped',flipped);
+      hint.textContent=flipped?'CLICK TO RETURN':'CLICK TO REVEAL';
+      gsap.to(card,{rotateY:flipped?180:0,rotateX:0,duration:.75,ease:'power3.inOut',overwrite:true});
+      if(flipped)burst();
+    });
 
-      // Lag for ring
-      (function loop() {
-        rx += (mx - rx) * 0.12;
-        ry += (my - ry) * 0.12;
-        ring.style.left = rx + 'px';
-        ring.style.top  = ry + 'px';
-        requestAnimationFrame(loop);
-      })();
+    /* share */
+    document.getElementById('btn-share').addEventListener('click',async()=>{
+      if(navigator.share){try{await navigator.share({title:'Alexandria Sanctuary',text:'Where the Final Gate Opens',url:location.href});}catch{}}
+      else document.getElementById('btn-copy').click();
+    });
 
-      // Hover detection on interactive elements
-      const interactables = document.querySelectorAll('a, button');
-      interactables.forEach(function(el) {
-        el.addEventListener('mouseenter', function() {
-          document.body.classList.add('hovering-link');
-        });
-        el.addEventListener('mouseleave', function() {
-          document.body.classList.remove('hovering-link');
-        });
-      });
-    })();
+    /* copy */
+    const bc=document.getElementById('btn-copy');
+    bc.addEventListener('click',async()=>{
+      try{await navigator.clipboard.writeText(location.href);bc.textContent='✓ COPIED';setTimeout(()=>{bc.innerHTML='<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1"/><path d="M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v7a1 1 0 001 1h2"/></svg> COPY LINK';},2000);}catch{}
+    });
 
-    /* ── GSAP Entrance Animation ─────────────────────────── */
-    (function() {
-      if (typeof gsap === 'undefined') {
-        // Fallback: just show everything
-        document.querySelectorAll('.card > *, .card .title-wrap > *').forEach(function(el) {
-          el.style.opacity = '1';
-        });
-        return;
-      }
-
-      const tl = gsap.timeline({ delay: 0.18 });
-
-      // Emblem: scale up from 0.8
-      tl.to('.emblem-wrap', {
-        opacity: 1,
-        scale: 1,
-        duration: 1.1,
-        ease: 'power3.out',
-        transformOrigin: '50% 50%',
-        startAt: { scale: 0.8 }
-      });
-
-      // Title chars stagger
-      tl.to('.title-main', {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-        startAt: { opacity: 0, y: 14 }
-      }, '-=0.55');
-
-      tl.to('.title-sub', {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        ease: 'power2.out',
-        startAt: { opacity: 0, y: 10 }
-      }, '-=0.55');
-
-      // Divider
-      tl.to('.divider', {
-        opacity: 1,
-        scaleX: 1,
-        duration: 0.8,
-        ease: 'power2.out',
-        transformOrigin: '50% 50%',
-        startAt: { opacity: 0, scaleX: 0.3 }
-      }, '-=0.4');
-
-      // Coordinates
-      tl.to('.coords-wrap', {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        ease: 'power2.out',
-        startAt: { opacity: 0, y: 10 }
-      }, '-=0.4');
-
-      // Links slide up with stagger
-      tl.to('.link-btn', {
-        opacity: 1,
-        y: 0,
-        duration: 0.65,
-        ease: 'power2.out',
-        stagger: 0.1,
-        startAt: { opacity: 0, y: 18 }
-      }, '-=0.3');
-
-      // YouTube link
-      tl.to('.yt-link', {
-        opacity: 0.7,
-        y: 0,
-        duration: 0.55,
-        ease: 'power2.out',
-        startAt: { opacity: 0, y: 10 }
-      }, '-=0.2');
-
-      // Copyright
-      tl.to('.copyright', {
-        opacity: 0.38,
-        duration: 0.5,
-        ease: 'power1.out'
-      }, '-=0.1');
-    })();
+    /* entrance */
+    gsap.from('.scene',{y:50,opacity:0,duration:1.4,ease:'power3.out',delay:.4});
+    gsap.from('.actions',{y:20,opacity:0,duration:1,ease:'power3.out',delay:.9});
+  })();
   </script>
 </body>
 </html>

@@ -4,133 +4,262 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dispatches — Alexandria Sanctuary</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" media="print" onload="this.media='all'">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg-solid:  #080604;
-      --bg-panel:  #0D0A07;
-      --gold:      #C8A96E;
-      --gold-dim:  #8B6A30;
-      --parchment: #EAE4D6;
-      --parchment-60: rgba(234,228,214,0.6);
-    }
-    html { background: var(--bg-solid); color: var(--parchment); }
-    body { font-family: 'Cormorant Garamond', serif; font-size: 18px; line-height: 1.7; }
-    a { color: inherit; text-decoration: none; }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#080604;--gold:#C8A96E;--gdim:#8B6A30;--gbright:#E8C98E;--p:#EAE4D6;--p60:rgba(234,228,214,.6);--p30:rgba(234,228,214,.3);--panel:#0D0A07;}
+    html{background:var(--bg);color:var(--p)}
+    body{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.7;cursor:none;overflow-x:hidden}
+    @media(hover:none){body{cursor:auto}}
+    a{color:inherit;text-decoration:none}
+    .grain{position:fixed;inset:-30%;width:160%;height:160%;z-index:9900;pointer-events:none;opacity:.028;will-change:transform;contain:layout style paint;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation:grain-move .7s steps(1) infinite}
+    @keyframes grain-move{0%{transform:translate(0,0)}14%{transform:translate(-4%,-8%)}28%{transform:translate(-14%,4%)}42%{transform:translate(6%,-22%)}57%{transform:translate(-4%,22%)}71%{transform:translate(14%,-2%)}85%{transform:translate(-2%,12%)}}
+    @media(prefers-reduced-motion:reduce){.grain{animation:none}}
+    #cur-dot,#cur-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:99999;border-radius:50%;transform:translate(-50%,-50%)}
+    #cur-dot{width:5px;height:5px;background:var(--gold)}
+    #cur-ring{width:36px;height:36px;border:1px solid rgba(200,169,110,.5);transition:width .3s,height .3s}
+    body.ch #cur-ring{width:54px;height:54px;border-color:var(--gold)}
 
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 40px;
-      background: linear-gradient(to bottom, rgba(8,6,4,.95), transparent);
-    }
-    .nav-logo {
-      font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: .2em;
-      color: var(--gold); display: flex; align-items: center; gap: 10px;
-    }
-    .nav-logo svg { width: 22px; height: 22px; color: var(--gold); }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .15em; color: var(--parchment-60); transition: color .3s; }
-    .nav-links a:hover { color: var(--gold); }
+    /* nav */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(8,6,4,.9),transparent);transition:padding .4s,background .4s}
+    .nav.sc{background:rgba(8,6,4,.92);backdrop-filter:blur(20px);padding:14px 48px}
+    .nav-logo{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.28em;color:var(--gold);display:flex;align-items:center;gap:10px}
+    .nav-logo svg{width:20px;height:20px}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;color:var(--p60);transition:color .3s}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-cta{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;border:1px solid var(--gdim);padding:9px 22px;color:var(--gold);transition:background .3s,color .3s}
+    .nav-cta:hover{background:var(--gold);color:var(--bg)}
+    @media(max-width:768px){.nav-links{display:none}.nav,.nav.sc{padding:18px 24px}}
 
-    .hero {
-      min-height: 40vh; display: flex; align-items: flex-end;
-      padding: 120px 40px 60px;
-      border-bottom: 1px solid rgba(200,169,110,.12);
-    }
-    .hero-inner { max-width: 760px; }
-    .hero-label { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .25em; color: var(--gold-dim); margin-bottom: 16px; }
-    .hero-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 400; color: var(--gold); line-height: 1.2; margin-bottom: 20px; }
-    .hero-desc { color: var(--parchment-60); font-size: 1.1rem; max-width: 560px; }
+    /* hero */
+    .hero{min-height:45vh;display:flex;align-items:flex-end;padding:120px 48px 64px;border-bottom:1px solid rgba(200,169,110,.1)}
+    .hero-inner{max-width:760px}
+    .h-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.4em;color:var(--gdim);margin-bottom:18px}
+    .h-title{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:400;color:var(--gold);line-height:1.15;margin-bottom:18px}
+    .h-desc{color:var(--p60);font-size:1.05rem;max-width:520px}
+    @media(max-width:640px){.hero{padding:100px 24px 48px}}
 
-    .feed-wrap { max-width: 800px; margin: 0 auto; padding: 80px 40px; }
+    /* filters */
+    .filters{display:flex;gap:10px;padding:32px 48px;flex-wrap:wrap;border-bottom:1px solid rgba(200,169,110,.08)}
+    .filter-btn{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.2em;padding:8px 18px;border:1px solid rgba(200,169,110,.2);color:var(--p60);background:transparent;cursor:pointer;transition:all .25s}
+    .filter-btn:hover,.filter-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(200,169,110,.06)}
+    @media(max-width:640px){.filters{padding:24px 20px}}
 
-    .feed-item {
-      padding: 36px 0;
-      border-bottom: 1px solid rgba(200,169,110,.1);
-    }
-    .feed-item:last-child { border-bottom: none; }
-    .feed-meta { font-size: 12px; letter-spacing: .15em; color: var(--gold-dim); margin-bottom: 12px; }
-    .feed-category { font-family: 'Cinzel', serif; }
-    .feed-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--gold); margin-bottom: 12px; line-height: 1.4; }
-    .feed-excerpt { color: var(--parchment-60); font-size: 1rem; margin-bottom: 16px; }
-    .feed-link { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .15em; color: var(--gold); border-bottom: 1px solid var(--gold-dim); padding-bottom: 2px; transition: color .3s; }
-    .feed-link:hover { color: #fff; }
+    /* tts bar */
+    .tts-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;background:rgba(8,6,4,.95);backdrop-filter:blur(20px);border-top:1px solid rgba(200,169,110,.12);padding:14px 48px;display:flex;align-items:center;gap:16px;transform:translateY(100%);transition:transform .4s}
+    .tts-bar.visible{transform:translateY(0)}
+    .tts-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;color:var(--gold);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .tts-progress{flex:1;height:2px;background:rgba(200,169,110,.15);position:relative;cursor:pointer}
+    .tts-prog-fill{height:100%;background:var(--gold);width:0%;transition:width .5s linear}
+    .tts-stop{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;padding:7px 16px;border:1px solid var(--gdim);color:var(--gdim);background:transparent;cursor:pointer;transition:all .2s;flex-shrink:0}
+    .tts-stop:hover{border-color:var(--gold);color:var(--gold)}
+    @media(max-width:640px){.tts-bar{padding:12px 20px}}
 
-    .footer { padding: 40px; text-align: center; border-top: 1px solid rgba(200,169,110,.1); }
-    .footer p { font-size: 13px; color: var(--parchment-60); }
-    .footer a { color: var(--gold-dim); }
-    .footer a:hover { color: var(--gold); }
-
-    @media (max-width: 600px) {
-      .nav { padding: 16px 20px; }
-      .nav-links { display: none; }
-      .hero { padding: 100px 20px 48px; }
-      .feed-wrap { padding: 48px 20px; }
-    }
+    /* feed */
+    .feed{max-width:800px;margin:0 auto;padding:56px 48px 120px}
+    @media(max-width:640px){.feed{padding:40px 20px 100px}}
+    .article{padding:40px 0;border-bottom:1px solid rgba(200,169,110,.09);position:relative;overflow:hidden}
+    .article::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(200,169,110,.04),transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none}
+    .article:hover::after{opacity:1}
+    .a-meta{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+    .a-cat{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.3em;color:var(--gdim);text-transform:uppercase}
+    .a-rt{font-size:12px;color:var(--p30)}
+    .a-read{font-size:12px;color:var(--gold)}
+    .a-title{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:400;color:var(--gold);line-height:1.35;margin-bottom:12px;cursor:pointer;transition:opacity .2s}
+    .a-title:hover{opacity:.8}
+    .a-excerpt{color:var(--p60);font-size:.98rem;margin-bottom:20px;line-height:1.7}
+    .a-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .btn-read{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.2em;color:var(--gold);border-bottom:1px solid var(--gdim);padding-bottom:2px;cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;transition:color .2s,border-color .2s}
+    .btn-read:hover{color:var(--gbright);border-color:var(--gold)}
+    .btn-tts{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.2em;color:var(--p60);border:1px solid rgba(200,169,110,.15);padding:6px 14px;cursor:pointer;background:none;transition:all .2s;display:flex;align-items:center;gap:6px}
+    .btn-tts:hover{border-color:var(--gold);color:var(--gold)}
+    .btn-tts svg{width:11px;height:11px}
+    .read-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:0;transition:opacity .3s;flex-shrink:0}
+    .read-dot.show{opacity:1}
+    .empty{padding:60px 0;text-align:center;color:var(--p30);font-style:italic}
+    footer{text-align:center;padding:32px;border-top:1px solid rgba(200,169,110,.07)}
+    footer p{font-size:11px;color:var(--p30)}footer a{color:var(--gdim)}
   </style>
 </head>
 <body>
+  <div class="grain"></div>
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
 
-  <nav class="nav">
+  <nav class="nav" id="nav">
     <a href="../" class="nav-logo">
-      <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1">
-        <circle cx="14" cy="14" r="11"/>
-        <line x1="14" y1="3" x2="14" y2="25"/>
-        <line x1="3" y1="14" x2="25" y2="14"/>
-        <circle cx="14" cy="14" r="4"/>
-      </svg>
-      ALEXANDRIA
+      <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1"><circle cx="14" cy="14" r="11"/><line x1="14" y1="3" x2="14" y2="25"/><line x1="3" y1="14" x2="25" y2="14"/><circle cx="14" cy="14" r="4"/></svg>ALEXANDRIA
     </a>
     <ul class="nav-links">
-      <li><a href="../sanctuary/">SANCTUARY</a></li>
       <li><a href="../philosophy/">WISDOM</a></li>
+      <li><a href="../sanctuary/">SANCTUARY</a></li>
       <li><a href="../forum/">DIALOGUES</a></li>
-      <li><a href="../visit/">VISIT</a></li>
     </ul>
+    <a href="../visit/" class="nav-cta">VISIT</a>
   </nav>
 
   <section class="hero">
     <div class="hero-inner">
-      <p class="hero-label">DISPATCHES</p>
-      <h1 class="hero-title">Letters from the Sanctuary</h1>
-      <p class="hero-desc">Reflections, meditations, and fragments of wisdom from the companions of Alexandria.</p>
+      <p class="h-label">DISPATCHES</p>
+      <h1 class="h-title">Letters from<br>the Sanctuary</h1>
+      <p class="h-desc">Reflections, meditations, and fragments of wisdom from the companions of Alexandria.</p>
     </div>
   </section>
 
-  <div class="feed-wrap" id="feed-container">
-    <!-- populated by JS -->
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-cat="all">ALL</button>
+    <button class="filter-btn" data-cat="philosophy">PHILOSOPHY</button>
+    <button class="filter-btn" data-cat="practice">PRACTICE</button>
+    <button class="filter-btn" data-cat="legacy">LEGACY</button>
+    <button class="filter-btn" data-cat="place">PLACE</button>
   </div>
 
-  <footer class="footer">
-    <p>&copy; 2026 Alexandria Sanctuary &nbsp;&middot;&nbsp; <a href="../">Return Home</a></p>
-  </footer>
+  <div class="feed" id="feed"><p class="empty">Loading dispatches…</p></div>
+
+  <div class="tts-bar" id="tts-bar">
+    <span class="tts-title" id="tts-title"></span>
+    <div class="tts-progress"><div class="tts-prog-fill" id="tts-prog"></div></div>
+    <button class="tts-stop" id="tts-stop">STOP</button>
+  </div>
+
+  <footer><p>Alexandria Sanctuary · <a href="../">Home</a></p></footer>
 
   <script>
-    fetch('wisdom.json')
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        var container = document.getElementById('feed-container');
-        var html = '';
-        data.articles.forEach(function(a) {
-          html += '<article class="feed-item">'
-            + '<p class="feed-meta"><span class="feed-category">' + (a.category || '') + '</span>'
-            + (a.readTime ? ' &nbsp;&middot;&nbsp; ' + a.readTime : '')
-            + (a.createdAt ? ' &nbsp;&middot;&nbsp; ' + a.createdAt : '') + '</p>'
-            + '<h2 class="feed-title">' + a.title + '</h2>'
-            + '<p class="feed-excerpt">' + (a.excerpt || '') + '</p>'
-            + '<a href="' + (a.url || '#') + '" class="feed-link">Read &rarr;</a>'
-            + '</article>';
-        });
-        container.innerHTML = html || '<p style="color:var(--parchment-60)">No dispatches yet.</p>';
-      })
-      .catch(function() {
-        document.getElementById('feed-container').innerHTML = '<p style="color:var(--parchment-60)">Dispatches arriving soon.</p>';
-      });
-  </script>
+  (() => {
+    'use strict';
+    gsap.registerPlugin(ScrollTrigger);
+    const isTouch = window.matchMedia('(hover:none)').matches;
 
+    /* cursor */
+    if (!isTouch) {
+      const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+      let mx=-200,my=-200,rx=-200,ry=-200;
+      document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';},{passive:true});
+      (function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+    } else {
+      document.getElementById('cur-dot').style.display='none';
+      document.getElementById('cur-ring').style.display='none';
+    }
+    window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>40),{passive:true});
+
+    /* spotlight */
+    document.addEventListener('mousemove', e => {
+      document.querySelectorAll('.article').forEach(a => {
+        const r = a.getBoundingClientRect();
+        a.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100)+'%');
+        a.style.setProperty('--my', ((e.clientY-r.top)/r.height*100)+'%');
+      });
+    }, {passive:true});
+
+    /* tts */
+    let synth = window.speechSynthesis;
+    let ttsActive = false;
+    let progTimer = null;
+    const bar = document.getElementById('tts-bar');
+    const ttsTitle = document.getElementById('tts-title');
+    const ttsProg = document.getElementById('tts-prog');
+
+    function speak(title, text) {
+      if (!synth) return;
+      synth.cancel();
+      const utt = new SpeechSynthesisUtterance(text);
+      utt.rate = .88; utt.pitch = .95;
+      ttsTitle.textContent = title;
+      bar.classList.add('visible');
+      ttsActive = true;
+      let pct = 0;
+      const words = text.split(' ').length;
+      const dur = words / 2.5 * 1000;
+      const start = Date.now();
+      clearInterval(progTimer);
+      progTimer = setInterval(() => {
+        pct = Math.min(100, (Date.now()-start)/dur*100);
+        ttsProg.style.width = pct+'%';
+        if (pct >= 100) clearInterval(progTimer);
+      }, 200);
+      utt.onend = () => { ttsActive=false; bar.classList.remove('visible'); clearInterval(progTimer); };
+      synth.speak(utt);
+    }
+    document.getElementById('tts-stop').addEventListener('click', () => { synth && synth.cancel(); bar.classList.remove('visible'); clearInterval(progTimer); });
+
+    /* data */
+    let allArticles = [];
+    let currentCat = 'all';
+    const readSet = new Set(JSON.parse(localStorage.getItem('ax-read')||'[]'));
+
+    function saveRead(id) { readSet.add(id); localStorage.setItem('ax-read', JSON.stringify([...readSet])); }
+
+    function renderArticles(list) {
+      const feed = document.getElementById('feed');
+      if (!list.length) { feed.innerHTML='<p class="empty">No dispatches in this category yet.</p>'; return; }
+      feed.innerHTML = list.map(a => `
+        <article class="article" data-id="${a.id}">
+          <div class="a-meta">
+            <span class="a-cat">${a.category||''}</span>
+            ${a.readTime?`<span class="a-rt">${a.readTime}</span>`:''}
+            ${a.createdAt?`<span class="a-rt">${a.createdAt}</span>`:''}
+            <span class="read-dot ${readSet.has(a.id)?'show':''}" title="Read"></span>
+          </div>
+          <h2 class="a-title">${a.title}</h2>
+          <p class="a-excerpt">${a.excerpt||''}</p>
+          <div class="a-actions">
+            <a href="${a.url||'#'}" class="btn-read" onclick="markRead('${a.id}',this)">READ FULL DISPATCH →</a>
+            ${synth ? `<button class="btn-tts" onclick="ttsClick('${a.id}','${a.title.replace(/'/g,"\\'")}','${(a.excerpt||'').replace(/'/g,"\\'")}')">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5H2v6h3l4 3V2L5 5z"/><path d="M12 4a5 5 0 010 8"/><path d="M14 2a8 8 0 010 12" opacity=".4"/></svg>
+              HEAR IT
+            </button>` : ''}
+          </div>
+        </article>`).join('');
+      gsap.from('.article', {y:30, opacity:0, duration:.7, stagger:.1, ease:'power2.out'});
+    }
+
+    window.markRead = function(id, el) { saveRead(id); const dot = document.querySelector(`[data-id="${id}"] .read-dot`); if (dot) dot.classList.add('show'); };
+    window.ttsClick = function(id, title, excerpt) { speak(title, excerpt); };
+
+    function filterArticles() {
+      const list = currentCat === 'all' ? allArticles : allArticles.filter(a => a.category === currentCat);
+      renderArticles(list);
+    }
+
+    /* filters */
+    document.getElementById('filters').addEventListener('click', e => {
+      const btn = e.target.closest('.filter-btn'); if (!btn) return;
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      filterArticles();
+    });
+
+    /* fetch */
+    fetch('wisdom.json')
+      .then(r => r.json())
+      .then(data => {
+        allArticles = data.articles || [];
+        filterArticles();
+      })
+      .catch(() => {
+        allArticles = [
+          {id:'w1', title:'The Art of Graceful Transition', excerpt:'Preparing for life\'s final chapter is not about endings — it is about completing the masterpiece.', category:'philosophy', readTime:'5 min', createdAt:'2026-01-20', url:'../philosophy/'},
+          {id:'w2', title:'Cave Meditation: Ancient Practice', excerpt:'In the depths of silence, wisdom reveals itself. The cave retreat tradition spans millennia.', category:'practice', readTime:'7 min', createdAt:'2026-01-21', url:'../sanctuary/cave-retreat/'},
+          {id:'w3', title:'Building a Legacy', excerpt:'Every life is a library. We help preserve its volumes for future generations.', category:'legacy', readTime:'4 min', createdAt:'2026-01-22', url:'../library/'},
+          {id:'w4', title:'Palgongsan: The Mountain of Eight Merits', excerpt:'For over 1,000 years, pilgrims have sought wisdom on this sacred mountain.', category:'place', readTime:'6 min', createdAt:'2026-01-22', url:'../visit/'},
+        ];
+        filterArticles();
+      });
+
+    /* hero reveal */
+    gsap.from('.hero-inner > *', {y:30, opacity:0, duration:.9, stagger:.15, ease:'power3.out', delay:.3});
+
+  })();
+  </script>
 </body>
 </html>

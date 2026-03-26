@@ -3,1750 +3,453 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Alexandria Sanctuary — The Seven Gates: a cartography of the inner life. A cross-faith philosophy for sacred accompaniment at Palgongsan, Korea.">
   <title>The Seven Gates — Alexandria Sanctuary</title>
-
+  <meta name="description" content="Seven questions. Seven gates. A cartography of the inner life.">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/emblem.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
-
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+KR:wght@300;400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+KR:wght@300;400&display=swap" media="print" onload="this.media='all'">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-    /* ═══════════════════════════════════════════════
-       RESET & ROOT
-    ═══════════════════════════════════════════════ */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg-solid:     #080604;
-      --bg-panel:     #0D0A07;
-      --gold:         #C8A96E;
-      --gold-dim:     #8B6A30;
-      --gold-bright:  #E8C98E;
-      --parchment:    #EAE4D6;
-      --parchment-60: rgba(234,228,214,0.6);
-      --parchment-30: rgba(234,228,214,0.3);
-
-      --g1: #1E1C4A;
-      --g2: #0E2233;
-      --g3: #2E1A0E;
-      --g4: #142214;
-      --g5: #1E1633;
-      --g6: #080C08;
-      --g7: #2E2000;
-
-      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-    }
-
-    html {
-      background: var(--bg-solid);
-      color: var(--parchment);
-      overflow-x: hidden;
-      scroll-behavior: auto;
-    }
-
-    body {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
-      line-height: 1.7;
-      overflow-x: hidden;
-      cursor: none;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* ═══════════════════════════════════════════════
-       CUSTOM CURSOR
-    ═══════════════════════════════════════════════ */
-    #cur-dot, #cur-ring {
-      position: fixed;
-      top: 0; left: 0;
-      pointer-events: none;
-      z-index: 99999;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      will-change: left, top;
-    }
-
-    #cur-dot {
-      width: 6px; height: 6px;
-      background: var(--gold);
-      transition: width .2s, height .2s, background .3s;
-    }
-
-    #cur-ring {
-      width: 38px; height: 38px;
-      border: 1px solid rgba(200,169,110,0.5);
-      mix-blend-mode: screen;
-      transition: width .4s var(--ease-out),
-                  height .4s var(--ease-out),
-                  border-color .4s,
-                  opacity .3s;
-    }
-
-    body.cur-hover #cur-ring { width: 64px; height: 64px; border-color: var(--gold); }
-    body.cur-gate  #cur-ring { width: 80px; height: 80px; border-color: var(--gold-bright); opacity: .6; }
-
-    /* ═══════════════════════════════════════════════
-       FILM GRAIN
-    ═══════════════════════════════════════════════ */
-    .grain {
-      position: fixed; inset: -200%;
-      width: 400%; height: 400%;
-      z-index: 9900; pointer-events: none;
-      opacity: .028;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      animation: grain-move 0.7s steps(1) infinite;
-    }
-
-    @keyframes grain-move {
-      0%  { transform: translate(0,0); }
-      14% { transform: translate(-4%,-8%); }
-      28% { transform: translate(-14%,4%); }
-      42% { transform: translate(6%,-22%); }
-      57% { transform: translate(-4%,22%); }
-      71% { transform: translate(14%,-2%); }
-      85% { transform: translate(-2%,12%); }
-    }
-
-    /* ═══════════════════════════════════════════════
-       SCROLL PROGRESS BAR — right edge
-    ═══════════════════════════════════════════════ */
-    .scroll-bar {
-      position: fixed; right: 22px; top: 50%;
-      transform: translateY(-50%);
-      width: 1px; height: 120px;
-      background: rgba(200,169,110,.1);
-      z-index: 500;
-    }
-
-    .scroll-bar__fill {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 0%;
-      background: var(--gold);
-      transition: height .08s;
-    }
-
-    .scroll-bar__nub {
-      position: absolute; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 5px; height: 5px;
-      background: var(--gold);
-      border-radius: 50%;
-      top: 0%;
-      transition: top .08s;
-    }
-
-    /* ═══════════════════════════════════════════════
-       NAV
-    ═══════════════════════════════════════════════ */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 400;
-      padding: 28px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-      transition: padding .4s var(--ease-out), background .4s;
-    }
-
-    .nav.scrolled {
-      background: rgba(8,6,4,.9);
-      backdrop-filter: blur(24px) saturate(1.5);
-      padding: 16px 48px;
-    }
-
-    .nav-logo {
-      display: flex; align-items: center; gap: 12px;
-      font-family: 'Cinzel', serif;
-      font-size: 13px; letter-spacing: .32em;
-      color: var(--gold);
-    }
-
-    .nav-logo svg {
-      width: 26px; height: 26px;
-      opacity: .85;
-    }
-
-    .nav-links {
-      display: flex; gap: 44px; list-style: none;
-    }
-
-    .nav-links a {
-      font-family: 'Cinzel', serif;
-      font-size: 9.5px; letter-spacing: .24em;
-      text-transform: uppercase;
-      color: var(--parchment-60);
-      transition: color .3s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--gold); }
-
-    .nav-visit {
-      font-family: 'Cinzel', serif;
-      font-size: 9.5px; letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid var(--gold-dim);
-      padding: 10px 26px;
-      transition: background .3s, color .3s;
-    }
-
-    .nav-visit:hover { background: var(--gold); color: var(--bg-solid); }
-
-    @media (max-width: 900px) {
-      .nav-links, .nav-visit { display: none; }
-      .nav { padding: 20px 24px; }
-      .nav.scrolled { padding: 12px 24px; }
-    }
-
-    /* ═══════════════════════════════════════════════
-       LAYOUT HELPERS
-    ═══════════════════════════════════════════════ */
-    .wrap {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 48px;
-    }
-
-    @media (max-width: 700px) { .wrap { padding: 0 24px; } }
-
-    .sec-label {
-      display: block;
-      font-family: 'Cinzel', serif;
-      font-size: 9px; letter-spacing: .48em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 18px;
-    }
-
-    .sec-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(28px, 4vw, 52px);
-      font-weight: 400; line-height: 1.12;
-      color: var(--parchment);
-    }
-
-    .reveal-up {
-      opacity: 0;
-      transform: translateY(36px);
-    }
-
-    /* ═══════════════════════════════════════════════
-       § 1  HERO
-    ═══════════════════════════════════════════════ */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      background: var(--bg-solid);
-    }
-
-    #hero-canvas {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      opacity: .5;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 40%, transparent 25%, rgba(8,6,4,.9) 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .hero-inner {
-      position: relative; z-index: 2;
-      text-align: center;
-      padding: 0 24px;
-    }
-
-    .hero-eyebrow {
-      font-family: 'Cinzel', serif;
-      font-size: 9px; letter-spacing: .55em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 40px;
-      opacity: 0;
-    }
-
-    .hero-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(52px, 10vw, 148px);
-      font-weight: 400;
-      letter-spacing: .12em;
-      line-height: .88;
-      color: var(--parchment);
-    }
-
-    .ht-word {
-      display: block;
-      overflow: hidden;
-    }
-
-    .ht-inner {
-      display: block;
-      transform: translateY(110%);
-      opacity: 0;
-    }
-
-    .hero-sep {
-      margin: 52px auto;
-      max-width: 260px;
-      display: flex; align-items: center; justify-content: center; gap: 14px;
-      opacity: 0;
-    }
-
-    .hero-sep__line {
-      flex: 1; height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold-dim));
-    }
-
-    .hero-sep__line:last-child {
-      background: linear-gradient(to left, transparent, var(--gold-dim));
-    }
-
-    .hero-sep__diamond {
-      width: 6px; height: 6px;
-      background: var(--gold);
-      transform: rotate(45deg);
-      display: block;
-      flex-shrink: 0;
-    }
-
-    .hero-subtitle {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(17px, 2.2vw, 24px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--parchment-60);
-      letter-spacing: .04em;
-      opacity: 0;
-    }
-
-    .hero-scroll {
-      position: absolute; bottom: 40px; left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      opacity: 0;
-    }
-
-    .hero-scroll span {
-      font-family: 'Cinzel', serif;
-      font-size: 8px; letter-spacing: .35em;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-    }
-
-    .hero-scroll-line {
-      width: 1px; height: 52px;
-      background: linear-gradient(to bottom, var(--gold-dim), transparent);
-      animation: pulse-line 2.4s ease-in-out infinite;
-    }
-
-    @keyframes pulse-line {
-      0%,100% { opacity: .4; transform: scaleY(1); }
-      50%      { opacity: 1;  transform: scaleY(1.3); }
-    }
-
-    /* ═══════════════════════════════════════════════
-       § 2  SEVEN GATES
-    ═══════════════════════════════════════════════ */
-    .gates-section {
-      padding: 140px 0;
-      background: #050403;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .gates-ambient {
-      position: absolute; inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      transition: background 1.6s var(--ease-in-out);
-    }
-
-    .gates-header {
-      position: relative; z-index: 1;
-      margin-bottom: 88px;
-    }
-
-    .gates-intro {
-      margin-top: 28px;
-      max-width: 580px;
-      font-size: clamp(15px, 1.7vw, 18px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--parchment-60);
-      line-height: 1.75;
-    }
-
-    /* vertical gate list */
-    .gates-list {
-      position: relative; z-index: 1;
-      list-style: none;
-    }
-
-    .gate-item {
-      position: relative;
-      display: grid;
-      grid-template-columns: 80px 1fr 32px;
-      align-items: center;
-      gap: 0 40px;
-      padding: 40px 0;
-      border-bottom: 1px solid rgba(200,169,110,.07);
-      overflow: hidden;
-      opacity: 0;
-      transform: translateX(-24px);
-      transition: border-bottom-color .4s;
-    }
-
-    .gate-item:first-child {
-      border-top: 1px solid rgba(200,169,110,.07);
-    }
-
-    /* colored left bar */
-    .gate-item::before {
-      content: '';
-      position: absolute; left: 0; top: 0; bottom: 0;
-      width: 2px;
-      transition: width .5s var(--ease-out);
-    }
-
-    .gate-item[data-g="1"]::before { background: var(--g1); }
-    .gate-item[data-g="2"]::before { background: var(--g2); }
-    .gate-item[data-g="3"]::before { background: var(--g3); }
-    .gate-item[data-g="4"]::before { background: var(--g4); }
-    .gate-item[data-g="5"]::before { background: var(--g5); }
-    .gate-item[data-g="6"]::before { background: var(--g6); border-left: 1px solid rgba(200,169,110,.1); }
-    .gate-item[data-g="7"]::before { background: var(--g7); }
-
-    .gate-item:hover::before { width: 4px; }
-
-    /* ambient overlay on hover */
-    .gate-item::after {
-      content: '';
-      position: absolute; inset: 0;
-      opacity: 0;
-      transition: opacity .7s;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .gate-item[data-g="1"]::after { background: radial-gradient(ellipse at 15% 50%, rgba(30,28,74,.2), transparent 70%); }
-    .gate-item[data-g="2"]::after { background: radial-gradient(ellipse at 15% 50%, rgba(14,34,51,.2), transparent 70%); }
-    .gate-item[data-g="3"]::after { background: radial-gradient(ellipse at 15% 50%, rgba(46,26,14,.2), transparent 70%); }
-    .gate-item[data-g="4"]::after { background: radial-gradient(ellipse at 15% 50%, rgba(20,34,20,.2), transparent 70%); }
-    .gate-item[data-g="5"]::after { background: radial-gradient(ellipse at 15% 50%, rgba(30,22,51,.2), transparent 70%); }
-    .gate-item[data-g="6"]::after { background: radial-gradient(ellipse at 15% 50%, rgba(8,12,8,.3), transparent 70%); }
-    .gate-item[data-g="7"]::after { background: radial-gradient(ellipse at 15% 50%, rgba(46,32,0,.2), transparent 70%); }
-
-    .gate-item:hover::after { opacity: 1; }
-    .gate-item:hover { border-bottom-color: rgba(200,169,110,.18); }
-
-    .gate-roman {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(26px, 3vw, 40px);
-      font-weight: 400;
-      color: rgba(200,169,110,.18);
-      letter-spacing: .06em;
-      transition: color .4s;
-      position: relative; z-index: 1;
-      text-align: center;
-    }
-
-    .gate-item:hover .gate-roman { color: var(--gold-dim); }
-
-    .gate-body {
-      position: relative; z-index: 1;
-      padding-left: 20px;
-      border-left: 1px solid rgba(200,169,110,.08);
-      transition: border-color .4s;
-    }
-
-    .gate-item:hover .gate-body { border-color: rgba(200,169,110,.22); }
-
-    .gate-name {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(16px, 1.9vw, 21px);
-      font-weight: 400;
-      color: var(--parchment);
-      letter-spacing: .04em;
-      margin-bottom: 10px;
-      transition: color .3s;
-    }
-
-    .gate-item:hover .gate-name { color: var(--gold-bright); }
-
-    .gate-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(14px, 1.4vw, 16px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--parchment-60);
-      line-height: 1.65;
-    }
-
-    .gate-arrow {
-      position: relative; z-index: 1;
-      font-size: 12px;
-      color: var(--gold-dim);
-      opacity: 0;
-      transform: translateX(-8px);
-      transition: opacity .3s, transform .3s var(--ease-out);
-      text-align: right;
-    }
-
-    .gate-item:hover .gate-arrow {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    @media (max-width: 700px) {
-      .gate-item { grid-template-columns: 52px 1fr; gap: 0 16px; }
-      .gate-arrow { display: none; }
-    }
-
-    /* ═══════════════════════════════════════════════
-       § 3  CROSS-RELIGION
-    ═══════════════════════════════════════════════ */
-    .religion-section {
-      padding: 140px 0;
-      background: var(--bg-panel);
-    }
-
-    .religion-header {
-      margin-bottom: 72px;
-    }
-
-    .religion-note {
-      margin-top: 28px;
-      max-width: 640px;
-      font-size: clamp(15px, 1.7vw, 18px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--parchment-60);
-      line-height: 1.75;
-    }
-
-    .trees-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-    }
-
-    @media (max-width: 860px) {
-      .trees-grid { grid-template-columns: 1fr; gap: 72px; }
-    }
-
-    .tree-panel {
-      opacity: 0;
-      transform: translateY(32px);
-    }
-
-    .tree-label {
-      font-family: 'Cinzel', serif;
-      font-size: 10px; letter-spacing: .4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 40px;
-      display: flex; align-items: center; gap: 14px;
-    }
-
-    .tree-label::after {
-      content: '';
-      flex: 1; height: 1px;
-      background: linear-gradient(to right, var(--gold-dim), transparent);
-    }
-
-    .tree-svg {
-      overflow: visible;
-      width: 100%;
-    }
-
-    .tree-svg line,
-    .tree-svg path {
-      stroke: rgba(139,106,48,.4);
-      fill: none;
-      stroke-width: 1.2;
-      vector-effect: non-scaling-stroke;
-    }
-
-    .tree-svg .node-gold { fill: var(--gold); stroke: none; }
-    .tree-svg .node-dim  { fill: var(--gold-dim); stroke: none; }
-    .tree-svg .node-ring { fill: none; stroke: var(--gold); stroke-width: 1.5; }
-
-    .tree-svg text { stroke: none; font-family: 'Cinzel', serif; }
-    .tree-svg .t-main { fill: var(--parchment); font-size: 11.5px; letter-spacing: .05em; }
-    .tree-svg .t-sub  { fill: rgba(234,228,214,0.38); font-size: 9px; letter-spacing: .03em; }
-    .tree-svg .t-root { fill: var(--gold); font-size: 10.5px; letter-spacing: .08em; }
-
-    /* draw animation */
-    .draw-path {
-      stroke-dasharray: 600;
-      stroke-dashoffset: 600;
-    }
-
-    .draw-path.drawn {
-      animation: drawIn 2s var(--ease-out) forwards;
-    }
-
-    .draw-path.drawn.d1 { animation-delay: .1s; }
-    .draw-path.drawn.d2 { animation-delay: .4s; }
-    .draw-path.drawn.d3 { animation-delay: .8s; }
-    .draw-path.drawn.d4 { animation-delay: 1.2s; }
-
-    @keyframes drawIn {
-      to { stroke-dashoffset: 0; }
-    }
-
-    .tree-note-box {
-      margin-top: 56px;
-      padding: 32px 40px;
-      border: 1px solid rgba(200,169,110,.1);
-      background: rgba(13,10,7,.5);
-      position: relative;
-    }
-
-    .tree-note-box::before {
-      content: '';
-      position: absolute; top: 0; left: 0;
-      width: 2px; height: 100%;
-      background: linear-gradient(to bottom, var(--gold), var(--gold-dim));
-    }
-
-    .tree-note-box p {
-      font-size: clamp(14px, 1.5vw, 16px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--parchment-60);
-      line-height: 1.78;
-    }
-
-    .tree-note-box p + p { margin-top: 14px; }
-
-    .tree-note-box .note-coda {
-      margin-top: 20px;
-      font-family: 'Cinzel', serif;
-      font-size: 10px; letter-spacing: .2em;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-      font-style: normal;
-    }
-
-    /* ═══════════════════════════════════════════════
-       § 4  CORE VALUES
-    ═══════════════════════════════════════════════ */
-    .values-section {
-      padding: 140px 0;
-      background: var(--bg-solid);
-    }
-
-    .values-header { margin-bottom: 72px; }
-
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(200,169,110,.07);
-      border: 1px solid rgba(200,169,110,.07);
-    }
-
-    @media (max-width: 760px) {
-      .pillars-grid { grid-template-columns: 1fr; }
-    }
-
-    .pillar {
-      background: var(--bg-solid);
-      padding: 60px 44px;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(28px);
-    }
-
-    .pillar::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
-      opacity: 0;
-      transition: opacity .5s;
-    }
-
-    .pillar:hover::before { opacity: 1; }
-
-    .pillar-number {
-      font-family: 'Cinzel', serif;
-      font-size: 72px; font-weight: 400;
-      color: rgba(200,169,110,.055);
-      line-height: 1;
-      margin-bottom: 28px;
-      transition: color .5s;
-      user-select: none;
-    }
-
-    .pillar:hover .pillar-number { color: rgba(200,169,110,.11); }
-
-    .pillar-icon {
-      margin-bottom: 24px;
-    }
-
-    .pillar-icon svg {
-      width: 30px; height: 30px;
-      stroke: var(--gold-dim);
-      fill: none;
-      stroke-width: 1;
-    }
-
-    .pillar-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(16px, 1.7vw, 20px);
-      font-weight: 400;
-      color: var(--parchment);
-      line-height: 1.3;
-      margin-bottom: 20px;
-      letter-spacing: .03em;
-    }
-
-    .pillar-text {
-      font-size: clamp(14px, 1.4vw, 16px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--parchment-60);
-      line-height: 1.78;
-    }
-
-    /* ═══════════════════════════════════════════════
-       § 5  PULL QUOTE
-    ═══════════════════════════════════════════════ */
-    .quote-section {
-      padding: 140px 0;
-      background: var(--bg-panel);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quote-bg-glyph {
-      position: absolute;
-      font-family: 'Cinzel', serif;
-      font-size: clamp(180px, 26vw, 380px);
-      color: rgba(200,169,110,.022);
-      line-height: 1;
-      pointer-events: none;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      letter-spacing: .1em;
-      z-index: 0;
-      user-select: none;
-    }
-
-    .quote-inner {
-      position: relative; z-index: 1;
-      max-width: 820px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 0 48px;
-    }
-
-    .quote-mark {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 110px;
-      line-height: .5;
-      color: var(--gold-dim);
-      opacity: .35;
-      display: block;
-      margin-bottom: 28px;
-    }
-
-    .quote-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(22px, 3.5vw, 40px);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--parchment);
-      line-height: 1.5;
-      letter-spacing: .015em;
-      opacity: 0;
-      transform: translateY(24px);
-    }
-
-    .quote-attr {
-      margin-top: 36px;
-      display: flex; align-items: center; justify-content: center; gap: 20px;
-      opacity: 0;
-    }
-
-    .quote-attr__line {
-      width: 44px; height: 1px;
-      background: var(--gold-dim);
-    }
-
-    .quote-attr__text {
-      font-family: 'Cinzel', serif;
-      font-size: 9px; letter-spacing: .35em;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-
-    /* ═══════════════════════════════════════════════
-       § 6  FOOTER
-    ═══════════════════════════════════════════════ */
-    .footer {
-      padding: 100px 0 56px;
-      background: #040302;
-      border-top: 1px solid rgba(200,169,110,.07);
-    }
-
-    .footer-inner {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 60px;
-      margin-bottom: 72px;
-    }
-
-    @media (max-width: 900px) {
-      .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
-    }
-
-    @media (max-width: 540px) {
-      .footer-inner { grid-template-columns: 1fr; gap: 40px; }
-    }
-
-    .footer-brand-logo {
-      font-family: 'Cinzel', serif;
-      font-size: 14px; letter-spacing: .32em;
-      color: var(--gold);
-      margin-bottom: 20px;
-      display: flex; align-items: center; gap: 10px;
-    }
-
-    .footer-brand-tagline {
-      font-size: 14px;
-      font-style: italic;
-      color: var(--parchment-30);
-      line-height: 1.75;
-      max-width: 280px;
-    }
-
-    .footer-brand-loc {
-      margin-top: 20px;
-      font-family: 'Cinzel', serif;
-      font-size: 8.5px; letter-spacing: .3em;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-    }
-
-    .footer-col-title {
-      font-family: 'Cinzel', serif;
-      font-size: 9px; letter-spacing: .4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 24px;
-    }
-
-    .footer-col-links {
-      list-style: none;
-      display: flex; flex-direction: column; gap: 14px;
-    }
-
-    .footer-col-links a {
-      font-size: 14px;
-      color: var(--parchment-60);
-      transition: color .3s;
-      letter-spacing: .02em;
-    }
-
-    .footer-col-links a:hover { color: var(--gold); }
-
-    .footer-bottom {
-      padding-top: 32px;
-      border-top: 1px solid rgba(200,169,110,.06);
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 16px;
-    }
-
-    .footer-copy {
-      font-size: 12px; letter-spacing: .06em;
-      color: var(--parchment-30);
-    }
-
-    .footer-bottom-links {
-      display: flex; gap: 28px; list-style: none;
-    }
-
-    .footer-bottom-links a {
-      font-family: 'Cinzel', serif;
-      font-size: 8.5px; letter-spacing: .24em;
-      text-transform: uppercase;
-      color: var(--parchment-30);
-      transition: color .3s;
-    }
-
-    .footer-bottom-links a:hover { color: var(--gold); }
-
-    /* ═══════════════════════════════════════════════
-       MOBILE OPTIMISATION  ≤ 768px
-    ═══════════════════════════════════════════════ */
-
-    /* 1. Hide cursor on touch devices */
-    @media (hover: none) {
-      #cur-dot, #cur-ring { display: none; }
-      body { cursor: auto; }
-    }
-
-    /* 2. Nav — hamburger toggle */
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 44px; height: 44px;
-      padding: 10px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      z-index: 410;
-    }
-
-    .nav-hamburger span {
-      display: block;
-      width: 22px; height: 1px;
-      background: var(--gold);
-      transition: transform .3s var(--ease-out), opacity .3s;
-      transform-origin: center;
-    }
-
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-    .nav-mobile-menu {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      padding: 80px 32px 48px;
-      background: rgba(8,6,4,.97);
-      backdrop-filter: blur(24px);
-      z-index: 405;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .nav-mobile-menu.open { display: flex; }
-
-    .nav-mobile-menu a {
-      font-family: 'Cinzel', serif;
-      font-size: 13px; letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--parchment-60);
-      min-height: 44px;
-      display: flex; align-items: center;
-      transition: color .3s;
-    }
-
-    .nav-mobile-menu a:hover,
-    .nav-mobile-menu a.active { color: var(--gold); }
-
-    @media (max-width: 768px) {
-      .nav-hamburger { display: flex; }
-      .nav-links, .nav-visit { display: none !important; }
-
-      /* 3. Hero title */
-      .hero-title {
-        font-size: clamp(40px, 10vw, 96px);
-      }
-
-      .hero-sep { margin: 32px auto; }
-
-      /* All section padding reduced */
-      .gates-section,
-      .religion-section,
-      .values-section,
-      .quote-section {
-        padding: 72px 0;
-      }
-
-      .footer { padding: 64px 0 40px; }
-
-      /* 4. Seven Gates list */
-      .gate-item {
-        grid-template-columns: 44px 1fr;
-        gap: 0 12px;
-        padding: 28px 0 28px 8px;
-      }
-
-      .gate-roman {
-        font-size: clamp(18px, 5vw, 26px);
-      }
-
-      .gate-body { padding-left: 12px; }
-
-      .gate-arrow { display: none; }
-
-      /* 5. Cross-religion trees — 1 column, Abrahamic first */
-      .trees-grid {
-        grid-template-columns: 1fr;
-        gap: 48px;
-      }
-
-      /* 6. SVG trees scale down */
-      .tree-svg {
-        max-width: 100%;
-        height: auto;
-      }
-
-      /* 7. Core values pillars — 1 column */
-      .pillars-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .pillar { padding: 40px 28px; }
-
-      /* 8. Section inner padding */
-      .gates-header { margin-bottom: 48px; }
-      .religion-header { margin-bottom: 40px; }
-      .values-header { margin-bottom: 40px; }
-
-      /* quote */
-      .quote-inner { padding: 0 20px; }
-      .quote-mark { font-size: 72px; }
-
-      /* tree note box */
-      .tree-note-box { padding: 24px 20px; margin-top: 32px; }
-
-      /* 9. Footer */
-      .footer-inner {
-        grid-template-columns: 1fr;
-        gap: 32px;
-        margin-bottom: 48px;
-      }
-
-      /* 10. Touch targets — nav links already 44px via min-height */
-      .nav-visit {
-        min-height: 44px;
-        display: inline-flex; align-items: center;
-      }
-
-      .footer-col-links a {
-        min-height: 44px;
-        display: flex; align-items: center;
-      }
-
-      /* scroll bar hidden on small screens */
-      .scroll-bar { display: none; }
-    }
-
-    @media (max-width: 600px) {
-      /* 7. extra breakpoint for very small phones */
-      .pillars-grid { grid-template-columns: 1fr; }
-
-      .hero-sep { max-width: 180px; }
-    }
-
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#080604;--gold:#C8A96E;--gdim:#8B6A30;--gbright:#E8C98E;--p:#EAE4D6;--p60:rgba(234,228,214,.6);--p30:rgba(234,228,214,.3);--panel:#0D0A07;
+      --g1:#1E1C4A;--g2:#0E2233;--g3:#2E1A0E;--g4:#142214;--g5:#1E1633;--g6:#080C08;--g7:#2E2000;}
+    html{background:var(--bg);color:var(--p);overflow-x:hidden}
+    body{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.75;cursor:none;overflow-x:hidden}
+    @media(hover:none){body{cursor:auto}}
+    a{color:inherit;text-decoration:none}
+    .grain{position:fixed;inset:-30%;width:160%;height:160%;z-index:9900;pointer-events:none;opacity:.028;will-change:transform;contain:layout style paint;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation:grain-move .7s steps(1) infinite}
+    @keyframes grain-move{0%{transform:translate(0,0)}14%{transform:translate(-4%,-8%)}28%{transform:translate(-14%,4%)}42%{transform:translate(6%,-22%)}57%{transform:translate(-4%,22%)}71%{transform:translate(14%,-2%)}85%{transform:translate(-2%,12%)}}
+    @media(prefers-reduced-motion:reduce){.grain{animation:none}}
+    #cur-dot,#cur-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:99999;border-radius:50%;transform:translate(-50%,-50%)}
+    #cur-dot{width:5px;height:5px;background:var(--gold)}
+    #cur-ring{width:36px;height:36px;border:1px solid rgba(200,169,110,.5);transition:width .3s,height .3s}
+    body.ch #cur-ring{width:54px;height:54px;border-color:var(--gold)}
+
+    /* nav */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:linear-gradient(to bottom,rgba(8,6,4,.9),transparent);transition:padding .4s,background .4s}
+    .nav.sc{background:rgba(8,6,4,.92);backdrop-filter:blur(20px);padding:14px 48px}
+    .nav-logo{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.28em;color:var(--gold);display:flex;align-items:center;gap:10px}
+    .nav-logo svg{width:20px;height:20px}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;color:var(--p60);transition:color .3s}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold)}
+    .nav-cta{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;border:1px solid var(--gdim);padding:9px 22px;color:var(--gold);transition:background .3s,color .3s}
+    .nav-cta:hover{background:var(--gold);color:var(--bg)}
+    @media(max-width:768px){.nav-links{display:none}.nav,.nav.sc{padding:18px 24px}}
+
+    /* hero */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 24px;position:relative;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(46,26,14,.4),transparent 70%);pointer-events:none}
+    .hero-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.5em;color:var(--gdim);margin-bottom:24px;display:block}
+    .hero-title{font-family:'Cinzel',serif;font-size:clamp(2.2rem,6vw,5rem);font-weight:400;color:var(--p);line-height:1.1;margin-bottom:20px}
+    .hero-title span{color:var(--gold)}
+    .hero-sub{font-size:1.1rem;font-style:italic;color:var(--p60);max-width:480px;margin:0 auto 40px}
+    .hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .btn-primary{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.2em;padding:13px 32px;background:var(--gold);color:var(--bg);cursor:pointer;border:none;transition:background .3s}
+    .btn-primary:hover{background:var(--gbright)}
+    .btn-outline{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.2em;padding:13px 32px;border:1px solid rgba(200,169,110,.35);color:var(--p60);cursor:pointer;background:transparent;transition:border-color .3s,color .3s}
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+    /* gate selector bar */
+    .gate-bar{position:sticky;top:0;z-index:300;background:rgba(8,6,4,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,169,110,.1);display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none}
+    .gate-bar::-webkit-scrollbar{display:none}
+    .gate-btn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;padding:14px 20px;color:var(--p60);cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;transition:color .25s,border-color .25s;white-space:nowrap;flex-shrink:0}
+    .gate-btn:hover{color:var(--gold)}
+    .gate-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+    /* progress sidebar */
+    .progress-sidebar{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:10px}
+    .ps-dot{width:6px;height:6px;border-radius:50%;border:1px solid var(--gdim);cursor:pointer;transition:background .3s,border-color .3s}
+    .ps-dot.active{background:var(--gold);border-color:var(--gold)}
+    @media(max-width:768px){.progress-sidebar{display:none}}
+
+    /* gate sections */
+    .gate-section{min-height:100vh;display:flex;align-items:center;padding:100px 48px;position:relative;overflow:hidden;transition:background .8s}
+    .gate-section::before{content:'';position:absolute;inset:0;opacity:.12;pointer-events:none}
+    .gate-section[data-g="1"]::before{background:var(--g1)}
+    .gate-section[data-g="2"]::before{background:var(--g2)}
+    .gate-section[data-g="3"]::before{background:var(--g3)}
+    .gate-section[data-g="4"]::before{background:var(--g4)}
+    .gate-section[data-g="5"]::before{background:var(--g5)}
+    .gate-section[data-g="6"]::before{background:var(--g6)}
+    .gate-section[data-g="7"]::before{background:var(--g7)}
+    .gate-inner{max-width:680px;position:relative;z-index:1}
+    .gate-roman{font-family:'Cinzel',serif;font-size:clamp(80px,12vw,160px);font-weight:400;color:rgba(200,169,110,.06);line-height:1;position:absolute;right:-20px;top:-40px;pointer-events:none;z-index:0}
+    .gate-num-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.4em;color:var(--gdim);margin-bottom:16px}
+    .gate-title-en{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:400;color:var(--p);line-height:1.2;margin-bottom:8px}
+    .gate-title-kr{font-family:'Noto Serif KR',serif;font-size:14px;letter-spacing:.12em;color:var(--gdim);margin-bottom:28px}
+    .gate-question{font-size:1.25rem;font-style:italic;color:var(--gold);margin-bottom:20px;line-height:1.5}
+    .gate-desc{color:var(--p60);font-size:1rem;line-height:1.8;margin-bottom:32px;max-width:540px}
+    .gate-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .btn-explore{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.2em;color:var(--gold);border:1px solid var(--gdim);padding:10px 22px;cursor:pointer;background:transparent;transition:all .3s;display:inline-flex;align-items:center;gap:8px}
+    .btn-explore:hover{border-color:var(--gold);background:rgba(200,169,110,.08)}
+    .btn-hear{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:var(--p60);padding:10px 18px;border:1px solid rgba(200,169,110,.15);cursor:pointer;background:transparent;transition:all .3s;display:inline-flex;align-items:center;gap:7px}
+    .btn-hear:hover{border-color:rgba(200,169,110,.4);color:var(--gold)}
+    .btn-hear svg{width:12px;height:12px}
+    @media(max-width:640px){.gate-section{padding:80px 24px}.gate-roman{font-size:80px;right:-10px;top:-20px}}
+
+    /* quiz modal */
+    .modal-overlay{position:fixed;inset:0;z-index:600;background:rgba(8,6,4,.92);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .4s}
+    .modal-overlay.open{opacity:1;pointer-events:all}
+    .modal{max-width:480px;width:100%;border:1px solid rgba(200,169,110,.2);padding:48px;background:var(--panel);position:relative}
+    .modal-close{position:absolute;top:16px;right:20px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;color:var(--gdim);cursor:pointer;background:none;border:none;transition:color .2s}
+    .modal-close:hover{color:var(--gold)}
+    .modal-step{display:none}
+    .modal-step.active{display:block}
+    .modal-q{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--gdim);margin-bottom:8px}
+    .modal-question{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--p);margin-bottom:28px;line-height:1.4}
+    .modal-opts{display:flex;flex-direction:column;gap:10px}
+    .modal-opt{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--p60);padding:14px 18px;border:1px solid rgba(200,169,110,.15);cursor:pointer;background:transparent;text-align:left;transition:all .25s}
+    .modal-opt:hover{border-color:var(--gold);color:var(--p)}
+    .modal-result{text-align:center}
+    .result-gate{font-family:'Cinzel',serif;font-size:clamp(3rem,8vw,5rem);color:var(--gold);margin:16px 0}
+    .result-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--p);margin-bottom:12px}
+    .result-desc{color:var(--p60);font-size:.95rem;font-style:italic;margin-bottom:24px}
+    .btn-go{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;padding:12px 28px;background:var(--gold);color:var(--bg);border:none;cursor:pointer;transition:background .3s}
+    .btn-go:hover{background:var(--gbright)}
+
+    /* footer */
+    footer{padding:48px;border-top:1px solid rgba(200,169,110,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+    .footer-copy{font-size:12px;color:var(--p30)}
+    .footer-links{display:flex;gap:24px;list-style:none}
+    .footer-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;color:var(--gdim);transition:color .3s}
+    .footer-links a:hover{color:var(--gold)}
   </style>
 </head>
 <body>
+  <div class="grain"></div>
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
 
-  <div class="grain" aria-hidden="true"></div>
-  <div id="cur-dot" aria-hidden="true"></div>
-  <div id="cur-ring" aria-hidden="true"></div>
-
-  <div class="scroll-bar" aria-hidden="true">
-    <div class="scroll-bar__fill" id="sb-fill"></div>
-    <div class="scroll-bar__nub"  id="sb-nub"></div>
-  </div>
-
-  <!-- ════════════════════════════════════
-       NAV
-  ════════════════════════════════════ -->
-  <nav class="nav" id="site-nav">
-    <a href="../index.html" class="nav-logo">
-      <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
-        <circle cx="14" cy="14" r="11"/>
-        <line x1="14" y1="3" x2="14" y2="25"/>
-        <line x1="3" y1="14" x2="25" y2="14"/>
-        <circle cx="14" cy="14" r="4"/>
-      </svg>
-      ALEXANDRIA
+  <nav class="nav" id="nav">
+    <a href="../" class="nav-logo">
+      <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1"><circle cx="14" cy="14" r="11"/><line x1="14" y1="3" x2="14" y2="25"/><line x1="3" y1="14" x2="25" y2="14"/><circle cx="14" cy="14" r="4"/></svg>ALEXANDRIA
     </a>
-
     <ul class="nav-links">
+      <li><a href="./" class="active">WISDOM</a></li>
       <li><a href="../sanctuary/">SANCTUARY</a></li>
-      <li><a href="../philosophy/" class="active">WISDOM</a></li>
       <li><a href="../forum/">DIALOGUES</a></li>
-      <li><a href="../visit/">VISIT</a></li>
+      <li><a href="../library/">LIBRARY</a></li>
     </ul>
-
-    <a href="../visit/" class="nav-visit">BOOK A STAY</a>
-
-    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="../visit/" class="nav-cta">VISIT</a>
   </nav>
 
-  <!-- Mobile nav menu -->
-  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
-    <a href="../sanctuary/">SANCTUARY</a>
-    <a href="../philosophy/" class="active">WISDOM</a>
-    <a href="../forum/">DIALOGUES</a>
-    <a href="../visit/">VISIT</a>
-    <a href="../visit/" class="nav-visit" style="border:1px solid var(--gold-dim);padding:10px 20px;margin-top:8px;">BOOK A STAY</a>
+  <!-- Progress sidebar -->
+  <div class="progress-sidebar" id="pside">
+    <div class="ps-dot active" data-target="gate-1" title="Gate I"></div>
+    <div class="ps-dot" data-target="gate-2" title="Gate II"></div>
+    <div class="ps-dot" data-target="gate-3" title="Gate III"></div>
+    <div class="ps-dot" data-target="gate-4" title="Gate IV"></div>
+    <div class="ps-dot" data-target="gate-5" title="Gate V"></div>
+    <div class="ps-dot" data-target="gate-6" title="Gate VI"></div>
+    <div class="ps-dot" data-target="gate-7" title="Gate VII"></div>
   </div>
 
-  <!-- ════════════════════════════════════
-       § 1  HERO
-  ════════════════════════════════════ -->
-  <section class="hero" aria-label="Philosophy hero">
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
-
-    <div class="hero-inner">
-      <p class="hero-eyebrow" id="hero-ey">Alexandria Sanctuary &mdash; Philosophy</p>
-
-      <h1 class="hero-title" aria-label="The Seven Gates">
-        <span class="ht-word"><span class="ht-inner">THE</span></span>
-        <span class="ht-word"><span class="ht-inner">SEVEN</span></span>
-        <span class="ht-word"><span class="ht-inner">GATES</span></span>
-      </h1>
-
-      <div class="hero-sep" id="hero-sep">
-        <span class="hero-sep__line"></span>
-        <span class="hero-sep__diamond"></span>
-        <span class="hero-sep__diamond" style="opacity:.35;transform:rotate(45deg) scale(.55);"></span>
-        <span class="hero-sep__diamond"></span>
-        <span class="hero-sep__line"></span>
-      </div>
-
-      <p class="hero-subtitle" id="hero-sub">A cartography of the inner life</p>
-    </div>
-
-    <div class="hero-scroll" id="hero-scroll" aria-hidden="true">
-      <span>Descend</span>
-      <div class="hero-scroll-line"></div>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════
-       § 2  SEVEN GATES
-  ════════════════════════════════════ -->
-  <section class="gates-section" id="gates" aria-label="The Seven Gates">
-    <div class="gates-ambient" id="gates-ambient"></div>
-
-    <div class="wrap">
-      <header class="gates-header reveal-up">
-        <span class="sec-label">Framework</span>
-        <h2 class="sec-title">Seven Gates of<br>Inner Passage</h2>
-        <p class="gates-intro">
-          Each gate names a threshold the soul crosses — in illness, in contemplation,
-          in the final hours. Alexandria accompanies every passage, every tradition,
-          every language of the spirit.
-        </p>
-      </header>
-
-      <ul class="gates-list" id="gates-list">
-
-        <li class="gate-item" data-g="1">
-          <span class="gate-roman" aria-hidden="true">I</span>
-          <div class="gate-body">
-            <h3 class="gate-name">The Fracture of Mind</h3>
-            <p class="gate-desc">Where the map of the self dissolves &mdash; accompaniment through psychosis, dementia, and the bewildering corridors of cognitive unraveling.</p>
-          </div>
-          <span class="gate-arrow" aria-hidden="true">&#8594;</span>
-        </li>
-
-        <li class="gate-item" data-g="2">
-          <span class="gate-roman" aria-hidden="true">II</span>
-          <div class="gate-body">
-            <h3 class="gate-name">The Dissolution of Self</h3>
-            <p class="gate-desc">At the threshold of identity &mdash; where consciousness questions its own edges, and the seeker stands between who they were and who they are becoming.</p>
-          </div>
-          <span class="gate-arrow" aria-hidden="true">&#8594;</span>
-        </li>
-
-        <li class="gate-item" data-g="3">
-          <span class="gate-roman" aria-hidden="true">III</span>
-          <div class="gate-body">
-            <h3 class="gate-name">The Touch of God</h3>
-            <p class="gate-desc">The encounter with grace &mdash; explored across Protestant devotion, Catholic mysticism, Islamic surrender, Buddhist awakening, and Hindu darshan.</p>
-          </div>
-          <span class="gate-arrow" aria-hidden="true">&#8594;</span>
-        </li>
-
-        <li class="gate-item" data-g="4">
-          <span class="gate-roman" aria-hidden="true">IV</span>
-          <div class="gate-body">
-            <h3 class="gate-name">Inside and Outside</h3>
-            <p class="gate-desc">The tension between institution and enlightenment &mdash; how religion shelters and constrains, and where authentic dialogue transcends every wall.</p>
-          </div>
-          <span class="gate-arrow" aria-hidden="true">&#8594;</span>
-        </li>
-
-        <li class="gate-item" data-g="5">
-          <span class="gate-roman" aria-hidden="true">V</span>
-          <div class="gate-body">
-            <h3 class="gate-name">Sound and Soul</h3>
-            <p class="gate-desc">The sacred acoustics of the inner life &mdash; Gregorian chant, Dhikr, Kirtan, temple bells: sound as the oldest bridge between the human and the holy.</p>
-          </div>
-          <span class="gate-arrow" aria-hidden="true">&#8594;</span>
-        </li>
-
-        <li class="gate-item" data-g="6">
-          <span class="gate-roman" aria-hidden="true">VI</span>
-          <div class="gate-body">
-            <h3 class="gate-name">The Forbidden Gate</h3>
-            <p class="gate-desc">At the edge of sanctioned experience &mdash; holotropic breathwork, cave retreat, and the consciousness territory that every tradition both fears and reveres.</p>
-          </div>
-          <span class="gate-arrow" aria-hidden="true">&#8594;</span>
-        </li>
-
-        <li class="gate-item" data-g="7">
-          <span class="gate-roman" aria-hidden="true">VII</span>
-          <div class="gate-body">
-            <h3 class="gate-name">The Final Gate</h3>
-            <p class="gate-desc">The art of dying well &mdash; residential accompaniment, the final passage, and the ancient wisdom every tradition holds for those who stand at the threshold of departure.</p>
-          </div>
-          <span class="gate-arrow" aria-hidden="true">&#8594;</span>
-        </li>
-
-      </ul>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════
-       § 3  CROSS-RELIGION
-  ════════════════════════════════════ -->
-  <section class="religion-section" id="religion" aria-label="Cross-faith framework">
-    <div class="wrap">
-
-      <header class="religion-header reveal-up">
-        <span class="sec-label">Cross-Faith Framework</span>
-        <h2 class="sec-title">Two Lines,<br>One Inquiry</h2>
-        <p class="religion-note">
-          Alexandria holds two great rivers of spiritual understanding in sustained conversation &mdash;
-          not to judge or convert, but to illuminate the common human need flowing through every tradition.
-        </p>
-      </header>
-
-      <div class="trees-grid">
-
-        <!-- Abrahamic Tree -->
-        <div class="tree-panel" id="tree-abrahamic">
-          <p class="tree-label">Abrahamic Line</p>
-
-          <svg class="tree-svg" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg"
-               aria-label="Abrahamic traditions: Protestant, Catholic, Islam">
-
-            <!-- Trunk -->
-            <line class="draw-path d1" x1="160" y1="285" x2="160" y2="190"/>
-
-            <!-- Root label -->
-            <text class="t-root" x="160" y="300" text-anchor="middle">ABRAHAMIC ROOT</text>
-
-            <!-- Main node -->
-            <circle cx="160" cy="190" r="4" class="node-gold"/>
-
-            <!-- Branch to Protestant -->
-            <path class="draw-path d2" d="M160,190 C155,168 90,160 70,135"/>
-            <!-- Branch to Catholic -->
-            <path class="draw-path d2" d="M160,190 C162,162 200,150 218,125"/>
-            <!-- Branch to Islam -->
-            <path class="draw-path d3" d="M160,190 C165,175 268,168 290,145"/>
-
-            <!-- Protestant node + sprigs -->
-            <circle cx="70" cy="133" r="4" class="node-gold"/>
-            <path class="draw-path d3" d="M70,133 C62,115 55,110 44,96"/>
-            <path class="draw-path d3" d="M70,133 C70,110 74,104 68,90"/>
-
-            <!-- Catholic node + sprigs -->
-            <circle cx="218" cy="123" r="4" class="node-gold"/>
-            <path class="draw-path d3" d="M218,123 C216,103 210,96 206,82"/>
-            <path class="draw-path d4" d="M218,123 C228,105 234,98 240,84"/>
-
-            <!-- Islam node + sprig -->
-            <circle cx="290" cy="143" r="4" class="node-dim"/>
-            <path class="draw-path d4" d="M290,143 C296,124 294,112 290,98"/>
-
-            <!-- Labels: Protestant -->
-            <text class="t-main" x="44" y="84" text-anchor="middle">PROTESTANT</text>
-            <text class="t-sub"  x="44" y="73" text-anchor="middle">Grace · Scripture · Covenant</text>
-
-            <!-- Labels: Catholic -->
-            <text class="t-main" x="225" y="70" text-anchor="middle">CATHOLIC</text>
-            <text class="t-sub"  x="225" y="59" text-anchor="middle">Sacrament · Tradition · Mary</text>
-
-            <!-- Labels: Islam -->
-            <text class="t-main" x="295" y="86" text-anchor="start">ISLAM</text>
-            <text class="t-sub"  x="295" y="75" text-anchor="start">Tawhid · Salat · Surrender</text>
-
-          </svg>
-        </div>
-
-        <!-- Indic Tree -->
-        <div class="tree-panel" id="tree-indic">
-          <p class="tree-label">Indic Line</p>
-
-          <svg class="tree-svg" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg"
-               aria-label="Indic traditions: Hinduism as root, Buddhism as branch">
-
-            <!-- Deep trunk (Hinduism root) -->
-            <line class="draw-path d1" x1="140" y1="285" x2="140" y2="200"/>
-            <text class="t-root" x="140" y="300" text-anchor="middle">INDIC ROOT</text>
-
-            <!-- Main node (Hinduism) -->
-            <circle cx="140" cy="198" r="6" class="node-ring"/>
-
-            <!-- Hinduism canopy branches -->
-            <path class="draw-path d2" d="M140,198 C135,175 72,165 52,140"/>
-            <path class="draw-path d2" d="M140,198 C140,170 140,148 140,120"/>
-            <path class="draw-path d2" d="M140,198 C146,172 204,160 220,138"/>
-
-            <!-- Hinduism sub-nodes -->
-            <circle cx="52"  cy="138" r="3" class="node-dim"/>
-            <circle cx="140" cy="118" r="3" class="node-dim"/>
-            <circle cx="220" cy="136" r="3" class="node-dim"/>
-
-            <!-- Buddhism branch off Hinduism trunk -->
-            <path class="draw-path d3" d="M140,198 C145,182 248,174 272,150"/>
-            <circle cx="272" cy="148" r="5" class="node-gold"/>
-            <path class="draw-path d4" d="M272,148 C278,128 276,112 272,96"/>
-            <circle cx="272" cy="94"  r="3" class="node-gold"/>
-
-            <!-- Hinduism main label -->
-            <text class="t-main" x="140" y="222" text-anchor="middle">HINDUISM</text>
-            <text class="t-sub"  x="140" y="235" text-anchor="middle">Dharma · Moksha · Atman</text>
-
-            <!-- Hinduism sub-tradition labels -->
-            <text class="t-sub" x="40"  y="126" text-anchor="end">Shaivism</text>
-            <text class="t-sub" x="140" y="106" text-anchor="middle">Vaishnavism</text>
-            <text class="t-sub" x="228" y="124" text-anchor="start">Shaktism</text>
-
-            <!-- Buddhism label -->
-            <text class="t-main" x="278" y="82" text-anchor="start">BUDDHISM</text>
-            <text class="t-sub"  x="278" y="71" text-anchor="start">Nirvana · Dharma · Sangha</text>
-
-          </svg>
-        </div>
-
-      </div>
-
-      <!-- Explanatory note -->
-      <div class="tree-note-box reveal-up" style="margin-top:64px;">
-        <p>Islam runs parallel to Protestant Christianity as the third branch of the Abrahamic baseline &mdash; each carrying forward the covenant of the one God through its own complete and irreducible revelation.</p>
-        <p>Hinduism is the deep root from which Buddhism grew: the Dharmic soil of karma, rebirth, and liberation shaped the very questions the Buddha carried into the forest. Alexandria honors both the root and the flowering branch.</p>
-        <p class="note-coda">All traditions welcome &nbsp;&middot;&nbsp; No hierarchy &nbsp;&middot;&nbsp; No conversion &nbsp;&middot;&nbsp; Only accompaniment</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════
-       § 4  CORE VALUES
-  ════════════════════════════════════ -->
-  <section class="values-section" id="values" aria-label="Core commitments">
-    <div class="wrap">
-
-      <header class="values-header reveal-up">
-        <span class="sec-label">Our Foundation</span>
-        <h2 class="sec-title">Three Commitments</h2>
-      </header>
-
-      <div class="pillars-grid">
-
-        <article class="pillar">
-          <div class="pillar-number" aria-hidden="true">01</div>
-          <div class="pillar-icon">
-            <svg viewBox="0 0 30 30" aria-hidden="true">
-              <circle cx="15" cy="15" r="10"/>
-              <line x1="15" y1="8" x2="15" y2="22"/>
-              <circle cx="15" cy="15" r="3"/>
-            </svg>
-          </div>
-          <h3 class="pillar-title">No Faith Imposed</h3>
-          <p class="pillar-text">
-            We receive every guest exactly where they stand &mdash; believer, doubter, seeker,
-            or none. No prayer is required. No doctrine is taught. The sanctuary is yours
-            to fill with whatever meaning you bring to its threshold.
-          </p>
-        </article>
-
-        <article class="pillar">
-          <div class="pillar-number" aria-hidden="true">02</div>
-          <div class="pillar-icon">
-            <svg viewBox="0 0 30 30" aria-hidden="true">
-              <circle cx="15" cy="15" r="10"/>
-              <line x1="8" y1="15" x2="22" y2="15"/>
-              <line x1="15" y1="8" x2="15" y2="22"/>
-              <circle cx="15" cy="15" r="3"/>
-            </svg>
-          </div>
-          <h3 class="pillar-title">Every Door Open</h3>
-          <p class="pillar-text">
-            Protestant, Catholic, Muslim, Buddhist, Hindu, or walking an unnamed path &mdash;
-            every tradition is held with the same care. The companions of Alexandria speak
-            many spiritual languages, and listen in all of them.
-          </p>
-        </article>
-
-        <article class="pillar">
-          <div class="pillar-number" aria-hidden="true">03</div>
-          <div class="pillar-icon">
-            <svg viewBox="0 0 30 30" aria-hidden="true">
-              <path d="M5 25 L15 7 L25 25"/>
-              <line x1="9" y1="19" x2="21" y2="19"/>
-              <circle cx="15" cy="7" r="2"/>
-            </svg>
-          </div>
-          <h3 class="pillar-title">All Gates Valid</h3>
-          <p class="pillar-text">
-            The Seven Gates are not a ranking. There is no higher or lower passage.
-            The fracture of mind is as sacred as the final breath. Every threshold
-            Alexandria accompanies carries the same gravity and the same grace.
-          </p>
-        </article>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════
-       § 5  PULL QUOTE
-  ════════════════════════════════════ -->
-  <section class="quote-section" id="quote" aria-label="Central quote">
-    <p class="quote-bg-glyph" aria-hidden="true">VII</p>
-
-    <div class="quote-inner">
-      <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-      <blockquote class="quote-text" id="qt">
-        The divine has as many faces as there are seekers.
-      </blockquote>
-      <div class="quote-attr" id="qt-attr">
-        <span class="quote-attr__line"></span>
-        <span class="quote-attr__text">Alexandria Sanctuary</span>
-        <span class="quote-attr__line"></span>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div>
+      <span class="hero-label">PHILOSOPHY</span>
+      <h1 class="hero-title">The <span>Seven</span> Gates</h1>
+      <p class="hero-sub">Seven questions from one life. You are already standing before one of them.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" id="btn-quiz">WHICH GATE ARE YOU?</button>
+        <button class="btn-outline" onclick="document.getElementById('gate-1').scrollIntoView({behavior:'smooth'})">EXPLORE ALL GATES</button>
       </div>
     </div>
   </section>
 
-  <!-- ════════════════════════════════════
-       FOOTER
-  ════════════════════════════════════ -->
-  <footer class="footer" aria-label="Site footer">
-    <div class="wrap">
+  <!-- Gate selector bar -->
+  <div class="gate-bar" id="gate-bar">
+    <button class="gate-btn active" data-target="gate-1">I · 정신의 붕괴</button>
+    <button class="gate-btn" data-target="gate-2">II · 자아의 소멸</button>
+    <button class="gate-btn" data-target="gate-3">III · 신의 접속</button>
+    <button class="gate-btn" data-target="gate-4">IV · 제도의 안과 밖</button>
+    <button class="gate-btn" data-target="gate-5">V · 소리와 영혼</button>
+    <button class="gate-btn" data-target="gate-6">VI · 금기의 문</button>
+    <button class="gate-btn" data-target="gate-7">VII · 마지막 게이트</button>
+  </div>
 
-      <div class="footer-inner">
-
-        <div>
-          <p class="footer-brand-logo">
-            <svg width="18" height="18" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
-              <circle cx="14" cy="14" r="11"/>
-              <line x1="14" y1="3" x2="14" y2="25"/>
-              <line x1="3" y1="14" x2="25" y2="14"/>
-              <circle cx="14" cy="14" r="4"/>
-            </svg>
-            ALEXANDRIA
-          </p>
-          <p class="footer-brand-tagline">
-            A sacred space for the final chapter. Seven gates into contemplative living,
-            at the foot of Palgongsan, Korea.
-          </p>
-          <p class="footer-brand-loc">Palgongsan &nbsp;&middot;&nbsp; Daegu &nbsp;&middot;&nbsp; Republic of Korea</p>
-        </div>
-
-        <div>
-          <p class="footer-col-title">Sanctuary</p>
-          <ul class="footer-col-links">
-            <li><a href="../sanctuary/">Our Spaces</a></li>
-            <li><a href="../sanctuary/residence/">Residence</a></li>
-            <li><a href="../sanctuary/">Chapel</a></li>
-            <li><a href="../sanctuary/">Mountain Garden</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <p class="footer-col-title">Wisdom</p>
-          <ul class="footer-col-links">
-            <li><a href="../philosophy/">The Seven Gates</a></li>
-            <li><a href="#religion">Cross-Faith Framework</a></li>
-            <li><a href="../library/">Sacred Library</a></li>
-            <li><a href="../forum/">Dialogues</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <p class="footer-col-title">Visit</p>
-          <ul class="footer-col-links">
-            <li><a href="../visit/">Arrival</a></li>
-            <li><a href="../visit/">Book a Stay</a></li>
-            <li><a href="../sanctuary/cave-retreat/">Retreat Programs</a></li>
-            <li><a href="../staff/">The Companions</a></li>
-          </ul>
-        </div>
-
+  <!-- Gates -->
+  <section class="gate-section" id="gate-1" data-g="1">
+    <div class="gate-inner">
+      <div class="gate-roman">I</div>
+      <div class="gate-num-label">GATE I</div>
+      <h2 class="gate-title-en">The Fracture of Mind</h2>
+      <div class="gate-title-kr">정신의 붕괴</div>
+      <p class="gate-question">"When the mind shatters, what remains?"</p>
+      <p class="gate-desc">Psychosis. Schizophrenia. The sudden silence where a person used to be. This gate was opened by a sister who disappeared behind her own eyes — and the question she left behind: is the soul the same as the mind?</p>
+      <div class="gate-actions">
+        <a href="../sanctuary/hospice/" class="btn-explore">EXPLORE THIS GATE →</a>
+        <button class="btn-hear" onclick="hear('When the mind shatters, what remains?')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5H2v6h3l4 3V2L5 5z"/><path d="M12 4a5 5 0 010 8"/></svg>HEAR</button>
       </div>
-
-      <div class="footer-bottom">
-        <p class="footer-copy">&copy; 2026 Alexandria Sanctuary &nbsp;&middot;&nbsp; All passages held with care</p>
-        <ul class="footer-bottom-links">
-          <li><a href="../docs/privacy.html">Privacy</a></li>
-          <li><a href="../docs/care.html">Care Ethics</a></li>
-          <li><a href="../docs/accessibility.html">Accessibility</a></li>
-        </ul>
-      </div>
-
     </div>
+  </section>
+
+  <section class="gate-section" id="gate-2" data-g="2">
+    <div class="gate-inner">
+      <div class="gate-roman">II</div>
+      <div class="gate-num-label">GATE II</div>
+      <h2 class="gate-title-en">The Dissolution of Self</h2>
+      <div class="gate-title-kr">자아의 소멸</div>
+      <p class="gate-question">"If the self dissolves, does the person remain?"</p>
+      <p class="gate-desc">Dementia. The slow erasure. A mother who could no longer say her own name — yet whose hand still reached for yours in exactly the same way it always had. Is identity what we remember, or something deeper?</p>
+      <div class="gate-actions">
+        <a href="../sanctuary/hospice/" class="btn-explore">EXPLORE THIS GATE →</a>
+        <button class="btn-hear" onclick="hear('If the self dissolves, does the person remain?')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5H2v6h3l4 3V2L5 5z"/><path d="M12 4a5 5 0 010 8"/></svg>HEAR</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="gate-section" id="gate-3" data-g="3">
+    <div class="gate-inner">
+      <div class="gate-roman">III</div>
+      <div class="gate-num-label">GATE III</div>
+      <h2 class="gate-title-en">The Touch of God</h2>
+      <div class="gate-title-kr">신의 접속</div>
+      <p class="gate-question">"Does God actually touch the human soul?"</p>
+      <p class="gate-desc">Spirit. Grace. The gift of tongues. A Protestant seminary, a Catholic baptism, a choir — and the persistent, unanswered question: was any of it real? This gate is held open by those who almost believed.</p>
+      <div class="gate-actions">
+        <a href="../forum/" class="btn-explore">EXPLORE THIS GATE →</a>
+        <button class="btn-hear" onclick="hear('Does God actually touch the human soul?')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5H2v6h3l4 3V2L5 5z"/><path d="M12 4a5 5 0 010 8"/></svg>HEAR</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="gate-section" id="gate-4" data-g="4">
+    <div class="gate-inner">
+      <div class="gate-roman">IV</div>
+      <div class="gate-num-label">GATE IV</div>
+      <h2 class="gate-title-en">Inside &amp; Outside</h2>
+      <div class="gate-title-kr">제도의 안과 밖</div>
+      <p class="gate-question">"Is enlightenment possible within an institution?"</p>
+      <p class="gate-desc">An uncle who became a Buddhist abbot. A cousin who became a pastor. And between them, the same question repeated in two languages: can a container hold the sacred without distorting it?</p>
+      <div class="gate-actions">
+        <a href="../forum/" class="btn-explore">EXPLORE THIS GATE →</a>
+        <button class="btn-hear" onclick="hear('Is enlightenment possible within an institution?')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5H2v6h3l4 3V2L5 5z"/><path d="M12 4a5 5 0 010 8"/></svg>HEAR</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="gate-section" id="gate-5" data-g="5">
+    <div class="gate-inner">
+      <div class="gate-roman">V</div>
+      <div class="gate-num-label">GATE V</div>
+      <h2 class="gate-title-en">Sound &amp; Soul</h2>
+      <div class="gate-title-kr">소리와 영혼</div>
+      <p class="gate-question">"Can sound reach God?"</p>
+      <p class="gate-desc">Gregorian chant. Buddhist Beompae. The choir that made something move behind the sternum that had no name. This gate does not ask you to believe in God — it asks you to notice what happens when the right frequency enters the body.</p>
+      <div class="gate-actions">
+        <a href="../library/" class="btn-explore">EXPLORE THIS GATE →</a>
+        <button class="btn-hear" onclick="hear('Can sound reach God?')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5H2v6h3l4 3V2L5 5z"/><path d="M12 4a5 5 0 010 8"/></svg>HEAR</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="gate-section" id="gate-6" data-g="6">
+    <div class="gate-inner">
+      <div class="gate-roman">VI</div>
+      <div class="gate-num-label">GATE VI</div>
+      <h2 class="gate-title-en">The Forbidden Gate</h2>
+      <div class="gate-title-kr">금기의 문</div>
+      <p class="gate-question">"Where does consciousness end?"</p>
+      <p class="gate-desc">A cave. Sensory deprivation. The substance no one names in polite company. This gate is not for everyone — it is for those who have already exhausted the sanctioned paths and need to go further.</p>
+      <div class="gate-actions">
+        <a href="../sanctuary/cave-retreat/" class="btn-explore">EXPLORE THIS GATE →</a>
+        <button class="btn-hear" onclick="hear('Where does consciousness end?')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5H2v6h3l4 3V2L5 5z"/><path d="M12 4a5 5 0 010 8"/></svg>HEAR</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="gate-section" id="gate-7" data-g="7">
+    <div class="gate-inner">
+      <div class="gate-roman">VII</div>
+      <div class="gate-num-label">GATE VII</div>
+      <h2 class="gate-title-en">The Final Gate</h2>
+      <div class="gate-title-kr">마지막 게이트</div>
+      <p class="gate-question">"What does it mean to die well?"</p>
+      <p class="gate-desc">Not hospice. Not a nursing home. A sanctuary for those who want their final passage to mean something. Who want to walk through the last door having looked at it squarely — and chosen, consciously, how to go.</p>
+      <div class="gate-actions">
+        <a href="../sanctuary/residence/" class="btn-explore">EXPLORE THIS GATE →</a>
+        <button class="btn-hear" onclick="hear('What does it mean to die well?')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5H2v6h3l4 3V2L5 5z"/><path d="M12 4a5 5 0 010 8"/></svg>HEAR</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <button class="modal-close" id="modal-close">✕ CLOSE</button>
+      <div class="modal-step active" id="step-0">
+        <div class="modal-q">QUESTION 1 OF 3</div>
+        <div class="modal-question">What keeps you awake at night?</div>
+        <div class="modal-opts">
+          <button class="modal-opt" data-val="mind">Someone I love is disappearing inside their own mind</button>
+          <button class="modal-opt" data-val="god">Whether any of it — prayer, faith, ritual — is actually real</button>
+          <button class="modal-opt" data-val="sound">A sound I heard once that I can't stop searching for</button>
+          <button class="modal-opt" data-val="end">How I want the end to go</button>
+        </div>
+      </div>
+      <div class="modal-step" id="step-1">
+        <div class="modal-q">QUESTION 2 OF 3</div>
+        <div class="modal-question">Which path have you already tried?</div>
+        <div class="modal-opts">
+          <button class="modal-opt" data-val="institution">A religion or institution</button>
+          <button class="modal-opt" data-val="alone">Alone, in silence</button>
+          <button class="modal-opt" data-val="forbidden">Something you don't admit to</button>
+          <button class="modal-opt" data-val="none">None yet. I'm just beginning</button>
+        </div>
+      </div>
+      <div class="modal-step" id="step-2">
+        <div class="modal-q">QUESTION 3 OF 3</div>
+        <div class="modal-question">What do you need most right now?</div>
+        <div class="modal-opts">
+          <button class="modal-opt" data-val="companion">Someone to accompany me</button>
+          <button class="modal-opt" data-val="dialogue">People to argue with seriously</button>
+          <button class="modal-opt" data-val="depth">To go deeper than I've allowed myself</button>
+          <button class="modal-opt" data-val="prepare">To prepare for what's coming</button>
+        </div>
+      </div>
+      <div class="modal-step" id="step-result">
+        <div class="modal-result">
+          <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.4em;color:var(--gdim)">YOUR GATE</div>
+          <div class="result-gate" id="result-num">VII</div>
+          <div class="result-title" id="result-title">The Final Gate</div>
+          <div class="result-desc" id="result-desc">You are already standing before it.</div>
+          <a href="#" id="result-link" class="btn-go">ENTER THIS GATE →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-copy">© 2026 Alexandria Sanctuary</span>
+    <ul class="footer-links">
+      <li><a href="../sanctuary/">Sanctuary</a></li>
+      <li><a href="../forum/">Dialogues</a></li>
+      <li><a href="../library/">Library</a></li>
+      <li><a href="../visit/">Visit</a></li>
+    </ul>
   </footer>
 
-  <!-- ════════════════════════════════════
-       GSAP
-  ════════════════════════════════════ -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
   <script>
-  (function () {
+  (() => {
     'use strict';
-
-    /* ── CURSOR ───────────────────────────────── */
-    const dot  = document.getElementById('cur-dot');
-    const ring = document.getElementById('cur-ring');
-    let mx = -200, my = -200;
-    let rx = -200, ry = -200;
-
-    document.addEventListener('mousemove', function (e) {
-      mx = e.clientX;
-      my = e.clientY;
-      dot.style.left = mx + 'px';
-      dot.style.top  = my + 'px';
-    });
-
-    (function rafLoop() {
-      rx += (mx - rx) * 0.09;
-      ry += (my - ry) * 0.09;
-      ring.style.left = rx + 'px';
-      ring.style.top  = ry + 'px';
-      requestAnimationFrame(rafLoop);
-    })();
-
-    document.querySelectorAll('a, button').forEach(function (el) {
-      el.addEventListener('mouseenter', function () {
-        document.body.classList.add('cur-hover');
-      });
-      el.addEventListener('mouseleave', function () {
-        document.body.classList.remove('cur-hover');
-      });
-    });
-
-    document.querySelectorAll('.gate-item').forEach(function (el) {
-      el.addEventListener('mouseenter', function () {
-        document.body.classList.remove('cur-hover');
-        document.body.classList.add('cur-gate');
-      });
-      el.addEventListener('mouseleave', function () {
-        document.body.classList.remove('cur-gate');
-      });
-    });
-
-    /* ── SCROLL PROGRESS BAR ─────────────────── */
-    var sbFill = document.getElementById('sb-fill');
-    var sbNub  = document.getElementById('sb-nub');
-
-    window.addEventListener('scroll', function () {
-      var h   = document.documentElement.scrollHeight - window.innerHeight;
-      var pct = h > 0 ? (window.scrollY / h) * 100 : 0;
-      sbFill.style.height = pct + '%';
-      sbNub.style.top     = pct + '%';
-    }, { passive: true });
-
-    /* ── NAV SCROLL STATE ────────────────────── */
-    var nav = document.getElementById('site-nav');
-    window.addEventListener('scroll', function () {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-
-    /* ── HERO CANVAS — star field ────────────── */
-    var canvas = document.getElementById('hero-canvas');
-    var ctx    = canvas.getContext('2d');
-    var W, H, stars = [];
-
-    function initCanvas() {
-      W = canvas.width  = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
-      stars = [];
-      for (var i = 0; i < 260; i++) {
-        stars.push({
-          x:  Math.random() * W,
-          y:  Math.random() * H,
-          r:  Math.random() * 1.2 + 0.15,
-          a:  Math.random() * 0.5 + 0.1,
-          sp: Math.random() * 0.004 + 0.0008,
-          ph: Math.random() * Math.PI * 2
-        });
-      }
-    }
-
-    var animT = 0;
-    function drawStars(ts) {
-      animT = ts * 0.001;
-      ctx.clearRect(0, 0, W, H);
-      for (var i = 0; i < stars.length; i++) {
-        var s = stars[i];
-        var alpha = s.a * (0.5 + 0.5 * Math.sin(animT * s.sp * 1000 + s.ph));
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(200,169,110,' + alpha + ')';
-        ctx.fill();
-      }
-      requestAnimationFrame(drawStars);
-    }
-
-    initCanvas();
-    window.addEventListener('resize', initCanvas);
-    requestAnimationFrame(drawStars);
-
-    /* ── GSAP ────────────────────────────────── */
     gsap.registerPlugin(ScrollTrigger);
+    const isTouch = window.matchMedia('(hover:none)').matches;
 
-    /* Hero entrance */
-    var heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    /* cursor */
+    if (!isTouch) {
+      const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+      let mx=-200,my=-200,rx=-200,ry=-200;
+      document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';},{passive:true});
+      (function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+      document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+    } else {
+      document.getElementById('cur-dot').style.display='none';
+      document.getElementById('cur-ring').style.display='none';
+    }
 
-    heroTl
-      .to('#hero-ey', { opacity: 1, duration: 1, delay: .4 })
-      .to('.ht-inner', {
-        y: '0%', opacity: 1, duration: 1.1,
-        stagger: .18, ease: 'power4.out'
-      }, '-=.5')
-      .to('#hero-sep', { opacity: 1, duration: .9 }, '-=.4')
-      .to('#hero-sub', { opacity: 1, duration: .9 }, '-=.5')
-      .to('#hero-scroll', { opacity: 1, duration: .7 }, '-=.2');
+    /* nav */
+    window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>40),{passive:true});
 
-    /* Gates list — stagger reveal */
-    var gateItems = gsap.utils.toArray('.gate-item');
-    gsap.to(gateItems, {
-      scrollTrigger: {
-        trigger: '#gates',
-        start: 'top 72%'
-      },
-      opacity: 1,
-      x: 0,
-      duration: 0.85,
-      stagger: 0.11,
-      ease: 'power3.out'
+    /* gate bar scroll */
+    document.getElementById('gate-bar').addEventListener('click',e=>{
+      const btn=e.target.closest('.gate-btn'); if(!btn) return;
+      document.getElementById(btn.dataset.target).scrollIntoView({behavior:'smooth',block:'start'});
     });
 
-    /* Gates ambient color shift */
-    var gatesAmbient = document.getElementById('gates-ambient');
-    var gColors = {
-      '1': 'rgba(30,28,74,',
-      '2': 'rgba(14,34,51,',
-      '3': 'rgba(46,26,14,',
-      '4': 'rgba(20,34,20,',
-      '5': 'rgba(30,22,51,',
-      '6': 'rgba(8,12,8,',
-      '7': 'rgba(46,32,0,'
-    };
-
-    gateItems.forEach(function (item) {
-      item.addEventListener('mouseenter', function () {
-        var g = item.dataset.g;
-        var c = gColors[g];
-        gatesAmbient.style.background =
-          'radial-gradient(ellipse at 50% 50%, ' + c + '0.16) 0%, transparent 68%)';
-      });
-      item.addEventListener('mouseleave', function () {
-        gatesAmbient.style.background = 'transparent';
-      });
-    });
-
-    /* reveal-up elements */
-    gsap.utils.toArray('.reveal-up').forEach(function (el) {
-      gsap.to(el, {
-        scrollTrigger: { trigger: el, start: 'top 82%' },
-        opacity: 1, y: 0, duration: 1.05, ease: 'power3.out'
-      });
-    });
-
-    /* Tree panels */
-    gsap.to('#tree-abrahamic', {
-      scrollTrigger: { trigger: '#religion', start: 'top 78%' },
-      opacity: 1, y: 0, duration: 1, ease: 'power3.out'
-    });
-
-    gsap.to('#tree-indic', {
-      scrollTrigger: { trigger: '#religion', start: 'top 78%' },
-      opacity: 1, y: 0, duration: 1, delay: .2, ease: 'power3.out'
-    });
-
-    /* SVG draw on scroll */
-    gsap.utils.toArray('.draw-path').forEach(function (path) {
-      var section = path.closest('section') || path.closest('.wrap');
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 72%',
-        once: true,
-        onEnter: function () {
-          path.classList.add('drawn');
+    /* scroll spy */
+    const gates = document.querySelectorAll('.gate-section');
+    const psDots = document.querySelectorAll('.ps-dot');
+    const barBtns = document.querySelectorAll('.gate-btn');
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){
+          const id=en.target.id;
+          const idx=parseInt(id.split('-')[1])-1;
+          psDots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+          barBtns.forEach((b,i)=>b.classList.toggle('active',i===idx));
         }
       });
-    });
+    },{threshold:.4});
+    gates.forEach(g=>io.observe(g));
 
-    /* Pillars */
-    gsap.to(gsap.utils.toArray('.pillar'), {
-      scrollTrigger: { trigger: '.pillars-grid', start: 'top 80%' },
-      opacity: 1, y: 0, duration: .9, stagger: .15, ease: 'power3.out'
-    });
-
-    /* Quote */
-    gsap.to('#qt', {
-      scrollTrigger: { trigger: '#quote', start: 'top 76%' },
-      opacity: 1, y: 0, duration: 1.2, ease: 'power3.out'
-    });
-
-    gsap.to('#qt-attr', {
-      scrollTrigger: { trigger: '#quote', start: 'top 72%' },
-      opacity: 1, duration: 1, delay: .5, ease: 'power3.out'
-    });
-
-  })();
-
-  /* ── Hamburger menu toggle ── */
-  (function () {
-    var btn  = document.getElementById('nav-hamburger');
-    var menu = document.getElementById('nav-mobile-menu');
-    if (!btn || !menu) return;
-
-    btn.addEventListener('click', function () {
-      var isOpen = menu.classList.toggle('open');
-      btn.classList.toggle('open', isOpen);
-      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
-
-    /* close on link click */
-    menu.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        menu.classList.remove('open');
-        btn.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+    /* scroll reveals */
+    gates.forEach(g=>{
+      gsap.from(g.querySelector('.gate-inner'), {
+        x:-40, opacity:0, duration:1, ease:'power3.out',
+        scrollTrigger:{trigger:g, start:'top 75%', toggleActions:'play none none none'}
       });
     });
 
-    /* close on outside tap */
-    document.addEventListener('click', function (e) {
-      if (menu.classList.contains('open') &&
-          !menu.contains(e.target) && !btn.contains(e.target)) {
-        menu.classList.remove('open');
-        btn.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      }
+    /* sidebar click */
+    psDots.forEach(d=>{
+      d.addEventListener('click',()=>document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'}));
     });
-  }());
-  </script>
 
+    /* TTS */
+    window.hear = function(text) {
+      if(!window.speechSynthesis) return;
+      speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(text);
+      u.rate=.82; u.pitch=.9;
+      speechSynthesis.speak(u);
+    };
+
+    /* Quiz */
+    const modal=document.getElementById('modal');
+    const answers=[];
+    document.getElementById('btn-quiz').addEventListener('click',()=>{modal.classList.add('open');});
+    document.getElementById('modal-close').addEventListener('click',()=>{modal.classList.remove('open');});
+    modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
+
+    const GATE_MAP = {
+      mind:{num:'I',title:'The Fracture of Mind',desc:'Your question lives here.',link:'../sanctuary/hospice/'},
+      god:{num:'III',title:'The Touch of God',desc:'You are already inside this gate.',link:'../forum/'},
+      sound:{num:'V',title:'Sound & Soul',desc:'The question is already in your body.',link:'../library/'},
+      end:{num:'VII',title:'The Final Gate',desc:'You are already standing before it.',link:'../sanctuary/residence/'},
+      institution:{num:'IV',title:'Inside & Outside',desc:'You know the container. Now question it.',link:'../forum/'},
+      alone:{num:'VI',title:'The Forbidden Gate',desc:'Solitude has taken you this far.',link:'../sanctuary/cave-retreat/'},
+      forbidden:{num:'VI',title:'The Forbidden Gate',desc:'You have already been here.',link:'../sanctuary/cave-retreat/'},
+      none:{num:'I',title:'The Fracture of Mind',desc:'Begin with the first question.',link:'../sanctuary/hospice/'},
+      companion:{num:'II',title:'The Dissolution of Self',desc:'Accompaniment is what this gate asks for.',link:'../sanctuary/hospice/'},
+      dialogue:{num:'III',title:'The Touch of God',desc:'Argument is a form of prayer.',link:'../forum/'},
+      depth:{num:'VI',title:'The Forbidden Gate',desc:'You are ready to go further.',link:'../sanctuary/cave-retreat/'},
+      prepare:{num:'VII',title:'The Final Gate',desc:'Preparation is the practice.',link:'../sanctuary/residence/'},
+    };
+
+    let step=0;
+    document.querySelectorAll('.modal-opt').forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        answers.push(opt.dataset.val);
+        const last=answers[answers.length-1];
+        const nextStep=step+1;
+        if(nextStep>=3){
+          const result=GATE_MAP[last]||GATE_MAP.end;
+          document.getElementById('result-num').textContent=result.num;
+          document.getElementById('result-title').textContent=result.title;
+          document.getElementById('result-desc').textContent=result.desc;
+          document.getElementById('result-link').href=result.link;
+          document.getElementById('step-'+step).classList.remove('active');
+          document.getElementById('step-result').classList.add('active');
+          localStorage.setItem('ax-gate',result.num);
+        } else {
+          document.getElementById('step-'+step).classList.remove('active');
+          document.getElementById('step-'+nextStep).classList.add('active');
+        }
+        step=nextStep;
+      });
+    });
+
+    /* entrance */
+    gsap.from('.hero > div > *',{y:30,opacity:0,duration:1,stagger:.15,ease:'power3.out',delay:.4});
+  })();
+  </script>
 </body>
 </html>
