@@ -1117,6 +1117,45 @@
       opacity: 0;
       transform: translateX(40px);
     }
+
+/* ═══ MOBILE OPTIMIZATION ═══ */
+@media (hover: none) {
+  #cur-dot, #cur-ring { display: none; }
+  body { cursor: auto; }
+}
+
+@media (max-width: 768px) {
+  /* Nav */
+  .nav-links { display: none; flex-direction: column; position: fixed; inset: 0; background: rgba(8,6,4,.97); justify-content: center; align-items: center; gap: 32px; z-index: 8999; }
+  .nav-links.open { display: flex; }
+  .nav-burger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+  .nav-burger span { display: block; width: 24px; height: 1px; background: var(--gold); transition: .3s; }
+
+  /* Sections padding */
+  section, .section { padding: 80px 24px !important; }
+
+  /* Typography */
+  .hero-title, h1 { font-size: clamp(36px, 10vw, 72px) !important; }
+  .sec-title, h2 { font-size: clamp(24px, 6vw, 40px) !important; }
+  h3 { font-size: clamp(18px, 4vw, 24px) !important; }
+
+  /* Grids → single column */
+  [class*="grid"], [class*="cards"], [class*="cols"] { grid-template-columns: 1fr !important; }
+
+  /* Footer */
+  .footer-grid, footer > div { grid-template-columns: 1fr !important; gap: 32px !important; }
+
+  /* Touch targets */
+  a, button { min-height: 44px; }
+
+  /* Scroll bar hide on mobile */
+  .scroll-bar { display: none; }
+}
+
+@media (max-width: 480px) {
+  section, .section { padding: 60px 20px !important; }
+  .hero-title, h1 { font-size: clamp(28px, 9vw, 48px) !important; }
+}
   </style>
 </head>
 <body>
@@ -1149,6 +1188,7 @@
     ALEXANDRIA
   </a>
 
+  <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   <ul class="nav-links">
     <li><a href="../index.html">Sanctuary</a></li>
     <li><a href="../library/index.html">Library</a></li>
@@ -1879,6 +1919,12 @@
     stagger: 0.06,
     scrollTrigger: { trigger: '.grand-traditions', start: 'top 85%' }
   });
+
+  const burger = document.getElementById('burger');
+  const navLinks = document.querySelector('.nav-links');
+  if (burger && navLinks) {
+    burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  }
 
 })();
 </script>

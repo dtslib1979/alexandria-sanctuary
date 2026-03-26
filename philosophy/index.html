@@ -888,6 +888,165 @@
 
     .footer-bottom-links a:hover { color: var(--gold); }
 
+    /* ═══════════════════════════════════════════════
+       MOBILE OPTIMISATION  ≤ 768px
+    ═══════════════════════════════════════════════ */
+
+    /* 1. Hide cursor on touch devices */
+    @media (hover: none) {
+      #cur-dot, #cur-ring { display: none; }
+      body { cursor: auto; }
+    }
+
+    /* 2. Nav — hamburger toggle */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px; height: 44px;
+      padding: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 410;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--gold);
+      transition: transform .3s var(--ease-out), opacity .3s;
+      transform-origin: center;
+    }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 80px 32px 48px;
+      background: rgba(8,6,4,.97);
+      backdrop-filter: blur(24px);
+      z-index: 405;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .nav-mobile-menu.open { display: flex; }
+
+    .nav-mobile-menu a {
+      font-family: 'Cinzel', serif;
+      font-size: 13px; letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--parchment-60);
+      min-height: 44px;
+      display: flex; align-items: center;
+      transition: color .3s;
+    }
+
+    .nav-mobile-menu a:hover,
+    .nav-mobile-menu a.active { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .nav-hamburger { display: flex; }
+      .nav-links, .nav-visit { display: none !important; }
+
+      /* 3. Hero title */
+      .hero-title {
+        font-size: clamp(40px, 10vw, 96px);
+      }
+
+      .hero-sep { margin: 32px auto; }
+
+      /* All section padding reduced */
+      .gates-section,
+      .religion-section,
+      .values-section,
+      .quote-section {
+        padding: 72px 0;
+      }
+
+      .footer { padding: 64px 0 40px; }
+
+      /* 4. Seven Gates list */
+      .gate-item {
+        grid-template-columns: 44px 1fr;
+        gap: 0 12px;
+        padding: 28px 0 28px 8px;
+      }
+
+      .gate-roman {
+        font-size: clamp(18px, 5vw, 26px);
+      }
+
+      .gate-body { padding-left: 12px; }
+
+      .gate-arrow { display: none; }
+
+      /* 5. Cross-religion trees — 1 column, Abrahamic first */
+      .trees-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      /* 6. SVG trees scale down */
+      .tree-svg {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* 7. Core values pillars — 1 column */
+      .pillars-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pillar { padding: 40px 28px; }
+
+      /* 8. Section inner padding */
+      .gates-header { margin-bottom: 48px; }
+      .religion-header { margin-bottom: 40px; }
+      .values-header { margin-bottom: 40px; }
+
+      /* quote */
+      .quote-inner { padding: 0 20px; }
+      .quote-mark { font-size: 72px; }
+
+      /* tree note box */
+      .tree-note-box { padding: 24px 20px; margin-top: 32px; }
+
+      /* 9. Footer */
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-bottom: 48px;
+      }
+
+      /* 10. Touch targets — nav links already 44px via min-height */
+      .nav-visit {
+        min-height: 44px;
+        display: inline-flex; align-items: center;
+      }
+
+      .footer-col-links a {
+        min-height: 44px;
+        display: flex; align-items: center;
+      }
+
+      /* scroll bar hidden on small screens */
+      .scroll-bar { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      /* 7. extra breakpoint for very small phones */
+      .pillars-grid { grid-template-columns: 1fr; }
+
+      .hero-sep { max-width: 180px; }
+    }
+
   </style>
 </head>
 <body>
@@ -923,7 +1082,20 @@
     </ul>
 
     <a href="../visit/" class="nav-visit">BOOK A STAY</a>
+
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- Mobile nav menu -->
+  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <a href="../sanctuary/">SANCTUARY</a>
+    <a href="../philosophy/" class="active">WISDOM</a>
+    <a href="../forum/">DIALOGUES</a>
+    <a href="../visit/">VISIT</a>
+    <a href="../visit/" class="nav-visit" style="border:1px solid var(--gold-dim);padding:10px 20px;margin-top:8px;">BOOK A STAY</a>
+  </div>
 
   <!-- ════════════════════════════════════
        § 1  HERO
@@ -1539,6 +1711,41 @@
     });
 
   })();
+
+  /* ── Hamburger menu toggle ── */
+  (function () {
+    var btn  = document.getElementById('nav-hamburger');
+    var menu = document.getElementById('nav-mobile-menu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', function () {
+      var isOpen = menu.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    /* close on link click */
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* close on outside tap */
+    document.addEventListener('click', function (e) {
+      if (menu.classList.contains('open') &&
+          !menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+  }());
   </script>
 
 </body>

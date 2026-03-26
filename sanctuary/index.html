@@ -835,6 +835,170 @@
     /* Magnetic wrapper */
     .magnetic { display: inline-block; }
 
+    /* ═══════════════════════════════════════════════
+       MOBILE OPTIMIZATIONS
+    ═══════════════════════════════════════════════ */
+
+    /* 1. Hide cursor on touch devices */
+    @media (hover: none) {
+      #cur-dot, #cur-ring { display: none; }
+      body { cursor: auto; }
+    }
+
+    /* 2. Nav — hamburger button */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px; height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--gold);
+      transition: transform .3s, opacity .3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Mobile nav drawer */
+    @media (max-width: 768px) {
+      .nav-hamburger { display: flex; }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        background: rgba(8,6,4,.97);
+        backdrop-filter: blur(24px);
+        padding: 80px 32px 40px;
+        transform: translateY(-110%);
+        transition: transform .45s cubic-bezier(0.16,1,0.3,1);
+        z-index: 350;
+      }
+      .nav-links.open {
+        transform: translateY(0);
+      }
+      .nav-links li {
+        border-bottom: 1px solid rgba(200,169,110,.08);
+      }
+      .nav-links a {
+        display: block;
+        padding: 16px 0;
+        font-size: 11px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    /* 3. Hero — mobile font sizes and padding */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 100px 24px 64px;
+        min-height: 100svh;
+      }
+      .hero-title {
+        font-size: clamp(40px, 12vw, 72px);
+        margin-bottom: 24px;
+      }
+      .hero-subtitle {
+        font-size: clamp(15px, 4vw, 18px);
+        margin-bottom: 36px;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero {
+        padding: 88px 20px 56px;
+      }
+      .hero-title {
+        font-size: clamp(36px, 13vw, 60px);
+      }
+      .hero-tag { margin-bottom: 24px; }
+    }
+
+    /* 4. Path cards — full width, reduced min-height */
+    @media (max-width: 600px) {
+      .paths-grid { max-width: 100%; }
+      .path-card { min-height: 420px; }
+      .path-card-inner { padding: 40px 28px 36px; }
+      .path-card-numeral { font-size: 64px; }
+    }
+
+    /* 5. All section padding */
+    @media (max-width: 768px) {
+      .intro-section  { padding: 64px 24px; }
+      .paths-section  { padding: 32px 20px 64px; }
+      .quote-section  { padding: 64px 24px; }
+      .philosophy-section { padding: 64px 24px 64px; }
+      .traditions-section { padding: 64px 24px; }
+      footer { padding: 64px 24px 40px; }
+    }
+    @media (max-width: 480px) {
+      .intro-section  { padding: 48px 20px; }
+      .paths-section  { padding: 24px 16px 48px; }
+      .quote-section  { padding: 48px 20px; }
+      .philosophy-section { padding: 48px 20px 48px; }
+      .traditions-section { padding: 48px 20px; }
+      footer { padding: 48px 20px 32px; }
+    }
+
+    /* 6. Typography — large headings */
+    @media (max-width: 768px) {
+      .paths-header h2 {
+        font-size: clamp(24px, 6vw, 36px);
+      }
+      .quote-text {
+        font-size: clamp(18px, 5vw, 28px);
+      }
+      .quote-mark {
+        font-size: 80px;
+        margin-bottom: -24px;
+      }
+      .philosophy-left h2 {
+        font-size: clamp(22px, 5vw, 30px);
+      }
+    }
+
+    /* 7. Footer grid — already collapses, ensure 1-col at 768px */
+    @media (max-width: 768px) {
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    /* 8. Touch targets — min 44px */
+    @media (hover: none) {
+      .nav-back,
+      .path-card-cta,
+      .footer-col ul li a,
+      .nav-links a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+      }
+      .tradition-item { padding: 28px 16px; }
+    }
+
+    /* 9. Quote section — already handled above in §6 */
+
+    /* 10. Philosophy section — collapse to 1-col on mobile */
+    @media (max-width: 768px) {
+      .philosophy-section {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .philosophy-left { position: static; }
+    }
+
   </style>
 </head>
 <body>
@@ -874,6 +1038,12 @@
       <li><a href="../forum/index.html">Dialogues</a></li>
       <li><a href="../visit/index.html">Visit</a></li>
     </ul>
+
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
     <a class="nav-back magnetic" href="../index.html">&#8592; Return</a>
   </nav>
@@ -1349,6 +1519,44 @@
         gsap.to(el, { x: 0, y: 0, duration: 0.65, ease: 'elastic.out(1, 0.4)' });
       });
     });
+
+    /* ─────────────────────────────────────────
+       HAMBURGER NAV TOGGLE (mobile)
+    ───────────────────────────────────────── */
+    (function() {
+      const hamburger = document.getElementById('nav-hamburger');
+      const navLinks  = document.querySelector('.nav-links');
+      if (!hamburger || !navLinks) return;
+
+      hamburger.addEventListener('click', function() {
+        const isOpen = navLinks.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+
+      // Close on link tap
+      navLinks.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          navLinks.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+
+      // Close on outside tap
+      document.addEventListener('click', function(e) {
+        if (navLinks.classList.contains('open') &&
+            !navLinks.contains(e.target) &&
+            !hamburger.contains(e.target)) {
+          navLinks.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+    })();
 
   </script>
 </body>

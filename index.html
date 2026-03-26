@@ -849,6 +849,137 @@
       font-size: 9px; letter-spacing: .2em;
       color: var(--gold-dim);
     }
+
+    /* ═══════════════════════════════════════════════
+       MOBILE OPTIMISATION
+    ═══════════════════════════════════════════════ */
+
+    /* 1. Custom cursor — hide on touch devices */
+    @media (hover: none) {
+      #cur-dot, #cur-ring { display: none; }
+      body { cursor: auto; }
+    }
+
+    /* 2. Hamburger button */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px; height: 44px;
+      background: none; border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 500;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 1.5px;
+      background: var(--gold);
+      transition: transform .35s var(--ease-out), opacity .25s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    @media (max-width: 768px) {
+      /* Nav */
+      .nav { padding: 16px 20px; }
+      .nav.scrolled { padding: 12px 20px; }
+      .nav-hamburger { display: flex; }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        background: rgba(8,6,4,.97);
+        backdrop-filter: blur(24px) saturate(1.5);
+        padding: 80px 32px 40px;
+        transform: translateY(-110%);
+        transition: transform .45s var(--ease-out);
+        z-index: 450;
+      }
+      .nav-links.open { transform: translateY(0); }
+      .nav-links li { border-bottom: 1px solid rgba(200,169,110,.08); }
+      .nav-links a {
+        display: block;
+        padding: 16px 0;
+        font-size: 11px;
+        letter-spacing: .28em;
+        min-height: 44px;
+        display: flex; align-items: center;
+      }
+
+      /* 3. Hero */
+      .hero-title {
+        font-size: clamp(48px, 12vw, 96px);
+      }
+      .hero-inner { padding: 0 20px; }
+      .hero-kr { letter-spacing: .25em; }
+      .hero-btns { margin-top: 36px; }
+
+      /* 6. Typography */
+      .sec-title { font-size: clamp(24px, 7vw, 36px); }
+
+      /* 7. Section padding */
+      .sec { padding: 64px 0; }
+      .gates-wrap { padding: 64px 0; }
+      .manifesto-wrap { padding: 80px 0; }
+      .wrap { padding: 0 20px; }
+      .gates-head { padding: 0 20px; margin-bottom: 40px; }
+      .gates-scroll-wrap { padding: 12px 20px 40px; }
+
+      /* 5. Grid layouts — 1 column */
+      .dial-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px;
+      }
+      .paths-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 36px;
+      }
+
+      /* 8. Manifesto */
+      #manifesto-text {
+        font-size: clamp(20px, 5.5vw, 32px);
+        padding: 0 20px;
+        word-spacing: .02em;
+      }
+
+      /* 9. Footer */
+      .footer { padding: 48px 20px 28px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+
+      /* 10. Touch targets */
+      .btn { min-height: 44px; padding: 14px 28px; }
+      .nav-enter { min-height: 44px; display: inline-flex; align-items: center; }
+      .gcard-link { min-height: 44px; display: inline-flex; align-items: center; }
+      .path-cta   { min-height: 44px; display: inline-flex; align-items: center; }
+      .footer-links a { min-height: 44px; display: flex; align-items: center; }
+    }
+
+    /* 4. Seven Gates — gate cards on small phones */
+    @media (max-width: 480px) {
+      .gcard { width: 80vw; }
+
+      /* 4. Touch-scroll helpers (also applied globally but explicit here) */
+      .gates-scroll-wrap {
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+      }
+    }
+
+    /* Ensure touch-scroll on all mobile */
+    .gates-scroll-wrap {
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x;
+    }
   </style>
 </head>
 <body>
@@ -899,6 +1030,9 @@
       <li><a href="forum/">Forum</a></li>
       <li><a href="library/">Library</a></li>
     </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <a href="visit/" class="nav-enter mag">Enter</a>
   </nav>
 
@@ -1592,6 +1726,42 @@
         window.scrollTo({ top: y, behavior: 'smooth' });
       });
     });
+
+    /* ─── HAMBURGER MENU ────────────────────────── */
+    const navHamburger = $('#nav-hamburger');
+    const navLinks     = $('.nav-links');
+
+    if (navHamburger && navLinks) {
+      navHamburger.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('open');
+        navHamburger.classList.toggle('open', isOpen);
+        navHamburger.setAttribute('aria-expanded', isOpen);
+        // prevent body scroll when menu is open
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+
+      // Close menu when a nav link is tapped
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          navHamburger.classList.remove('open');
+          navHamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+
+      // Close menu on outside tap
+      document.addEventListener('click', e => {
+        if (navLinks.classList.contains('open') &&
+            !navLinks.contains(e.target) &&
+            !navHamburger.contains(e.target)) {
+          navLinks.classList.remove('open');
+          navHamburger.classList.remove('open');
+          navHamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+    }
 
   })();
   </script>
