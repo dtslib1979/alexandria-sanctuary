@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy — Alexandria Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg-solid:#080604; --gold:#C8A96E; --gold-dim:#8B6A30; --parchment:#EAE4D6; --parchment-60:rgba(234,228,214,0.6); }
+    html { background: var(--bg-solid); color: var(--parchment); }
+    body { font-family: 'Cormorant Garamond', serif; font-size: 18px; line-height: 1.8; }
+    a { color: var(--gold); text-decoration: none; }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; background: linear-gradient(to bottom, rgba(8,6,4,.95), transparent); }
+    .nav-logo { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: .2em; color: var(--gold); display: flex; align-items: center; gap: 10px; }
+    .nav-logo svg { width: 22px; height: 22px; }
+    .doc-wrap { max-width: 720px; margin: 0 auto; padding: 140px 40px 80px; }
+    .doc-label { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .25em; color: var(--gold-dim); margin-bottom: 16px; }
+    h1 { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 400; color: var(--gold); margin-bottom: 40px; }
+    h2 { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 500; color: var(--gold); margin: 36px 0 12px; }
+    p { color: var(--parchment-60); margin-bottom: 16px; }
+    .back { display: inline-block; margin-top: 48px; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .15em; color: var(--gold-dim); border-bottom: 1px solid var(--gold-dim); padding-bottom: 2px; }
+    @media (max-width: 600px) { .nav { padding: 16px 20px; } .doc-wrap { padding: 110px 20px 60px; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../" class="nav-logo">
+      <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="14" cy="14" r="11"/>
+        <line x1="14" y1="3" x2="14" y2="25"/>
+        <line x1="3" y1="14" x2="25" y2="14"/>
+        <circle cx="14" cy="14" r="4"/>
+      </svg>
+      ALEXANDRIA
+    </a>
+  </nav>
+
+  <div class="doc-wrap">
+    <p class="doc-label">LEGAL</p>
+    <h1>Privacy Policy</h1>
+
+    <h2>Who We Are</h2>
+    <p>Alexandria Sanctuary is a contemplative care space located at the foot of Palgongsan, Daegu, Republic of Korea. This site is maintained for informational purposes.</p>
+
+    <h2>Information We Collect</h2>
+    <p>We do not collect personal data through this website. Inquiry forms, if present, are processed with full confidentiality and are never shared with third parties.</p>
+
+    <h2>Cookies</h2>
+    <p>This site uses no tracking cookies. External fonts are loaded via Google Fonts, which may set its own cookies subject to Google's privacy policy.</p>
+
+    <h2>Your Rights</h2>
+    <p>You have the right to know what information we hold about you, and to request its deletion. Contact us at the address provided on the <a href="../visit/">Visit</a> page.</p>
+
+    <h2>Changes</h2>
+    <p>This policy may be updated without notice. The current version is always published at this URL.</p>
+
+    <a href="../" class="back">← Return Home</a>
+  </div>
+</body>
+</html>
