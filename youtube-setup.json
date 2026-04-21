@@ -1,0 +1,102 @@
+{
+  "_comment": "Alexandria Sanctuary YouTube 채널 설정",
+  "_account": "b",
+  "_channel_id_ref": "UCt-pTP_Bketi7o9R-2Q7tPA",
+  "channel": {
+    "title": "Alexandria Sanctuary",
+    "description": "🌿 새로운 개념의 요양 공간.\n사람 중심의 요양 문화를 만들어갑니다.\n\n✅ 요양 문화 이야기\n✅ 어르신 디지털 활용\n✅ 공간 설계 과정\n✅ 케어 현장 기록",
+    "keywords": [
+      "요양원",
+      "요양",
+      "어르신",
+      "케어",
+      "공간설계",
+      "Alexandria"
+    ],
+    "language": "ko",
+    "country": "KR",
+    "trailer_video_id": null,
+    "banner_image_path": "assets/youtube-banner.jpg",
+    "profile_image_path": "assets/youtube-profile.jpg"
+  },
+  "upload_defaults": {
+    "categoryId": "28",
+    "language": "ko",
+    "license": "youtube",
+    "privacyStatus": "public",
+    "selfDeclaredMadeForKids": false
+  },
+  "playlists": [
+    {
+      "id_key": "culture",
+      "title": "요양 문화 이야기",
+      "description": "사람 중심 요양의 새로운 기준.",
+      "privacyStatus": "public",
+      "tags": [
+        "요양문화",
+        "케어",
+        "사람중심"
+      ]
+    },
+    {
+      "id_key": "digital",
+      "title": "어르신 디지털 활용",
+      "description": "시니어 스마트폰 & AI 활용법.",
+      "privacyStatus": "public",
+      "tags": [
+        "어르신",
+        "디지털",
+        "스마트폰"
+      ]
+    },
+    {
+      "id_key": "space",
+      "title": "공간 설계 이야기",
+      "description": "Alexandria 공간 만드는 과정.",
+      "privacyStatus": "public",
+      "tags": [
+        "공간설계",
+        "인테리어",
+        "요양"
+      ]
+    },
+    {
+      "id_key": "care",
+      "title": "케어 현장 기록",
+      "description": "요양 현장 실제 이야기.",
+      "privacyStatus": "public",
+      "tags": [
+        "케어",
+        "현장",
+        "요양"
+      ]
+    }
+  ],
+  "channelSections": [
+    {
+      "type": "singlePlaylist",
+      "title": "요양 문화 이야기",
+      "playlist_key": "culture",
+      "position": 0
+    },
+    {
+      "type": "singlePlaylist",
+      "title": "어르신 디지털 활용",
+      "playlist_key": "digital",
+      "position": 1
+    },
+    {
+      "type": "singlePlaylist",
+      "title": "공간 설계 이야기",
+      "playlist_key": "space",
+      "position": 2
+    },
+    {
+      "type": "singlePlaylist",
+      "title": "케어 현장 기록",
+      "playlist_key": "care",
+      "position": 3
+    }
+  ],
+  "_playlist_ids": {}
+}
