@@ -1,0 +1,32 @@
+# Alexandria Sanctuary — .gitignore
+
+# MCP-Therapy: 박씨 개인 원문 (절대 커밋 금지)
+private_seeds/
+
+# LoRA 어댑터 / GGUF 모델 (대용량, .safetensors 수백MB)
+mcp/models/*.gguf
+mcp/models/*.safetensors
+mcp/models/*.bin
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+
+# Node / build
+node_modules/
+dist/
+.DS_Store
+
+# Secrets
+.env
+.env.*
+*.key
+*.pem
+credentials.json
+
+# OS
+Thumbs.db
