@@ -195,3 +195,48 @@ def _compose_prompt_skeleton(
         "- 존댓말 · 의료/약물 언급 · '~해야 한다' 강제형",
     ]
     return "\n".join(lines)
+
+
+# ─────────────────────────────────────────────────────────────────
+#  v1.4 — LLM Gateway + Enforcer 통합 파이프
+# ─────────────────────────────────────────────────────────────────
+
+def analyze_full_with_llm(
+    narrative: str,
+    llm_interpretation: Optional[dict] = None,
+    metadata: Optional[dict] = None,
+    forced_gate: Optional[str] = None,
+) -> dict:
+    """
+    박씨 구조 v1.4 통합 함수.
+
+    Args:
+        narrative: 박씨 꿈/서사 입력
+        llm_interpretation: 외부 LLM (Claude Code/Claude API) 1차 해석.
+            없으면 ANTHROPIC_API_KEY 체크 후 직접 호출 시도.
+            스키마: {"interpretation", "citations", "dominant_themes"}
+        metadata: is_dream / date / is_family_event / anniversary_within_30d
+        forced_gate: "I"~"VII" (옵션)
+
+    Returns:
+        EnforceResult.to_dict() — 최종 박씨 톤 리포트 + structured
+    """
+    from mcp.llm.enforcer import enforce
+    from mcp.llm.llm_gateway import call_llm_direct, is_api_available
+
+    if llm_interpretation is None:
+        if is_api_available():
+            llm_interpretation = call_llm_direct(narrative, metadata)
+        else:
+            # Claude Code 클라이언트 경로: LLM 해석을 받아야 분석 진행 가능
+            return {
+                "error": "LLM_INTERPRETATION_REQUIRED",
+                "message": (
+                    "ANTHROPIC_API_KEY 없음. Claude Code 대화에서 해석 먼저 생성한 뒤 "
+                    "analyze_full_with_llm(narrative, llm_interpretation={...}) 호출"
+                ),
+                "system_prompt_hint": "mcp.llm.llm_gateway.build_system_prompt() 참고",
+            }
+
+    result = enforce(llm_interpretation, narrative, metadata, forced_gate)
+    return result.to_dict()

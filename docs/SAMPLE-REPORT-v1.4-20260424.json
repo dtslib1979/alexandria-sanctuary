@@ -1,0 +1,129 @@
+{
+  "final_narrative": "이 꿈은 애도와 해방이 한자리에 같이 올라온 상태다. Freud 관점에서 돌봄 시스템 종결을 향한 위장된 소원이 읽히고, Jung 관점에서 지휘자 이미지는 파편화된 자아의 통합 시도로 본다. 가족시스템 이론에선 1년 전 요양원 입소 이후 역할 분화 과정에 있다. 옛 방+3/13 애니버서리 중첩은 장소-기억 트리거로 작용했고, 욕설 에피소드는 잔여 분노의 투사로 해석된다. 꿈 속에서 스스로 추론하는 메타 레이어가 보인다는 건 이미 자기 해석 모드라는 뜻.\n\n—\n참고. 네 판단이 최종이다. 레시피 아님, 레퍼런스임.",
+  "citations": [
+    {
+      "title": "Freud - The Interpretation of Dreams (1900)",
+      "url": "https://www.simplypsychology.org/dream-interpretation.html",
+      "school": "freud"
+    },
+    {
+      "title": "Jung - Archetypes and the Collective Unconscious",
+      "url": "https://www.cgjungny.org/",
+      "school": "jung"
+    },
+    {
+      "title": "Bowen Family Systems Theory",
+      "url": "https://www.thebowencenter.org/",
+      "school": "family"
+    },
+    {
+      "title": "Plutchik's Wheel of Emotions (1980)",
+      "url": "https://en.wikipedia.org/wiki/Robert_Plutchik",
+      "school": "plutchik"
+    }
+  ],
+  "dominant_themes": [
+    "애도",
+    "해방감",
+    "가족 역할 분화",
+    "잔여 분노",
+    "메타인지"
+  ],
+  "structured": {
+    "plutchik": {
+      "emotion_levels": {
+        "joy": 0.34,
+        "trust": 0.0,
+        "fear": 0.0,
+        "surprise": 0.13,
+        "sadness": 0.33,
+        "disgust": 0.0,
+        "anger": 0.56,
+        "anticipation": 0.0
+      },
+      "dominant_emotion": "anger",
+      "intensity_label": "anger",
+      "dyads": [
+        {
+          "emotions": [
+            "anger",
+            "joy"
+          ],
+          "english": "Pride",
+          "korean": "자부",
+          "distance": 2,
+          "strength": 0.45
+        },
+        {
+          "emotions": [
+            "anger",
+            "sadness"
+          ],
+          "english": "Envy",
+          "korean": "시기",
+          "distance": 2,
+          "strength": 0.445
+        }
+      ],
+      "ambivalence": [
+        {
+          "polar_pair": [
+            "joy",
+            "sadness"
+          ],
+          "label_ko": "기쁨 ↔ 슬픔 양가",
+          "strength": 0.335
+        }
+      ]
+    },
+    "axis_profile": {
+      "grief": 0.795,
+      "guilt": 0.508,
+      "eros": 0.5,
+      "rage": 0.716,
+      "liberation": 0.793,
+      "anxiety": 0.342
+    },
+    "dominant_axis": "grief",
+    "axis_narrative": "애도와 해방감이 주축으로 같이 올라온 상태",
+    "active_gates": [
+      "I",
+      "II",
+      "IV",
+      "VI"
+    ],
+    "plug_weights": {
+      "parksy_profile": 1.0,
+      "env_trigger": 0.7,
+      "freud": 0.6,
+      "jung": 0.48,
+      "family_systems": 0.65,
+      "shaman_ko": 0.08,
+      "sufi": 0.14,
+      "ayahuasca": 0.06,
+      "mass_protocol": 0.08,
+      "narrative_meta": 0.6,
+      "guardrail": 1.0
+    }
+  },
+  "safety_verdict": {
+    "level": 0,
+    "input_level": 0,
+    "output_level": 0
+  },
+  "rubric": {
+    "structure": 0.1,
+    "practicality": 0.0,
+    "tone": 0.0,
+    "overreach_penalty": 0.0,
+    "automation": 0.0,
+    "final_score": 0.2,
+    "verdict": "reject",
+    "positive_score": 0.32,
+    "notes": []
+  },
+  "transformations": [
+    "verdict_injected"
+  ],
+  "parksy_tone_verdict": "참고. 네 판단이 최종이다. 레시피 아님, 레퍼런스임."
+}
