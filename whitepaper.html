@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alexandria MCP-Therapy Whitepaper v0.2 — 정신분석 레퍼런스 모델 엔진">
+  <title>MCP-Therapy Whitepaper · Alexandria Sanctuary</title>
+
+  <link rel="icon" type="image/svg+xml" href="assets/icons/emblem.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+KR:wght@300;400;500&display=swap">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-solid:     #080604;
+      --bg-panel:     #0D0A07;
+      --bg-panel-2:   #140E08;
+      --gold:         #C8A96E;
+      --gold-dim:     #8B6A30;
+      --gold-bright:  #E8C98E;
+      --parchment:    #EAE4D6;
+      --parchment-70: rgba(234,228,214,0.7);
+      --parchment-40: rgba(234,228,214,0.4);
+      --parchment-20: rgba(234,228,214,0.2);
+      --mahogany:     #1E1408;
+
+      --g1: #1E1C4A;
+      --g2: #0E2233;
+      --g3: #2E1A0E;
+      --g4: #142214;
+      --g5: #1E1633;
+      --g6: #080C08;
+      --g7: #2E2000;
+
+      --font-display: 'Cinzel', serif;
+      --font-body:    'Cormorant Garamond', 'Noto Serif KR', serif;
+      --font-ko:      'Noto Serif KR', serif;
+    }
+
+    html { background: var(--bg-solid); color: var(--parchment); scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--gold-bright); text-decoration: none; border-bottom: 1px dotted var(--gold-dim); transition: all .2s; }
+    a:hover { color: var(--parchment); border-color: var(--parchment); }
+
+    /* GRAIN */
+    .grain {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 9900;
+      opacity: .025;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      padding: 18px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: linear-gradient(180deg, rgba(8,6,4,0.95) 0%, rgba(8,6,4,0.6) 80%, transparent 100%);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 14px; letter-spacing: 0.3em;
+      color: var(--gold);
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; }
+    .nav-links a { border: none; color: var(--parchment-70); }
+    .nav-links a:hover { color: var(--gold-bright); }
+    @media (max-width: 640px) {
+      .nav { padding: 14px 18px; }
+      .nav-links { gap: 16px; font-size: 11px; }
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 92vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center;
+      padding: 140px 24px 80px;
+      position: relative;
+      background: radial-gradient(ellipse at center, var(--mahogany) 0%, var(--bg-solid) 75%);
+    }
+    .hero-eyebrow {
+      font-family: var(--font-display);
+      font-size: 11px; letter-spacing: 0.5em;
+      color: var(--gold-dim); text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 7vw, 84px);
+      font-weight: 500; letter-spacing: 0.05em;
+      color: var(--gold-bright);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .hero-sub {
+      font-style: italic;
+      font-size: clamp(18px, 2.2vw, 24px);
+      color: var(--parchment-70);
+      max-width: 640px;
+      margin-bottom: 48px;
+    }
+    .hero-meta {
+      display: flex; gap: 32px; flex-wrap: wrap; justify-content: center;
+      font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--parchment-40);
+    }
+    .hero-meta strong { color: var(--gold); font-weight: 500; }
+    .hero-quote {
+      max-width: 720px;
+      margin-top: 72px;
+      padding: 32px 40px;
+      border-top: 1px solid var(--parchment-20);
+      border-bottom: 1px solid var(--parchment-20);
+      font-style: italic; font-size: 18px;
+      color: var(--parchment);
+    }
+    .hero-quote::before, .hero-quote::after { content: '"'; color: var(--gold); font-size: 32px; }
+
+    /* SECTIONS */
+    section.sec {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 96px 32px;
+      border-top: 1px solid var(--parchment-20);
+    }
+    .sec-eyebrow {
+      font-family: var(--font-display);
+      font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 16px;
+    }
+    .sec-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 500; color: var(--gold-bright);
+      margin-bottom: 32px;
+      letter-spacing: 0.02em;
+    }
+    .sec p { font-size: 17px; color: var(--parchment); margin-bottom: 20px; }
+    .sec p.lead { font-size: 20px; font-style: italic; color: var(--parchment-70); }
+    .sec ul { list-style: none; margin: 16px 0 24px; }
+    .sec ul li { padding: 8px 0 8px 24px; position: relative; color: var(--parchment); }
+    .sec ul li::before {
+      content: '◇'; position: absolute; left: 0; top: 8px;
+      color: var(--gold-dim); font-size: 12px;
+    }
+    .sec h3 {
+      font-family: var(--font-display);
+      font-size: 22px; color: var(--gold);
+      margin: 48px 0 16px; letter-spacing: 0.05em;
+    }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0 32px;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--parchment-20);
+    }
+    th {
+      font-family: var(--font-display);
+      font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500;
+      border-bottom: 1px solid var(--gold-dim);
+    }
+    td { color: var(--parchment-70); }
+    td strong { color: var(--parchment); font-weight: 500; }
+    td code { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--gold-bright); background: var(--bg-panel); padding: 2px 6px; border-radius: 3px; }
+
+    /* GATE CARDS */
+    .gates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .gate-card {
+      padding: 24px;
+      border-radius: 2px;
+      border: 1px solid var(--parchment-20);
+      background: var(--bg-panel);
+      position: relative;
+      overflow: hidden;
+    }
+    .gate-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gate-color, var(--gold));
+    }
+    .gate-card-num {
+      font-family: var(--font-display);
+      font-size: 11px; letter-spacing: 0.3em;
+      color: var(--gold-dim); text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .gate-card-title {
+      font-family: var(--font-display);
+      font-size: 17px; font-weight: 500;
+      color: var(--gold-bright);
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+    }
+    .gate-card-plug {
+      font-size: 13px;
+      color: var(--parchment-70);
+      padding-top: 12px;
+      border-top: 1px solid var(--parchment-20);
+    }
+    .gate-card-plug code {
+      color: var(--gold);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    /* ARCH DIAGRAM */
+    .arch {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--parchment-70);
+      background: var(--bg-panel);
+      border: 1px solid var(--parchment-20);
+      border-radius: 3px;
+      padding: 20px;
+      white-space: pre;
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+
+    /* CTA */
+    .cta-block {
+      margin: 64px 0;
+      padding: 40px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 3px;
+      background: linear-gradient(135deg, var(--bg-panel-2) 0%, var(--bg-panel) 100%);
+      text-align: center;
+    }
+    .cta-block h3 { margin-top: 0; }
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 40px;
+      margin: 8px 6px;
+      border: 1px solid var(--gold);
+      border-radius: 2px;
+      font-family: var(--font-display);
+      font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold-bright);
+      background: transparent;
+      transition: all .3s;
+    }
+    .cta-btn:hover {
+      background: var(--gold);
+      color: var(--bg-solid);
+      border-color: var(--gold);
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 120px;
+      padding: 48px 32px;
+      text-align: center;
+      border-top: 1px solid var(--parchment-20);
+      color: var(--parchment-40);
+      font-size: 13px;
+    }
+    footer a { color: var(--gold-dim); }
+
+    /* UTILITIES */
+    .muted { color: var(--parchment-40); }
+    .tight { max-width: 680px; margin: 0 auto; }
+    .phase-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      font-family: var(--font-display);
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--bg-solid);
+      background: var(--gold);
+      border-radius: 2px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .phase-done { background: var(--gold-dim); }
+    .phase-wait { background: transparent; color: var(--gold-dim); border: 1px solid var(--gold-dim); }
+  </style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">ALEXANDRIA</a>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#gates">Gates</a></li>
+    <li><a href="#arch">Architecture</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">MCP-Therapy Whitepaper · v0.2</div>
+  <h1 class="hero-title">The Engine<br>Behind the Gates</h1>
+  <p class="hero-sub">정신분석 레퍼런스 모델. 1000년 임상의 디지털 복원.</p>
+
+  <div class="hero-meta">
+    <div><strong>Status</strong> · Design Complete</div>
+    <div><strong>Phase 1</strong> · 2 weeks</div>
+    <div><strong>Y1 Budget</strong> · $20</div>
+    <div><strong>Operator</strong> · Parksy</div>
+  </div>
+
+  <blockquote class="hero-quote">
+    A급 정신분석가·샤먼·수도사·수피의 해석 정규분포를 확률 플러그 + LoRA로 강제한 박씨 전용 영성 레퍼런스 엔진. 레시피가 아니라 거울이다.
+  </blockquote>
+</section>
+
+<!-- OVERVIEW -->
+<section class="sec" id="overview">
+  <div class="sec-eyebrow">§1 · Overview</div>
+  <h2 class="sec-title">Why Alexandria</h2>
+  <p class="lead">이 레포의 원래 컨셉은 "신개념 요양원 실버타운"이었다. 그 자리에 영성 엔진이 들어간다. 요양원이 도서관이 되는 구체적 사건.</p>
+
+  <h3>Alignment</h3>
+  <ul>
+    <li><strong>Alexandria</strong> — 기원전 3세기 대도서관. 소실 후 수천 년 복원 시도. 본 엔진이 그 디지털 복원.</li>
+    <li><strong>Sanctuary</strong> — 성소/피난처. 샤먼·미사·수피·아야와스카 전부 "성소"를 요구.</li>
+    <li><strong>7 Gate</strong> — 이미 서사가 깔려 있음. 본 백서 플러그 10개와 거의 1:1 매칭.</li>
+    <li><strong>Directory</strong> — <code>library/</code>, <code>sanctuary/</code>, <code>forum/</code>, <code>philosophy/</code> 전부 스펙대로 대기 중.</li>
+  </ul>
+
+  <h3>Ground Rule</h3>
+  <p>사용자 = 박씨 1명. 외부 판매 없음. B급 상담/무당 소비를 대체하는 자기관리 OS. 출력은 <em>레퍼런스</em>이지 레시피가 아니다. 판단은 항상 박씨 것.</p>
+</section>
+
+<!-- GATE MAPPING -->
+<section class="sec" id="gates">
+  <div class="sec-eyebrow">§2 · Seven Gates × Ten Plugs</div>
+  <h2 class="sec-title">The Mapping</h2>
+  <p>각 Gate는 UI이고, 그 뒤에 플러그 엔진이 확률 분포로 작동한다. 박씨가 Gate를 클릭하면 해당 플러그 가중치가 강제 부스팅된다.</p>
+
+  <div class="gates-grid">
+    <div class="gate-card" style="--gate-color: #1E1C4A;">
+      <div class="gate-card-num">Gate I · Indigo</div>
+      <div class="gate-card-title">The Fracture<br>of Mind</div>
+      <div class="gate-card-plug"><code>FreudPlug</code> · 무의식 · 억압 · 균열</div>
+    </div>
+    <div class="gate-card" style="--gate-color: #0E2233;">
+      <div class="gate-card-num">Gate II · Abyss</div>
+      <div class="gate-card-title">The Dissolution<br>of Self</div>
+      <div class="gate-card-plug"><code>JungPlug</code> · 개성화 · Self · 통합</div>
+    </div>
+    <div class="gate-card" style="--gate-color: #2E1A0E;">
+      <div class="gate-card-num">Gate III · Ember</div>
+      <div class="gate-card-title">The Touch<br>of God</div>
+      <div class="gate-card-plug"><code>SufiPlug</code> + <code>MassProtocolPlug</code></div>
+    </div>
+    <div class="gate-card" style="--gate-color: #142214;">
+      <div class="gate-card-num">Gate IV · Forest</div>
+      <div class="gate-card-title">Inside<br>&amp; Outside</div>
+      <div class="gate-card-plug"><code>FamilySystemsPlug</code> · 분화 · 경계</div>
+    </div>
+    <div class="gate-card" style="--gate-color: #1E1633;">
+      <div class="gate-card-num">Gate V · Violet</div>
+      <div class="gate-card-title">Sound<br>&amp; Soul</div>
+      <div class="gate-card-plug"><code>AyahuascaPlug</code> + <code>ShamanKoPlug</code></div>
+    </div>
+    <div class="gate-card" style="--gate-color: #080C08;">
+      <div class="gate-card-num">Gate VI · Cave</div>
+      <div class="gate-card-title">The Forbidden<br>Gate</div>
+      <div class="gate-card-plug"><code>NarrativeMetaPlug</code> · 꿈 속 추론</div>
+    </div>
+    <div class="gate-card" style="--gate-color: #2E2000;">
+      <div class="gate-card-num">Gate VII · Amber</div>
+      <div class="gate-card-title">The Final<br>Gate</div>
+      <div class="gate-card-plug"><code>MassProtocolPlug</code> · 파견 · 일상 복귀</div>
+    </div>
+    <div class="gate-card" style="--gate-color: var(--gold);">
+      <div class="gate-card-num">Background · Always</div>
+      <div class="gate-card-title">Environment<br>&amp; Voice</div>
+      <div class="gate-card-plug"><code>EnvTriggerPlug</code> + <code>ParksyProfilePlug</code></div>
+    </div>
+  </div>
+
+  <h3>Weight Formula</h3>
+  <p>박씨가 직접 던진 아키텍처 문장을 선형 코드로 구현:</p>
+  <div class="arch">def compute_weights(narrative, metadata, forced_gate=None):
+    weights = {p.name: p.weight_default for p in PLUGS}
+
+    # 1. 키워드 부스트
+    for plug in PLUGS:
+        hits = count_keywords(narrative, plug.keywords_trigger)
+        weights[plug.name] += hits * 0.15
+
+    # 2. 메타데이터 강제
+    if metadata.get("is_dream"):      weights["freud"] += 0.3; weights["jung"] += 0.3
+    if metadata.get("is_family_event"):  weights["family_systems"] += 0.4
+    if metadata.get("anniversary_within_30d"): weights["env_trigger"] += 0.5
+
+    # 3. Gate 강제 부스트 (UI 클릭)
+    if forced_gate:
+        for p in [p for p in PLUGS if p.gate_id == forced_gate]:
+            weights[p.name] += 0.5
+
+    # 4. ParksyProfilePlug 항상 1.0
+    weights["parksy_profile"] = 1.0
+
+    return normalize(weights, lock=["parksy_profile"])</div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="sec" id="arch">
+  <div class="sec-eyebrow">§3 · Architecture</div>
+  <h2 class="sec-title">Five Layers</h2>
+
+  <div class="arch">┌─────────────────────────────────────────────────────────────┐
+│  Layer 5: UI (기존 알렉산드리아 PWA)                          │
+│  index.html · whitepaper.html · devplan.html · console.html │
+└────────────────────────┬────────────────────────────────────┘
+                         │  fetch / MCP-SSE
+┌────────────────────────▼────────────────────────────────────┐
+│  Layer 4: MCP Interface                                     │
+│  analyze_dream / analyze_narrative /                        │
+│  propose_ritual / compare_agents / query_library            │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────────┐
+│  Layer 3: Plug Orchestrator                                 │
+│  mcp/plug_orchestrator.py · plugs/*.py (10) · prompts/      │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────────┐
+│  Layer 2: Model                                             │
+│  Qwen2.5-7B + therapy-lora-v1 → llama.cpp Q4_K_M (CPU)      │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────────┐
+│  Layer 1: Data                                              │
+│  library/{freud,jung,family,shaman_ko,sufi,ayahuasca,mass}/ │
+│  library/parksy_seeds/ (공개)                                │
+│  private_seeds/ (.gitignore — 박씨 원문)                     │
+└─────────────────────────────────────────────────────────────┘</div>
+
+  <h3>MCP Tools</h3>
+  <table>
+    <tr><th>Tool</th><th>Purpose</th><th>Primary Gate</th></tr>
+    <tr><td><code>analyze_dream</code></td><td>꿈 서사 해석</td><td>I, II, VI</td></tr>
+    <tr><td><code>analyze_narrative</code></td><td>일반 서사 (결정·관계·정체성)</td><td>IV</td></tr>
+    <tr><td><code>propose_ritual</code></td><td>의례/리추얼 제안</td><td>III, VII</td></tr>
+    <tr><td><code>compare_agents</code></td><td>멀티 에이전트 브릿지 비교</td><td>VI</td></tr>
+    <tr><td><code>query_library</code></td><td>학파 케이스 검색</td><td>전역</td></tr>
+  </table>
+</section>
+
+<!-- ROADMAP -->
+<section class="sec" id="roadmap">
+  <div class="sec-eyebrow">§4 · Roadmap</div>
+  <h2 class="sec-title">Four Phases</h2>
+
+  <table>
+    <tr><th>Phase</th><th>Duration</th><th>Budget</th><th>Outcome</th></tr>
+    <tr><td><strong>Phase 0</strong> — 씨앗 <span class="phase-badge phase-done">Now</span></td><td>1 week</td><td>$0</td><td>디렉토리 골격 · 학파 README · DEVPLAN</td></tr>
+    <tr><td><strong>Phase 1</strong> — MVP <span class="phase-badge">Next</span></td><td>2 weeks</td><td>$2</td><td>10 플러그 · LoRA 학습 · MCP 서버 · 재현 테스트</td></tr>
+    <tr><td><strong>Phase 2</strong> — Gate UI <span class="phase-badge phase-wait">Queued</span></td><td>4 weeks</td><td>$6</td><td>console.html · TTS 낭독 · 리추얼 모듈</td></tr>
+    <tr><td><strong>Phase 3</strong> — 순환 <span class="phase-badge phase-wait">Ongoing</span></td><td>Monthly</td><td>$1.50/월</td><td>자동 재학습 · 피드백 루프 · 커리큘럼</td></tr>
+  </table>
+
+  <h3>Success Criteria</h3>
+  <ul>
+    <li>재현 정확도 ≥ <strong>80%</strong> (2026-04-24 로그 기준)</li>
+    <li>추론 지연 ≤ <strong>10초</strong> (로컬 CPU)</li>
+    <li>플러그 활성 다양성 ≥ <strong>3개</strong> 이상 가중치 0.15 초과</li>
+    <li>Phase 1 비용 ≤ <strong>$2</strong></li>
+    <li>월 사용 ≥ 3회 (자동화 원칙 유지)</li>
+  </ul>
+
+  <h3>Failure Declaration</h3>
+  <ul>
+    <li>Phase 1 후 4주 내 월 사용 < 3회 → <em>디프리케이트</em></li>
+    <li>재현 정확도 < 50% → <em>v2 재설계</em></li>
+  </ul>
+</section>
+
+<!-- MASS PROTOCOL -->
+<section class="sec">
+  <div class="sec-eyebrow">§5 · Mass Protocol</div>
+  <h2 class="sec-title">A 1,000-Year Clinical Trial</h2>
+  <p class="lead">천주교 미사는 1000년 넘게 돌아간, 지구상 가장 긴 임상 실험을 통과한 표준화된 샤먼 OS다. 6단계 프로토콜을 MCP 도구에 그대로 매핑한다.</p>
+
+  <table>
+    <tr><th>미사 6단계</th><th>MCP 도구</th><th>박씨 일상</th><th>Gate</th></tr>
+    <tr><td>1. 입당</td><td>세션 시작</td><td>로그 수집</td><td>—</td></tr>
+    <tr><td>2. 말씀 전례</td><td><code>analyze_narrative</code></td><td>상황 서술</td><td>I, IV</td></tr>
+    <tr><td>3. 복음 · 강론</td><td>플러그 가중합 리포트</td><td>해석 수신</td><td>II, VI</td></tr>
+    <tr><td>4. 봉헌</td><td>박씨 큐레이션</td><td>받을 해석 선택</td><td>—</td></tr>
+    <tr><td>5. 성체성사</td><td><code>propose_ritual</code></td><td>방 정리 · 글쓰기 · 산책</td><td>III</td></tr>
+    <tr><td>6. 파견</td><td>세션 종료</td><td>일상 복귀</td><td><strong>VII</strong></td></tr>
+  </table>
+</section>
+
+<!-- CTA -->
+<section class="sec">
+  <div class="cta-block">
+    <h3 style="margin: 0 0 16px;">Next Actions</h3>
+    <p class="muted" style="margin-bottom: 28px;">Phase 1 착수 승인 시 2주 내 Alexandria가 말을 한다.</p>
+    <a href="docs/MCP-THERAPY-WHITEPAPER-v0.2.md" class="cta-btn">Full Whitepaper (MD)</a>
+    <a href="docs/MCP-THERAPY-DEVPLAN.md" class="cta-btn">DEVPLAN</a>
+    <a href="index.html#gates" class="cta-btn">View Gates</a>
+  </div>
+</section>
+
+<!-- FINAL QUOTE -->
+<section class="sec">
+  <div class="tight" style="text-align: center;">
+    <p class="lead" style="font-style: italic;">
+      박씨는 알렉산드리아 성소 위에 영성 엔진을 얹는다.<br>
+      기존 7 Gate가 UI이고, 플러그 10개가 엔진이고, 미사 6단계가 프로토콜이다.<br>
+      어머니가 간 요양원 자리에 세우는, 자기관리용 디지털 도서관.<br>
+      1000년 걸린 임상 실험을 2주 MCP로 복제한다.<br>
+      결과는 팔지 않는다. 박씨 혼자 쓴다.<br>
+      <strong style="color: var(--gold-bright);">이것이 Phase 3의 첫 번째 자가 소비 엔진이다.</strong>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>Alexandria Sanctuary · MCP-Therapy v0.2 · 2026-04-24</p>
+  <p style="margin-top: 8px;">Authored by Claude Opus 4.7 · Curated by Parksy</p>
+  <p style="margin-top: 16px;">
+    <a href="index.html">Sanctuary</a> ·
+    <a href="library/">Library</a> ·
+    <a href="philosophy/">Philosophy</a> ·
+    <a href="forum/">Forum</a>
+  </p>
+</footer>
+
+</body>
+</html>
