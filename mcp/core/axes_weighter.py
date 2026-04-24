@@ -86,11 +86,17 @@ def axis_distribution(
     metadata: dict | None = None,
 ) -> dict[str, float]:
     """
-    최종 축 분포.
-    1. 직접 추출 (axes.extract)
-    2. 간접 기여 (plug weight × PLUG_AXIS_MATRIX)
-    3. 혼합 (0.6 : 0.4), 각 축 [0, 1] 클램프
+    최종 축 분포 (v1.3 — Plutchik 통합).
+
+    1. Layer 2 직접 추출 (axes.extract)
+    2. Layer 2 간접 (plug weight × PLUG_AXIS_MATRIX)
+    3. Layer 1 Plutchik 기여 (emotion_bridge.plutchik_to_axis_boost)
+    4. 혼합 + 클램프
+
+    참조: WHITEPAPER §5 (Plutchik Integration)
     """
+    from mcp.core.emotion_bridge import plutchik_to_axis_boost
+
     metadata = metadata or {}
     direct = extract_all(narrative, metadata)
 
@@ -102,8 +108,16 @@ def axis_distribution(
         for aid, aw in row.items():
             indirect[aid] += pw * aw
 
+    # Layer 1 (Plutchik) 기여
+    plutchik_boost = plutchik_to_axis_boost(narrative, metadata)
+
     combined = {
-        aid: min(DIRECT_BLEND * direct[aid] + INDIRECT_BLEND * indirect[aid], 1.0)
+        aid: min(
+            DIRECT_BLEND * direct[aid]
+            + INDIRECT_BLEND * indirect[aid]
+            + plutchik_boost.get(aid, 0),
+            1.0,
+        )
         for aid in AXIS_IDS
     }
     return combined

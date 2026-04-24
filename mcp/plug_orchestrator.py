@@ -15,6 +15,7 @@ from mcp.plugs import ALL_PLUGS
 from mcp.core.axes_weighter import (
     axis_distribution, dominant_axis, axis_narrative,
 )
+from mcp.core.plutchik import emotion_profile as plutchik_profile
 from mcp.safety.crisis_detector import detect as crisis_detect
 
 
@@ -99,10 +100,13 @@ def analyze_full(
             "analysis_skipped": True,
         }
 
-    # 2. 플러그 가중치
+    # 2. Layer 1 — Plutchik 8 기본 감정 프로파일
+    plutchik = plutchik_profile(narrative, metadata)
+
+    # 3. 플러그 가중치
     weights = compute_weights(narrative, metadata, forced_gate)
 
-    # 3. 축 분포
+    # 4. Layer 2 — 도메인 축 분포 (Plutchik 기여 포함)
     axes = axis_distribution(weights, narrative, metadata)
     dom = dominant_axis(axes)
     narr = axis_narrative(axes)
@@ -132,6 +136,7 @@ def analyze_full(
 
     return {
         "safety_verdict": safety,
+        "plutchik_layer": plutchik,          # 🆕 v1.3 — Layer 1
         "plug_weights": {k: round(v, 3) for k, v in weights.items()},
         "axis_profile": {k: round(v, 3) for k, v in axes.items()},
         "dominant_axis": dom,

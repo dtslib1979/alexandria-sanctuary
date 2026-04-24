@@ -1,0 +1,150 @@
+{
+  "v1.3_plutchik_retest": [
+    {
+      "label": "박씨 2026-04-24 꿈 (2차)",
+      "plutchik": {
+        "emotion_levels": {
+          "joy": 0.34,
+          "trust": 0.0,
+          "fear": 0.0,
+          "surprise": 0.13,
+          "sadness": 0.33,
+          "disgust": 0.0,
+          "anger": 0.56,
+          "anticipation": 0.0
+        },
+        "dominant_emotion": "anger",
+        "intensity_label": "anger",
+        "dyads": [
+          {
+            "emotions": [
+              "anger",
+              "joy"
+            ],
+            "english": "Pride",
+            "korean": "자부",
+            "distance": 2,
+            "strength": 0.45
+          },
+          {
+            "emotions": [
+              "anger",
+              "sadness"
+            ],
+            "english": "Envy",
+            "korean": "시기",
+            "distance": 2,
+            "strength": 0.445
+          }
+        ],
+        "ambivalence": [
+          {
+            "polar_pair": [
+              "joy",
+              "sadness"
+            ],
+            "label_ko": "기쁨 ↔ 슬픔 양가",
+            "strength": 0.335
+          }
+        ]
+      },
+      "axis_profile": {
+        "grief": 0.787,
+        "guilt": 0.501,
+        "eros": 0.492,
+        "rage": 0.708,
+        "liberation": 0.786,
+        "anxiety": 0.329
+      },
+      "dominant_axis": "grief",
+      "axis_narrative": "애도와 해방감이 주축으로 같이 올라온 상태"
+    },
+    {
+      "label": "꿈 1 (가족/애도/분노)",
+      "plutchik": {
+        "emotion_levels": {
+          "joy": 0.0,
+          "trust": 0.0,
+          "fear": 0.0,
+          "surprise": 0.0,
+          "sadness": 0.06,
+          "disgust": 0.0,
+          "anger": 0.42,
+          "anticipation": 0.0
+        },
+        "dominant_emotion": "anger",
+        "intensity_label": "anger",
+        "dyads": [],
+        "ambivalence": []
+      },
+      "axis_profile": {
+        "grief": 0.285,
+        "guilt": 0.39,
+        "eros": 0.217,
+        "rage": 0.523,
+        "liberation": 0.33,
+        "anxiety": 0.273
+      },
+      "dominant_axis": "rage",
+      "axis_narrative": "분노와 죄책감이 주축으로 같이 올라온 상태"
+    },
+    {
+      "label": "꿈 2 (일/불안)",
+      "plutchik": {
+        "emotion_levels": {
+          "joy": 0.0,
+          "trust": 0.0,
+          "fear": 0.62,
+          "surprise": 0.0,
+          "sadness": 0.06,
+          "disgust": 0.0,
+          "anger": 0.0,
+          "anticipation": 0.12
+        },
+        "dominant_emotion": "fear",
+        "intensity_label": "fear",
+        "dyads": [],
+        "ambivalence": []
+      },
+      "axis_profile": {
+        "grief": 0.327,
+        "guilt": 0.277,
+        "eros": 0.249,
+        "rage": 0.184,
+        "liberation": 0.295,
+        "anxiety": 0.991
+      },
+      "dominant_axis": "anxiety",
+      "axis_narrative": "불안이 지배적"
+    },
+    {
+      "label": "꿈 3 (에로스/해방)",
+      "plutchik": {
+        "emotion_levels": {
+          "joy": 0.0,
+          "trust": 0.26,
+          "fear": 0.0,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.0,
+          "anticipation": 0.0
+        },
+        "dominant_emotion": "trust",
+        "intensity_label": "acceptance",
+        "dyads": [],
+        "ambivalence": []
+      },
+      "axis_profile": {
+        "grief": 0.317,
+        "guilt": 0.324,
+        "eros": 0.516,
+        "rage": 0.188,
+        "liberation": 0.518,
+        "anxiety": 0.212
+      },
+      "dominant_axis": "liberation",
+      "axis_narrative": "해방감과 삶의 욕구가 주축으로 같이 올라온 상태"
+    }
+  ]
+}
