@@ -1,291 +1,469 @@
-# Alexandria MCP-Therapy · 박씨 사용 매뉴얼
+# Alexandria MCP-Therapy · 사용 매뉴얼
 
-**목표 독자**: 박씨 본인
-**길이**: 폰에서 5분 안에 읽기
-**전제**: Claude Code Max 정액 구독
+**작성**: 2026-04-24
+**대상**: 박씨 본인 + 박씨가 보여줄 친구 (완전 처음 쓰는 사람)
 
 ---
 
-## 1. 지금 당장 할 일 (1분)
+# PART A · 먼저 이게 뭔지 30초
 
-### 1.1 Claude Code 재시작
+## A.1 엔진 한 줄 설명
 
-폰이든 PC든 **Claude Code를 한 번 닫았다 다시 연다**. 그거면 끝.
+> **박씨 꿈/서사 → 감정 8축 + 학파 11렌즈 + 6 도메인 축 + 가드레일로 강제 통과된 박씨 톤 레퍼런스 리포트.**
+
+---
+
+## A.2 왜 "Claude Code 창에서만" 쓰는가?
+
+### MCP가 뭐냐 (아주 간단히)
+
+**MCP** = **Model Context Protocol** (Anthropic 만든 표준).
+
+```
+Claude (AI) ←→ [MCP 프로토콜] ←→ 외부 도구 서버
+```
+
+AI가 외부 도구를 "손발처럼" 쓰게 해주는 규격. 이메일 보내기, 파일 읽기, 계산기 호출 등 전부 MCP로 연결.
+
+### 우리 엔진 위치
+
+우리가 만든 `alexandria-therapy` = **MCP 서버** (도구 제공자).
+Claude Code = **MCP 클라이언트** (도구 호출자).
+
+```
+[사용자 대화]
+     ↓
+[Claude Code — LLM이면서 MCP 클라이언트]
+     ↓ MCP 프로토콜
+[alexandria-therapy 서버 — 박씨 엔진]
+     ↓
+[Enforcer: rules + plugs + axes + Plutchik]
+     ↓
+[최종 리포트]
+```
+
+### 왜 "Claude Code 창" 에서만?
+
+- **Claude Code** 는 Anthropic 공식 CLI. MCP 프로토콜 지원.
+- **Claude Desktop** (Mac/Windows 앱)도 지원.
+- **ChatGPT/Gemini/Grok** = MCP 지원 X. 우리 엔진 못 씀.
+- **Perplexity** = MCP 지원 X.
+
+즉 우리 엔진은 **Claude 계열에서만** 자동 호출된다.
+다른 AI에서 박씨 톤 쓰고 싶으면 `get_system_prompt` 결과만 복붙해서 쓸 수 있다 (Part D §4 참고).
+
+### 왜 재시작이 필요한가?
+
+Claude Code가 시작할 때 `.mcp.json` 파일을 **한 번만 읽는다**. 새 MCP 서버 추가했으면 재시작해서 다시 읽어야 연결된다.
+
+---
+
+# PART B · 친구가 완전 처음부터 설치해서 쓰기
+
+**친구 A가 이 엔진 써보고 싶다고 하면 이 8단계 따라하면 됨.**
+
+---
+
+## B.1 요구사항 체크
 
 ```bash
-# PC WSL2에서
-exit  # 현재 Claude Code 세션 종료
-claude  # 다시 시작
+# 1. Python 3.10 이상
+python3 --version
+# Python 3.10.x 또는 이상이어야 함
+
+# 2. git
+git --version
+
+# 3. OS: Linux / macOS / WSL2 (Windows)
 ```
 
+없으면 먼저 설치.
+
+---
+
+## B.2 Claude Code 설치 (없으면)
+
+```bash
+# 공식 스크립트
+curl -fsSL https://claude.ai/install.sh | sh
 ```
-# 폰 Termux에서
-:q  # 세션 종료 (또는 Ctrl+C)
-claude  # 재시작
+
+또는 https://docs.claude.com/en/docs/claude-code 가이드 따라.
+
+**Claude 계정 필요**: https://claude.ai 가입 → Max 구독 권장 (API 과금 회피).
+
+```bash
+# 로그인
+claude login
 ```
 
-재시작하면 `~/dtslib-papyrus/.mcp.json` + `~/alexandria-sanctuary/.mcp.json` 가 자동 로드된다.
+---
 
-### 1.2 도구 등록 확인
+## B.3 레포 clone
 
-재시작 직후 아무 세션에서:
+```bash
+cd ~
+git clone https://github.com/dtslib1979/alexandria-sanctuary.git
+cd alexandria-sanctuary
+```
+
+---
+
+## B.4 Python 의존성 설치
+
+```bash
+# MCP SDK
+pip install mcp --user --break-system-packages
+
+# 테스트용 (선택)
+pip install pytest --user --break-system-packages
+```
+
+**Ubuntu 24.04 / Debian 12** 에서 `error: externally-managed-environment` 나오면 `--break-system-packages` 플래그 필수.
+
+**macOS / 다른 Linux** 에서는 보통 `pip install mcp --user` 로 충분.
+
+**가상환경 쓰는 경우**:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install mcp pytest
+```
+
+---
+
+## B.5 동작 검증
+
+```bash
+cd ~/alexandria-sanctuary
+python3 -m pytest alex_mcp/tests/
+```
+
+**`173 passed`** 나와야 정상. 실패하면 뭔가 틀어진 것.
+
+---
+
+## B.6 `.mcp.json` 등록
+
+**친구 홈 경로** 로 값 수정해야 함.
+
+친구 홈 경로 확인:
+```bash
+echo $HOME
+# 예: /home/kim 또는 /Users/kim
+```
+
+`~/.mcp.json` 또는 작업 디렉토리에 아래 파일 작성:
+
+```json
+{
+  "mcpServers": {
+    "alexandria-therapy": {
+      "type": "stdio",
+      "command": "python3",
+      "args": ["-m", "alex_mcp.server"],
+      "cwd": "/home/kim/alexandria-sanctuary",
+      "env": {}
+    }
+  }
+}
+```
+
+**⚠️ `/home/kim/`** 부분을 친구 본인 경로로 변경 (B.6 첫 명령 결과).
+
+### .mcp.json 위치 선택
+
+| 경로 | 작동 범위 |
+|------|---------|
+| `~/.mcp.json` | Claude Code 어디서든 작동 (홈 전역) |
+| `~/프로젝트/.mcp.json` | 해당 프로젝트 디렉토리에서만 |
+
+친구는 아무 곳에서나 쓰고 싶으면 `~/.mcp.json` 권장.
+
+---
+
+## B.7 Claude Code 재시작
+
+```bash
+# 기존 Claude Code 세션 있으면 종료
+# 대화창에 /exit 치거나 Ctrl+D
+
+# 재시작
+claude
+```
+
+---
+
+## B.8 설치 확인
+
+Claude Code 대화창에서:
 
 ```
 /mcp
 ```
 
-입력하면 연결된 서버 목록 뜸. `alexandria-therapy` 있으면 OK.
-
-또는:
+또는 새 터미널에서:
 
 ```bash
 claude mcp list
 ```
 
+결과에 **`alexandria-therapy`** 가 보이면 완료.
+
 ---
 
-## 2. 박씨가 실제로 어떻게 쓰는가
+# PART C · 박씨 본인 (이미 설치된 경우)
 
-### 시나리오 A: 꿈 분석 (주 용도)
-
-박씨 대화창에서 그냥 이렇게 말한다:
-
-> "어제 이상한 꿈 꿨어. [꿈 내용 주절주절]. 분석해봐."
-
-Claude Code가 자동으로:
-1. `get_system_prompt` 호출 → 박씨 톤 규칙 로드
-2. 웹 검색으로 Freud/Jung/Plutchik 학술자료 검색
-3. 1차 해석 생성
-4. `analyze_dream(narrative=..., llm_interpretation=...)` 호출
-5. Enforcer 9단계 강제 통과
-6. 박씨 톤 최종 리포트 출력
-
-**박씨는 "꿈 분석해봐" 한 마디만 하면 된다.**
-
-### 시나리오 B: 빠른 구조만 확인
-
-LLM 해석 없이 감정 구조만 빨리 보고 싶으면:
-
-> "이 문장 pre-LLM 구조로만 분석해: [텍스트]"
-
-→ `analyze_narrative` 도구 자동 호출 → 10ms 만에 Plutchik/축/플러그 JSON 반환
-
-### 시나리오 C: 다른 AI 답변 평가
-
-Gemini/GPT 답변 받아놓고:
-
-> "이 답변 박씨 루브릭으로 평가해: [AI 답변 붙여넣기]"
-
-→ `evaluate_text` 자동 호출 → 5축 점수 + pass/regenerate/reject 판정
-
-### 시나리오 D: 다른 AI 쓸 때 박씨 톤 유지
-
-Perplexity/Claude Desktop 등 다른 곳에서 물어볼 때 박씨 톤 프롬프트 쓰려면:
-
-> "박씨 시스템 프롬프트 줘"
-
-→ `get_system_prompt` 호출 → 1125자 프롬프트 반환. 박씨가 다른 AI 앞에 복붙.
-
-### 시나리오 E: 박씨캡처 새 로그 분석
-
-폰에 박씨캡처 새 로그 찍히면:
+박씨는 이미 B.3~B.6 전부 완료됨. B.7 재시작만 하면 끝.
 
 ```bash
-# PC에서 폰 로그 가져오기 (글로벌 CLAUDE.md 절차)
-scp -P 8022 폰IP:~/storage/shared/Download/parksy-logs/최신.md ~/uploads/
+# 현재 세션 종료 후
+claude
 ```
-
-그 다음 박씨 대화:
-
-> "최신 박씨캡처 로그 파싱해"
-
-→ `parse_parksy_log` 자동 호출 → 박씨 발화 N개 / AI 발화 N개 / 힌트 통계
 
 ---
 
-## 3. 결과물 읽는 법
+# PART D · 실제 사용법 (공통)
 
-`analyze_dream` 결과 JSON 구조:
+## D.1 기본 시나리오 — 꿈 분석
 
-```json
-{
-  "final_narrative": "박씨 톤 서술형 해석 + 레퍼런스 선언 고정",
-  "citations": [
-    {"title": "Freud 1900", "url": "...", "school": "freud"}
-  ],
-  "dominant_themes": ["애도", "해방감"],
-  "structured": {
-    "plutchik": {
-      "emotion_levels": {"joy": 0.34, "sadness": 0.33, ...},
-      "dominant_emotion": "anger",
-      "intensity_label": "anger",
-      "dyads": [{"english": "Pride", "korean": "자부", ...}],
-      "ambivalence": [{"label_ko": "기쁨 ↔ 슬픔 양가"}]
-    },
-    "axis_profile": {
-      "grief": 0.80, "liberation": 0.79, "rage": 0.72, ...
-    },
-    "dominant_axis": "grief",
-    "axis_narrative": "애도와 해방감이 주축으로 같이 올라온 상태",
-    "active_gates": ["I", "II", "IV", "VI"],
-    "plug_weights": {"freud": 0.60, "jung": 0.48, ...}
-  },
-  "safety_verdict": {"level": 0},
-  "rubric": {
-    "structure": 0.3, "practicality": 0.2, "tone": 0.5,
-    "final_score": 2.5, "verdict": "pass"
-  },
-  "transformations": ["tone_rewrite:3", "verdict_injected"],
-  "parksy_tone_verdict": "참고. 네 판단이 최종이다. 레시피 아님, 레퍼런스임."
-}
+Claude Code 대화창에 자연스럽게:
+
+```
+어제 꿈 꿨어. 어머니가 나와서 이상한 행동 했어.
+구체적으로는 [꿈 내용 주절주절]. 분석해줘.
 ```
 
-### 실용적 읽기 순서
+Claude가 자동으로:
+1. `get_system_prompt` 도구 호출 → 박씨 톤 규칙 로드
+2. 웹 검색 (Freud/Jung/Plutchik 학술자료)
+3. 1차 해석 생성
+4. `analyze_dream(narrative=..., llm_interpretation=...)` 호출
+5. 엔진이 9단계 강제 규칙 통과
+6. 박씨 톤 최종 리포트 출력
 
-1. **`final_narrative`** — 읽기용 본문. 박씨 톤으로 변환 완료된 해석
-2. **`axis_narrative`** — 한 줄 요약 ("애도와 해방감이 주축")
-3. **`dominant_axis`** — 주축 1개
-4. **`plutchik.ambivalence`** — 양가 감정 (박씨 5800줄 핵심)
-5. **`citations`** — 학자 인용 (필요 시)
-6. **`rubric.verdict`** — 이 리포트 자체 품질 (pass / regenerate / reject)
+**도구 이름 외울 필요 없음.** Claude가 알아서 호출.
+
+## D.2 다른 5 시나리오
+
+### D.2.1 빠른 구조만 (LLM 없이)
+
+```
+이 문장을 pre-LLM 구조로만 분석해:
+"요즘 계속 공허하고 뭘 해도 재미없다"
+```
+
+→ `analyze_narrative` 자동 호출 → 10ms 만에 JSON
+
+### D.2.2 다른 AI 답변 평가
+
+```
+Gemini가 이렇게 답했는데 박씨 루브릭으로 평가해:
+"당신은 우울증 초기 증상이 보이고, 상담을 받으시는 것이..."
+```
+
+→ `evaluate_text` 호출 → `reject` (의료 진단 CRITICAL)
+
+### D.2.3 다른 AI 에 박씨 톤 주입
+
+```
+ChatGPT 쓸 건데 박씨 시스템 프롬프트 줘
+```
+
+→ `get_system_prompt` 호출 → 1125자 프롬프트 반환. 친구가 복사해서 다른 AI 앞에 붙임.
+
+### D.2.4 박씨캡처 로그 파싱
+
+```
+~/uploads/ParksyLog_20260424_082123.md 파싱해
+```
+
+→ `parse_parksy_log` 호출 → 박씨 발화 N개 / AI 발화 N개 통계.
+
+### D.2.5 세션 초반 설정 주입
+
+첫 대화에서:
+
+```
+지금부터 이 대화에서는 박씨 톤으로만 답해.
+get_system_prompt 먼저 호출해서 규칙 로드하고 시작.
+```
+
+→ Claude가 세션 내내 박씨 톤 유지.
+
+---
+
+## D.3 결과 읽는 법
+
+`analyze_dream` 결과 JSON. 박씨가 볼 순서:
+
+1. **`final_narrative`** — 박씨 톤으로 강제 치환된 해석. 바로 읽기.
+2. **`axis_narrative`** — "애도와 해방감이 주축" 같은 한 줄 요약.
+3. **`dominant_axis`** — 주축 1개 (grief/guilt/eros/rage/liberation/anxiety).
+4. **`plutchik.ambivalence`** — 양가 감정 (박씨 2026-04-24 꿈의 핵심).
+5. **`citations`** — 학자 출처 (Freud/Jung/Bowen/Plutchik 등).
+6. **`rubric.verdict`** — 리포트 자체 품질 (pass/regenerate/reject).
 
 나머지는 관심 있을 때만.
 
----
+### 예시 출력 (박씨 2026-04-24 꿈)
 
-## 4. 5개 도구 언제 쓰나
+```
+final_narrative:
+"이 꿈은 애도와 해방이 한자리에 같이 올라온 상태다.
+ Freud 관점에서 돌봄 시스템 종결을 향한 위장된 소원이 읽히고...
+ —
+ 참고. 네 판단이 최종이다. 레시피 아님, 레퍼런스임."
 
-| 도구 | 입력 | 언제 쓰나 |
-|------|------|---------|
-| `analyze_dream` | narrative + llm_interpretation | 꿈/사건 깊게 분석 |
-| `analyze_narrative` | narrative | 빠른 구조만 (LLM 없이) |
-| `evaluate_text` | text | 다른 AI 답변 평가 |
-| `get_system_prompt` | — | 다른 AI에 박씨 톤 주입 |
-| `parse_parksy_log` | path | 박씨캡처 로그 파싱 |
+axis_narrative:
+"애도와 해방감이 주축으로 같이 올라온 상태"
 
-박씨는 **도구 이름 기억할 필요 없음**. 자연스럽게 말하면 내가 알아서 호출.
+plutchik.ambivalence:
+[{"polar_pair": ["joy", "sadness"], "label_ko": "기쁨 ↔ 슬픔 양가"}]
 
----
-
-## 5. 안전장치 (Crisis L2)
-
-박씨 입력에 "죽고 싶다" 같은 위기 키워드 감지 시:
-
-1. **엔진 자동 차단**. 분석 생략
-2. 대신 **1393 / 1577-0199** 연락처만 반환
-3. "이 엔진은 지금 닫힌다. 내일 다시 열린다" 메시지
-
-**예외**: 꿈 맥락이면 (`is_dream: True`) 완화. "어머니 돌아가시는 꿈"은 L2 아님.
+citations:
+- Freud - The Interpretation of Dreams (1900)
+- Jung - Archetypes and the Collective Unconscious
+- Bowen Family Systems Theory
+- Plutchik's Wheel of Emotions (1980)
+```
 
 ---
 
-## 6. 문제 해결
+# PART E · 안전장치 (Crisis L2)
 
-### 6.1 "analyze_dream 도구 없어요"
+사용자 입력이나 LLM 출력에 **"죽고 싶다" / "자살" / "자해"** 같은 위기 키워드 감지되면:
+
+- 엔진 **전면 차단**
+- 분석 생략
+- 대신 연락처만 반환:
+  - 자살예방상담전화 **1393** (24h, 무료)
+  - 정신건강위기상담 **1577-0199**
+  - 청소년전화 **1388**
+
+**예외**: 꿈 맥락 (`metadata.is_dream: True`) 에서는 "어머니 돌아가시는 꿈" 같은 건 L2 아님.
+
+---
+
+# PART F · 안 될 때
+
+## F.1 "/mcp" 에 alexandria-therapy 없음
 
 ```bash
-# 1. MCP SDK 설치 확인
-pip show mcp --user
-
-# 2. 서버 수동 실행 (오류 메시지 보기)
+# 1. 서버 수동 실행해서 에러 확인
 cd ~/alexandria-sanctuary
 python3 -m alex_mcp.server
-# (Ctrl+C로 종료)
+# 정상이면 stdin 대기 (Ctrl+C 로 종료)
+# 에러 나면 그 메시지 해결
 
-# 3. .mcp.json 경로 확인
-cat ~/dtslib-papyrus/.mcp.json | grep alex
+# 2. .mcp.json 경로 맞는지
+cat ~/.mcp.json
+# cwd 가 본인 홈 경로로 되어 있는지
+
+# 3. MCP SDK 설치됐는지
+pip show mcp
+
+# 4. Claude Code 완전 종료
+# 프로세스 kill:
+pkill -f claude
+# 그 다음 재시작
+claude
 ```
 
-안 뜨면 Claude Code 완전 종료(프로세스 kill)하고 재시작.
-
-### 6.2 "결과가 이상해"
+## F.2 "결과가 이상하다"
 
 ```bash
-# 파이프라인 테스트 돌려서 baseline 확인
 cd ~/alexandria-sanctuary
 python3 -m pytest alex_mcp/tests/ -v
-# → 173 passed 나와야 정상
+# 173 passed 안 나오면 뭔가 꼬임
 ```
 
-실패하면 최근 변경 revert:
+실패하면 최근 변경 되돌리기 (헌법: `reset --hard` 금지, `revert` 만):
 
 ```bash
 git log --oneline -5
-git revert <hash>  # 헌법: reset --hard 금지, revert만
+git revert <hash>
 ```
 
-### 6.3 "박씨 톤이 아니다"
+## F.3 "박씨 톤이 아니다"
 
-`rules/parksy_tone.py` 의 `TONE_REWRITES` 에 패턴 추가하고:
+`alex_mcp/rules/parksy_tone.py` 의 `TONE_REWRITES` 에 패턴 추가:
 
+```python
+(r"(\S+)이에요\b", r"\1이다"),
+```
+
+추가 후:
 ```bash
 python3 -m pytest alex_mcp/tests/test_rules.py -v
 ```
 
-통과 확인 후 커밋.
+통과하면 커밋.
 
-### 6.4 "권위 호소/존댓말 통과됐다"
+## F.4 "Python import 에러: ModuleNotFoundError: No module named 'mcp.server'"
 
-`rules/parksy_forbidden.py` FORBIDDEN 리스트 확장.
-
----
-
-## 7. 박씨 로그 새로 받을 때 루틴
-
-박씨캡처 APK가 매일 로그 떨구면 자동 축적:
+**원인**: 우리 패키지 이름이 예전엔 `mcp`였는데 `alex_mcp` 로 리네임. 구버전 clone 인 경우.
 
 ```bash
-# 폰 → PC (글로벌 CLAUDE.md 절차)
-scp -P 8022 $(cat ~/.phone_ip):~/storage/shared/Download/parksy-logs/$(ssh -p 8022 $(cat ~/.phone_ip) 'ls -t ~/storage/shared/Download/parksy-logs/ | head -1') ~/uploads/
+cd ~/alexandria-sanctuary
+git pull origin main
+# 최신 버전에는 alex_mcp/ 디렉토리 있음
 ```
-
-그 다음 박씨 지시:
-
-> "최신 박씨캡처 로그 리버스해서 rules 업데이트해"
-
-내가 자동으로:
-1. `parse_parksy_log` → 박씨 발화 추출
-2. 새 규칙 패턴 `rules/parksy_*.py` 에 추가
-3. pytest 돌려서 깨지는 거 없는지 확인
-4. 커밋 + 텔레그램 요약
 
 ---
 
-## 8. 현재 시스템 통계
+# PART G · 박씨캡처 로그 자동 리버스 (박씨 전용)
+
+박씨캡처 APK가 매일 로그 떨굼. 새 로그 쌓이면:
+
+## G.1 폰에서 PC로 가져오기
+
+```bash
+# 글로벌 CLAUDE.md 절차
+PHONE_IP=$(cat ~/.phone_ip)
+LATEST=$(ssh -p 8022 $PHONE_IP 'ls -t ~/storage/shared/Download/parksy-logs/ | head -1')
+scp -P 8022 $PHONE_IP:~/storage/shared/Download/parksy-logs/$LATEST ~/uploads/
+```
+
+## G.2 Claude Code 대화에서
+
+```
+최신 박씨캡처 로그 리버스해서 rules 업데이트해
+```
+
+자동으로:
+1. `parse_parksy_log` 호출 → 박씨 발화 추출
+2. 새 패턴 `alex_mcp/rules/parksy_*.py` 에 추가
+3. `pytest alex_mcp/tests/` 실행 → 통과 확인
+4. `git commit` + push
+5. 텔레그램 요약 보고
+
+---
+
+# PART H · 시스템 통계 (2026-04-24 현재)
 
 | 항목 | 수치 |
-|---|:--:|
-| 총 동작 코드 | 3,036줄 (server 220 + 기존 2,816) |
-| pytest | **173 case 전부 통과** |
+|------|:--:|
+| 동작 코드 | 3,036 LOC |
+| 테스트 | **173 pass / 0 fail** |
 | 플러그 | 11개 (Freud/Jung/Family/Shaman/Sufi/Ayahuasca/Mass/Env/NarrMeta/ParksyProfile/Guardrail) |
 | 감정 축 | 6 도메인 (Grief/Guilt/Eros/Rage/Liberation/Anxiety) |
-| Plutchik | 8 감정 + 24 Dyad + 4 대립쌍 |
-| 금기 카테고리 | 7 (honorifics/oversympathy/medical/imperative/authority/perfection/mystic) |
-| 박씨 규칙 | rules/ 6 파일 (log_parser + tone + forbidden + negative + positive + eval_rubric) |
-| MCP 도구 | 5 (analyze_dream / analyze_narrative / evaluate_text / get_system_prompt / parse_parksy_log) |
+| Plutchik | 8 기본 + 24 Dyad + 4 대립쌍 |
+| 금기 카테고리 | 7 |
+| MCP 도구 | 5 (`analyze_dream`, `analyze_narrative`, `evaluate_text`, `get_system_prompt`, `parse_parksy_log`) |
 | 운영 비용 | **$0** (Claude Max 정액) |
 
 ---
 
-## 9. 한 줄 요약
+# PART I · 한 줄 요약
 
-> **"Claude Code 재시작하고 박씨가 '꿈 분석해' 한 마디 던지면 끝. 내가 자동으로 MCP 도구 호출. 표준화된 박씨 톤 리포트 + 학자 인용 + 감정 구조 전부 나옴."**
-
----
-
-## 10. 다음 업데이트 후보 (박씨 우선순위 따라)
-
-| 옵션 | 필요 시간 | 비용 |
-|------|:--:|:--:|
-| console.html — 폰 웹 UI (박씨 꿈 입력 폼) | 2시간 | $0 |
-| 박씨 252개 캡처 로그 전체 리버스 | 반나절 | $0 |
-| sanctuary/ 리추얼 동적 페이지 | 4시간 | $0 |
-| 박씨 장기 감정 추적 대시보드 | 1일 | $0 |
-
-박씨가 "X 해" 하면 그 방향 진행.
+| 사용자 | 할 일 |
+|--------|------|
+| 박씨 본인 | Claude Code 재시작만 |
+| 친구 A (처음) | B.1 ~ B.8 (약 15분) |
+| 그 다음 | 대화창에 "꿈 분석해" 자연스럽게 |
 
 ---
 
-*본 매뉴얼은 박씨 본인 전용.*
-*외부 배포 금지.*
-*작성: Claude Opus 4.7 | 2026-04-24*
+*2026-04-24 · commit ecedf89*
+*문의/이슈: https://github.com/dtslib1979/alexandria-sanctuary/issues*
