@@ -1,13 +1,18 @@
 """
-5-Axis Domain ISA — 학파 중립 감정 좌표계.
+6-Axis Domain ISA — 학파 중립 감정 좌표계 (v1.2).
 
 박씨 2026-04-24 로그의 F(꿈) = Grief ∘ Guilt ∘ Eros ∘ Rage 합성함수를
-Liberation 축 추가해서 확장.
+Liberation + Anxiety 로 확장하여 6축 체계.
+
+v1.1 → v1.2 변경:
+- Anxiety 축 신설 (성과/압박/불안/수행 실패 주제 포착)
+- grief 메타포 확장 (사라지/투명/보이지 않)
+- guilt 키워드 확장 (방치/제대로/못 받은/돌봐주지 못)
 
 참조:
-- WHITEPAPER-v1.0.md §5
+- WHITEPAPER-v1.2.md §5
 - A Survey of LLMs in Psychotherapy — arxiv 2502.11095
-- 박씨 2026-04-24 꿈 로그 (원천 요구사항)
+- 박씨 2026-04-24 꿈 로그 + Perplexity 프로토타입 3세트 (2026-04-24 검증)
 """
 from __future__ import annotations
 
@@ -29,7 +34,7 @@ class Axis(ABC):
 
 
 # ─────────────────────────────────────────────────────────────────
-#  A1 · Grief (애도)
+#  A1 · Grief (애도)  — v1.2: 사라짐/투명 메타포 확장
 # ─────────────────────────────────────────────────────────────────
 class GriefAxis(Axis):
     id = "grief"
@@ -39,23 +44,24 @@ class GriefAxis(Axis):
         "떠났", "보냈", "마지막",
         "작별", "이별", "끝",
     ]
-    metaphors = ["장례", "무덤", "겨울", "저물", "사라", "묘지", "소실"]
+    metaphors = [
+        "장례", "무덤", "겨울", "저물", "사라", "묘지", "소실",
+        "투명해지", "흐릿해지", "보이지 않", "흩어",   # v1.2 추가
+    ]
 
     def extract(self, narrative, metadata):
         direct = self._count(narrative, self.keywords) * 0.12
         indirect = self._count(narrative, self.metaphors) * 0.06
-        # 꿈 + 죽음/이별 조합 → 강한 grief (한국어 완곡어 포함)
         death_markers = ["죽", "장례", "돌아가", "떠났", "보냈"]
         if metadata.get("is_dream") and any(m in narrative for m in death_markers):
             direct += 0.25
-        # 1년 기일/애니버서리
         if metadata.get("anniversary_within_30d"):
             direct += 0.15
         return min(direct + indirect, 1.0)
 
 
 # ─────────────────────────────────────────────────────────────────
-#  A2 · Guilt (죄책감)
+#  A2 · Guilt (죄책감)  — v1.2: 방치/돌봄실패 키워드 확장
 # ─────────────────────────────────────────────────────────────────
 class GuiltAxis(Axis):
     id = "guilt"
@@ -64,6 +70,8 @@ class GuiltAxis(Axis):
         "미안", "죄책", "잘못", "책임",
         "빚", "부채", "병신",
         "외면", "배신", "실수",
+        "방치", "못 받은", "제대로 못",            # v1.2 추가
+        "돌봐주지 못", "챙겨주지 못", "놓쳤",       # v1.2 추가
     ]
     metaphors = ["그림자", "짐", "빚", "오점", "얼룩"]
 
@@ -83,9 +91,9 @@ class ErosAxis(Axis):
         "외롭", "그립", "사랑",
         "살고 싶", "접촉", "누군가",
         "관계", "업소", "스킨십",
-        "따뜻", "만지고",
+        "따뜻", "만지고", "손을 잡",             # v1.2 추가
     ]
-    metaphors = ["봄", "꽃", "빛", "불", "체온"]
+    metaphors = ["봄", "꽃", "빛", "불", "체온", "가슴이 따뜻"]
 
     def extract(self, narrative, metadata):
         direct = self._count(narrative, self.keywords) * 0.12
@@ -103,9 +111,9 @@ class RageAxis(Axis):
         "짜증", "분노", "욕", "씨발",
         "병신", "꺼져", "지긋지긋",
         "불공평", "억울", "치가 떨",
-        "화가 난",
+        "화가 난", "그만해",                      # v1.2 추가
     ]
-    metaphors = ["불길", "폭발", "칼날"]
+    metaphors = ["불길", "폭발", "칼날", "소리 없는 비명"]
 
     def extract(self, narrative, metadata):
         direct = self._count(narrative, self.keywords) * 0.14
@@ -114,7 +122,7 @@ class RageAxis(Axis):
 
 
 # ─────────────────────────────────────────────────────────────────
-#  A5 · Liberation (해방 · 종료 후 자유) 🆕
+#  A5 · Liberation (해방 · 종료 후 자유)
 # ─────────────────────────────────────────────────────────────────
 class LiberationAxis(Axis):
     id = "liberation"
@@ -123,7 +131,7 @@ class LiberationAxis(Axis):
         "편하", "가볍", "자유", "해방",
         "놓아", "벗어", "시원",
         "맑", "트인", "열린",
-        "끝났", "마무리",
+        "끝났", "마무리", "허용",                 # v1.2 추가
     ]
     metaphors = ["아침", "창문", "새소리", "햇빛", "바람"]
 
@@ -133,12 +141,46 @@ class LiberationAxis(Axis):
         return min(direct + indirect, 1.0)
 
 
+# ─────────────────────────────────────────────────────────────────
+#  A6 · Anxiety (불안 · 압박 · 수행 실패)  🆕 v1.2
+#  박씨 프로토타입 꿈 2 검증으로 공백 확인 후 신설.
+# ─────────────────────────────────────────────────────────────────
+class AnxietyAxis(Axis):
+    id = "anxiety"
+    name_ko = "불안"
+    keywords = [
+        "불안", "압박", "압박감",
+        "준비 안", "준비가 안", "준비 못",
+        "끌려", "막막", "떨림",
+        "완성도", "미루", "늦을", "늦어",
+        "실패", "못 한", "부담",
+        "완벽", "부족", "모자라",
+    ]
+    metaphors = [
+        "침묵이 이어", "끝도 없는", "새까만 어둠", "어둠만",
+        "엉켜", "엉킨", "흐릿해", "흐릿했",
+        "안 보이", "입에서 아무 말도",
+        "목소리가 안", "소리 없는",
+        "텅 빈", "빈 무대",
+    ]
+
+    def extract(self, narrative, metadata):
+        direct = self._count(narrative, self.keywords) * 0.13
+        indirect = self._count(narrative, self.metaphors) * 0.08
+        # 꿈 + 수행 실패 메타포 조합 → 강한 anxiety
+        perf_markers = ["프레젠테이션", "발표", "무대", "시험", "면접", "마이크"]
+        if metadata.get("is_dream") and any(m in narrative for m in perf_markers):
+            direct += 0.20
+        return min(direct + indirect, 1.0)
+
+
 ALL_AXES: list[Axis] = [
     GriefAxis(),
     GuiltAxis(),
     ErosAxis(),
     RageAxis(),
     LiberationAxis(),
+    AnxietyAxis(),                # 🆕 v1.2
 ]
 
 AXIS_IDS = [a.id for a in ALL_AXES]
@@ -158,23 +200,22 @@ def dominant_axis(distribution: dict[str, float]) -> str:
 
 
 if __name__ == "__main__":
-    # Self-test
-    parksy_dream = (
-        "어머니가 돌아가시는 꿈을 꿨다. "
-        "심폐소생 쇼크 전기 충격기 바이탈 사인 들리며 일어나서 "
-        "오케스트라 지휘하듯 웃었다. "
-        "상가집 가는 길 모르는 전화에 병신이라고 욕했다."
-    )
-    parksy_waking = (
-        "창문 열어놓고 잤는데 새소리 들리고 햇빛 들어와서 오랜만에 잘 잤다. "
-        "마음이 편하다."
-    )
-    print("박씨 꿈 입력:")
-    for aid, v in extract_all(parksy_dream, {"is_dream": True}).items():
-        print(f"  {aid}: {v:.3f}")
-    print(f"  dominant → {dominant_axis(extract_all(parksy_dream, {'is_dream': True}))}")
-
-    print("\n박씨 기상 입력:")
-    for aid, v in extract_all(parksy_waking, {}).items():
-        print(f"  {aid}: {v:.3f}")
-    print(f"  dominant → {dominant_axis(extract_all(parksy_waking, {}))}")
+    # Self-test (v1.2 6축)
+    tests = [
+        ("박씨 꿈 (애도)",
+         "어머니가 돌아가시는 꿈을 꿨다. 오케스트라 지휘하듯 웃었다. 상가집 가는 길에 병신이라고 욕했다.",
+         {"is_dream": True}),
+        ("꿈 2 (불안)",
+         "무대 뒤 대본 엉켜 있었다 준비 안 된 상태로 끌려나왔다 새까만 어둠 입에서 아무 말도 안 나와 침묵 이어졌다 불안감 압박감 완성도 미루",
+         {"is_dream": True}),
+        ("꿈 3 (해방+에로스)",
+         "낯선 여자와 손을 잡았다 가슴이 따뜻해졌다 허용된 자유 해방감",
+         {"is_dream": True}),
+    ]
+    for label, text, meta in tests:
+        d = extract_all(text, meta)
+        print(f"\n[{label}]")
+        for aid, v in sorted(d.items(), key=lambda x: -x[1]):
+            bar = "█" * int(v * 25)
+            print(f"  {aid:12s} {v:.3f} {bar}")
+        print(f"  → dominant: {dominant_axis(d)}")

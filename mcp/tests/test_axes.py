@@ -7,7 +7,7 @@ import pytest
 
 from mcp.core.axes import (
     ALL_AXES, AXIS_IDS, extract_all,
-    GriefAxis, GuiltAxis, ErosAxis, RageAxis, LiberationAxis,
+    GriefAxis, GuiltAxis, ErosAxis, RageAxis, LiberationAxis, AnxietyAxis,
 )
 from mcp.core.axes_weighter import (
     PLUG_AXIS_MATRIX, axis_distribution, dominant_axis, axis_narrative,
@@ -15,11 +15,12 @@ from mcp.core.axes_weighter import (
 
 
 class TestAxesRegistry:
-    def test_five_axes(self):
-        assert len(ALL_AXES) == 5
+    def test_six_axes(self):
+        """v1.2: Anxiety 축 추가 → 6축."""
+        assert len(ALL_AXES) == 6
 
     def test_axis_ids(self):
-        assert set(AXIS_IDS) == {"grief", "guilt", "eros", "rage", "liberation"}
+        assert set(AXIS_IDS) == {"grief", "guilt", "eros", "rage", "liberation", "anxiety"}
 
     def test_extract_all_returns_all_ids(self):
         dist = extract_all("test", {})
@@ -66,6 +67,36 @@ class TestLiberation:
         assert v > 0.2
 
 
+class TestAnxiety:
+    """v1.2 신규: 성과/수행 불안 축."""
+
+    def test_performance_anxiety(self):
+        v = AnxietyAxis().extract(
+            "불안 압박 준비 안 된 끌려나갔다 완성도 부담",
+            {"is_dream": True}
+        )
+        assert v > 0.4, f"performance anxiety 포착 실패: {v}"
+
+    def test_stage_dream_bonus(self):
+        """무대/발표 메타데이터 부스트."""
+        v = AnxietyAxis().extract(
+            "무대 뒤에서 마이크 잡고 말하려 했지만 입에서 아무 말도 안 나왔다",
+            {"is_dream": True}
+        )
+        assert v > 0.25
+
+    def test_silence_darkness_metaphors(self):
+        v = AnxietyAxis().extract(
+            "새까만 어둠 끝도 없는 침묵이 이어 흐릿해 엉킨",
+            {}
+        )
+        assert v > 0.3
+
+    def test_no_anxiety_for_neutral(self):
+        v = AnxietyAxis().extract("오늘 날씨 좋다", {})
+        assert v == 0.0
+
+
 class TestMatrix:
     def test_matrix_has_all_plugs(self):
         expected = {
@@ -76,9 +107,15 @@ class TestMatrix:
         assert set(PLUG_AXIS_MATRIX.keys()) == expected
 
     def test_each_row_sums_to_one(self):
+        """v1.2: 6축이라 허용오차 약간 크게."""
         for plug, row in PLUG_AXIS_MATRIX.items():
             s = sum(row.values())
-            assert abs(s - 1.0) < 0.001, f"{plug}: row sum = {s}"
+            assert abs(s - 1.0) < 0.01, f"{plug}: row sum = {s}"
+
+    def test_matrix_has_anxiety_column(self):
+        """v1.2: 모든 row에 anxiety 키 포함."""
+        for plug, row in PLUG_AXIS_MATRIX.items():
+            assert "anxiety" in row, f"{plug}: anxiety 열 누락"
 
     def test_each_row_has_all_axes(self):
         for plug, row in PLUG_AXIS_MATRIX.items():

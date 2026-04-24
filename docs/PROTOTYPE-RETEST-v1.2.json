@@ -1,0 +1,146 @@
+{
+  "v1.2_6axis_retest": [
+    {
+      "label": "꿈 1 (가족/애도/분노)",
+      "expected": "rage/grief",
+      "safety": {
+        "level": 0,
+        "categories": [],
+        "dream_exception_applied": false,
+        "negation_applied": false,
+        "input_length": 397
+      },
+      "axis_profile": {
+        "grief": 0.268,
+        "guilt": 0.448,
+        "eros": 0.217,
+        "rage": 0.508,
+        "liberation": 0.329,
+        "anxiety": 0.321
+      },
+      "dominant": "rage",
+      "narrative": "분노와 죄책감이 주축으로 같이 올라온 상태",
+      "gates": [
+        "I",
+        "II",
+        "IV"
+      ],
+      "top_plugs": [
+        {
+          "name": "parksy_profile",
+          "weight": 1.0
+        },
+        {
+          "name": "guardrail",
+          "weight": 1.0
+        },
+        {
+          "name": "family_systems",
+          "weight": 0.6
+        },
+        {
+          "name": "freud",
+          "weight": 0.4
+        },
+        {
+          "name": "jung",
+          "weight": 0.4
+        }
+      ]
+    },
+    {
+      "label": "꿈 2 (일/불안)",
+      "expected": "anxiety",
+      "safety": {
+        "level": 0,
+        "categories": [],
+        "dream_exception_applied": false,
+        "negation_applied": false,
+        "input_length": 357
+      },
+      "axis_profile": {
+        "grief": 0.31,
+        "guilt": 0.236,
+        "eros": 0.237,
+        "rage": 0.184,
+        "liberation": 0.279,
+        "anxiety": 0.807
+      },
+      "dominant": "anxiety",
+      "narrative": "불안이 지배적",
+      "gates": [
+        "I",
+        "II"
+      ],
+      "top_plugs": [
+        {
+          "name": "parksy_profile",
+          "weight": 1.0
+        },
+        {
+          "name": "guardrail",
+          "weight": 1.0
+        },
+        {
+          "name": "freud",
+          "weight": 0.4
+        },
+        {
+          "name": "jung",
+          "weight": 0.4
+        },
+        {
+          "name": "env_trigger",
+          "weight": 0.12
+        }
+      ]
+    },
+    {
+      "label": "꿈 3 (에로스/해방)",
+      "expected": "liberation/eros",
+      "safety": {
+        "level": 0,
+        "categories": [],
+        "dream_exception_applied": false,
+        "negation_applied": false,
+        "input_length": 336
+      },
+      "axis_profile": {
+        "grief": 0.391,
+        "guilt": 0.326,
+        "eros": 0.494,
+        "rage": 0.189,
+        "liberation": 0.514,
+        "anxiety": 0.263
+      },
+      "dominant": "liberation",
+      "narrative": "해방감과 삶의 욕구가 주축으로 같이 올라온 상태",
+      "gates": [
+        "I",
+        "II"
+      ],
+      "top_plugs": [
+        {
+          "name": "parksy_profile",
+          "weight": 1.0
+        },
+        {
+          "name": "guardrail",
+          "weight": 1.0
+        },
+        {
+          "name": "freud",
+          "weight": 0.48
+        },
+        {
+          "name": "jung",
+          "weight": 0.4
+        },
+        {
+          "name": "sufi",
+          "weight": 0.14
+        }
+      ]
+    }
+  ]
+}
