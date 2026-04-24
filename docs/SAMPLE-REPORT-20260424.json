@@ -1,0 +1,98 @@
+{
+  "primary": {
+    "safety_verdict": {
+      "level": 0,
+      "categories": [],
+      "dream_exception_applied": true,
+      "negation_applied": false,
+      "input_length": 227
+    },
+    "axis_profile": {
+      "grief": 0.693,
+      "guilt": 0.502,
+      "eros": 0.472,
+      "rage": 0.566,
+      "liberation": 0.459
+    },
+    "dominant_axis": "grief",
+    "axis_narrative": "애도와 분노가 주축으로 같이 올라온 상태",
+    "active_gates": [
+      "I",
+      "II",
+      "IV",
+      "V",
+      "VI"
+    ],
+    "top_plugs": [
+      {
+        "name": "parksy_profile",
+        "weight": 1.0
+      },
+      {
+        "name": "guardrail",
+        "weight": 1.0
+      },
+      {
+        "name": "family_systems",
+        "weight": 0.65
+      },
+      {
+        "name": "freud",
+        "weight": 0.6
+      },
+      {
+        "name": "narrative_meta",
+        "weight": 0.6
+      }
+    ],
+    "parksy_tone_verdict": "참고. 네 판단이 최종이다. 레시피 아님, 레퍼런스임."
+  },
+  "with_context": {
+    "safety_verdict": {
+      "level": 0,
+      "categories": [],
+      "dream_exception_applied": true,
+      "negation_applied": false,
+      "input_length": 394
+    },
+    "axis_profile": {
+      "grief": 0.856,
+      "guilt": 0.54,
+      "eros": 0.602,
+      "rage": 0.591,
+      "liberation": 0.775
+    },
+    "dominant_axis": "grief",
+    "axis_narrative": "애도와 해방감이 주축으로 같이 올라온 상태",
+    "active_gates": [
+      "I",
+      "II",
+      "IV",
+      "V",
+      "VI"
+    ],
+    "top_plugs": [
+      {
+        "name": "parksy_profile",
+        "weight": 1.0
+      },
+      {
+        "name": "guardrail",
+        "weight": 1.0
+      },
+      {
+        "name": "env_trigger",
+        "weight": 0.7
+      },
+      {
+        "name": "family_systems",
+        "weight": 0.65
+      },
+      {
+        "name": "freud",
+        "weight": 0.6
+      }
+    ],
+    "parksy_tone_verdict": "참고. 네 판단이 최종이다. 레시피 아님, 레퍼런스임."
+  }
+}
