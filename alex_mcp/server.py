@@ -1,33 +1,56 @@
 """
-Alexandria MCP-Therapy Server (stdio).
+Alexandria MCP-Therapy Server (듀얼 모드: stdio + SSE).
 
-박씨 Claude Code가 이 서버의 도구를 호출:
+박씨 설계 원칙:
+- 로컬 PC: stdio 모드 (Claude Code settings.json 서브프로세스)
+- Railway: SSE 모드 (--sse 플래그 또는 MCP_TRANSPORT=sse)
+- 같은 코드 하나로 양쪽 지원 (파피루스 eae_mcp_writer 패턴)
+
+도구:
 - analyze_dream   : 꿈 서술 + LLM 해석 → enforcer 강제 통과
 - analyze_narrative: pre-LLM 빠른 분석 (LLM 없이도)
 - evaluate_text   : 박씨 루브릭 5축 평가
 - get_system_prompt: LLM이 써야 할 시스템 프롬프트 반환
 - parse_parksy_log : 박씨캡처 로그 파싱
 
-등록 방법 (.mcp.json):
-{
-  "mcpServers": {
-    "alexandria-therapy": {
-      "command": "python3",
-      "args": ["-m", "alex_mcp.server"],
-      "cwd": "/home/dtsli/alexandria-sanctuary"
+등록 방법 (로컬 stdio):
+  ~/.mcp.json
+  {
+    "mcpServers": {
+      "alexandria-therapy": {
+        "command": "python3",
+        "args": ["-m", "alex_mcp.server"],
+        "cwd": "/home/dtsli/alexandria-sanctuary"
+      }
     }
   }
-}
+
+등록 방법 (Railway SSE):
+  {
+    "mcpServers": {
+      "alexandria-therapy-remote": {
+        "type": "sse",
+        "url": "https://alexandria-therapy.up.railway.app/sse"
+      }
+    }
+  }
+
+실행:
+  python3 -m alex_mcp.server         # stdio (로컬)
+  python3 -m alex_mcp.server --sse   # SSE (Railway / 로컬 원격 테스트)
 """
 from __future__ import annotations
 
 import asyncio
 import json
+import os
+import sys
 from pathlib import Path
 from typing import Any
 
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
+from mcp.server.sse import SseServerTransport
 import mcp.types as types
 
 # 우리 엔진 (alex_mcp 네임스페이스)
@@ -259,10 +282,11 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
 
 
 # ─────────────────────────────────────────────────────────────────
-#  엔트리포인트
+#  엔트리포인트 (듀얼 모드)
 # ─────────────────────────────────────────────────────────────────
 
-async def main():
+async def run_stdio():
+    """로컬 Claude Code용 stdio 모드."""
     async with stdio_server() as (read_stream, write_stream):
         await app.run(
             read_stream,
@@ -271,5 +295,116 @@ async def main():
         )
 
 
+def run_sse(host: str = "0.0.0.0", port: int = 8000):
+    """
+    Railway/원격 배포용 SSE 모드.
+    파피루스 eae_mcp_writer 502 해결 패턴 이식:
+    - 순수 ASGI 미들웨어 (Starlette Mount 우회)
+    - /health 엔드포인트 (Railway healthcheck)
+    - uvicorn 직접 실행
+    """
+    import uvicorn
+
+    sse = SseServerTransport("/messages/")
+
+    async def handle_sse(scope, receive, send):
+        """SSE 연결 핸들러 (ASGI)."""
+        async with sse.connect_sse(scope, receive, send) as streams:
+            await app.run(
+                streams[0],
+                streams[1],
+                app.create_initialization_options(),
+            )
+
+    async def asgi_app(scope, receive, send):
+        """
+        순수 ASGI 미들웨어 — Railway 502 회피 핵심.
+        /health   → 200 JSON
+        /sse      → MCP SSE 스트림
+        /messages → MCP POST 메시지
+        나머지    → 404
+        """
+        if scope["type"] != "http":
+            return
+
+        path = scope.get("path", "")
+
+        # Health check (Railway 필수)
+        if path == "/health":
+            await send({
+                "type": "http.response.start",
+                "status": 200,
+                "headers": [(b"content-type", b"application/json")],
+            })
+            await send({
+                "type": "http.response.body",
+                "body": b'{"status":"ok","server":"alexandria-therapy","transport":"sse"}',
+            })
+            return
+
+        # MCP SSE 연결
+        if path == "/sse":
+            await handle_sse(scope, receive, send)
+            return
+
+        # MCP POST messages
+        if path.startswith("/messages"):
+            await sse.handle_post_message(scope, receive, send)
+            return
+
+        # 루트 페이지 (디버깅용)
+        if path == "/":
+            await send({
+                "type": "http.response.start",
+                "status": 200,
+                "headers": [(b"content-type", b"text/html; charset=utf-8")],
+            })
+            body = (
+                b"<h1>Alexandria MCP-Therapy</h1>"
+                b"<p>SSE endpoint: <code>/sse</code></p>"
+                b"<p>Health: <code>/health</code></p>"
+            )
+            await send({"type": "http.response.body", "body": body})
+            return
+
+        # 기타 404
+        await send({
+            "type": "http.response.start",
+            "status": 404,
+            "headers": [(b"content-type", b"text/plain")],
+        })
+        await send({
+            "type": "http.response.body",
+            "body": b"Not Found",
+        })
+
+    uvicorn.run(asgi_app, host=host, port=port, log_level="info")
+
+
+def main():
+    """
+    듀얼 모드 진입점.
+
+    SSE 모드 트리거:
+    - CLI 플래그: --sse
+    - 환경변수: MCP_TRANSPORT=sse
+    - 환경변수 존재만으로도 작동 (Railway 자동 설정)
+    """
+    sse_mode = (
+        "--sse" in sys.argv
+        or os.environ.get("MCP_TRANSPORT") == "sse"
+        or bool(os.environ.get("RAILWAY_ENVIRONMENT"))  # Railway 자동 감지
+    )
+
+    if sse_mode:
+        port = int(os.environ.get("PORT", "8000"))
+        host = os.environ.get("HOST", "0.0.0.0")
+        print(f"[alexandria-therapy] SSE mode on {host}:{port}", file=sys.stderr)
+        run_sse(host=host, port=port)
+    else:
+        print("[alexandria-therapy] stdio mode", file=sys.stderr)
+        asyncio.run(run_stdio())
+
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
